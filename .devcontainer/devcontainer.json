@@ -23,17 +23,18 @@
         }
       },
       "extensions": [
-        "bradlc.vscode-tailwindcss",
-        "esbenp.prettier-vscode",
-        "Vue.volar",
-        "Vue.vscode-typescript-vue-plugin",
-        "dbaeumer.vscode-eslint",
-        "GitHub.vscode-github-actions",
-        "ms-azuretools.vscode-docker",
-        "timonwong.shellcheck",
-        "waderyan.gitblame",
-        "streetsidesoftware.code-spell-checker"
-      ]
+		"bradlc.vscode-tailwindcss",
+		"esbenp.prettier-vscode",
+		"Vue.volar",
+		"Vue.vscode-typescript-vue-plugin",
+		"dbaeumer.vscode-eslint",
+		"GitHub.vscode-github-actions",
+		"ms-azuretools.vscode-docker",
+		"timonwong.shellcheck",
+		"waderyan.gitblame",
+		"streetsidesoftware.code-spell-checker",
+		"unifiedjs.vscode-mdx"
+	]
     }
   }
   // Features to add to the dev container. More info: https://containers.dev/features.

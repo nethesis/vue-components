@@ -17,5 +17,13 @@ COPY tsconfig.node.json .
 COPY vite.config.ts .
 RUN npm run build
 
+FROM build as build-storybook
+COPY .storybook .storybook
+COPY stories stories
+RUN npm run build-storybook
+
 FROM scratch as dist
 COPY --from=build /app/dist /
+
+FROM scratch as storybook
+COPY --from=build-storybook /app/storybook-static /
