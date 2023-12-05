@@ -1,0 +1,53 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+  "name": "vue-tailwind-lib-dev",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "build": {
+    "context": "..",
+    "dockerfile": "../Containerfile",
+    "target": "dev"
+  },
+
+  "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,Z",
+  "workspaceFolder": "/app",
+  "runArgs": ["--userns=keep-id", "--name=vue-tailwind-lib-dev"],
+  "appPort": "6006:6006",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "files.associations": {
+          ".env*": "properties"
+        }
+      },
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "Vue.volar",
+        "Vue.vscode-typescript-vue-plugin",
+        "dbaeumer.vscode-eslint",
+        "GitHub.vscode-github-actions",
+        "ms-azuretools.vscode-docker",
+        "timonwong.shellcheck",
+        "waderyan.gitblame",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "yarn install",
+
+  // Configure tool-specific properties.
+  // "customizations": {},
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}
