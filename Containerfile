@@ -10,7 +10,7 @@ COPY package-lock.json .
 RUN npm ci --ignore-scripts
 COPY src src
 COPY postcss.config.js .
-COPY tailwind.config.js .
+COPY tailwind.config.ts .
 COPY tsconfig.app.json .
 COPY tsconfig.json .
 COPY tsconfig.node.json .
