@@ -1,46 +1,40 @@
 # @nethesis/vue-components
 
-This template should help get you started developing with Vue 3 in Vite.
+This library contains a set of Vue components used in Nethesis products.
 
-## Recommended IDE Setup
+## Installation
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+You can add this library via npm:
 
 ```sh
-npm install
+npm install @nethesis/vue-components
 ```
 
-### Compile and Hot-Reload for Development
+Then, before using them, you need to update the `tailwind.config.js/ts` with the following lines:
 
-```sh
-npm run dev
+```js
+export default {
+  // ...
+  presets: [require('@nethesis/vue-components/tailwind.config.ts')],
+  content: [
+    // ...
+    './node_modules/@nethesis/vue-components/dist/**/*.js',
+    // ...
+  ],
+  // ...
+}
 ```
 
-### Type-Check, Compile and Minify for Production
+the preset is optional, however it is recommended to inherit the correct theme for the components.
 
-```sh
-npm run build
-```
+You can still override the theme adding your customizations, more info can be found in the [Tailwind documentation](https://tailwindcss.com/docs/presets).
 
-### Lint with [ESLint](https://eslint.org/)
+After this, you're golden! You can browse the [Storybook](https://nethesis.github.io/vue-components) to see the available components and their usage.
 
-```sh
-npm run lint
-```
+## Contributing
+
+You can read the [contributing guidelines](CONTRIBUTING.md) to know how to contribute to this project.
+
+## License
+
+All the repo is licensed under [GPL 3.0 or later](LICENSE) license.
