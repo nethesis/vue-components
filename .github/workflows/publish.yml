@@ -1,0 +1,29 @@
+name: Release Please
+
+on:
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release-please'))
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          ./build.sh dist
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+      - name: Publish to NPM
+        if: ${{ steps.release.outputs.release_created }}
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
