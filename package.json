@@ -13,7 +13,7 @@
     },
     "./tailwind.config.ts": "./tailwind.config.ts"
   },
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "build": "run-p type-check \"build-only {@}\" --",
     "build-only": "vite build",
