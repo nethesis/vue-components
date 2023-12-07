@@ -4,7 +4,7 @@ WORKDIR /app
 FROM base as dev
 CMD exec /bin/bash -c "npm install && npm run storybook"
 
-FROM base as build
+FROM base as app
 COPY package.json .
 COPY package-lock.json .
 RUN npm ci --ignore-scripts
@@ -15,9 +15,11 @@ COPY tsconfig.app.json .
 COPY tsconfig.json .
 COPY tsconfig.node.json .
 COPY vite.config.ts .
+
+FROM app as build
 RUN npm run build
 
-FROM build as build-storybook
+FROM app as build-storybook
 COPY .storybook .storybook
 COPY stories stories
 RUN npm run build-storybook
