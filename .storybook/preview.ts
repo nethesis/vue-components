@@ -1,7 +1,7 @@
 import type { Preview, VueRenderer } from '@storybook/vue3'
-import '../src/main.css'
+import { withThemeByClassName } from '@storybook/addon-themes'
 
-import { withThemeByClassName, withThemeByDataAttribute } from '@storybook/addon-themes'
+import '../src/main.css'
 
 const preview: Preview = {
   parameters: {
