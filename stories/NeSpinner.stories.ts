@@ -2,7 +2,7 @@
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
 import type { Meta, StoryObj } from '@storybook/vue3'
-import NeSpinner from '../src/components/NeSpinner.vue'
+import { NeSpinner } from '../src/main'
 
 const meta = {
   title: 'Utils/NeSpinner',
