@@ -10,22 +10,28 @@ You can add this library via npm:
 npm install @nethesis/vue-components
 ```
 
-Then, before using them, you need to update the `tailwind.config.js/ts` with the following lines:
+After this, you'll need to import a few files to make everything work:
 
-```js
-export default {
-  // ...
-  presets: [require('@nethesis/vue-components/tailwind.config.ts')],
-  content: [
-    // ...
-    './node_modules/@nethesis/vue-components/dist/**/*.js',
-    // ...
-  ],
-  // ...
-}
-```
+1. You need to import the main CSS file, if you're using PostCSS (this is the default if you're using Vite + TailwindCSS) you can import it in your `main.css` file:
 
-the preset is optional, however it is recommended to inherit the correct theme for the components.
+    ```postcss
+    @import '@nethesis/vue-components/vue-components.css';
+    ```
+
+2. Import the default preset for tailwind, this can be done editing the `tailwind.config.js/ts` with the following lines:
+
+    ```js
+    export default {
+      // ...
+      presets: [require('@nethesis/vue-components/tailwind.config.ts')],
+      content: [
+        // ...
+        './node_modules/@nethesis/vue-components/dist/**/*.js',
+        // ...
+      ],
+      // ...
+    }
+    ```
 
 You can still override the theme adding your customizations, more info can be found in the [Tailwind documentation](https://tailwindcss.com/docs/presets).
 

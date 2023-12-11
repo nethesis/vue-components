@@ -29,7 +29,8 @@
       "require": "./dist/vue-components.umd.cjs",
       "types": "./dist/main.d.ts"
     },
-    "./tailwind.config.ts": "./tailwind.config.ts"
+    "./tailwind.config.ts": "./tailwind.config.ts",
+    "./vue-components.css": "./dist/main.css"
   },
   "scripts": {
     "build": "run-p type-check \"build-only {@}\" --",

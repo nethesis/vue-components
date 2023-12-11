@@ -1,7 +1,3 @@
-/*
-This file is only used by Storybook to load Tailwind CSS.
-Editing this file won't change the Tailwind CSS in the components.
-*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

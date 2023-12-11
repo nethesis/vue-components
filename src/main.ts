@@ -1,3 +1,4 @@
+// components import
 import NeSkeleton from '@/components/NeSkeleton.vue'
 import NeSpinner from '@/components/NeSpinner.vue'
 import NeExpandable from '@/components/NeExpandable.vue'
@@ -7,6 +8,8 @@ import NeInlineNotification from '@/components/NeInlineNotification.vue'
 import NeRoundedIcon from '@/components/NeRoundedIcon.vue'
 import NeSideDrawer from '@/components/NeSideDrawer.vue'
 import NeTitle from '@/components/NeTitle.vue'
+// style import
+import '@/main.css'
 
 export {
   NeSkeleton,
