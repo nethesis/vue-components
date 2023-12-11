@@ -1,4 +1,5 @@
 import { Config } from 'tailwindcss'
+import defaultTheme from 'tailwindcss/defaultTheme'
 import colors = require('tailwindcss/colors')
 
 export default {
@@ -22,7 +23,7 @@ export default {
         'indeterminate-progress-bar': 'indeterminateProgressBar 1s infinite linear'
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif']
+        sans: ['Poppins', ...defaultTheme.fontFamily.sans]
       }
     }
   },
