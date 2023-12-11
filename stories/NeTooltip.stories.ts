@@ -25,7 +25,7 @@ const placementValues = [
 const triggerEventValues = ['click', 'mouseenter focus', 'focusin', 'mouseenter click', 'manual']
 
 const meta = {
-  title: 'NeTooltip',
+  title: 'Visual/NeTooltip',
   component: NeTooltip,
   tags: ['autodocs'],
   argTypes: {
