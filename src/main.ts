@@ -6,6 +6,7 @@ import NeFileInput from '@/components/NeFileInput.vue'
 import NeInlineNotification from '@/components/NeInlineNotification.vue'
 import NeRoundedIcon from '@/components/NeRoundedIcon.vue'
 import NeSideDrawer from '@/components/NeSideDrawer.vue'
+import NeTitle from '@/components/NeTitle.vue'
 
 export {
   NeSkeleton,
@@ -15,5 +16,6 @@ export {
   NeFileInput,
   NeInlineNotification,
   NeRoundedIcon,
-  NeSideDrawer
+  NeSideDrawer,
+  NeTitle
 }
