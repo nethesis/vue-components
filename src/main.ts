@@ -10,6 +10,7 @@ import NeSideDrawer from '@/components/NeSideDrawer.vue'
 import NeTitle from '@/components/NeTitle.vue'
 import NeTooltip from '@/components/NeTooltip.vue'
 import NeBadge from '@/components/NeBadge.vue'
+import NeButton from '@/components/NeButton.vue'
 // style import
 import '@/main.css'
 
@@ -24,5 +25,6 @@ export {
   NeSideDrawer,
   NeTitle,
   NeTooltip,
-  NeBadge
+  NeBadge,
+  NeButton
 }
