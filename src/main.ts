@@ -9,6 +9,7 @@ import NeRoundedIcon from '@/components/NeRoundedIcon.vue'
 import NeSideDrawer from '@/components/NeSideDrawer.vue'
 import NeTitle from '@/components/NeTitle.vue'
 import NeTooltip from '@/components/NeTooltip.vue'
+import NeBadge from '@/components/NeBadge.vue'
 // style import
 import '@/main.css'
 
@@ -22,5 +23,6 @@ export {
   NeRoundedIcon,
   NeSideDrawer,
   NeTitle,
-  NeTooltip
+  NeTooltip,
+  NeBadge
 }
