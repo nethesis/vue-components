@@ -5,6 +5,7 @@ import NeProgressBar from '@/components/NeProgressBar.vue'
 import NeFileInput from '@/components/NeFileInput.vue'
 import NeInlineNotification from '@/components/NeInlineNotification.vue'
 import NeRoundedIcon from '@/components/NeRoundedIcon.vue'
+import NeSideDrawer from '@/components/NeSideDrawer.vue'
 
 export {
   NeSkeleton,
@@ -13,5 +14,6 @@ export {
   NeProgressBar,
   NeFileInput,
   NeInlineNotification,
-  NeRoundedIcon
+  NeRoundedIcon,
+  NeSideDrawer
 }
