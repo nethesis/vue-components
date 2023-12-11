@@ -15,10 +15,20 @@ export default defineConfig({
       fileName: 'vue-components'
     },
     rollupOptions: {
-      external: ['vue'],
+      external: [
+        'vue',
+        'vue-tippy',
+        '@fortawesome/vue-fontawesome',
+        '@fortawesome/free-solid-svg-icons',
+        '@headlessui/vue'
+      ],
       output: {
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          'vue-tippy': 'Tippy',
+          '@fortawesome/vue-fontawesome': 'FontAwesomeIcon',
+          '@fortawesome/free-solid-svg-icons': 'fa',
+          '@headlessui/vue': 'HeadlessUI'
         }
       }
     }
