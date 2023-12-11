@@ -8,6 +8,7 @@ import NeInlineNotification from '@/components/NeInlineNotification.vue'
 import NeRoundedIcon from '@/components/NeRoundedIcon.vue'
 import NeSideDrawer from '@/components/NeSideDrawer.vue'
 import NeTitle from '@/components/NeTitle.vue'
+import NeTooltip from '@/components/NeTooltip.vue'
 // style import
 import '@/main.css'
 
@@ -20,5 +21,6 @@ export {
   NeInlineNotification,
   NeRoundedIcon,
   NeSideDrawer,
-  NeTitle
+  NeTitle,
+  NeTooltip
 }
