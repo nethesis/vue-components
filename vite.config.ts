@@ -20,7 +20,8 @@ export default defineConfig({
         'vue-tippy',
         '@fortawesome/vue-fontawesome',
         '@fortawesome/free-solid-svg-icons',
-        '@headlessui/vue'
+        '@headlessui/vue',
+        'uuid'
       ],
       output: {
         globals: {
@@ -28,7 +29,8 @@ export default defineConfig({
           'vue-tippy': 'Tippy',
           '@fortawesome/vue-fontawesome': 'FontAwesomeIcon',
           '@fortawesome/free-solid-svg-icons': 'fa',
-          '@headlessui/vue': 'HeadlessUI'
+          '@headlessui/vue': 'HeadlessUI',
+          uuid: 'v'
         }
       }
     }

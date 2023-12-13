@@ -11,6 +11,7 @@ import NeTitle from '@/components/NeTitle.vue'
 import NeTooltip from '@/components/NeTooltip.vue'
 import NeBadge from '@/components/NeBadge.vue'
 import NeButton from '@/components/NeButton.vue'
+import NeCheckbox from '@/components/NeCheckbox.vue'
 // style import
 import '@/main.css'
 
@@ -26,5 +27,6 @@ export {
   NeTitle,
   NeTooltip,
   NeBadge,
-  NeButton
+  NeButton,
+  NeCheckbox
 }
