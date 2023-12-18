@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0](https://github.com/nethesis/vue-components/compare/v0.2.0...v0.3.0) (2023-12-18)
+
+
+### Features
+
+* added NeBadge ([66143c1](https://github.com/nethesis/vue-components/commit/66143c1a515fb38fb15124bda8589761ba8153e9))
+* added NeButton ([8949ce1](https://github.com/nethesis/vue-components/commit/8949ce17ce3615b00474cba8826aaef2b764394e))
+* added NeCheckbox ([c1d7672](https://github.com/nethesis/vue-components/commit/c1d767284421c012f98e907fc45a1215a093ef97))
+
+
+### Performance Improvements
+
+* removed dependencies from build ([bfcb948](https://github.com/nethesis/vue-components/commit/bfcb94822618f8966fe9d30eef587fbad5be720b))
+
 ## [0.2.0](https://github.com/nethesis/vue-components/compare/v0.1.0...v0.2.0) (2023-12-11)
 
 
