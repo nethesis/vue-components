@@ -42,7 +42,7 @@
   "scripts": {
     "build": "run-p build-types \"build-only {@}\" --",
     "build-only": "vite build",
-    "build-types": "vue-tsc -declaration --emitDeclarationOnly -p tsconfig.app.json --composite false",
+    "build-types": "vue-tsc --declaration --declarationMap --emitDeclarationOnly -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "storybook": "storybook dev -p 6006",
