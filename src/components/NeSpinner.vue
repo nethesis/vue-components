@@ -85,7 +85,7 @@ const colorClasses = computed(() => colors[props.color])
 
 <template>
   <svg
-    class="text-gray-300 dark:text-gray-500 animate-spin-fast"
+    class="animate-spin-fast text-gray-300 dark:text-gray-500"
     :class="[sizeClasses, colorClasses]"
     fill="none"
     role="status"
