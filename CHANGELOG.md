@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/nethesis/vue-components/compare/v0.3.0...v0.4.0) (2023-12-20)
+
+
+### Features
+
+* added NeTable ([2a86404](https://github.com/nethesis/vue-components/commit/2a864046d53347f829c27555b4d2a71af1fd76d7))
+
 ## [0.3.0](https://github.com/nethesis/vue-components/compare/v0.2.0...v0.3.0) (2023-12-18)
 
 
