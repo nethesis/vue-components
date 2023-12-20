@@ -15,7 +15,7 @@ After this, you'll need to import a few files to make everything work:
 1. You need to import the main CSS file, if you're using PostCSS (this is the default if you're using Vite + TailwindCSS) you can import it in your `main.css` file:
 
     ```postcss
-    @import '@nethesis/vue-components/vue-components.css';
+    @import '@nethesis/vue-components/main.css';
     ```
 
 2. Import the default preset for tailwind, this can be done editing the `tailwind.config.js/ts` with the following lines:
