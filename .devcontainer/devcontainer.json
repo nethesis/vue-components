@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
-  "name": "vue-tailwind-lib-dev",
+  "name": "vue-components-dev",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "build": {
     "context": "..",
@@ -11,7 +11,7 @@
 
   "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,Z",
   "workspaceFolder": "/app",
-  "runArgs": ["--userns=keep-id", "--name=vue-tailwind-lib-dev"],
+  "runArgs": ["--userns=keep-id", "--name=vue-components-dev"],
   "appPort": "6006:6006",
   "customizations": {
     "vscode": {
