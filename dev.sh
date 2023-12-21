@@ -3,7 +3,7 @@
 set -e
 
 dev_image=${DEV_IMAGE:-"vue-components:dev-20.10.0"}
-container_name=vue-tailwind-lib-dev
+container_name=vue-components-dev
 
 build_image() {
     podman build \
