@@ -1,7 +1,10 @@
+//  Copyright (C) 2024 Nethesis S.r.l.
+//  SPDX-License-Identifier: GPL-3.0-or-later
+
 import { Meta, StoryObj } from '@storybook/vue3'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { NeBadge } from '../src/main'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 
 const meta: Meta<typeof NeBadge> = {
   title: 'Visual/NeBadge',
@@ -63,7 +66,7 @@ export const WithLabel: StoryObj<typeof NeBadge> = {
   args: {
     size: 'sm',
     kind: 'primary',
-    rounded: false,
+    rounded: true,
     text: "Where's the label?",
     label: "Here's the label!",
     icon: undefined,

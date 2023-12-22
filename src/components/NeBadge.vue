@@ -1,3 +1,8 @@
+<!--
+  Copyright (C) 2024 Nethesis S.r.l.
+  SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 <script lang="ts" setup>
 import { computed, type PropType } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -45,7 +50,7 @@ const props = defineProps({
    * Icon to display inside the badge.
    */
   icon: {
-    type: Array<string>,
+    type: Object,
     required: false,
     default: undefined
   },
