@@ -3,7 +3,7 @@ import defaultTheme from 'tailwindcss/defaultTheme'
 import colors = require('tailwindcss/colors')
 
 export default {
-  content: ['./src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{vue,js,ts,jsx,tsx}', './stories/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
