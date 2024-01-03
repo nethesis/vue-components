@@ -20,6 +20,10 @@ const preview: Preview = {
         dark: 'dark'
       },
       defaultTheme: 'light'
+    }),
+    (story) => ({
+      components: { story },
+      template: '<div class="bg-gray-50 p-10 dark:bg-gray-900"><story /></div>'
     })
   ]
 }
