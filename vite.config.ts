@@ -20,7 +20,9 @@ export default defineConfig({
         '@fortawesome/vue-fontawesome',
         '@fortawesome/free-solid-svg-icons',
         '@headlessui/vue',
-        'uuid'
+        'uuid',
+        'lodash-es',
+        '@vueuse/core'
       ],
       output: {
         globals: {
@@ -29,7 +31,9 @@ export default defineConfig({
           '@fortawesome/vue-fontawesome': 'FontAwesomeIcon',
           '@fortawesome/free-solid-svg-icons': 'fa',
           '@headlessui/vue': 'HeadlessUI',
-          uuid: 'v'
+          uuid: 'v',
+          'lodash-es': 'uniqBy',
+          '@vueuse/core': 'onClickOutside'
         }
       }
     }
