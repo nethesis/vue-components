@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/nethesis/vue-components/compare/v0.4.0...v0.5.0) (2024-01-05)
+
+
+### Features
+
+* add NeCombobox component ([f21794e](https://github.com/nethesis/vue-components/commit/f21794e0876c65298db63117e0ae92a362a617ee))
+* added background decorator if dark theme ([cd81f78](https://github.com/nethesis/vue-components/commit/cd81f788a23188fa7b4bef7120b37566fa81e6e6))
+
+
+### Bug Fixes
+
+* **NeBadge:** fix icon prop and storybook ([552cc14](https://github.com/nethesis/vue-components/commit/552cc14783065b82a62401aaab7db560e9ca2720))
+
 ## [0.4.0](https://github.com/nethesis/vue-components/compare/v0.3.0...v0.4.0) (2023-12-20)
 
 
