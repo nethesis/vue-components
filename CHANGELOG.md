@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/nethesis/vue-components/compare/v0.5.0...v0.6.0) (2024-01-17)
+
+
+### Features
+
+* add optional and optionalLabel to NeCombobox ([#10](https://github.com/nethesis/vue-components/issues/10)) ([78cc3ea](https://github.com/nethesis/vue-components/commit/78cc3ea98acbb37831fa1fe892c0f6587fd6d7f3))
+
 ## [0.5.0](https://github.com/nethesis/vue-components/compare/v0.4.0...v0.5.0) (2024-01-05)
 
 
