@@ -41,6 +41,7 @@ export interface Props {
   multiple?: boolean
   disabled?: boolean
   showOptionsType: boolean
+  optional?: boolean
   selectedLabel: string
   showSelectedLabel?: boolean
   noResultsLabel: string
@@ -48,6 +49,7 @@ export interface Props {
   noOptionsLabel: string
   acceptUserInput?: boolean
   userInputLabel: string
+  optionalLabel: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -138,6 +140,19 @@ watch(selected, () => {
     }
   }
 })
+
+watch(
+  () => props.options,
+  () => {
+    // update selection
+
+    if (props.multiple) {
+      selectMultipleOptionsFromModelValue()
+    } else {
+      selectSingleOptionFromModelValue()
+    }
+  }
+)
 
 onMounted(() => {
   if (props.multiple) {
@@ -276,22 +291,23 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
       v-bind="$attrs"
       :disabled="disabled"
     >
-      <div class="flex">
-        <ComboboxLabel
-          v-if="props.label"
-          class="mb-2 block text-sm font-medium leading-6 text-gray-700 dark:text-gray-200"
-        >
-          {{ props.label }}
-        </ComboboxLabel>
-        <span v-if="$slots.tooltip" class="ml-2">
-          <slot name="tooltip"></slot>
-        </span>
-      </div>
+      <ComboboxLabel
+        v-if="props.label"
+        class="mb-2 flex justify-between text-sm font-medium leading-6 text-gray-700 dark:text-gray-200"
+      >
+        <div>
+          <span>{{ props.label }}</span>
+          <span v-if="$slots.tooltip" class="ml-2">
+            <slot name="tooltip"></slot>
+          </span>
+        </div>
+        <span v-if="optional" class="ml-2 font-normal">{{ optionalLabel }}</span>
+      </ComboboxLabel>
       <div class="relative">
         <ComboboxInput
           :class="`${
             props.invalidMessage ? inputInvalidStyle : inputValidStyle
-          } w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-50 dark:placeholder:text-gray-500`"
+          } w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-gray-50 dark:placeholder:text-gray-500 sm:text-sm sm:leading-6`"
           :display-value="(option: any) => option?.label"
           :placeholder="props.placeholder"
           @change="query = $event.target.value"
@@ -309,7 +325,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           <ComboboxOptions
             v-if="filteredOptions.length > 0"
             static
-            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 ring-opacity-5 focus:outline-none sm:text-sm dark:bg-gray-950 dark:ring-gray-500/50"
+            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 ring-opacity-5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50 sm:text-sm"
           >
             <ComboboxOption
               v-for="option in filteredOptions"

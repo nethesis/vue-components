@@ -17,6 +17,7 @@ const meta = {
     multiple: false,
     disabled: false,
     showOptionsType: true,
+    optional: false,
     selectedLabel: 'Selected',
     showSelectedLabel: true,
     noResultsLabel: 'No results',
@@ -24,6 +25,7 @@ const meta = {
     noOptionsLabel: 'No options available',
     acceptUserInput: false,
     userInputLabel: 'User input',
+    optionalLabel: 'Optional',
     modelValue: '',
     options: [
       { id: '1', label: 'Cherry' },
@@ -49,6 +51,19 @@ export const Default: Story = {
     template: template
   }),
   args: {}
+}
+
+export const Optional: Story = {
+  render: (args) => ({
+    components: { NeCombobox },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    optional: true
+  }
 }
 
 const manyOptions: any = []
