@@ -2,6 +2,7 @@ import type { Preview, VueRenderer } from '@storybook/vue3'
 import { withThemeByClassName } from '@storybook/addon-themes'
 
 import '../src/main.css'
+import './storybook.css'
 
 const preview: Preview = {
   parameters: {
