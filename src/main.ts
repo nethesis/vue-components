@@ -22,6 +22,7 @@ export { default as NeTableBody } from '@/components/NeTableBody.vue'
 export { default as NeTableRow } from '@/components/NeTableRow.vue'
 export { default as NeTableCell } from '@/components/NeTableCell.vue'
 export { default as NeCombobox } from '@/components/NeCombobox.vue'
+export { default as NeDropdown } from '@/components/NeDropdown.vue'
 
 // types
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
