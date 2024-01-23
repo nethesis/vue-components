@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.0](https://github.com/nethesis/vue-components/compare/v0.6.0...v0.7.0) (2024-01-23)
+
+
+### Features
+
+* add NeCard and NeDropdown [#12](https://github.com/nethesis/vue-components/issues/12) ([661c682](https://github.com/nethesis/vue-components/commit/661c682cc9edd6dad8e4e6506ad4afbe17abfdf3))
+* add NeCard component ([8731287](https://github.com/nethesis/vue-components/commit/8731287bcae930e1d0a9e4f3991c4bc3a78bb708))
+* add NeDropdown component ([b688eed](https://github.com/nethesis/vue-components/commit/b688eed703a66c1ae08fbf2cddebb6441ddf6e22))
+
+
+### Bug Fixes
+
+* improve light/dark theme ([793b8fe](https://github.com/nethesis/vue-components/commit/793b8fe1177547d9858ccbbbc2a8331a94e2a6f0))
+
 ## [0.6.0](https://github.com/nethesis/vue-components/compare/v0.5.0...v0.6.0) (2024-01-17)
 
 
