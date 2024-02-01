@@ -56,10 +56,10 @@ const emit = defineEmits(['close', 'primaryClick', 'secondaryClick'])
 const isExpandedDetails = ref(false)
 
 const containerKindStyle: { [index: string]: string } = {
-  info: 'border-indigo-500 bg-indigo-100 dark:border-indigo-400 dark:bg-indigo-900',
-  warning: 'border-amber-500 bg-amber-100 dark:border-amber-400 dark:bg-amber-700',
-  error: 'border-rose-500 bg-rose-100 dark:border-rose-400 dark:bg-rose-900',
-  success: 'border-green-500 bg-green-100 dark:border-green-400 dark:bg-green-900'
+  info: 'border-indigo-500 bg-indigo-100 dark:border-indigo-300 dark:bg-indigo-900',
+  warning: 'border-amber-500 bg-amber-100 dark:border-amber-300 dark:bg-amber-700',
+  error: 'border-rose-500 bg-rose-100 dark:border-rose-300 dark:bg-rose-900',
+  success: 'border-green-600 bg-green-100 dark:border-green-500 dark:bg-green-900'
 }
 
 const iconName: { [index: string]: IconDefinition } = {
@@ -91,13 +91,13 @@ const descriptionKindStyle: { [index: string]: string } = {
 }
 
 const buttonsKindStyle: { [index: string]: string } = {
-  info: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-200 focus:ring-indigo-600 focus:ring-offset-indigo-100 dark:bg-indigo-900 dark:text-indigo-100 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 dark:focus:ring-offset-indigo-900',
+  info: 'ring-indigo-400 dark:ring-indigo-400 bg-indigo-100 text-indigo-800 hover:bg-indigo-200 focus:ring-indigo-600 focus:ring-offset-indigo-100 dark:bg-indigo-900 dark:text-indigo-100 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 dark:focus:ring-offset-indigo-900',
   warning:
-    'bg-amber-100 text-amber-800 hover:bg-amber-200 focus:ring-amber-600 focus:ring-offset-amber-100 dark:bg-amber-700 dark:text-amber-50 dark:hover:bg-amber-600 dark:focus:ring-amber-400 dark:focus:ring-offset-amber-700',
+    'ring-amber-500 dark:ring-amber-400 bg-amber-100 text-amber-800 hover:bg-amber-200 focus:ring-amber-600 focus:ring-offset-amber-100 dark:bg-amber-700 dark:text-amber-50 dark:hover:bg-amber-600 dark:focus:ring-amber-400 dark:focus:ring-offset-amber-700',
   error:
-    'bg-rose-100 text-rose-800 hover:bg-rose-200 focus:ring-rose-600 focus:ring-offset-rose-100 dark:bg-rose-900 dark:text-rose-100 dark:hover:bg-rose-800 dark:focus:ring-rose-400 dark:focus:ring-offset-rose-900',
+    'ring-rose-400 dark:ring-rose-300 bg-rose-100 text-rose-800 hover:bg-rose-200 focus:ring-rose-600 focus:ring-offset-rose-100 dark:bg-rose-900 dark:text-rose-100 dark:hover:bg-rose-800 dark:focus:ring-rose-400 dark:focus:ring-offset-rose-900',
   success:
-    'bg-green-100 text-green-800 hover:bg-green-200 focus:ring-green-600 focus:ring-offset-green-100 dark:bg-green-900 dark:text-green-100 dark:hover:bg-green-800 dark:focus:ring-green-400 dark:focus:ring-offset-green-900'
+    'ring-green-600 dark:ring-green-600 bg-green-100 text-green-800 hover:bg-green-200 focus:ring-green-600 focus:ring-offset-green-100 dark:bg-green-900 dark:text-green-100 dark:hover:bg-green-800 dark:focus:ring-green-400 dark:focus:ring-offset-green-900'
 }
 
 const closeIconKindStyle: { [index: string]: string } = {
@@ -166,10 +166,10 @@ const closeIconKindStyle: { [index: string]: string } = {
         </template>
         <!-- buttons -->
         <div v-if="primaryButtonLabel || secondaryButtonLabel" class="mt-4">
-          <div class="-mx-2 -my-1.5 flex">
+          <div class="-mx-2 flex">
             <button
               v-if="primaryButtonLabel"
-              :class="`rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+              :class="`rounded-md px-2 py-1.5 text-sm font-medium ring-1 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 buttonsKindStyle[props.kind as string]
               }`"
               type="button"
