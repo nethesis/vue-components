@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.0](https://github.com/nethesis/vue-components/compare/v0.7.0...v0.8.0) (2024-02-05)
+
+
+### Features
+
+* add component NeLink ([f7c051c](https://github.com/nethesis/vue-components/commit/f7c051c41c90a06e6833ad82aaadb1de1ef7d6c6))
+
+
+### Bug Fixes
+
+* primary button style for NeInlineNotification ([d3ca5d7](https://github.com/nethesis/vue-components/commit/d3ca5d70529cc8017b59e982b116cb151a66fa4f))
+
 ## [0.7.0](https://github.com/nethesis/vue-components/compare/v0.6.0...v0.7.0) (2024-01-23)
 
 
