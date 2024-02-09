@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/nethesis/vue-components/compare/v0.8.0...v0.9.0) (2024-02-09)
+
+
+### Features
+
+* add NeFormItemLabel and NeRadioSelection ([#16](https://github.com/nethesis/vue-components/issues/16)) ([e54275b](https://github.com/nethesis/vue-components/commit/e54275b6a885334fd41f3015a11b575bf33770be))
+
 ## [0.8.0](https://github.com/nethesis/vue-components/compare/v0.7.0...v0.8.0) (2024-02-05)
 
 
