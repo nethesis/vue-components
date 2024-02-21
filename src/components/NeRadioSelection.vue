@@ -111,8 +111,8 @@ function focus() {
 </script>
 
 <template>
-  <div>
-    <div class="mb-2 text-sm">
+  <div class="text-sm">
+    <div class="mb-2">
       <NeFormItemLabel class="mb-0">
         {{ label }}
         <span v-if="$slots.tooltip" class="ml-1">
@@ -122,6 +122,7 @@ function focus() {
       <p v-if="description" class="text-gray-500 dark:text-gray-400">{{ description }}</p>
     </div>
     <div v-if="card" :class="gridStyle" class="grid">
+      <!-- card layout -->
       <button
         v-for="option in options"
         :key="option.id"
@@ -161,6 +162,7 @@ function focus() {
       </button>
     </div>
     <template v-else>
+      <!-- standard layout -->
       <fieldset>
         <legend class="sr-only">{{ label }}</legend>
         <div class="space-y-3">
@@ -178,9 +180,12 @@ function focus() {
             <label
               :for="option.id"
               :disabled="option.disabled"
-              class="ml-2 text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
+              class="ms-2 text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
             >
-              {{ option.label }}
+              <div>{{ option.label }}</div>
+              <div v-if="option.description" class="text-gray-500 dark:text-gray-400">
+                {{ option.description }}
+              </div>
             </label>
           </div>
         </div>

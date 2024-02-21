@@ -193,3 +193,37 @@ export const WithSlot: StoryObj<typeof NeRadioSelection> = {
     gridStyle: 'grid-cols-3 gap-3'
   }
 }
+
+const template = '<NeRadioSelection v-bind="args" />'
+
+export const OptionsWithDescription: StoryObj<typeof NeRadioSelection> = {
+  render: (args) => ({
+    components: { NeRadioSelection },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    options: [
+      {
+        id: '1',
+        label: 'Choose 1',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisci elit'
+      },
+      {
+        id: '2',
+        label: 'Choose 2',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt'
+      },
+      {
+        id: '3',
+        label: 'Choose 3',
+        disabled: true,
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua'
+      }
+    ]
+  }
+}
