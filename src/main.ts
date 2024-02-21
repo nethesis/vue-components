@@ -27,6 +27,8 @@ export { default as NeCard } from '@/components/NeCard.vue'
 export { default as NeLink } from '@/components/NeLink.vue'
 export { default as NeFormItemLabel } from '@/components/NeFormItemLabel.vue'
 export { default as NeRadioSelection } from '@/components/NeRadioSelection.vue'
+export { default as NePaginator } from '@/components/NePaginator.vue'
 
 // types
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
+export type { NePaginatorProps } from '@/components/NePaginator.vue'
