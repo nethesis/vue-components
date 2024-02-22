@@ -1,18 +1,24 @@
 <!--
-  Copyright (C) 2023 Nethesis S.r.l.
+  Copyright (C) 2024 Nethesis S.r.l.
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
 <script lang="ts" setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { onMounted, ref, watch } from 'vue'
+import { NeButton } from '@/main'
 
 const props = defineProps({
-  title: {
+  label: {
     type: String,
-    required: true
+    default: ''
   },
-  expanded: {
+  isExpanded: {
+    type: Boolean,
+    default: false
+  },
+  fullWidth: {
     type: Boolean,
     default: false
   }
@@ -20,26 +26,61 @@ const props = defineProps({
 
 const emit = defineEmits(['setExpanded'])
 
+const internalIsExpanded = ref(false)
+
+onMounted(() => {
+  internalIsExpanded.value = props.isExpanded
+})
+
+watch(
+  () => props.isExpanded,
+  () => {
+    if (internalIsExpanded.value != props.isExpanded) {
+      internalIsExpanded.value = props.isExpanded
+    }
+  }
+)
+
 function toggleExpanded() {
-  emit('setExpanded', !props.expanded)
+  internalIsExpanded.value = !internalIsExpanded.value
+  emit('setExpanded', internalIsExpanded.value)
 }
 </script>
 
 <template>
-  <div>
-    <button
-      class="flex w-full items-center justify-between rounded border-b border-gray-300 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-200 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-700"
-      @click="toggleExpanded"
-    >
-      <span>{{ title }}</span>
-      <FontAwesomeIcon
-        :icon="expanded ? faChevronUp : faChevronDown"
-        aria-hidden="true"
-        class="h-4 w-4 shrink-0 text-gray-700 dark:text-gray-200"
-      />
-    </button>
+  <div class="text-sm">
+    <div :class="['cursor-pointer', fullWidth ? 'block' : 'inline-block']" @click="toggleExpanded">
+      <slot name="trigger">
+        <!-- inline button -->
+        <template v-if="!fullWidth">
+          <NeButton kind="tertiary" size="sm" class="-ml-2">
+            <template #suffix>
+              <font-awesome-icon
+                :icon="internalIsExpanded ? faChevronUp : faChevronDown"
+                class="h-3 w-3"
+                aria-hidden="true"
+              />
+            </template>
+            {{ label }}
+          </NeButton>
+        </template>
+        <template v-else>
+          <!-- full width button -->
+          <button
+            class="flex w-full items-center justify-between rounded border-b border-gray-300 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-200 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-700"
+          >
+            <span>{{ label }}</span>
+            <font-awesome-icon
+              :icon="internalIsExpanded ? faChevronUp : faChevronDown"
+              class="h-3 w-3"
+              aria-hidden="true"
+            />
+          </button>
+        </template>
+      </slot>
+    </div>
     <Transition name="slide-down">
-      <div v-show="expanded" class="text-sm text-gray-700 dark:text-gray-200">
+      <div v-show="internalIsExpanded" class="space-y-6">
         <slot></slot>
       </div>
     </Transition>
