@@ -29,6 +29,16 @@ export { default as NeFormItemLabel } from '@/components/NeFormItemLabel.vue'
 export { default as NeRadioSelection } from '@/components/NeRadioSelection.vue'
 export { default as NePaginator } from '@/components/NePaginator.vue'
 
-// types
+// types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
 export type { NePaginatorProps } from '@/components/NePaginator.vue'
+
+// library functions export
+export {
+  sortByProperty,
+  focusElement,
+  getAxiosErrorMessage,
+  byteFormat1024,
+  byteFormat1000,
+  kbpsFormat
+} from '@/lib/utils'
