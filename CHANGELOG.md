@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/nethesis/vue-components/compare/v0.9.0...v0.10.0) (2024-02-22)
+
+
+### Features
+
+* add NePaginator ([#19](https://github.com/nethesis/vue-components/issues/19)) ([d5c5198](https://github.com/nethesis/vue-components/commit/d5c51987f0f11ce635d2b20718d618da81979b39))
+
 ## [0.9.0](https://github.com/nethesis/vue-components/compare/v0.8.0...v0.9.0) (2024-02-09)
 
 
