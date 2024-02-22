@@ -49,7 +49,7 @@ function closeDrawer() {
           leave-to="translate-x-full"
         >
           <DialogPanel
-            class="3xl:w-[35rem] relative ml-16 flex w-[80vw] flex-1 overflow-y-auto bg-gray-50 text-gray-700 shadow-[0px_20px_40px_0_rgba(0,0,0,0.2)] sm:w-[25rem] lg:w-[30rem] dark:bg-gray-900 dark:text-gray-100 dark:shadow-[0px_20px_40px_0_rgba(0,0,0,0.6)]"
+            class="3xl:w-[35rem] relative ml-16 flex w-[80vw] flex-1 overflow-y-auto bg-gray-50 text-gray-700 shadow-[0px_20px_40px_0_rgba(0,0,0,0.2)] dark:bg-gray-900 dark:text-gray-100 dark:shadow-[0px_20px_40px_0_rgba(0,0,0,0.6)] sm:w-[25rem] lg:w-[30rem]"
           >
             <TransitionChild
               v-if="!title"

@@ -125,6 +125,7 @@ function focus() {
       <button
         v-for="option in options"
         :key="option.id"
+        ref="inputRef"
         type="button"
         :class="[
           `${cardClasses[cardSize]}`,
@@ -132,9 +133,8 @@ function focus() {
         ]"
         class="relative flex w-full items-center overflow-hidden rounded-md border text-gray-700 shadow-sm hover:bg-gray-200/70 focus:outline-none focus:ring-2 focus:ring-primary-700 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-600/30 dark:focus:ring-primary-500 dark:focus:ring-offset-primary-950"
         role="button"
-        @click="value = option.id"
         :disabled="option.disabled || disabled"
-        ref="inputRef"
+        @click="value = option.id"
       >
         <FontAwesomeIcon
           v-if="option.icon"
@@ -167,13 +167,13 @@ function focus() {
           <div v-for="option in options" :key="option.id" class="flex items-center">
             <input
               :id="option.id"
+              ref="inputRef"
               v-model="value"
               :checked="value == option.id"
               :value="option.id"
               class="peer border-gray-300 text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 focus:dark:ring-primary-200 focus:dark:ring-offset-gray-900"
               type="radio"
               :disabled="option.disabled || disabled"
-              ref="inputRef"
             />
             <label
               :for="option.id"
