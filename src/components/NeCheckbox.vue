@@ -8,11 +8,26 @@ import { computed } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
 const props = defineProps({
-  modelValue: Boolean,
-  id: String,
-  label: String,
-  disableSelectOnLabel: Boolean,
-  disabled: Boolean
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
+  id: {
+    type: String,
+    default: ''
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  disableSelectOnLabel: {
+    type: Boolean,
+    default: false
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const emit = defineEmits(['update:modelValue'])

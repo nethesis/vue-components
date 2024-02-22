@@ -75,7 +75,7 @@ export const WithLabelAndProgress: Story = {
   args: { progress: 75, label: 'Task progress', showProgress: true }
 }
 
-export const color: Story = {
+export const Color: Story = {
   render: (args) => ({
     components: { NeProgressBar },
     setup() {
@@ -86,7 +86,7 @@ export const color: Story = {
   args: { progress: 75, color: 'blue' }
 }
 
-export const customColor: Story = {
+export const CustomColor: Story = {
   render: (args) => ({
     components: { NeProgressBar },
     setup() {
@@ -97,7 +97,7 @@ export const customColor: Story = {
   args: { progress: 75, color: 'custom', customColorClasses: 'bg-fuchsia-600 dark:bg-fuchsia-500' }
 }
 
-export const indeterminate: Story = {
+export const Indeterminate: Story = {
   render: (args) => ({
     components: { NeProgressBar },
     setup() {

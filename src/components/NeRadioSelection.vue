@@ -23,15 +23,16 @@ type RadioOption = {
 
 const props = defineProps({
   modelValue: {
-    type: String
+    type: String,
+    default: ''
   },
   label: {
     required: true,
     type: String
   },
   description: {
-    required: false,
-    type: String
+    type: String,
+    default: ''
   },
   options: {
     required: true,
