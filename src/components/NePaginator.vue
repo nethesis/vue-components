@@ -6,6 +6,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { range } from 'lodash-es'
+import { faChevronLeft as fasChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight as fasChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export type NePaginatorProps = {
   currentPage: number
@@ -14,7 +17,24 @@ export type NePaginatorProps = {
   nextLabel: string
 }
 
-const props = defineProps<NePaginatorProps>()
+const props = defineProps({
+  currentPage: {
+    type: Number,
+    required: true
+  },
+  totalPages: {
+    type: Number,
+    required: true
+  },
+  previousLabel: {
+    type: String,
+    required: true
+  },
+  nextLabel: {
+    type: String,
+    required: true
+  }
+})
 const emit = defineEmits<{
   selectPage: [page: number]
 }>()
@@ -55,21 +75,7 @@ function navigateToPage(page: number) {
           @click="navigateToPage(currentPage - 1)"
         >
           <span class="sr-only">{{ previousLabel }}</span>
-          <svg
-            class="h-3 w-3 rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 1 1 5l4 4"
-            />
-          </svg>
+          <font-awesome-icon :icon="fasChevronLeft" class="h-3 w-3 shrink-0" aria-hidden="true" />
         </button>
       </li>
       <!-- show all page numbers if there are no more than 8 pages in total -->
@@ -145,21 +151,7 @@ function navigateToPage(page: number) {
           @click="navigateToPage(currentPage + 1)"
         >
           <span class="sr-only">{{ nextLabel }}</span>
-          <svg
-            class="h-3 w-3 rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 9 4-4-4-4"
-            />
-          </svg>
+          <font-awesome-icon :icon="fasChevronRight" class="h-3 w-3 shrink-0" aria-hidden="true" />
         </button>
       </li>
     </ul>
