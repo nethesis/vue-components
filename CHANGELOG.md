@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/nethesis/vue-components/compare/v0.11.0...v0.11.1) (2024-02-23)
+
+
+### Bug Fixes
+
+* **NeExpandable:** minor style fix ([#25](https://github.com/nethesis/vue-components/issues/25)) ([18ca7a1](https://github.com/nethesis/vue-components/commit/18ca7a129b60a4fc62810bea9c9fc85c2bc81059))
+
 ## [0.11.0](https://github.com/nethesis/vue-components/compare/v0.10.0...v0.11.0) (2024-02-23)
 
 
