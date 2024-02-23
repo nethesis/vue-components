@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.11.0](https://github.com/nethesis/vue-components/compare/v0.10.0...v0.11.0) (2024-02-23)
+
+
+### Features
+
+* add lib functions ([#23](https://github.com/nethesis/vue-components/issues/23)) ([cc3bf14](https://github.com/nethesis/vue-components/commit/cc3bf1489e5c780c67e11f0b368f3c74fcac92a9))
+* add utils.ts ([1de66db](https://github.com/nethesis/vue-components/commit/1de66db5e22d25f891448487d3b0dddbf57afad4))
+
+
+### Bug Fixes
+
+* **NeRadioSelection:** fix description support ([#20](https://github.com/nethesis/vue-components/issues/20)) ([f8914e7](https://github.com/nethesis/vue-components/commit/f8914e74fb5815df1c2aaa0dc19226fe64ce9192))
+
 ## [0.10.0](https://github.com/nethesis/vue-components/compare/v0.9.0...v0.10.0) (2024-02-22)
 
 
