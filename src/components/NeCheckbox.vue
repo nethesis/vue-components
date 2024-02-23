@@ -8,11 +8,26 @@ import { computed } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
 const props = defineProps({
-  modelValue: Boolean,
-  id: String,
-  label: String,
-  disableSelectOnLabel: Boolean,
-  disabled: Boolean
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
+  id: {
+    type: String,
+    default: ''
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  disableSelectOnLabel: {
+    type: Boolean,
+    default: false
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -36,7 +51,7 @@ const model = computed({
         v-model="model"
         :aria-describedby="componentId + '-description'"
         :disabled="disabled"
-        class="h-5 w-5 rounded border-gray-300 text-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 sm:h-4 sm:w-4 dark:border-gray-500 dark:text-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950"
+        class="h-5 w-5 rounded border-gray-300 text-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-500 dark:text-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950 sm:h-4 sm:w-4"
         type="checkbox"
         v-bind="$attrs"
       />

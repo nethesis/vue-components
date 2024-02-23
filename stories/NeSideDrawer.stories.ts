@@ -7,7 +7,7 @@ import { NeSideDrawer } from '../src/main'
 const meta = {
   title: 'Visual/NeSideDrawer',
   args: {
-    isShown: false,
+    isShown: true,
     title: 'Drawer title',
     closeAriaLabel: 'Close side drawer'
   }
