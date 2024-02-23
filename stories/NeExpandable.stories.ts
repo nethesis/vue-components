@@ -18,7 +18,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const defaultTemplate = `<NeExpandable v-bind="args">
-  <div class="pt-4 pl-2 text-gray-700 dark:text-gray-300">
+  <div class="text-gray-700 dark:text-gray-300">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   </div>
 </NeExpandable>`
@@ -51,7 +51,7 @@ const customTriggerTemplate = `<NeExpandable v-bind="args">
       Click here to show more
     </span>
   </template>
-  <div class="pt-4 pl-2 text-gray-700 dark:text-gray-300">
+  <div class="text-gray-700 dark:text-gray-300">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   </div>
 </NeExpandable>`
@@ -73,7 +73,7 @@ const customTriggerFullWidthTemplate = `<NeExpandable v-bind="args">
       Click here to show more
     </div>
   </template>
-  <div class="pt-4 pl-2 text-gray-700 dark:text-gray-300">
+  <div class="text-gray-700 dark:text-gray-300">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   </div>
 </NeExpandable>`

@@ -80,7 +80,7 @@ function toggleExpanded() {
       </slot>
     </div>
     <Transition name="slide-down">
-      <div v-show="internalIsExpanded" class="space-y-6">
+      <div v-show="internalIsExpanded" class="mt-4">
         <slot></slot>
       </div>
     </Transition>
