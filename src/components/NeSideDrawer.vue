@@ -11,6 +11,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 const props = defineProps({
   isShown: { type: Boolean, default: false },
   title: { type: String, default: '' },
+  closeOnClickOutside: { type: Boolean, default: false },
   closeAriaLabel: { type: String, default: 'Close side drawer' }
 })
 
@@ -19,11 +20,17 @@ const emit = defineEmits(['close'])
 function closeDrawer() {
   emit('close')
 }
+
+function maybeCloseDrawer() {
+  if (props.closeOnClickOutside) {
+    closeDrawer()
+  }
+}
 </script>
 
 <template>
   <TransitionRoot :show="isShown" as="template">
-    <Dialog as="div" class="relative z-[100]" @close="closeDrawer">
+    <Dialog as="div" class="relative z-[100]" @close="maybeCloseDrawer">
       <TransitionChild
         as="template"
         enter="transition-opacity ease-linear duration-300"
