@@ -9,6 +9,7 @@ const meta = {
   args: {
     isShown: true,
     title: 'Drawer title',
+    closeOnClickOutside: false,
     closeAriaLabel: 'Close side drawer'
   }
 } satisfies Meta<typeof NeSideDrawer>
