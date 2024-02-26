@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/nethesis/vue-components/compare/v0.11.1...v0.12.0) (2024-02-26)
+
+
+### Features
+
+* **NeSideDrawer:** add prop closeOnClickOutside ([#27](https://github.com/nethesis/vue-components/issues/27)) ([3dd9ad7](https://github.com/nethesis/vue-components/commit/3dd9ad7eb3e26ca9f1a334e817b4baaa16471cca))
+
 ## [0.11.1](https://github.com/nethesis/vue-components/compare/v0.11.0...v0.11.1) (2024-02-23)
 
 
