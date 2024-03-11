@@ -1,6 +1,8 @@
 # @nethesis/vue-components
 
-This library contains a set of Vue components used in Nethesis products.
+This library contains:
+- a collection of Vue 3 components based on [Flowbite](https://flowbite.com/)
+- a set of utility functions
 
 ## Installation
 
