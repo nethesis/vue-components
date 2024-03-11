@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.13.0](https://github.com/nethesis/vue-components/compare/v0.12.0...v0.13.0) (2024-03-11)
+
+
+### Features
+
+* add NeEmptyState ([#29](https://github.com/nethesis/vue-components/issues/29)) ([f1211ca](https://github.com/nethesis/vue-components/commit/f1211caea22c61f37023e71b0b36f32c36bb6975))
+
+
+### Bug Fixes
+
+* close NeSideDrawer on ESC key ([#30](https://github.com/nethesis/vue-components/issues/30)) ([a053e65](https://github.com/nethesis/vue-components/commit/a053e65881822a7f29d1a4cb5c0bdab11ea2f204))
+
 ## [0.12.0](https://github.com/nethesis/vue-components/compare/v0.11.1...v0.12.0) (2024-02-26)
 
 
