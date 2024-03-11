@@ -7,6 +7,7 @@
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
   isShown: { type: Boolean, default: false },
@@ -17,12 +18,28 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
+onMounted(() => {
+  window.addEventListener('keydown', onKeyUp)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', onKeyUp)
+})
+
 function closeDrawer() {
   emit('close')
 }
 
 function maybeCloseDrawer() {
+  // close drawer only if closeOnClickOutside pros is true
   if (props.closeOnClickOutside) {
+    closeDrawer()
+  }
+}
+
+function onKeyUp(event: any) {
+  // close drawer on escape key
+  if (event.key === 'Escape') {
     closeDrawer()
   }
 }
