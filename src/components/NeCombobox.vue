@@ -19,7 +19,7 @@ import { faCheck as fasCheck } from '@fortawesome/free-solid-svg-icons'
 import { faXmark as fasXmark } from '@fortawesome/free-solid-svg-icons'
 import NeBadge from './NeBadge.vue'
 import { onClickOutside } from '@vueuse/core'
-import { uniqBy } from 'lodash-es'
+import { uniqBy, isEqual } from 'lodash-es'
 
 export interface NeComboboxOption {
   id: string
@@ -165,8 +165,9 @@ onMounted(() => {
 watch(
   () => props.modelValue,
   () => {
-    // watching modelValue with multiple selection causes a loop that degrades rendering performance
-    if (!props.multiple) {
+    if (props.multiple) {
+      selectMultipleOptionsFromModelValue()
+    } else {
       selectSingleOptionFromModelValue()
     }
   }
@@ -260,7 +261,11 @@ function selectMultipleOptionsFromModelValue() {
       selectedList.push(optionFound)
     }
   }
-  selected.value = selectedList
+
+  // update selected list only if needed: this is needed to avoid loops that degrade performances
+  if (!isEqual(selected.value, selectedList)) {
+    selected.value = selectedList
+  }
 }
 
 function focus() {
