@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.1](https://github.com/nethesis/vue-components/compare/v0.13.0...v0.13.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* watch model changes on NeCombobox multiple ([#32](https://github.com/nethesis/vue-components/issues/32)) ([2a3f307](https://github.com/nethesis/vue-components/commit/2a3f307745ae56756da78620791f81187bb2569d))
+
 ## [0.13.0](https://github.com/nethesis/vue-components/compare/v0.12.0...v0.13.0) (2024-03-11)
 
 
