@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.2](https://github.com/nethesis/vue-components/compare/v0.13.1...v0.13.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* pagination enhancements ([#34](https://github.com/nethesis/vue-components/issues/34)) ([a522e19](https://github.com/nethesis/vue-components/commit/a522e194accf04478845300ffcd3ad1e555f4e1f))
+
 ## [0.13.1](https://github.com/nethesis/vue-components/compare/v0.13.0...v0.13.1) (2024-04-09)
 
 
