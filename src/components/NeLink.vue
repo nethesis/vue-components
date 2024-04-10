@@ -5,7 +5,7 @@
 <template>
   <a
     rel="noreferrer"
-    class="cursor-pointer text-primary-700 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200"
+    class="cursor-pointer font-medium text-primary-700 hover:text-primary-800 hover:underline dark:text-primary-300 dark:hover:text-primary-200"
   >
     <slot />
   </a>
