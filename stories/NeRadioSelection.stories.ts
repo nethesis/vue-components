@@ -61,7 +61,7 @@ export const Default: StoryObj<typeof NeRadioSelection> = {
       return { args }
     },
     template: `
-      <NeRadioSelection v-model="args.modelValue" :label="args.label" :options="args.options" />
+      <NeRadioSelection v-bind="args" />
     `
   })
 }
@@ -73,8 +73,7 @@ export const WithDescription: StoryObj<typeof NeRadioSelection> = {
       return { args }
     },
     template: `
-      <NeRadioSelection v-model="args.modelValue" :description="args.description" :label="args.label"
-      :options="args.options" />
+      <NeRadioSelection v-bind="args" />
     `
   }),
   args: {
@@ -89,8 +88,7 @@ export const CardPicker: StoryObj<typeof NeRadioSelection> = {
       return { args }
     },
     template: `
-      <NeRadioSelection v-model="args.modelValue" :card="args.card" :grid-style="args.gridStyle"
-      :label="args.label" :options="args.options" />
+      <NeRadioSelection v-bind="args" />
     `
   }),
   args: {
@@ -143,7 +141,7 @@ export const Disabled: StoryObj<typeof NeRadioSelection> = {
       return { args }
     },
     template: `
-      <NeRadioSelection v-model="args.modelValue" :label="args.label" :options="args.options" />
+      <NeRadioSelection v-bind="args" />
     `
   }),
   args: {
@@ -158,7 +156,7 @@ export const WithTooltip: StoryObj<typeof NeRadioSelection> = {
       return { args }
     },
     template: `
-      <NeRadioSelection v-model="args.modelValue" :label="args.label" :options="args.options">\
+      <NeRadioSelection v-bind="args">\
         <template #tooltip>\
           <NeTooltip>\
             <template #content>Tooltip</template>\

@@ -80,9 +80,9 @@ const cardClasses: Record<RadioCardSize, string> = {
 }
 
 const iconClasses: Record<RadioCardSize, string> = {
-  md: 'h-7 w-7 pr-4',
-  lg: 'h-10 w-10 pr-5',
-  xl: 'h-12 w-12 pr-6'
+  md: 'h-7 w-7 pr-2',
+  lg: 'h-10 w-10 pr-3',
+  xl: 'h-12 w-12 pr-5'
 }
 
 const textClasses: Record<RadioCardSize, string> = {
