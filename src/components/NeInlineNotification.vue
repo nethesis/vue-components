@@ -179,9 +179,12 @@ const closeIconKindStyle: { [index: string]: string } = {
             </button>
             <button
               v-if="secondaryButtonLabel"
-              :class="`ml-3 rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                buttonsKindStyle[props.kind as string]
-              }`"
+              :class="[
+                `rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                  buttonsKindStyle[props.kind as string]
+                }`,
+                { 'ml-3': primaryButtonLabel }
+              ]"
               type="button"
               @click="emit('secondaryClick')"
             >
