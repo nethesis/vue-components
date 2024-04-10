@@ -58,3 +58,6 @@ export {
   savePreference,
   getPreference
 } from '@/lib/storage'
+
+// composables export
+export { useItemPagination } from '@/composables/useItemPagination'
