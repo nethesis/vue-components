@@ -51,7 +51,7 @@ defineProps({
 
 <template>
   <Tippy :interactive="interactive" :placement="placement" :trigger="triggerEvent" theme="tailwind">
-    <span class="cursor-pointer">
+    <span class="inline-flex cursor-pointer">
       <slot name="trigger">
         <FontAwesomeIcon
           :icon="faCircleInfo"
