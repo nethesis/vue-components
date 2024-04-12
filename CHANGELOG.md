@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.14.0](https://github.com/nethesis/vue-components/compare/v0.13.2...v0.14.0) (2024-04-12)
+
+
+### Features
+
+* add invertedTheme prop to NeLink ([02568f2](https://github.com/nethesis/vue-components/commit/02568f2b6011caae24653803720f0174a41223b2))
+* add NeTabs component ([86ce5ee](https://github.com/nethesis/vue-components/commit/86ce5eeab7a50e98949c37aa1155319df6fd52bc))
+* add NeTextArea component ([075f9b4](https://github.com/nethesis/vue-components/commit/075f9b4cc988aca54bcf739bc8df754a2ab06645))
+
+
+### Bug Fixes
+
+* multiple selection in NeCombobox ([9bb1da6](https://github.com/nethesis/vue-components/commit/9bb1da60be994f20777eff1bd0a76d8717b49d4d))
+* search in NeCombobox considering descriptions ([ae71401](https://github.com/nethesis/vue-components/commit/ae71401a36a91034ee71b94113027c4af32015d0))
+* style and storybook of NeRadioSelection ([d2ce1b3](https://github.com/nethesis/vue-components/commit/d2ce1b358da2ef10818c7b255b2d37c9d732cda6))
+* style of NeInlineNotification buttons ([531f7c7](https://github.com/nethesis/vue-components/commit/531f7c7769b3bfa92d58be07d01f9319457b9fb2))
+* style of NeLink ([ef6410e](https://github.com/nethesis/vue-components/commit/ef6410e1d3eaa28e4810e0aaea4bbb458aebcddb))
+* style of NeTooltip ([c0bc262](https://github.com/nethesis/vue-components/commit/c0bc26220f52b7675c799c1f6b2264543da70741))
+* type of button element in NeBadge ([1d12d40](https://github.com/nethesis/vue-components/commit/1d12d400c83e13ee298a28cdcc71c2cacb078e08))
+
 ## [0.13.2](https://github.com/nethesis/vue-components/compare/v0.13.1...v0.13.2) (2024-04-10)
 
 
