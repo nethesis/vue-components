@@ -30,6 +30,7 @@ export { default as NeRadioSelection } from '@/components/NeRadioSelection.vue'
 export { default as NePaginator } from '@/components/NePaginator.vue'
 export { default as NeEmptyState } from '@/components/NeEmptyState.vue'
 export { default as NeTabs } from '@/components/NeTabs.vue'
+export { default as NeTextArea } from '@/components/NeTextArea.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
