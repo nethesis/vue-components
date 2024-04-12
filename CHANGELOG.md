@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/nethesis/vue-components/compare/v0.14.0...v0.15.0) (2024-04-12)
+
+
+### Features
+
+* add NeTextInput component ([#39](https://github.com/nethesis/vue-components/issues/39)) ([e2afb02](https://github.com/nethesis/vue-components/commit/e2afb022e105d3a80200e213fa265e6bfef681c2))
+
 ## [0.14.0](https://github.com/nethesis/vue-components/compare/v0.13.2...v0.14.0) (2024-04-12)
 
 
