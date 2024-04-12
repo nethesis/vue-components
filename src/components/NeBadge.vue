@@ -187,6 +187,7 @@ function onIconClick() {
     <template v-if="icon">
       <button
         v-if="iconClickable"
+        type="button"
         :class="[iconPosition == 'right' ? 'order-1' : '', iconButtonClasses, 'flex', 'rounded']"
         @click="onIconClick"
       >

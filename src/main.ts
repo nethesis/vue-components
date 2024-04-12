@@ -29,10 +29,12 @@ export { default as NeFormItemLabel } from '@/components/NeFormItemLabel.vue'
 export { default as NeRadioSelection } from '@/components/NeRadioSelection.vue'
 export { default as NePaginator } from '@/components/NePaginator.vue'
 export { default as NeEmptyState } from '@/components/NeEmptyState.vue'
+export { default as NeTabs } from '@/components/NeTabs.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
 export type { NePaginatorProps } from '@/components/NePaginator.vue'
+export type { Tab } from '@/components/NeTabs.vue'
 
 // library functions export
 export {

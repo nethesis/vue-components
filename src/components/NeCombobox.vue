@@ -96,7 +96,13 @@ const filteredOptions = computed(() => {
   }
 
   let results = allOptions.value.filter((option: NeComboboxOption) => {
-    return option.label.trim().toLowerCase().includes(query.value.trim().toLowerCase())
+    return (
+      // search in option label
+      option.label.trim().toLowerCase().includes(query.value.trim().toLowerCase()) ||
+      // search in option description
+      (option.description &&
+        option.description.trim().toLowerCase().includes(query.value.trim().toLowerCase()))
+    )
   })
 
   // user input
@@ -255,10 +261,13 @@ function selectMultipleOptionsFromModelValue() {
   const selectedList: NeComboboxOption[] = []
 
   for (const selectedOption of props.modelValue as NeComboboxOption[]) {
-    const optionFound = props.options.find((option) => option.id === selectedOption.id)
+    const optionFound = allOptions.value.find((option) => option.id === selectedOption.id)
 
     if (optionFound) {
       selectedList.push(optionFound)
+    } else if (props.acceptUserInput) {
+      userInputOptions.value.push(selectedOption)
+      selectedList.push(selectedOption)
     }
   }
 
@@ -282,7 +291,7 @@ function removeFromSelection(optionToRemove: NeComboboxOption) {
   )
 }
 
-// detect clic outside to close the options list
+// detect click outside to close the options list
 onClickOutside(comboboxRef, () => onClickOutsideCombobox())
 </script>
 
