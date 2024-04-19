@@ -33,11 +33,13 @@ export { default as NeTabs } from '@/components/NeTabs.vue'
 export { default as NeTextArea } from '@/components/NeTextArea.vue'
 export { default as NeTextInput } from '@/components/NeTextInput.vue'
 export { default as NeToggle } from '@/components/NeToggle.vue'
+export { default as NeToastNotification } from '@/components/NeToastNotification.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
 export type { NePaginatorProps } from '@/components/NePaginator.vue'
 export type { Tab } from '@/components/NeTabs.vue'
+export type { NeNotification } from '@/components/NeToastNotification.vue'
 
 // library functions export
 export {
