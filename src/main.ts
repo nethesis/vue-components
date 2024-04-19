@@ -32,6 +32,7 @@ export { default as NeEmptyState } from '@/components/NeEmptyState.vue'
 export { default as NeTabs } from '@/components/NeTabs.vue'
 export { default as NeTextArea } from '@/components/NeTextArea.vue'
 export { default as NeTextInput } from '@/components/NeTextInput.vue'
+export { default as NeToggle } from '@/components/NeToggle.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
