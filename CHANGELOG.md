@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.16.0](https://github.com/nethesis/vue-components/compare/v0.15.0...v0.16.0) (2024-04-22)
+
+
+### Features
+
+* add NeModal component ([#43](https://github.com/nethesis/vue-components/issues/43)) ([600c2dc](https://github.com/nethesis/vue-components/commit/600c2dc1c0dfca331116e6b44f7f56cd987de284))
+* add NeToastNotification component ([#42](https://github.com/nethesis/vue-components/issues/42)) ([8b7587e](https://github.com/nethesis/vue-components/commit/8b7587ed2fb49e274d83b0b1ecbfe6ca8cdf0450))
+* add NeToggle component ([#41](https://github.com/nethesis/vue-components/issues/41)) ([a25db1c](https://github.com/nethesis/vue-components/commit/a25db1c78a2c647d55dad64f8c19d11f91aaf75d))
+
 ## [0.15.0](https://github.com/nethesis/vue-components/compare/v0.14.0...v0.15.0) (2024-04-12)
 
 
