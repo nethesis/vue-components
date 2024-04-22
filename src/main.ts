@@ -34,6 +34,7 @@ export { default as NeTextArea } from '@/components/NeTextArea.vue'
 export { default as NeTextInput } from '@/components/NeTextInput.vue'
 export { default as NeToggle } from '@/components/NeToggle.vue'
 export { default as NeToastNotification } from '@/components/NeToastNotification.vue'
+export { default as NeModal } from '@/components/NeModal.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
