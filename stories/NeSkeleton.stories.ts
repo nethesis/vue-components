@@ -6,11 +6,12 @@ const meta: Meta<typeof NeSkeleton> = {
   component: NeSkeleton,
   tags: ['autodocs'],
   argTypes: {
-    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     lines: { control: 'number' }
   },
   args: {
-    size: 'md'
+    size: 'md',
+    lines: 1
   }
 }
 

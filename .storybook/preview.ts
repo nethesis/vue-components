@@ -1,12 +1,13 @@
 import type { Preview, VueRenderer } from '@storybook/vue3'
 import { withThemeByClassName } from '@storybook/addon-themes'
+import { fn } from '@storybook/test'
 
 import '../src/main.css'
 import './storybook.css'
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: { onClick: fn() },
     controls: {
       matchers: {
         color: /(background|color)$/i,
