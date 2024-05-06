@@ -17,7 +17,10 @@ const meta: Meta<typeof NeTable> = {
   },
   args: {
     ariaLabel: 'Aria label for the table',
-    cardBreakpoint: 'md'
+    cardBreakpoint: 'md',
+    loading: false,
+    skeletonRows: 8,
+    skeletonColumns: 4
   },
   render: (args) => ({
     components: {
@@ -84,4 +87,12 @@ const meta: Meta<typeof NeTable> = {
 
 export default meta
 
-export const Default: StoryObj<typeof NeTable> = {}
+export const Default: StoryObj<typeof NeTable> = {
+  args: {}
+}
+
+export const Loading: StoryObj<typeof NeTable> = {
+  args: {
+    loading: true
+  }
+}

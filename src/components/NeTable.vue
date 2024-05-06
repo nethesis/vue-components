@@ -4,6 +4,7 @@
 -->
 <script lang="ts" setup>
 import { type PropType } from 'vue'
+import NeTableSkeleton from './NeTableSkeleton.vue'
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
@@ -15,6 +16,18 @@ defineProps({
   cardBreakpoint: {
     type: String as PropType<Breakpoint>,
     default: 'md'
+  },
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  skeletonRows: {
+    type: Number,
+    default: 8
+  },
+  skeletonColumns: {
+    type: Number,
+    default: 4
   }
 })
 
@@ -36,7 +49,19 @@ const tableCardStyle: Record<Breakpoint, string> = {
         tableCardStyle[cardBreakpoint]
       ]"
     >
-      <slot />
+      <template v-if="loading">
+        <NeTableSkeleton
+          :rows="skeletonRows"
+          :columns="skeletonColumns"
+          :card-breakpoint="cardBreakpoint"
+        />
+      </template>
+      <template v-else>
+        <slot />
+      </template>
     </table>
+  </div>
+  <div v-if="$slots.paginator" class="mt-6 flex flex-row justify-end">
+    <slot name="paginator" />
   </div>
 </template>
