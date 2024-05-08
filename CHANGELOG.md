@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/nethesis/vue-components/compare/v0.16.0...v0.16.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* make NeTable responsive and accessible ([#47](https://github.com/nethesis/vue-components/issues/47)) ([c4eb5d3](https://github.com/nethesis/vue-components/commit/c4eb5d35177bea052d643f3867c083d299dcfa5b))
+
 ## [0.16.0](https://github.com/nethesis/vue-components/compare/v0.15.0...v0.16.0) (2024-04-22)
 
 
