@@ -3,12 +3,12 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <script lang="ts" setup>
-import { type PropType } from 'vue'
+import { provide, ref, type PropType } from 'vue'
 import NeTableSkeleton from './NeTableSkeleton.vue'
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
-defineProps({
+const props = defineProps({
   ariaLabel: {
     type: String,
     required: true
@@ -30,6 +30,9 @@ defineProps({
     default: 4
   }
 })
+
+// provide cardBreakpoint prop to children components
+provide('cardBreakpoint', ref(props.cardBreakpoint))
 
 const tableCardStyle: Record<Breakpoint, string> = {
   sm: 'sm:table sm:divide-y sm:divide-gray-300 sm:dark:divide-gray-600',

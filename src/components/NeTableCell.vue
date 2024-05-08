@@ -3,20 +3,19 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <script lang="ts" setup>
-import type { PropType } from 'vue'
+import { inject } from 'vue'
 import type { Breakpoint } from './NeTable.vue'
 
 defineProps({
   dataLabel: {
-    // This attribute replaces table header in mobile viewport
+    // this attribute replaces table header in mobile viewport
     type: String,
     required: true
-  },
-  cardBreakpoint: {
-    type: String as PropType<Breakpoint>,
-    default: 'md'
   }
 })
+
+// inject cardBreakpoint from NeTable.vue
+const cardBreakpoint = inject('cardBreakpoint', 'md')
 
 const tdCardStyle: Record<Breakpoint, string> = {
   sm: 'sm:table-cell',

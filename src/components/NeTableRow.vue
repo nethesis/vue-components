@@ -3,15 +3,11 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <script lang="ts" setup>
-import { type PropType } from 'vue'
+import { inject } from 'vue'
 import type { Breakpoint } from './NeTable.vue'
 
-defineProps({
-  cardBreakpoint: {
-    type: String as PropType<Breakpoint>,
-    default: 'md'
-  }
-})
+// inject cardBreakpoint from NeTable.vue
+const cardBreakpoint = inject('cardBreakpoint', 'md')
 
 const trCardStyle: Record<Breakpoint, string> = {
   sm: 'sm:table-row',
