@@ -169,7 +169,7 @@ function onSecondaryClick() {
                     </div>
                   </div>
                 </div>
-                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <div class="mt-6 sm:flex sm:flex-row-reverse">
                   <NeButton
                     :kind="primaryButtonKind"
                     size="lg"
