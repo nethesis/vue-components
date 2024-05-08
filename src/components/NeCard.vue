@@ -59,18 +59,20 @@ defineEmits(['titleClick'])
     <!-- header -->
     <div class="flex justify-between">
       <!-- title -->
-      <h3
-        v-if="title || $slots.title"
-        class="mb-3 font-semibold leading-6 text-gray-900 dark:text-gray-50"
-      >
-        <span v-if="title">
-          {{ title }}
-        </span>
-        <slot v-if="$slots.title" name="title"></slot>
+      <div class="mb-3 flex items-center gap-1">
+        <h3
+          v-if="title || $slots.title"
+          class="font-semibold leading-6 text-gray-900 dark:text-gray-50"
+        >
+          <span v-if="title">
+            {{ title }}
+          </span>
+          <slot v-if="$slots.title" name="title"></slot>
+        </h3>
         <span v-if="$slots.titleTooltip" class="ml-1">
           <slot name="titleTooltip"></slot>
         </span>
-      </h3>
+      </div>
       <!-- top-right slot (e.g. for kebab menu) -->
       <div
         v-if="$slots.topRight || menuItems?.length"
