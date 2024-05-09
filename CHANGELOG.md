@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.16.2](https://github.com/nethesis/vue-components/compare/v0.16.1...v0.16.2) (2024-05-09)
+
+
+### Bug Fixes
+
+* make NeTooltip more accessible ([5093de4](https://github.com/nethesis/vue-components/commit/5093de43f17c3876012dae540eb7e4e2353ecc03))
+* style of NeCard tooltip ([a291983](https://github.com/nethesis/vue-components/commit/a29198329ca63a5a40c3ae1162a2e3bc68993201))
+* style of NeModal ([b362433](https://github.com/nethesis/vue-components/commit/b36243306f80e3e64248f8b37d509e55282004b1))
+
 ## [0.16.1](https://github.com/nethesis/vue-components/compare/v0.16.0...v0.16.1) (2024-05-08)
 
 
