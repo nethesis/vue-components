@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.3](https://github.com/nethesis/vue-components/compare/v0.16.2...v0.16.3) (2024-05-13)
+
+
+### Bug Fixes
+
+* position of NeCard icon ([#51](https://github.com/nethesis/vue-components/issues/51)) ([bb4621c](https://github.com/nethesis/vue-components/commit/bb4621c9dd4d2b4b3741d916dd1627acb0e82e70))
+
 ## [0.16.2](https://github.com/nethesis/vue-components/compare/v0.16.1...v0.16.2) (2024-05-09)
 
 
