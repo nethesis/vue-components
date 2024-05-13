@@ -73,6 +73,12 @@ defineEmits(['titleClick'])
           <slot name="titleTooltip"></slot>
         </span>
       </div>
+      <!-- icon -->
+      <FontAwesomeIcon
+        v-if="icon?.length"
+        :icon="icon"
+        class="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-600"
+      />
       <!-- top-right slot (e.g. for kebab menu) -->
       <div
         v-if="$slots.topRight || menuItems?.length"
@@ -104,11 +110,6 @@ defineEmits(['titleClick'])
           <slot></slot>
         </template>
       </div>
-      <FontAwesomeIcon
-        v-if="icon?.length"
-        :icon="icon"
-        class="ml-4 h-6 w-6 shrink-0 text-gray-400 dark:text-gray-600"
-      />
     </div>
   </div>
 </template>
