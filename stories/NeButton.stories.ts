@@ -39,13 +39,6 @@ export const Secondary: Story = {
   }
 }
 
-//// sample story with no need to specify the template:
-// export const Secondary: Story = {
-//   args: {
-//     kind: 'secondary'
-//   }
-// }
-
 export const Primary: Story = {
   render: (args) => ({
     components: { NeButton },
@@ -55,7 +48,6 @@ export const Primary: Story = {
     template: template
   }),
   args: {
-    // ...Secondary.args, ////
     kind: 'primary'
   }
 }
