@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/nethesis/vue-components/compare/v0.16.3...v1.0.0) (2024-05-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* add NeHeading and remove NeTitle ([#53](https://github.com/nethesis/vue-components/issues/53))
+
+### Code Refactoring
+
+* add NeHeading and remove NeTitle ([#53](https://github.com/nethesis/vue-components/issues/53)) ([fe39532](https://github.com/nethesis/vue-components/commit/fe39532c782fda9a187435b45bbe6559c6f74a1b))
+
 ## [0.16.3](https://github.com/nethesis/vue-components/compare/v0.16.2...v0.16.3) (2024-05-13)
 
 
