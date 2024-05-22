@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeTextArea, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'Control/NeTextArea',
+  title: 'NeTextArea',
   component: NeTextArea,
   // default values
   args: {

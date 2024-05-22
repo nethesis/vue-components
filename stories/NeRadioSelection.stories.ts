@@ -20,7 +20,7 @@ library.add(faShield)
 library.add(faHardDrive)
 
 const meta: Meta<typeof NeRadioSelection> = {
-  title: 'Control/NeRadioSelection',
+  title: 'NeRadioSelection',
   component: NeRadioSelection,
   argTypes: {
     cardSize: { control: 'inline-radio', options: ['md', 'lg', 'xl'] }

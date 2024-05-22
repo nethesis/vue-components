@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeButton } from '../src/main'
 
 const meta = {
-  title: 'Control/NeButton',
+  title: 'NeButton',
   component: NeButton,
   tags: ['autodocs'],
   argTypes: {

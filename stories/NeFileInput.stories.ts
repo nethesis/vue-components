@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeFileInput } from '../src/main'
 
 const meta = {
-  title: 'Control/NeFileInput',
+  title: 'NeFileInput',
   component: NeFileInput,
   argTypes: {},
   args: {

@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeCombobox, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'Control/NeCombobox',
+  title: 'NeCombobox',
   component: NeCombobox,
   args: {
     label: 'Choose fruit',

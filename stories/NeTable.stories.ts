@@ -9,7 +9,7 @@ import {
 import { Meta, StoryObj } from '@storybook/vue3'
 
 const meta: Meta<typeof NeTable> = {
-  title: 'Visual/NeTable',
+  title: 'NeTable',
   component: NeTable,
   tags: ['autodocs'],
   argTypes: {

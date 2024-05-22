@@ -5,7 +5,7 @@ import { Meta, StoryObj } from '@storybook/vue3'
 import { NeHeading } from '../src/main'
 
 const meta: Meta<typeof NeHeading> = {
-  title: 'Visual/NeHeading',
+  title: 'NeHeading',
   component: NeHeading,
   tags: ['autodocs'],
   argTypes: {

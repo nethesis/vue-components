@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeSideDrawer } from '../src/main'
 
 const meta = {
-  title: 'Visual/NeSideDrawer',
+  title: 'NeSideDrawer',
   args: {
     isShown: true,
     title: 'Drawer title',

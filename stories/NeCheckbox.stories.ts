@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeCheckbox, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'Control/NeCheckbox',
+  title: 'NeCheckbox',
   component: NeCheckbox,
   tags: ['autodocs'],
   args: {

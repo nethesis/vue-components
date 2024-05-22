@@ -6,7 +6,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { NeRoundedIcon } from '../src/main'
 
 const meta = {
-  title: 'Utils/NeRoundedIcon',
+  title: 'NeRoundedIcon',
   component: NeRoundedIcon,
   argTypes: {
     kind: { control: 'inline-radio', options: ['info', 'warning', 'error', 'success'] }

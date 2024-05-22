@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeInlineNotification } from '../src/main'
 
 const meta = {
-  title: 'Visual/NeInlineNotification',
+  title: 'NeInlineNotification',
   component: NeInlineNotification,
   tags: ['autodocs'],
   argTypes: {

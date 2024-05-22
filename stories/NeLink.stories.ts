@@ -5,7 +5,7 @@ import { Meta, StoryObj } from '@storybook/vue3'
 import { NeLink } from '../src/main'
 
 const meta: Meta<typeof NeLink> = {
-  title: 'Visual/NeLink',
+  title: 'NeLink',
   component: NeLink,
   tags: ['autodocs'],
   args: {

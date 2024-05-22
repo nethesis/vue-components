@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeFormItemLabel } from '../src/main'
 
 const meta = {
-  title: 'Visual/NeFormItemLabel',
+  title: 'NeFormItemLabel',
   component: NeFormItemLabel
 } satisfies Meta<typeof NeFormItemLabel>
 

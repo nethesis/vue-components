@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { NeToggle, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'Control/NeToggle',
+  title: 'NeToggle',
   component: NeToggle,
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl'] }
