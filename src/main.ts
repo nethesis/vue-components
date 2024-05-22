@@ -35,6 +35,7 @@ export { default as NeToggle } from '@/components/NeToggle.vue'
 export { default as NeToastNotification } from '@/components/NeToastNotification.vue'
 export { default as NeModal } from '@/components/NeModal.vue'
 export { default as NeHeading } from '@/components/NeHeading.vue'
+export { default as NeListbox } from '@/components/NeListbox.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
