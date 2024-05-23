@@ -20,7 +20,7 @@ const tbodyCardStyle: Record<Breakpoint, string> = {
 <template>
   <thead
     :class="[
-      `hidden bg-gray-100 font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-50`,
+      `hidden bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50`,
       tbodyCardStyle[cardBreakpoint]
     ]"
   >
