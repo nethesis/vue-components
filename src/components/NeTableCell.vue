@@ -8,9 +8,9 @@ import type { Breakpoint } from './NeTable.vue'
 
 defineProps({
   dataLabel: {
-    // this attribute replaces table header in mobile viewport
+    // this attribute replaces table header in mobile viewport and should always have a value. The only exception is when the cell contains the empty state of the table
     type: String,
-    required: true
+    default: ''
   }
 })
 
@@ -34,8 +34,12 @@ const dataLabelCardStyle: Record<Breakpoint, string> = {
 }
 </script>
 <template>
-  <td :data-label="dataLabel" :class="[`grid grid-cols-2 px-6 py-4`, tdCardStyle[cardBreakpoint]]">
+  <td
+    :data-label="dataLabel"
+    :class="[`grid px-6 py-4`, tdCardStyle[cardBreakpoint], { 'grid-cols-2': dataLabel }]"
+  >
     <span
+      v-if="dataLabel"
       :class="[`font-medium text-gray-900 dark:text-gray-50`, dataLabelCardStyle[cardBreakpoint]]"
     >
       {{ dataLabel }}

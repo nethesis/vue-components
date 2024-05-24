@@ -4,9 +4,12 @@ import {
   NeTableCell,
   NeTableHead,
   NeTableHeadCell,
-  NeTableRow
+  NeTableRow,
+  NeEmptyState
 } from '../src/main'
 import { Meta, StoryObj } from '@storybook/vue3'
+import { faTable } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 const meta: Meta<typeof NeTable> = {
   title: 'NeTable',
@@ -92,6 +95,44 @@ export const Loading: StoryObj<typeof NeTable> = {
   args: {
     loading: true
   }
+}
+
+// add fontawesome icons
+library.add(faTable)
+
+const noItemsTemplate = `
+<NeTable v-bind="args">
+    <NeTableHead>
+      <NeTableHeadCell>Game</NeTableHeadCell>
+      <NeTableHeadCell>Platform</NeTableHeadCell>
+      <NeTableHeadCell>Year</NeTableHeadCell>
+    </NeTableHead>
+    <NeTableBody>
+      <NeTableRow>
+        <NeTableCell colspan="3">
+          <NeEmptyState title="No items" :icon="['fas', 'table']" class="bg-white dark:bg-gray-950"/>
+        </NeTableCell>
+      </NeTableRow>
+    </NeTableBody>
+  </NeTable>`
+
+export const NoItems: StoryObj<typeof NeTable> = {
+  render: (args) => ({
+    components: {
+      NeTable,
+      NeTableHead,
+      NeTableHeadCell,
+      NeTableBody,
+      NeTableRow,
+      NeTableCell,
+      NeEmptyState
+    },
+    setup() {
+      return { args }
+    },
+    template: noItemsTemplate
+  }),
+  args: {}
 }
 
 export const CardBreakpointXL: StoryObj<typeof NeTable> = {
