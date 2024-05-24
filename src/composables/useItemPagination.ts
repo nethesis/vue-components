@@ -1,8 +1,8 @@
 import { useOffsetPagination } from '@vueuse/core'
-import { computed, toValue, type MaybeRefOrGetter } from 'vue'
+import { computed, toValue, type MaybeRef, type MaybeRefOrGetter } from 'vue'
 
 export type ItemPaginationSettings = {
-  itemsPerPage: number
+  itemsPerPage: MaybeRef<number>
   onPageChange?: () => void
 }
 
@@ -28,8 +28,8 @@ export function useItemPagination<T>(
   })
 
   const paginatedItems = computed(() => {
-    const start = (currentPage.value - 1) * settings.itemsPerPage
-    const end = start + settings.itemsPerPage
+    const start = (currentPage.value - 1) * toValue(settings.itemsPerPage)
+    const end = start + toValue(settings.itemsPerPage)
     const itemsArray = toValue(items)
     return itemsArray.slice(start, end)
   })

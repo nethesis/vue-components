@@ -42,6 +42,8 @@ export type { NeComboboxOption } from '@/components/NeCombobox.vue'
 export type { NePaginatorProps } from '@/components/NePaginator.vue'
 export type { Tab } from '@/components/NeTabs.vue'
 export type { NeNotification } from '@/components/NeToastNotification.vue'
+export type { NeListboxOption } from '@/components/NeListbox.vue'
+
 
 // library functions export
 export {

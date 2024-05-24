@@ -63,8 +63,8 @@ const tableCardStyle: Record<Breakpoint, string> = {
         <slot />
       </template>
     </table>
-  </div>
-  <div v-if="$slots.paginator" class="mt-6 flex flex-row justify-end">
-    <slot name="paginator" />
+    <div v-if="$slots.paginator">
+      <slot name="paginator" />
+    </div>
   </div>
 </template>

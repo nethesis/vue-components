@@ -65,6 +65,9 @@ const query = ref('')
 const selected = ref(props.multiple ? [] : null) as any
 const showOptions = ref(false)
 const listboxRef = ref<HTMLDivElement | null>(null)
+const top = ref(0)
+const left = ref(0)
+const buttonRef = ref<InstanceType<typeof Listbox> | null>(null)
 
 const inputValidStyle =
   'ring-gray-300 dark:ring-gray-600 focus:ring-primary-500 dark:focus:ring-primary-300'
@@ -128,6 +131,11 @@ watch(
     }
   }
 )
+
+function calculatePosition() {
+  top.value = buttonRef.value?.$el.getBoundingClientRect().bottom + window.scrollY
+  left.value = buttonRef.value?.$el.getBoundingClientRect().left - window.scrollX
+}
 
 function onClickOutsideListbox() {
   query.value = ''
@@ -197,9 +205,11 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
       </ListboxLabel>
       <div class="relative">
         <ListboxButton
+          ref="buttonRef"
           :class="`${
             props.invalidMessage ? inputInvalidStyle : inputValidStyle
-          } min-h-9 w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset transition-colors duration-200 hover:bg-gray-200/70 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-gray-50 dark:hover:bg-gray-600/30 sm:text-sm sm:leading-6`"
+          } min-h-9 w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-left text-base text-gray-900 shadow-sm ring-1 ring-inset transition-colors duration-200 hover:bg-gray-200/70 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-gray-50 dark:hover:bg-gray-600/30 sm:text-sm sm:leading-6`"
+          @click="calculatePosition()"
         >
           <template v-if="!multiple">
             <template v-if="selected">
@@ -229,54 +239,61 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
             <font-awesome-icon :icon="fasChevronDown" class="h-3 w-3 shrink-0" aria-hidden="true" />
           </div>
         </ListboxButton>
-        <div v-show="open || showOptions">
-          <ListboxOptions
-            static
-            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 ring-opacity-5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50 sm:text-sm"
-          >
-            <ListboxOption
-              v-for="option in allOptions"
-              :key="option.id"
-              v-slot="{ active, selected: optionSelected }"
-              :value="option"
-              as="template"
-              :disabled="option.disabled"
-              @click="onOptionSelected()"
+        <Teleport to="body">
+          <div v-show="open || showOptions">
+            <ListboxOptions
+              static
+              class="absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 ring-opacity-5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50 sm:text-sm"
+              :style="[{ top: top + 'px' }, { left: left + 'px' }]"
             >
-              <li
-                :class="[
-                  'relative cursor-default select-none py-2 pl-3 pr-9',
-                  active
-                    ? 'cursor-pointer bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-100'
-                    : option.disabled
-                      ? 'cursor-not-allowed text-gray-500 dark:text-gray-500'
-                      : 'text-gray-900 dark:text-gray-100'
-                ]"
+              <ListboxOption
+                v-for="option in allOptions"
+                :key="option.id"
+                v-slot="{ active, selected: optionSelected }"
+                :value="option"
+                as="template"
+                :disabled="option.disabled"
+                @click="onOptionSelected()"
               >
-                <div class="block truncate">
-                  <span :class="['truncate', optionSelected && 'font-semibold']">
-                    {{ option.label }}
-                  </span>
-                  <span
-                    v-if="option.description && showOptionsType"
-                    :class="['ml-2.5 truncate text-gray-500 dark:text-gray-400']"
-                  >
-                    {{ option.description }}
-                  </span>
-                </div>
-
-                <span
-                  v-if="optionSelected"
+                <li
                   :class="[
-                    'absolute inset-y-0 right-0 flex items-center pr-4 text-primary-700 dark:text-primary-500'
+                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    active
+                      ? 'cursor-pointer bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-100'
+                      : option.disabled
+                        ? 'cursor-not-allowed text-gray-500 dark:text-gray-500'
+                        : 'text-gray-900 dark:text-gray-100'
                   ]"
                 >
-                  <font-awesome-icon :icon="fasCheck" class="h-4 w-4 shrink-0" aria-hidden="true" />
-                </span>
-              </li>
-            </ListboxOption>
-          </ListboxOptions>
-        </div>
+                  <div class="block truncate">
+                    <span :class="['truncate', optionSelected && 'font-semibold']">
+                      {{ option.label }}
+                    </span>
+                    <span
+                      v-if="option.description && showOptionsType"
+                      :class="['ml-2.5 truncate text-gray-500 dark:text-gray-400']"
+                    >
+                      {{ option.description }}
+                    </span>
+                  </div>
+
+                  <span
+                    v-if="optionSelected"
+                    :class="[
+                      'absolute inset-y-0 right-0 flex items-center pr-4 text-primary-700 dark:text-primary-500'
+                    ]"
+                  >
+                    <font-awesome-icon
+                      :icon="fasCheck"
+                      class="h-4 w-4 shrink-0"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </li>
+              </ListboxOption>
+            </ListboxOptions>
+          </div>
+        </Teleport>
       </div>
       <!-- invalid message -->
       <p v-if="invalidMessage" :class="[descriptionBaseStyle, 'text-rose-700 dark:text-rose-400']">
