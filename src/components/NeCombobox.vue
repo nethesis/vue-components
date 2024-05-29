@@ -62,6 +62,7 @@ const props = withDefaults(defineProps<Props>(), {
   multiple: false,
   disabled: false,
   showOptionsType: true,
+  optional: false,
   showSelectedLabel: true,
   acceptUserInput: false
 })

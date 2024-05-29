@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faUsers)
 
 const meta = {
-  title: 'Visual/NeEmptyState',
+  title: 'NeEmptyState',
   component: NeEmptyState,
   argTypes: {},
   args: {

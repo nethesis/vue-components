@@ -3,30 +3,23 @@
 
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import { NeCombobox, NeTooltip } from '../src/main'
+import { NeListbox, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'Control/NeCombobox',
-  component: NeCombobox,
+  title: 'NeListbox',
+  component: NeListbox,
   args: {
     label: 'Choose fruit',
     placeholder: 'Placeholder',
     helperText: '',
     invalidMessage: '',
-    maxOptionsShown: 50,
     multiple: false,
     disabled: false,
     showOptionsType: true,
     optional: false,
-    selectedLabel: 'Selected',
-    showSelectedLabel: true,
-    noResultsLabel: 'No results',
-    limitedOptionsLabel: 'Continue typing to show more options',
     noOptionsLabel: 'No options available',
-    acceptUserInput: false,
-    userInputLabel: 'User input',
     optionalLabel: 'Optional',
-    modelValue: '',
+    modelValue: '1',
     options: [
       { id: '1', label: 'Cherry' },
       { id: '2', label: 'Apple' },
@@ -35,16 +28,16 @@ const meta = {
       { id: '5', label: 'Peach' }
     ]
   } // default values
-} satisfies Meta<typeof NeCombobox>
+} satisfies Meta<typeof NeListbox>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-const template = '<NeCombobox v-bind="args" class="max-w-md" />'
+const template = '<NeListbox v-bind="args" class="max-w-md" />'
 
 export const Default: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
@@ -55,40 +48,21 @@ export const Default: Story = {
 
 export const Optional: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
     template: template
   }),
   args: {
-    optional: true
-  }
-}
-
-const manyOptions: any = []
-
-for (let i = 0; i < 150; i++) {
-  manyOptions.push({ id: i.toString(), label: `Option ${i}` })
-}
-
-export const ManyOptions: Story = {
-  render: (args) => ({
-    components: { NeCombobox },
-    setup() {
-      return { args }
-    },
-    template: template
-  }),
-  args: {
-    options: manyOptions,
-    label: 'Choose'
+    optional: true,
+    modelValue: ''
   }
 }
 
 export const HelperText: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
@@ -99,7 +73,7 @@ export const HelperText: Story = {
 
 export const Invalid: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
@@ -112,7 +86,7 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
@@ -123,7 +97,7 @@ export const Disabled: Story = {
 
 export const Multiple: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
@@ -131,28 +105,14 @@ export const Multiple: Story = {
   }),
   args: {
     label: 'Choose one or more options',
-    multiple: true
-  }
-}
-
-export const MultipleWithManyOptions: Story = {
-  render: (args) => ({
-    components: { NeCombobox },
-    setup() {
-      return { args }
-    },
-    template: template
-  }),
-  args: {
-    options: manyOptions,
-    label: 'Choose one or more options',
-    multiple: true
+    multiple: true,
+    modelValue: []
   }
 }
 
 export const OptionsWithDescription: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
@@ -177,7 +137,7 @@ export const OptionsWithDescription: Story = {
 
 export const NoOptions: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeListbox },
     setup() {
       return { args }
     },
@@ -187,43 +147,21 @@ export const NoOptions: Story = {
 }
 
 const templateWithTooltip =
-  '<NeCombobox v-bind="args" class="max-w-md">\
+  '<NeListbox v-bind="args" class="max-w-md">\
       <template #tooltip>\
         <NeTooltip>\
           <template #content>Tooltip</template>\
         </NeTooltip>\
       </template>\
-    </NeCombobox>'
+    </NeListbox>'
 
 export const WithTooltip: Story = {
   render: (args) => ({
-    components: { NeCombobox, NeTooltip },
+    components: { NeListbox, NeTooltip },
     setup() {
       return { args }
     },
     template: templateWithTooltip
   }),
   args: {}
-}
-
-export const AcceptUserInput: Story = {
-  render: (args) => ({
-    components: { NeCombobox },
-    setup() {
-      return { args }
-    },
-    template: template
-  }),
-  args: { acceptUserInput: true, placeholder: 'Choose or type any fruit' }
-}
-
-export const AcceptUserInputMultiple: Story = {
-  render: (args) => ({
-    components: { NeCombobox },
-    setup() {
-      return { args }
-    },
-    template: template
-  }),
-  args: { acceptUserInput: true, multiple: true, placeholder: 'Choose or type any fruit' }
 }

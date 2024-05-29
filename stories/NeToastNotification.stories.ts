@@ -7,7 +7,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 const meta = {
-  title: 'Visual/NeToastNotification',
+  title: 'NeToastNotification',
   component: NeToastNotification,
   args: {
     srCloseLabel: 'Close',

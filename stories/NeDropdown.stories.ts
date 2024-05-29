@@ -19,7 +19,7 @@ library.add(fasCopy)
 library.add(fasChevronDown)
 
 const meta = {
-  title: 'Visual/NeDropdown',
+  title: 'NeDropdown',
   component: NeDropdown,
   tags: ['autodocs'],
   args: {

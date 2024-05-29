@@ -5,10 +5,20 @@ import { Meta, StoryObj } from '@storybook/vue3'
 import { NePaginator } from '../src/main'
 
 const meta: Meta<typeof NePaginator> = {
-  title: 'Visual/NePaginator',
+  title: 'NePaginator',
   component: NePaginator,
   tags: ['autodocs'],
-  args: {}
+  args: {
+    currentPage: 1,
+    totalRows: 54,
+    pageSize: 10,
+    pageSizes: [10, 25, 50, 100],
+    previousLabel: 'Go to previous page',
+    nextLabel: 'Go to next page',
+    navPaginationLabel: 'Pagination',
+    rangeOfTotalLabel: 'of',
+    pageSizeLabel: 'Show'
+  }
 }
 
 export default meta
@@ -24,12 +34,7 @@ export const Default: Story = {
     },
     template: template
   }),
-  args: {
-    currentPage: 1,
-    totalPages: 5,
-    previousLabel: 'Previous',
-    nextLabel: 'Next'
-  }
+  args: {}
 }
 
 export const WithManyPages: Story = {
@@ -42,8 +47,20 @@ export const WithManyPages: Story = {
   }),
   args: {
     currentPage: 5,
-    totalPages: 12,
-    previousLabel: 'Previous',
-    nextLabel: 'Next'
+    totalRows: 125
+  }
+}
+
+export const CustomPageSizes: Story = {
+  render: (args) => ({
+    components: { NePaginator },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    pageSizes: [5, 10, 15, 20],
+    pageSize: 5
   }
 }

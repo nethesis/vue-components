@@ -35,12 +35,15 @@ export { default as NeToggle } from '@/components/NeToggle.vue'
 export { default as NeToastNotification } from '@/components/NeToastNotification.vue'
 export { default as NeModal } from '@/components/NeModal.vue'
 export { default as NeHeading } from '@/components/NeHeading.vue'
+export { default as NeListbox } from '@/components/NeListbox.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
 export type { NePaginatorProps } from '@/components/NePaginator.vue'
 export type { Tab } from '@/components/NeTabs.vue'
 export type { NeNotification } from '@/components/NeToastNotification.vue'
+export type { NeListboxOption } from '@/components/NeListbox.vue'
+
 
 // library functions export
 export {
