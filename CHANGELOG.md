@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/nethesis/vue-components/compare/v1.0.0...v1.1.0) (2024-05-29)
+
+
+### Features
+
+* add NeListbox component ([06e985b](https://github.com/nethesis/vue-components/commit/06e985bd1e0e088e82af77a5df9d1de2137bb8d0))
+
+
+### Bug Fixes
+
+* fix NeTable and NePaginator style ([7605adb](https://github.com/nethesis/vue-components/commit/7605adb0587dca38bd0012dfee8fefff9c6db11d))
+* improve NeTable pagination ([da1a4b0](https://github.com/nethesis/vue-components/commit/da1a4b03381a604897c5d26e4605ff3ef1d9104a))
+* minor fixes to NeCombobox ([339a719](https://github.com/nethesis/vue-components/commit/339a7191295c2fbcc2159947d40ed13ed2ee887c))
+* support for empty state in NeTable ([fe7c120](https://github.com/nethesis/vue-components/commit/fe7c120306e967256a3f5751d2bca8db4f1af566))
+
 ## [1.0.0](https://github.com/nethesis/vue-components/compare/v0.16.3...v1.0.0) (2024-05-20)
 
 
