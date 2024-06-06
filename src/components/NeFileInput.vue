@@ -16,6 +16,7 @@ interface FileInputProps {
   dropzoneLabel: string
   progress: number
   showProgress: boolean
+  accept: string | undefined
 }
 
 const props = withDefaults(defineProps<FileInputProps>(), {
@@ -24,7 +25,8 @@ const props = withDefaults(defineProps<FileInputProps>(), {
   invalidMessage: '',
   progress: 0,
   showProgress: false,
-  dropzoneLabel: 'Drag and drop or click to upload'
+  dropzoneLabel: 'Drag and drop or click to upload',
+  accept: undefined
 })
 
 const emit = defineEmits(['update:modelValue', 'select'])
@@ -105,7 +107,7 @@ const dragOverHandler = (event: Event) => {
               {{ dropZoneText }}
             </p>
           </div>
-          <input class="hidden" type="file" />
+          <input class="hidden" type="file" :accept="accept" />
           <!-- progress bar -->
           <NeProgressBar
             v-if="showProgress"
