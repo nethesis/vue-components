@@ -14,7 +14,8 @@ const meta = {
     progress: 0,
     showProgress: false,
     dropzoneLabel: 'Drag and drop or click to upload',
-    modelValue: null
+    modelValue: null,
+    accept: undefined
   } // default values
 } satisfies Meta<typeof NeFileInput>
 
@@ -56,4 +57,17 @@ export const Progress: Story = {
     template: template
   }),
   args: { showProgress: true, progress: 75 }
+}
+
+export const Accept: Story = {
+  render: (args) => ({
+    components: { NeFileInput },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    accept: 'image/*,.pdf'
+  }
 }
