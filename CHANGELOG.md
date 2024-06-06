@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/nethesis/vue-components/compare/v1.1.0...v1.2.0) (2024-06-06)
+
+
+### Features
+
+* add accept prop to NeFileInput ([#58](https://github.com/nethesis/vue-components/issues/58)) ([5faa252](https://github.com/nethesis/vue-components/commit/5faa252461f0b8714111eaf7a6df84f3c3ebc2ed))
+
 ## [1.1.0](https://github.com/nethesis/vue-components/compare/v1.0.0...v1.1.0) (2024-05-29)
 
 
