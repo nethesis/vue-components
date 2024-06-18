@@ -251,10 +251,18 @@ function onOptionSelected(selectedOption: NeComboboxOption) {
 }
 
 function selectSingleOptionFromModelValue() {
-  const optionFound = props.options.find((option) => option.id === props.modelValue)
+  const optionFound = allOptions.value.find((option) => option.id === props.modelValue)
 
   if (optionFound) {
     selected.value = optionFound
+  } else if (props.acceptUserInput && props.modelValue) {
+    const userInputOption = {
+      id: props.modelValue as string,
+      label: props.modelValue as string,
+      description: props.userInputLabel
+    }
+    userInputOptions.value.push(userInputOption)
+    selected.value = userInputOption
   }
 }
 
@@ -267,6 +275,9 @@ function selectMultipleOptionsFromModelValue() {
     if (optionFound) {
       selectedList.push(optionFound)
     } else if (props.acceptUserInput) {
+      if (!selectedOption.description) {
+        selectedOption.description = props.userInputLabel
+      }
       userInputOptions.value.push(selectedOption)
       selectedList.push(selectedOption)
     }
