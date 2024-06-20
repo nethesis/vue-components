@@ -4,6 +4,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import { NeCombobox, NeTooltip } from '../src/main'
+import { faStar, faBell, faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 const meta = {
   title: 'NeCombobox',
@@ -171,6 +173,28 @@ export const OptionsWithDescription: Story = {
       { id: '8', label: 'Mason Heaney', description: '@masonheaney' },
       { id: '9', label: 'Claudie Smitham', description: '@claudiesmitham' },
       { id: '10', label: 'Emil Schaefer', description: '@emilschaefer' }
+    ]
+  }
+}
+
+library.add(faStar)
+library.add(faBell)
+library.add(faEarthAmericas)
+
+export const OptionsWithIcon: Story = {
+  render: (args) => ({
+    components: { NeCombobox },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    label: 'Choose',
+    options: [
+      { id: '1', label: 'First option', description: 'Description', icon: faStar },
+      { id: '2', label: 'Second option', icon: faBell },
+      { id: '3', label: 'Third option', icon: faEarthAmericas }
     ]
   }
 }

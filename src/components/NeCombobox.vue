@@ -14,7 +14,10 @@ import {
   ComboboxOptions
 } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faChevronDown as fasChevronDown } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronDown as fasChevronDown,
+  type IconDefinition
+} from '@fortawesome/free-solid-svg-icons'
 import { faCheck as fasCheck } from '@fortawesome/free-solid-svg-icons'
 import { faXmark as fasXmark } from '@fortawesome/free-solid-svg-icons'
 import NeBadge from './NeBadge.vue'
@@ -25,6 +28,7 @@ export interface NeComboboxOption {
   id: string
   label: string
   description?: string
+  icon?: IconDefinition
   rawObj?: any
   disabled?: boolean
 }
@@ -372,10 +376,19 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
                       : 'text-gray-900 dark:text-gray-100'
                 ]"
               >
-                <div class="block truncate">
-                  <span :class="['truncate', optionSelected && 'font-semibold']">
+                <div class="flex items-center truncate">
+                  <!-- option icon -->
+                  <font-awesome-icon
+                    v-if="option.icon"
+                    :icon="option.icon"
+                    class="mr-2.5 h-4 w-4 shrink-0"
+                    aria-hidden="true"
+                  />
+                  <!-- option label -->
+                  <span :class="['shrink-0 truncate', optionSelected && 'font-semibold']">
                     {{ option.label }}
                   </span>
+                  <!-- option description -->
                   <span
                     v-if="option.description && showOptionsType"
                     :class="['ml-2.5 truncate text-gray-500 dark:text-gray-400']"
