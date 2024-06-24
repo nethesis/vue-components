@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/nethesis/vue-components/compare/v1.2.0...v1.3.0) (2024-06-24)
+
+
+### Features
+
+* support options icon in NeCombobox ([61fb8ff](https://github.com/nethesis/vue-components/commit/61fb8ff1ba4b1fd5e5300a487ae6eecdd2b8658a))
+
+
+### Bug Fixes
+
+* improve user input management for NeCombobox ([04215a1](https://github.com/nethesis/vue-components/commit/04215a1c5c9b93619353c1d4906bbe12bd8821ba))
+
 ## [1.2.0](https://github.com/nethesis/vue-components/compare/v1.1.0...v1.2.0) (2024-06-06)
 
 
