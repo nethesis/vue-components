@@ -39,10 +39,10 @@ export { default as NeListbox } from '@/components/NeListbox.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
-export type { NePaginatorProps } from '@/components/NePaginator.vue'
 export type { Tab } from '@/components/NeTabs.vue'
 export type { NeNotification } from '@/components/NeToastNotification.vue'
 export type { NeListboxOption } from '@/components/NeListbox.vue'
+export type { NeDropdownItem } from '@/components/NeDropdown.vue'
 
 // library functions export
 export {

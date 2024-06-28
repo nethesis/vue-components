@@ -11,13 +11,6 @@ import { faChevronRight as fasChevronRight } from '@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { NeListbox } from '@/main'
 
-export type NePaginatorProps = {
-  currentPage: number
-  totalPages: number
-  previousLabel: string
-  nextLabel: string
-}
-
 const props = defineProps({
   currentPage: {
     type: Number,
