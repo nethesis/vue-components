@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/nethesis/vue-components/compare/v1.3.0...v1.3.1) (2024-06-28)
+
+
+### Bug Fixes
+
+* export NeDropdownItem type ([e452381](https://github.com/nethesis/vue-components/commit/e452381c5fb20ce43127603473b8c549d008bd78))
+* hover styles for NeButton ([a1ace3d](https://github.com/nethesis/vue-components/commit/a1ace3da3ee0a4b8abdd672c5d185300ec5c5e05))
+
 ## [1.3.0](https://github.com/nethesis/vue-components/compare/v1.2.0...v1.3.0) (2024-06-24)
 
 
