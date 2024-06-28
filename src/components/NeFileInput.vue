@@ -7,7 +7,7 @@
 import { computed } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
-import NeProgressBar from '@/components/NeProgressBar.vue'
+import NeProgressBar from './NeProgressBar.vue'
 
 interface FileInputProps {
   modelValue?: File | File[] | null
@@ -107,7 +107,7 @@ const dragOverHandler = (event: Event) => {
               {{ dropZoneText }}
             </p>
           </div>
-          <input class="hidden" type="file" :accept="accept" />
+          <input :accept="accept" class="hidden" type="file" />
           <!-- progress bar -->
           <NeProgressBar
             v-if="showProgress"
