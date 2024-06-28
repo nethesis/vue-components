@@ -7,7 +7,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark as fasXmark } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { humanDistanceToNowLoc, formatDateLoc } from '../main'
+import { humanDistanceToNowLoc, formatDateLoc } from '../lib/dateTime'
 import NeButton from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
 import NeTooltip from './NeTooltip.vue'

@@ -9,7 +9,7 @@ import NeTableSkeleton from './NeTableSkeleton.vue'
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 const props = defineProps({
-  ariaLabel: {
+  label: {
     type: String,
     required: true
   },
@@ -46,7 +46,7 @@ const tableCardStyle: Record<Breakpoint, string> = {
   <div class="overflow-x-auto rounded-lg border border-gray-300 shadow-sm dark:border-gray-600">
     <table
       role="grid"
-      :aria-label="ariaLabel"
+      :aria-label="label"
       :class="[
         `grid w-full table-auto bg-white text-left text-sm font-normal text-gray-700 dark:bg-gray-950 dark:text-gray-200`,
         tableCardStyle[cardBreakpoint]
