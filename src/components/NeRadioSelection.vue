@@ -4,11 +4,12 @@
 -->
 
 <script lang="ts" setup>
-import { type PropType, type Ref, ref, watch } from 'vue'
+import { computed, type PropType, type Ref, ref, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import NeFormItemLabel from '@/components/NeFormItemLabel.vue'
+import { v4 as uuidv4 } from 'uuid'
 
 export type RadioCardSize = 'md' | 'lg' | 'xl'
 
@@ -31,6 +32,11 @@ const props = defineProps({
     type: String
   },
   description: {
+    type: String,
+    default: ''
+  },
+  // name of radio button group
+  name: {
     type: String,
     default: ''
   },
@@ -96,6 +102,8 @@ const selectionMarkClasses: Record<RadioCardSize, string> = {
   lg: 'right-3 top-3 h-4 w-4',
   xl: 'right-3 top-3 h-5 w-5'
 }
+
+const radioName = computed(() => (props.name ? props.name : uuidv4()))
 
 watch(value, (newValue) => emit('update:modelValue', newValue))
 
@@ -169,9 +177,10 @@ function focus() {
         <div class="space-y-3">
           <div v-for="option in options" :key="option.id" class="flex items-center">
             <input
-              :id="option.id"
+              :id="`${radioName}-${option.id}`"
               ref="inputRef"
               v-model="value"
+              :name="radioName"
               :checked="value == option.id"
               :value="option.id"
               class="peer border-gray-300 text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 focus:dark:ring-primary-200 focus:dark:ring-offset-gray-900"
@@ -179,7 +188,7 @@ function focus() {
               :disabled="option.disabled || disabled"
             />
             <label
-              :for="option.id"
+              :for="`${radioName}-${option.id}`"
               :disabled="option.disabled"
               class="ms-2 text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
             >
