@@ -28,8 +28,8 @@ const props = defineProps({
     default: ''
   },
   label: {
-    required: true,
-    type: String
+    type: String,
+    default: ''
   },
   description: {
     type: String,
@@ -122,8 +122,10 @@ function focus() {
 <template>
   <div class="text-sm">
     <div class="mb-2">
-      <NeFormItemLabel class="mb-0">
-        {{ label }}
+      <NeFormItemLabel v-if="props.label || $slots.label" class="mb-0">
+        <slot name="label">
+          {{ label }}
+        </slot>
         <span v-if="$slots.tooltip" class="ml-1">
           <slot name="tooltip"></slot>
         </span>

@@ -225,3 +225,22 @@ export const OptionsWithDescription: StoryObj<typeof NeRadioSelection> = {
     ]
   }
 }
+
+export const LabelSlot: StoryObj<typeof NeRadioSelection> = {
+  render: (args) => ({
+    components: { NeRadioSelection },
+    setup() {
+      return { args }
+    },
+    template: `
+      <NeRadioSelection v-bind="args">
+        <template #label>
+          Label slot
+        </template>
+      </NeRadioSelection>
+    `
+  }),
+  args: {
+    label: ''
+  }
+}
