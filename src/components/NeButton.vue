@@ -72,7 +72,7 @@ const loadingSuffix = computed(() => props.loading && props.loadingPosition === 
 
 <template>
   <button
-    class="font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-primary-300"
+    class="font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-primary-300"
     :class="[kindStyle[props.kind], sizeStyle[props.size]]"
     :disabled="disabled"
     type="button"
