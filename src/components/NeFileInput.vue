@@ -16,7 +16,7 @@ interface FileInputProps {
   dropzoneLabel: string
   progress: number
   showProgress: boolean
-  accept: string | undefined
+  accept?: string | undefined
 }
 
 const props = withDefaults(defineProps<FileInputProps>(), {
