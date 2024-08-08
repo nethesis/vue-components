@@ -18,7 +18,8 @@ const meta = {
     topLabel: '',
     size: 'md',
     disabled: false,
-    modelValue: true
+    modelValue: true,
+    invalidMessage: ''
   }
 } satisfies Meta<typeof NeToggle>
 
@@ -96,4 +97,17 @@ export const WithTopLabelAndTooltip: Story = {
     template: templateWithTopTooltip
   }),
   args: { topLabel: 'Top label' }
+}
+
+export const InvalidMessage: Story = {
+  render: (args) => ({
+    components: { NeToggle },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    invalidMessage: 'Invalid selection'
+  }
 }

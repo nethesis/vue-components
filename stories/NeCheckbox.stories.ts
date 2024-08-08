@@ -13,7 +13,8 @@ const meta = {
     modelValue: true,
     disabled: false,
     disableSelectOnLabel: false,
-    id: ''
+    id: '',
+    invalidMessage: ''
   }
 } satisfies Meta<typeof NeCheckbox>
 
@@ -103,4 +104,19 @@ export const WithTooltip: Story = {
     template: templateWithTooltip
   }),
   args: {}
+}
+
+export const InvalidMessage: Story = {
+  render: (args) => ({
+    components: { NeCheckbox },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    modelValue: false,
+    label: 'I agree to the Terms and conditions',
+    invalidMessage: 'You need to agree to the Terms and conditions'
+  }
 }

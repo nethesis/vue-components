@@ -50,7 +50,8 @@ const meta: Meta<typeof NeRadioSelection> = {
     modelValue: '1',
     disabled: false,
     cardSize: 'md',
-    cardSelectionMark: true
+    cardSelectionMark: true,
+    invalidMessage: ''
   }
 }
 
@@ -243,5 +244,20 @@ export const LabelSlot: StoryObj<typeof NeRadioSelection> = {
   }),
   args: {
     label: ''
+  }
+}
+
+export const InvalidMessage: StoryObj<typeof NeRadioSelection> = {
+  render: (args) => ({
+    components: { NeRadioSelection },
+    setup() {
+      return { args }
+    },
+    template: `
+      <NeRadioSelection v-bind="args" />
+    `
+  }),
+  args: {
+    invalidMessage: 'Invalid selection'
   }
 }

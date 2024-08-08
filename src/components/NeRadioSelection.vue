@@ -63,6 +63,10 @@ const props = defineProps({
   cardSelectionMark: {
     type: Boolean,
     default: true
+  },
+  invalidMessage: {
+    type: String,
+    default: ''
   }
 })
 
@@ -203,5 +207,9 @@ function focus() {
         </div>
       </fieldset>
     </template>
+    <!-- invalid message -->
+    <p v-if="invalidMessage" class="mt-2 text-sm text-rose-700 dark:text-rose-400">
+      {{ invalidMessage }}
+    </p>
   </div>
 </template>
