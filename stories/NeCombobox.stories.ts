@@ -10,6 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 const meta = {
   title: 'NeCombobox',
   component: NeCombobox,
+  tags: ['autodocs'],
   args: {
     label: 'Choose fruit',
     placeholder: 'Placeholder',

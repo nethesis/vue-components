@@ -8,6 +8,7 @@ import { NeToggle, NeTooltip } from '../src/main'
 const meta = {
   title: 'NeToggle',
   component: NeToggle,
+  tags: ['autodocs'],
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl'] }
   },

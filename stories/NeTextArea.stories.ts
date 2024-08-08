@@ -8,6 +8,7 @@ import { NeTextArea, NeTooltip } from '../src/main'
 const meta = {
   title: 'NeTextArea',
   component: NeTextArea,
+  tags: ['autodocs'],
   // default values
   args: {
     label: 'Label',

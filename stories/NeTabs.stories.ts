@@ -8,6 +8,7 @@ import { NeTabs } from '../src/main'
 const meta = {
   title: 'NeTabs',
   component: NeTabs,
+  tags: ['autodocs'],
   argTypes: {},
   args: {
     tabs: [

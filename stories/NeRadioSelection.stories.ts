@@ -22,6 +22,7 @@ library.add(faHardDrive)
 const meta: Meta<typeof NeRadioSelection> = {
   title: 'NeRadioSelection',
   component: NeRadioSelection,
+  tags: ['autodocs'],
   argTypes: {
     cardSize: { control: 'inline-radio', options: ['md', 'lg', 'xl'] }
   },

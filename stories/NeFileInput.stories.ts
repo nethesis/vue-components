@@ -7,6 +7,7 @@ import { NeFileInput } from '../src/main'
 const meta = {
   title: 'NeFileInput',
   component: NeFileInput,
+  tags: ['autodocs'],
   argTypes: {},
   args: {
     label: 'Label',

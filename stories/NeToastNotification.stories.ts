@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 const meta = {
   title: 'NeToastNotification',
   component: NeToastNotification,
+  tags: ['autodocs'],
   args: {
     srCloseLabel: 'Close',
     primaryButtonRightAligned: false,

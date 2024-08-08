@@ -6,7 +6,8 @@ import { NeFormItemLabel } from '../src/main'
 
 const meta = {
   title: 'NeFormItemLabel',
-  component: NeFormItemLabel
+  component: NeFormItemLabel,
+  tags: ['autodocs']
 } satisfies Meta<typeof NeFormItemLabel>
 
 export default meta
