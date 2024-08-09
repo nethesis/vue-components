@@ -133,7 +133,7 @@ function calculatePosition() {
           :disabled="disabled"
           type="button"
         >
-          <div class="flex items-center justify-center">
+          <span class="flex items-center justify-center">
             <slot v-if="$slots.label" name="label"></slot>
             <span v-else>{{ label }}</span>
             <NeBadge
@@ -143,7 +143,7 @@ function calculatePosition() {
               class="ml-2"
             />
             <FontAwesomeIcon :icon="faChevronDown" class="ml-2 h-3 w-3" aria-hidden="true" />
-          </div>
+          </span>
         </button>
       </slot>
     </MenuButton>
@@ -189,7 +189,6 @@ function calculatePosition() {
               />
               <label
                 :for="`${componentId}-${option.id}`"
-                :disabled="option.disabled"
                 class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
               >
                 <span>{{ option.label }}</span>
@@ -220,7 +219,7 @@ function calculatePosition() {
                 <label
                   :class="[
                     'flex flex-col font-medium text-gray-700 dark:text-gray-50',
-                    { 'cursor-not-allowed opacity-50': disabled }
+                    { 'cursor-not-allowed opacity-50': option.disabled }
                   ]"
                   :for="`${componentId}-${option.id}`"
                 >
