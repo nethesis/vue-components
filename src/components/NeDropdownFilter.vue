@@ -65,7 +65,7 @@ const buttonRef = ref()
 const componentId = computed(() => (props.id ? props.id : uuidv4()))
 
 const isSelectionCountShown = computed(() => {
-  return props.showSelectionCount && props.kind === 'checkbox' && checkboxModel.value.length > 0
+  return props.showSelectionCount && props.kind == 'checkbox' && checkboxModel.value.length > 0
 })
 
 watch(
