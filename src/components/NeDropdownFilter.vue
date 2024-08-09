@@ -7,7 +7,6 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { isEqual } from 'lodash-es'
 import { v4 as uuidv4 } from 'uuid'
@@ -54,8 +53,6 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   id: ''
 })
-
-library.add(faChevronDown)
 
 const model = defineModel<string[]>()
 const radioModel = ref('')
@@ -148,11 +145,7 @@ function calculatePosition() {
               size="xs"
               class="ml-2"
             />
-            <FontAwesomeIcon
-              :icon="['fas', 'chevron-down']"
-              class="ml-2 h-3 w-3"
-              aria-hidden="true"
-            />
+            <FontAwesomeIcon :icon="faChevronDown" class="ml-2 h-3 w-3" aria-hidden="true" />
           </div>
         </button>
       </slot>
