@@ -150,7 +150,7 @@ function navigateToPage(page: number) {
             @click="navigateToPage(currentPage - 1)"
           >
             <span class="sr-only">{{ previousLabel }}</span>
-            <font-awesome-icon :icon="fasChevronLeft" class="h-3 w-3 shrink-0" aria-hidden="true" />
+            <FontAwesomeIcon :icon="fasChevronLeft" class="h-3 w-3 shrink-0" aria-hidden="true" />
           </button>
         </li>
         <!-- show all page numbers if there are no more than 8 pages in total -->
@@ -231,7 +231,7 @@ function navigateToPage(page: number) {
             @click="navigateToPage(currentPage + 1)"
           >
             <span class="sr-only">{{ nextLabel }}</span>
-            <font-awesome-icon
+            <FontAwesomeIcon
               :icon="fasChevronRight"
               class="h-3 w-3 shrink-0"
               aria-hidden="true"

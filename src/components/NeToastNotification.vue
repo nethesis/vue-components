@@ -80,7 +80,7 @@ library.add(fasXmark)
           @click="$emit('close')"
         >
           <span class="sr-only">{{ srCloseLabel }}</span>
-          <font-awesome-icon :icon="['fas', 'xmark']" class="h-5 w-5" aria-hidden="true" />
+          <FontAwesomeIcon :icon="['fas', 'xmark']" class="h-5 w-5" aria-hidden="true" />
         </button>
         <!-- timestamp -->
         <NeTooltip

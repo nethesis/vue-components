@@ -55,7 +55,7 @@ function toggleExpanded() {
         <template v-if="!fullWidth">
           <NeButton kind="tertiary" size="sm" class="-ml-2">
             <template #suffix>
-              <font-awesome-icon
+              <FontAwesomeIcon
                 :icon="internalIsExpanded ? faChevronUp : faChevronDown"
                 class="h-3 w-3"
                 aria-hidden="true"
@@ -70,7 +70,7 @@ function toggleExpanded() {
             class="flex w-full items-center justify-between rounded border-b border-gray-300 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-200 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-700"
           >
             <span>{{ label }}</span>
-            <font-awesome-icon
+            <FontAwesomeIcon
               :icon="internalIsExpanded ? faChevronUp : faChevronDown"
               class="h-3 w-3"
               aria-hidden="true"

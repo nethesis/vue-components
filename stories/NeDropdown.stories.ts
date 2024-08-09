@@ -97,7 +97,7 @@ const withSlotTemplate =
     <template #button>\
       <NeButton>\
         <template #suffix>\
-          <font-awesome-icon :icon="[\'fas\', \'chevron-down\']" class="h-4 w-4" aria-hidden="true" />\
+          <FontAwesomeIcon :icon="[\'fas\', \'chevron-down\']" class="h-4 w-4" aria-hidden="true" />\
         </template>\
         Menu\
       </NeButton>\

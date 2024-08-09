@@ -141,7 +141,7 @@ function onSecondaryClick() {
                     @click="onClose"
                   >
                     <span class="sr-only">{{ closeAriaLabel }}</span>
-                    <font-awesome-icon
+                    <FontAwesomeIcon
                       :icon="['fas', 'xmark']"
                       class="h-5 w-5"
                       aria-hidden="true"

@@ -236,7 +236,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
               { 'cursor-not-allowed opacity-50': disabled }
             ]"
           >
-            <font-awesome-icon :icon="fasChevronDown" class="h-3 w-3 shrink-0" aria-hidden="true" />
+            <FontAwesomeIcon :icon="fasChevronDown" class="h-3 w-3 shrink-0" aria-hidden="true" />
           </div>
         </ListboxButton>
         <Teleport to="body">
@@ -283,7 +283,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
                       'absolute inset-y-0 right-0 flex items-center pr-4 text-primary-700 dark:text-primary-500'
                     ]"
                   >
-                    <font-awesome-icon
+                    <FontAwesomeIcon
                       :icon="fasCheck"
                       class="h-4 w-4 shrink-0"
                       aria-hidden="true"

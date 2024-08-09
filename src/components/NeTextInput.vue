@@ -171,7 +171,7 @@ function focus() {
           <span class="sr-only">{{
             isPasswordVisible ? hidePasswordLabel : showPasswordLabel
           }}</span>
-          <font-awesome-icon
+          <FontAwesomeIcon
             :icon="['fas', isPasswordVisible ? 'eye-slash' : 'eye']"
             class="h-4 w-4 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
@@ -183,7 +183,7 @@ function focus() {
         v-else-if="invalidMessage"
         class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
       >
-        <font-awesome-icon
+        <FontAwesomeIcon
           :icon="['fas', 'circle-exclamation']"
           class="h-4 w-4 text-rose-700 dark:text-rose-400"
           aria-hidden="true"
