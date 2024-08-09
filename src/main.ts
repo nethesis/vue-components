@@ -36,6 +36,7 @@ export { default as NeToastNotification } from '@/components/NeToastNotification
 export { default as NeModal } from '@/components/NeModal.vue'
 export { default as NeHeading } from '@/components/NeHeading.vue'
 export { default as NeListbox } from '@/components/NeListbox.vue'
+export { default as NeDropdownFilter } from '@/components/NeDropdownFilter.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
@@ -43,6 +44,7 @@ export type { Tab } from '@/components/NeTabs.vue'
 export type { NeNotification } from '@/components/NeToastNotification.vue'
 export type { NeListboxOption } from '@/components/NeListbox.vue'
 export type { NeDropdownItem } from '@/components/NeDropdown.vue'
+export type { FilterOption, FilterKind } from '@/components/NeDropdownFilter.vue'
 
 // library functions export
 export {
