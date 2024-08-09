@@ -93,12 +93,9 @@ watch(
   () => model.value,
   () => {
     updateInternalModel()
-  }
+  },
+  { immediate: true }
 )
-
-onMounted(() => {
-  updateInternalModel()
-})
 
 function updateInternalModel() {
   if (props.kind === 'radio') {
