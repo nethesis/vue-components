@@ -12,6 +12,7 @@ library.add(faUsers)
 const meta = {
   title: 'NeEmptyState',
   component: NeEmptyState,
+  tags: ['autodocs'],
   argTypes: {},
   args: {
     title: 'No user',

@@ -8,6 +8,7 @@ import { NeRoundedIcon } from '../src/main'
 const meta = {
   title: 'NeRoundedIcon',
   component: NeRoundedIcon,
+  tags: ['autodocs'],
   argTypes: {
     kind: { control: 'inline-radio', options: ['info', 'warning', 'error', 'success'] }
   },

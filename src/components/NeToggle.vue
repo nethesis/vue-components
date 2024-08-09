@@ -26,6 +26,10 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  invalidMessage: {
+    type: String,
+    default: ''
   }
 })
 
@@ -78,10 +82,10 @@ const toggleBallClasses = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="text-sm">
     <label
       v-if="topLabel"
-      class="mb-2 flex items-end justify-between text-sm font-medium leading-6 text-gray-700 dark:text-gray-200"
+      class="mb-2 flex items-end justify-between font-medium leading-6 text-gray-700 dark:text-gray-200"
     >
       <span>
         {{ topLabel }}
@@ -102,5 +106,9 @@ const toggleBallClasses = computed(() => {
         <slot name="tooltip"></slot>
       </span>
     </div>
+    <!-- invalid message -->
+    <p v-if="invalidMessage" class="mt-2 text-sm text-rose-700 dark:text-rose-400">
+      {{ invalidMessage }}
+    </p>
   </div>
 </template>

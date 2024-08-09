@@ -8,6 +8,7 @@ import { NeListbox, NeTooltip } from '../src/main'
 const meta = {
   title: 'NeListbox',
   component: NeListbox,
+  tags: ['autodocs'],
   args: {
     label: 'Choose fruit',
     placeholder: 'Placeholder',

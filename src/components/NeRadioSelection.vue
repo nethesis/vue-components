@@ -28,8 +28,8 @@ const props = defineProps({
     default: ''
   },
   label: {
-    required: true,
-    type: String
+    type: String,
+    default: ''
   },
   description: {
     type: String,
@@ -63,6 +63,10 @@ const props = defineProps({
   cardSelectionMark: {
     type: Boolean,
     default: true
+  },
+  invalidMessage: {
+    type: String,
+    default: ''
   }
 })
 
@@ -122,8 +126,10 @@ function focus() {
 <template>
   <div class="text-sm">
     <div class="mb-2">
-      <NeFormItemLabel class="mb-0">
-        {{ label }}
+      <NeFormItemLabel v-if="props.label || $slots.label" class="mb-0">
+        <slot name="label">
+          {{ label }}
+        </slot>
         <span v-if="$slots.tooltip" class="ml-1">
           <slot name="tooltip"></slot>
         </span>
@@ -201,5 +207,9 @@ function focus() {
         </div>
       </fieldset>
     </template>
+    <!-- invalid message -->
+    <p v-if="invalidMessage" class="mt-2 text-sm text-rose-700 dark:text-rose-400">
+      {{ invalidMessage }}
+    </p>
   </div>
 </template>

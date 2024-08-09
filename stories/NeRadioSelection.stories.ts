@@ -22,6 +22,7 @@ library.add(faHardDrive)
 const meta: Meta<typeof NeRadioSelection> = {
   title: 'NeRadioSelection',
   component: NeRadioSelection,
+  tags: ['autodocs'],
   argTypes: {
     cardSize: { control: 'inline-radio', options: ['md', 'lg', 'xl'] }
   },
@@ -49,7 +50,8 @@ const meta: Meta<typeof NeRadioSelection> = {
     modelValue: '1',
     disabled: false,
     cardSize: 'md',
-    cardSelectionMark: true
+    cardSelectionMark: true,
+    invalidMessage: ''
   }
 }
 
@@ -223,5 +225,39 @@ export const OptionsWithDescription: StoryObj<typeof NeRadioSelection> = {
           'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua'
       }
     ]
+  }
+}
+
+export const LabelSlot: StoryObj<typeof NeRadioSelection> = {
+  render: (args) => ({
+    components: { NeRadioSelection },
+    setup() {
+      return { args }
+    },
+    template: `
+      <NeRadioSelection v-bind="args">
+        <template #label>
+          Label slot
+        </template>
+      </NeRadioSelection>
+    `
+  }),
+  args: {
+    label: ''
+  }
+}
+
+export const InvalidMessage: StoryObj<typeof NeRadioSelection> = {
+  render: (args) => ({
+    components: { NeRadioSelection },
+    setup() {
+      return { args }
+    },
+    template: `
+      <NeRadioSelection v-bind="args" />
+    `
+  }),
+  args: {
+    invalidMessage: 'Invalid selection'
   }
 }
