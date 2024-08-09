@@ -349,7 +349,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
             { 'cursor-not-allowed opacity-50': disabled }
           ]"
         >
-          <font-awesome-icon :icon="fasChevronDown" class="h-3 w-3 shrink-0" aria-hidden="true" />
+          <FontAwesomeIcon :icon="fasChevronDown" class="h-3 w-3 shrink-0" aria-hidden="true" />
         </ComboboxButton>
         <div v-show="open || showOptions">
           <ComboboxOptions
@@ -378,7 +378,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
               >
                 <div class="flex items-center truncate">
                   <!-- option icon -->
-                  <font-awesome-icon
+                  <FontAwesomeIcon
                     v-if="option.icon"
                     :icon="option.icon"
                     class="mr-2.5 h-4 w-4 shrink-0"
@@ -403,7 +403,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
                     'absolute inset-y-0 right-0 flex items-center pr-4 text-primary-700 dark:text-primary-500'
                   ]"
                 >
-                  <font-awesome-icon :icon="fasCheck" class="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <FontAwesomeIcon :icon="fasCheck" class="h-4 w-4 shrink-0" aria-hidden="true" />
                 </span>
               </li>
             </ComboboxOption>

@@ -82,7 +82,7 @@ watch(
       <slot name="button">
         <!-- default kebab button -->
         <NeButton class="py-2" kind="tertiary">
-          <font-awesome-icon
+          <FontAwesomeIcon
             :icon="['fas', 'ellipsis-vertical']"
             aria-hidden="true"
             class="h-5 w-5 shrink-0"
@@ -125,7 +125,7 @@ watch(
                 ]"
                 @click="onItemClick(item)"
               >
-                <font-awesome-icon
+                <FontAwesomeIcon
                   v-if="item.icon"
                   :icon="[item.iconStyle || 'fas', item.icon]"
                   aria-hidden="true"

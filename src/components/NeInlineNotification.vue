@@ -115,7 +115,7 @@ const closeIconKindStyle: { [index: string]: string } = {
   <div :class="`rounded-md border-l-4 p-4 text-sm ${containerKindStyle[props.kind as string]}`">
     <div class="flex">
       <div class="flex-shrink-0">
-        <font-awesome-icon
+        <FontAwesomeIcon
           :class="`h-4 w-4 ${iconKindStyle[props.kind as string]}`"
           :icon="iconName[props.kind as string]"
           aria-hidden="true"
@@ -149,7 +149,7 @@ const closeIconKindStyle: { [index: string]: string } = {
             @click="isExpandedDetails = !isExpandedDetails"
           >
             <span>{{ showDetailsLabel }}</span>
-            <font-awesome-icon
+            <FontAwesomeIcon
               :icon="isExpandedDetails ? faChevronUp : faChevronDown"
               aria-hidden="true"
               class="ml-2 h-3 w-3"
@@ -204,7 +204,7 @@ const closeIconKindStyle: { [index: string]: string } = {
             @click="emit('close')"
           >
             <span class="sr-only">{{ props.closeAriaLabel }}</span>
-            <font-awesome-icon :icon="faXmark" class="h-4 w-4" aria-hidden="true" />
+            <FontAwesomeIcon :icon="faXmark" class="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       </div>
