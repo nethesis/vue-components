@@ -148,7 +148,7 @@ function calculatePosition() {
               size="xs"
               class="ml-2"
             />
-            <font-awesome-icon
+            <FontAwesomeIcon
               :icon="['fas', 'chevron-down']"
               class="ml-2 h-3 w-3"
               aria-hidden="true"
@@ -200,16 +200,16 @@ function calculatePosition() {
               <label
                 :for="`${componentId}-${option.id}`"
                 :disabled="option.disabled"
-                class="ms-2 text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
+                class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
               >
-                <div>{{ option.label }}</div>
-                <div
+                <span>{{ option.label }}</span>
+                <span
                   v-if="option.description"
                   :id="`${componentId}-${option.id}-description`"
                   class="text-gray-500 dark:text-gray-400"
                 >
                   {{ option.description }}
-                </div>
+                </span>
               </label>
             </div>
             <div v-else-if="kind === 'checkbox'" class="flex items-center py-2" @click.stop>
@@ -229,19 +229,19 @@ function calculatePosition() {
                 <!-- show label prop or default slot -->
                 <label
                   :class="[
-                    'font-medium text-gray-700 dark:text-gray-50',
+                    'flex flex-col font-medium text-gray-700 dark:text-gray-50',
                     { 'cursor-not-allowed opacity-50': disabled }
                   ]"
                   :for="`${componentId}-${option.id}`"
                 >
-                  <div>{{ option.label }}</div>
-                  <div
+                  <span>{{ option.label }}</span>
+                  <span
                     v-if="option.description"
                     :id="`${componentId}-${option.id}-description`"
                     class="text-gray-500 dark:text-gray-400"
                   >
                     {{ option.description }}
-                  </div>
+                  </span>
                 </label>
               </div>
             </div>
