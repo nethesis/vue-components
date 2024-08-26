@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0](https://github.com/nethesis/vue-components/compare/v1.3.1...v1.4.0) (2024-08-26)
+
+
+### Features
+
+* add NeDropdownFilter component ([#66](https://github.com/nethesis/vue-components/issues/66)) ([b3b83dc](https://github.com/nethesis/vue-components/commit/b3b83dcaa35323b0750876f24d9a5d8150cc3787))
+
+
+### Bug Fixes
+
+* accept prop of NeFileInput is optional ([b33b21f](https://github.com/nethesis/vue-components/commit/b33b21f2d76a0eb809ab16fe7792199f68dcb86d))
+* add docs page to all components ([b33b21f](https://github.com/nethesis/vue-components/commit/b33b21f2d76a0eb809ab16fe7792199f68dcb86d))
+* add invalidMessage prop to all input components ([b33b21f](https://github.com/nethesis/vue-components/commit/b33b21f2d76a0eb809ab16fe7792199f68dcb86d))
+* add invalidMessage prop to all input components ([#68](https://github.com/nethesis/vue-components/issues/68)) ([b33b21f](https://github.com/nethesis/vue-components/commit/b33b21f2d76a0eb809ab16fe7792199f68dcb86d))
+* font-weight of NeButton text ([b33b21f](https://github.com/nethesis/vue-components/commit/b33b21f2d76a0eb809ab16fe7792199f68dcb86d))
+* slot support for NeRadioSelection label ([b33b21f](https://github.com/nethesis/vue-components/commit/b33b21f2d76a0eb809ab16fe7792199f68dcb86d))
+
 ## [1.3.1](https://github.com/nethesis/vue-components/compare/v1.3.0...v1.3.1) (2024-07-29)
 
 
