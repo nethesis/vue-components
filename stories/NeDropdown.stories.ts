@@ -59,7 +59,8 @@ const meta = {
       }
     ],
     alignToRight: false,
-    openMenuAriaLabel: 'Open menu'
+    openMenuAriaLabel: 'Open menu',
+    menuClasses: ''
   }
 } satisfies Meta<typeof NeDropdown>
 
@@ -113,4 +114,17 @@ export const WithSlot: Story = {
     template: withSlotTemplate
   }),
   args: {}
+}
+
+export const MenuClasses: Story = {
+  render: (args) => ({
+    components: { NeDropdown },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    menuClasses: '!bg-fuchsia-200 dark:!bg-fuchsia-900'
+  }
 }
