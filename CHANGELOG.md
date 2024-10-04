@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/nethesis/vue-components/compare/v1.4.0...v1.5.0) (2024-10-04)
+
+
+### Features
+
+* add menuClasses prop to NeDropdown ([#72](https://github.com/nethesis/vue-components/issues/72)) ([afba335](https://github.com/nethesis/vue-components/commit/afba3357a4faea7c2d296988572f3b7a3b23fb55))
+
 ## [1.4.0](https://github.com/nethesis/vue-components/compare/v1.3.1...v1.4.0) (2024-08-26)
 
 
