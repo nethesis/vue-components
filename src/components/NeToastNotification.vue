@@ -22,9 +22,9 @@ export interface NeNotification {
   payload?: any
   isShown?: boolean
   primaryLabel?: string
-  primaryAction?: Function
+  primaryAction?: (...args: any[]) => void
   secondaryLabel?: string
-  secondaryAction?: Function
+  secondaryAction?: (...args: any[]) => void
 }
 
 defineProps({
