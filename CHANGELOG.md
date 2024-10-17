@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/nethesis/vue-components/compare/v1.5.0...v1.5.1) (2024-10-17)
+
+
+### Miscellaneous Chores
+
+* force release ([d4462ea](https://github.com/nethesis/vue-components/commit/d4462eacf4737e2954736bf9ded526ed564cfea3))
+
 ## [1.5.0](https://github.com/nethesis/vue-components/compare/v1.4.0...v1.5.0) (2024-10-04)
 
 
