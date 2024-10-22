@@ -3,7 +3,7 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <script lang="ts" setup>
-import { provide, ref, type PropType } from 'vue'
+import { computed, provide, ref, type PropType } from 'vue'
 import NeTableSkeleton from './NeTableSkeleton.vue'
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
@@ -28,11 +28,30 @@ const props = defineProps({
   skeletonColumns: {
     type: Number,
     default: 4
+  },
+  sortKey: {
+    type: String,
+    default: ''
+  },
+  sortDescending: {
+    type: Boolean,
+    default: false
   }
 })
 
-// provide cardBreakpoint prop to children components
-provide('cardBreakpoint', ref(props.cardBreakpoint))
+// provide props to children components
+provide(
+  'cardBreakpoint',
+  computed(() => props.cardBreakpoint)
+)
+provide(
+  'sortKey',
+  computed(() => props.sortKey)
+)
+provide(
+  'sortDescending',
+  computed(() => props.sortDescending)
+)
 
 const tableCardStyle: Record<Breakpoint, string> = {
   sm: 'sm:table sm:divide-y sm:divide-gray-300 sm:dark:divide-gray-600',

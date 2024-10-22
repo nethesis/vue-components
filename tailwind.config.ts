@@ -31,6 +31,11 @@ export default {
       }
     }
   },
+  variants: {
+    extend: {
+      textColor: ['group-hover']
+    }
+  },
   plugins: [require('@tailwindcss/forms')],
   darkMode: 'class'
 } satisfies Config
