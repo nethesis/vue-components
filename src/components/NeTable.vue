@@ -3,7 +3,7 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <script lang="ts" setup>
-import { computed, provide, ref, type PropType } from 'vue'
+import { computed, provide, type PropType } from 'vue'
 import NeTableSkeleton from './NeTableSkeleton.vue'
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
