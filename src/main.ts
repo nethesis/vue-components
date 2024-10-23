@@ -37,6 +37,7 @@ export { default as NeModal } from '@/components/NeModal.vue'
 export { default as NeHeading } from '@/components/NeHeading.vue'
 export { default as NeListbox } from '@/components/NeListbox.vue'
 export { default as NeDropdownFilter } from '@/components/NeDropdownFilter.vue'
+export { default as NeSortDropdown } from '@/components/NeSortDropdown.vue'
 
 // types export
 export type { NeComboboxOption } from '@/components/NeCombobox.vue'
@@ -73,3 +74,4 @@ export {
 
 // composables export
 export { useItemPagination } from '@/composables/useItemPagination'
+export { useSort } from '@/composables/useSort'

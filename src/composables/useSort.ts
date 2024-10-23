@@ -43,8 +43,6 @@ export function useSort(
       return valueA.length - valueB.length
     }
 
-    console.log('sort: unknown object types', typeof valueA, typeof valueB) ////
-
     if (typeof valueA !== 'undefined' && typeof valueB === 'undefined') {
       return -1
     } else if (typeof valueA === 'undefined' && typeof valueB !== 'undefined') {

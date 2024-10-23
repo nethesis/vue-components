@@ -35,7 +35,7 @@ const meta: Meta<typeof NeTable> = {
     loading: false,
     skeletonRows: 8,
     skeletonColumns: 4,
-    sortKey: 'game',
+    sortKey: '',
     sortDescending: false
   },
   render: (args) => ({
@@ -207,5 +207,7 @@ export const Sortable: StoryObj<typeof NeTable> = {
     },
     template: sortableTemplate
   }),
-  args: {}
+  args: {
+    sortKey: 'game'
+  }
 }
