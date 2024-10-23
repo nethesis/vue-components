@@ -12,6 +12,16 @@ import { Meta, StoryObj } from '@storybook/vue3'
 import { faTable } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
+const items = [
+  { game: 'Super Mario 64', platform: 'Nintendo 64', year: 1996 },
+  { game: 'Super Mario Odyssey', platform: 'Nintendo Switch', year: 2017 },
+  { game: 'Super Mario World', platform: 'Super Nintendo', year: 1990 },
+  { game: 'The Legend of Zelda', platform: 'Nintendo Entertainment System', year: 1986 },
+  { game: 'The Legend of Zelda: A Link to the Past', platform: 'Super Nintendo', year: 1991 },
+  { game: 'The Legend of Zelda: Breath of the Wild', platform: 'Nintendo Switch', year: 2017 },
+  { game: 'The Legend of Zelda: Ocarina of Time', platform: 'Nintendo 64', year: 1998 }
+]
+
 const meta: Meta<typeof NeTable> = {
   title: 'NeTable',
   component: NeTable,
@@ -24,7 +34,9 @@ const meta: Meta<typeof NeTable> = {
     cardBreakpoint: 'md',
     loading: false,
     skeletonRows: 8,
-    skeletonColumns: 4
+    skeletonColumns: 4,
+    sortKey: '',
+    sortDescending: false
   },
   render: (args) => ({
     components: {
@@ -37,7 +49,7 @@ const meta: Meta<typeof NeTable> = {
       NePaginator
     },
     setup() {
-      return { args }
+      return { args, items }
     },
     template: `
   <NeTable v-bind="args">
@@ -47,40 +59,10 @@ const meta: Meta<typeof NeTable> = {
       <NeTableHeadCell>Year</NeTableHeadCell>
     </NeTableHead>
     <NeTableBody>
-      <NeTableRow>
-        <NeTableCell data-label="Game">The Legend of Zelda: Breath of the Wild</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo Switch</NeTableCell>
-        <NeTableCell data-label="Year">2017</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">Super Mario Odyssey</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo Switch</NeTableCell>
-        <NeTableCell data-label="Year">2017</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">The Legend of Zelda: Ocarina of Time</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo 64</NeTableCell>
-        <NeTableCell data-label="Year">1998</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">Super Mario 64</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo 64</NeTableCell>
-        <NeTableCell data-label="Year">1996</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">The Legend of Zelda: A Link to the Past</NeTableCell>
-        <NeTableCell data-label="Platform">Super Nintendo</NeTableCell>
-        <NeTableCell data-label="Year">1991</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">Super Mario World</NeTableCell>
-        <NeTableCell data-label="Platform">Super Nintendo</NeTableCell>
-        <NeTableCell data-label="Year">1990</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">The Legend of Zelda</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo Entertainment System</NeTableCell>
-        <NeTableCell data-label="Year">1986</NeTableCell>
+      <NeTableRow v-for="(item, index) in items" :key="index">
+        <NeTableCell data-label="Game">{{ item.game }}</NeTableCell>
+        <NeTableCell data-label="Platform">{{ item.platform }}</NeTableCell>
+        <NeTableCell data-label="Year">{{ item.year }}</NeTableCell>
       </NeTableRow>
     </NeTableBody>
   </NeTable>`
@@ -101,30 +83,10 @@ const withPaginatorTemplate = `
       <NeTableHeadCell>Year</NeTableHeadCell>
     </NeTableHead>
     <NeTableBody>
-      <NeTableRow>
-        <NeTableCell data-label="Game">The Legend of Zelda: Breath of the Wild</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo Switch</NeTableCell>
-        <NeTableCell data-label="Year">2017</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">Super Mario Odyssey</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo Switch</NeTableCell>
-        <NeTableCell data-label="Year">2017</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">The Legend of Zelda: Ocarina of Time</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo 64</NeTableCell>
-        <NeTableCell data-label="Year">1998</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">Super Mario 64</NeTableCell>
-        <NeTableCell data-label="Platform">Nintendo 64</NeTableCell>
-        <NeTableCell data-label="Year">1996</NeTableCell>
-      </NeTableRow>
-      <NeTableRow>
-        <NeTableCell data-label="Game">The Legend of Zelda: A Link to the Past</NeTableCell>
-        <NeTableCell data-label="Platform">Super Nintendo</NeTableCell>
-        <NeTableCell data-label="Year">1991</NeTableCell>
+      <NeTableRow v-for="(item, index) in items" :key="index">
+        <NeTableCell data-label="Game">{{ item.game }}</NeTableCell>
+        <NeTableCell data-label="Platform">{{ item.platform }}</NeTableCell>
+        <NeTableCell data-label="Year">{{ item.year }}</NeTableCell>
       </NeTableRow>
     </NeTableBody>
     <template #paginator>
@@ -155,7 +117,7 @@ export const WithPaginator: StoryObj<typeof NeTable> = {
       NePaginator
     },
     setup() {
-      return { args }
+      return { args, items }
     },
     template: withPaginatorTemplate
   }),
@@ -209,5 +171,43 @@ export const NoItems: StoryObj<typeof NeTable> = {
 export const CardBreakpointXL: StoryObj<typeof NeTable> = {
   args: {
     cardBreakpoint: 'xl'
+  }
+}
+
+const sortableTemplate = `
+<NeTable v-bind="args">
+    <NeTableHead>
+      <NeTableHeadCell sortable columnKey="game">Game</NeTableHeadCell>
+      <NeTableHeadCell sortable columnKey="platform">Platform</NeTableHeadCell>
+      <NeTableHeadCell sortable columnKey="year">Year</NeTableHeadCell>
+    </NeTableHead>
+    <NeTableBody>
+      <NeTableRow v-for="(item, index) in items" :key="index">
+        <NeTableCell data-label="Game">{{ item.game }}</NeTableCell>
+        <NeTableCell data-label="Platform">{{ item.platform }}</NeTableCell>
+        <NeTableCell data-label="Year">{{ item.year }}</NeTableCell>
+      </NeTableRow>
+    </NeTableBody>
+  </NeTable>`
+
+export const Sortable: StoryObj<typeof NeTable> = {
+  render: (args) => ({
+    components: {
+      NeTable,
+      NeTableHead,
+      NeTableHeadCell,
+      NeTableBody,
+      NeTableRow,
+      NeTableCell,
+      NeEmptyState,
+      NePaginator
+    },
+    setup() {
+      return { args, items }
+    },
+    template: sortableTemplate
+  }),
+  args: {
+    sortKey: 'game'
   }
 }

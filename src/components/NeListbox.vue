@@ -283,11 +283,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
                       'absolute inset-y-0 right-0 flex items-center pr-4 text-primary-700 dark:text-primary-500'
                     ]"
                   >
-                    <FontAwesomeIcon
-                      :icon="fasCheck"
-                      class="h-4 w-4 shrink-0"
-                      aria-hidden="true"
-                    />
+                    <FontAwesomeIcon :icon="fasCheck" class="h-4 w-4 shrink-0" aria-hidden="true" />
                   </span>
                 </li>
               </ListboxOption>

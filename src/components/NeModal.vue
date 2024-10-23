@@ -141,11 +141,7 @@ function onSecondaryClick() {
                     @click="onClose"
                   >
                     <span class="sr-only">{{ closeAriaLabel }}</span>
-                    <FontAwesomeIcon
-                      :icon="['fas', 'xmark']"
-                      class="h-5 w-5"
-                      aria-hidden="true"
-                    />
+                    <FontAwesomeIcon :icon="['fas', 'xmark']" class="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
                 <div class="sm:flex sm:items-start">

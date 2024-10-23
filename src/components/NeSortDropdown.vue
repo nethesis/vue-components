@@ -8,19 +8,12 @@ import { ref, watch, computed } from 'vue'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { isEqual } from 'lodash-es'
 import { v4 as uuidv4 } from 'uuid'
-import NeBadge from './NeBadge.vue'
-import NeLink from './NeLink.vue'
 import type { ButtonSize } from './NeButton.vue'
 
-export type FilterKind = 'radio' | 'checkbox'
-
-export type FilterOption = {
+export type SortOption = {
   id: string
   label: string
-  description?: string
-  disabled?: boolean
 }
 
 const sizeStyle: { [index: string]: string } = {
@@ -33,12 +26,12 @@ const sizeStyle: { [index: string]: string } = {
 
 export interface Props {
   label: string
-  options: FilterOption[]
-  kind: FilterKind
-  clearFilterLabel: string
+  options: SortOption[]
   openMenuAriaLabel: string
-  showClearFilter?: boolean
-  showSelectionCount?: boolean
+  sortByLabel: string
+  sortDirectionLabel: string
+  ascendingLabel: string
+  descendingLabel: string
   alignToRight?: boolean
   size?: ButtonSize
   disabled?: boolean
@@ -46,17 +39,16 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showClearFilter: true,
-  showSelectionCount: true,
   alignToRight: false,
   size: 'md',
   disabled: false,
   id: ''
 })
 
-const model = defineModel<string[]>()
-const radioModel = ref('')
-const checkboxModel = ref<string[]>([])
+const sortKey = defineModel<string>('sortKey')
+const sortDescending = defineModel<boolean>('sortDescending')
+const internalSortKey = ref('')
+const internalDescendingValue = ref('asc')
 const top = ref(0)
 const left = ref(0)
 const right = ref(0)
@@ -64,52 +56,51 @@ const buttonRef = ref()
 
 const componentId = computed(() => (props.id ? props.id : uuidv4()))
 
-const isSelectionCountShown = computed(() => {
-  return props.showSelectionCount && props.kind == 'checkbox' && checkboxModel.value.length > 0
-})
-
 watch(
   () => props.alignToRight,
   () => {
     calculatePosition()
-  }
-)
-
-watch(
-  () => radioModel.value,
-  () => {
-    model.value = [radioModel.value]
-  }
-)
-
-watch(
-  () => checkboxModel.value,
-  () => {
-    model.value = checkboxModel.value
-  }
-)
-
-watch(
-  () => model.value,
-  () => {
-    updateInternalModel()
   },
   { immediate: true }
 )
 
-function updateInternalModel() {
-  if (props.kind === 'radio') {
-    // update only if the value is different to avoid "Maximum recursive updates exceeded" error
-    if (model.value && radioModel.value !== model.value[0]) {
-      radioModel.value = model.value[0]
+watch(
+  () => sortDescending.value,
+  () => {
+    // update internal model when external model changes, converting boolean to string
+    internalDescendingValue.value = sortDescending.value ? 'desc' : 'asc'
+  },
+  { immediate: true }
+)
+
+watch(
+  () => sortKey.value,
+  () => {
+    // update internal model when external model changes
+    if (sortKey.value !== internalSortKey.value) {
+      internalSortKey.value = sortKey.value || ''
     }
-  } else if (props.kind === 'checkbox') {
-    // update only if the value is different to avoid "Maximum recursive updates exceeded" error
-    if (model.value && !isEqual(checkboxModel.value, model.value)) {
-      checkboxModel.value = model.value
-    }
-  }
-}
+  },
+  { immediate: true }
+)
+
+watch(
+  () => internalSortKey.value,
+  () => {
+    // update external model when internal model changes
+    sortKey.value = internalSortKey.value
+  },
+  { immediate: true }
+)
+
+watch(
+  () => internalDescendingValue.value,
+  () => {
+    // update external model when internal model changes, converting string to boolean
+    sortDescending.value = internalDescendingValue.value === 'desc'
+  },
+  { immediate: true }
+)
 
 function calculatePosition() {
   top.value = buttonRef.value?.$el.getBoundingClientRect().bottom + window.scrollY
@@ -136,12 +127,6 @@ function calculatePosition() {
           <span class="flex items-center justify-center">
             <slot v-if="$slots.label" name="label"></slot>
             <span v-else>{{ label }}</span>
-            <NeBadge
-              v-if="isSelectionCountShown"
-              :text="checkboxModel.length.toString()"
-              size="xs"
-              class="ml-2"
-            />
             <FontAwesomeIcon :icon="faChevronDown" class="ml-2 h-3 w-3" aria-hidden="true" />
           </span>
         </button>
@@ -161,78 +146,79 @@ function calculatePosition() {
             { top: top + 'px' },
             alignToRight ? { right: right + 'px' } : { left: left + 'px' }
           ]"
-          class="absolute z-50 mt-2.5 max-h-[16.5rem] min-w-[10rem] overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50"
+          class="absolute z-50 mt-2.5 max-h-80 min-w-[10rem] overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50"
         >
-          <MenuItem v-if="showClearFilter && kind == 'checkbox'" as="div" class="py-2">
-            <NeLink @click.stop="checkboxModel = []">
-              {{ clearFilterLabel }}
-            </NeLink>
-          </MenuItem>
-          <MenuItem v-for="option in options" :key="option.id" as="div" :disabled="option.disabled">
+          <div class="text-sm font-medium leading-6 text-gray-500 dark:text-gray-400">
+            {{ sortByLabel }}
+          </div>
+          <MenuItem v-for="option in options" :key="option.id" as="div">
             <!-- divider -->
             <hr
               v-if="option.id.includes('divider')"
               class="my-1 border-gray-200 dark:border-gray-700"
             />
-            <!-- filter option -->
-            <div v-if="kind === 'radio'" class="flex items-center py-2" @click.stop>
-              <!-- radio button -->
+            <div class="flex items-center py-2" @click.stop>
               <input
                 :id="`${componentId}-${option.id}`"
-                v-model="radioModel"
+                v-model="internalSortKey"
                 type="radio"
                 :name="componentId"
                 :value="option.id"
                 :aria-describedby="`${componentId}-${option.id}-description`"
                 class="peer border-gray-300 text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 focus:dark:ring-primary-200 focus:dark:ring-offset-gray-900"
-                :disabled="option.disabled || disabled"
+                :disabled="disabled"
               />
               <label
                 :for="`${componentId}-${option.id}`"
                 class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
               >
                 <span>{{ option.label }}</span>
-                <span
-                  v-if="option.description"
-                  :id="`${componentId}-${option.id}-description`"
-                  class="text-gray-500 dark:text-gray-400"
-                >
-                  {{ option.description }}
-                </span>
               </label>
             </div>
-            <div v-else-if="kind === 'checkbox'" class="flex items-center py-2" @click.stop>
-              <!-- checkbox -->
-              <div class="flex h-6 items-center">
-                <input
-                  :id="`${componentId}-${option.id}`"
-                  v-model="checkboxModel"
-                  type="checkbox"
-                  :value="option.id"
-                  :aria-describedby="`${componentId}-${option.id}-description`"
-                  :disabled="option.disabled || disabled"
-                  class="h-5 w-5 rounded border-gray-300 text-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-500 dark:text-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950 sm:h-4 sm:w-4"
-                />
-              </div>
-              <div class="ml-3 text-sm leading-6">
-                <!-- show label prop or default slot -->
-                <label
-                  :class="[
-                    'flex flex-col font-medium text-gray-700 dark:text-gray-50',
-                    { 'cursor-not-allowed opacity-50': option.disabled }
-                  ]"
-                  :for="`${componentId}-${option.id}`"
-                >
-                  <span>{{ option.label }}</span>
-                  <span
-                    v-if="option.description"
-                    :id="`${componentId}-${option.id}-description`"
-                    class="text-gray-500 dark:text-gray-400"
-                  >
-                    {{ option.description }}
-                  </span>
-                </label>
-              </div>
+          </MenuItem>
+          <div class="mt-4 text-sm font-medium leading-6 text-gray-500 dark:text-gray-400">
+            {{ sortDirectionLabel }}
+          </div>
+          <!-- ascending -->
+          <MenuItem as="div">
+            <div class="flex items-center py-2" @click.stop>
+              <input
+                :id="`${componentId}-asc`"
+                v-model="internalDescendingValue"
+                type="radio"
+                :name="`${componentId}-sortDirection`"
+                value="asc"
+                :aria-describedby="`${componentId}-asc-description`"
+                class="peer border-gray-300 text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 focus:dark:ring-primary-200 focus:dark:ring-offset-gray-900"
+                :disabled="disabled"
+              />
+              <label
+                :for="`${componentId}-asc`"
+                class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
+              >
+                <span>{{ ascendingLabel }}</span>
+              </label>
+            </div>
+          </MenuItem>
+          <!-- descending -->
+          <MenuItem as="div">
+            <div class="flex items-center py-2" @click.stop>
+              <input
+                :id="`${componentId}-desc`"
+                v-model="internalDescendingValue"
+                type="radio"
+                :name="`${componentId}-sortDirection`"
+                value="desc"
+                :aria-describedby="`${componentId}-desc-description`"
+                class="peer border-gray-300 text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 focus:dark:ring-primary-200 focus:dark:ring-offset-gray-900"
+                :disabled="disabled"
+              />
+              <label
+                :for="`${componentId}-desc`"
+                class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
+              >
+                <span>{{ descendingLabel }}</span>
+              </label>
             </div>
           </MenuItem>
         </MenuItems>
