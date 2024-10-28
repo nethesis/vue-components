@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/nethesis/vue-components/compare/v1.5.1...v1.6.0) (2024-10-28)
+
+
+### Features
+
+* add sort support ([#76](https://github.com/nethesis/vue-components/issues/76)) ([1a75a8a](https://github.com/nethesis/vue-components/commit/1a75a8a0aa763ccf6625cab2bb1f3c441a7b2725))
+
 ## [1.5.1](https://github.com/nethesis/vue-components/compare/v1.5.0...v1.5.1) (2024-10-17)
 
 
