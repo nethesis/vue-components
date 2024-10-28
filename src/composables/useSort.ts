@@ -1,14 +1,16 @@
 import { ref, toValue, watchEffect, type MaybeRefOrGetter } from 'vue'
-
-export function useSort(
-  items: MaybeRefOrGetter<Record<string, any>[]>,
-  sortKey: MaybeRefOrGetter<string>,
+export function useSort<T>(
+  items: MaybeRefOrGetter<T[]>,
+  sortKey: MaybeRefOrGetter<keyof T>,
   descending: MaybeRefOrGetter<boolean> = false,
-  sortFunctions: Record<string, (a: any, b: any) => number> = {}
+  sortFunctions: Record<keyof T, (a: T, b: T) => number> = {} as Record<
+    keyof T,
+    (a: T, b: T) => number
+  >
 ) {
-  const sortedItems = ref<Record<string, any>[]>([])
+  const sortedItems = ref<T[]>([])
 
-  function defaultSortFn(a: Record<string, any>, b: Record<string, any>) {
+  function defaultSortFn(a: T, b: T) {
     const sortKeyValue = toValue(sortKey)
     const valueA = a[sortKeyValue]
     const valueB = b[sortKeyValue]
@@ -60,12 +62,10 @@ export function useSort(
     const sortFunction = sortFunctions[sortKeyValue] || defaultSortFn
 
     // sort the items without mutating (slice) the original array
-    sortedItems.value = itemsValue
-      .slice()
-      .sort((a: Record<string, any>, b: Record<string, any>) => {
-        const result = sortFunction(a, b)
-        return descendingValue ? -result : result
-      })
+    sortedItems.value = itemsValue.slice().sort((a, b) => {
+      const result = sortFunction(a, b)
+      return descendingValue ? -result : result
+    })
   })
 
   return {
