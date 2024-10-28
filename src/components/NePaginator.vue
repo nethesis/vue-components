@@ -231,11 +231,7 @@ function navigateToPage(page: number) {
             @click="navigateToPage(currentPage + 1)"
           >
             <span class="sr-only">{{ nextLabel }}</span>
-            <FontAwesomeIcon
-              :icon="fasChevronRight"
-              class="h-3 w-3 shrink-0"
-              aria-hidden="true"
-            />
+            <FontAwesomeIcon :icon="fasChevronRight" class="h-3 w-3 shrink-0" aria-hidden="true" />
           </button>
         </li>
       </ul>
