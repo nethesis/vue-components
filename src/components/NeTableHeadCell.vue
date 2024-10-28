@@ -5,7 +5,6 @@
 <script lang="ts" setup>
 import { computed, inject, toValue } from 'vue'
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const props = defineProps({
@@ -26,10 +25,6 @@ const emit = defineEmits<{
 // inject from NeTable.vue
 const sortKey = inject('sortKey', '')
 const sortDescending = inject('sortDescending', false)
-
-library.add(faSort)
-library.add(faSortUp)
-library.add(faSortDown)
 
 const ariaSort = computed(() => {
   const sortKeyValue = toValue(sortKey)
