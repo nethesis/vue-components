@@ -13,6 +13,8 @@ import { v4 as uuidv4 } from 'uuid'
 import NeBadge from './NeBadge.vue'
 import NeLink from './NeLink.vue'
 import type { ButtonSize } from './NeButton.vue'
+import NeTextInput from './NeTextInput.vue'
+import { focusElement } from '@/main'
 
 export type FilterKind = 'radio' | 'checkbox'
 
@@ -39,6 +41,12 @@ export interface Props {
   openMenuAriaLabel: string
   showClearFilter?: boolean
   showSelectionCount?: boolean
+  noOptionsLabel: string
+  showOptionsFilter?: boolean
+  optionsFilterPlaceholder?: string
+  // limit the number of options displayed for performance
+  maxOptionsShown?: number
+  moreOptionsHiddenLabel: string
   alignToRight?: boolean
   size?: ButtonSize
   disabled?: boolean
@@ -48,6 +56,9 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   showClearFilter: true,
   showSelectionCount: true,
+  showOptionsFilter: false,
+  optionsFilterPlaceholder: '',
+  maxOptionsShown: 25,
   alignToRight: false,
   size: 'md',
   disabled: false,
@@ -61,11 +72,41 @@ const top = ref(0)
 const left = ref(0)
 const right = ref(0)
 const buttonRef = ref()
+const optionsFilter = ref('')
+const optionsFilterRef = ref()
 
 const componentId = computed(() => (props.id ? props.id : uuidv4()))
 
 const isSelectionCountShown = computed(() => {
   return props.showSelectionCount && props.kind == 'checkbox' && checkboxModel.value.length > 0
+})
+
+const optionsToDisplay = computed(() => {
+  return filteredOptions.value.slice(0, props.maxOptionsShown)
+})
+
+const moreOptionsHidden = computed(() => {
+  return filteredOptions.value.length > props.maxOptionsShown
+})
+
+const isShowingOptionsFilter = computed(() => {
+  return props.showOptionsFilter || props.options.length > props.maxOptionsShown
+})
+
+const filteredOptions = computed(() => {
+  if (!isShowingOptionsFilter.value) {
+    // return all options
+    return props.options
+  }
+
+  // show only options that match the options filter
+
+  const regex = /[^a-zA-Z0-9-]/g
+  const queryText = optionsFilter.value.replace(regex, '')
+
+  return props.options.filter((option) => {
+    return new RegExp(queryText, 'i').test(option.label?.replace(regex, ''))
+  })
 })
 
 watch(
@@ -119,6 +160,12 @@ function calculatePosition() {
     buttonRef.value?.$el.getBoundingClientRect().right -
     window.scrollX
 }
+
+function maybeFocusOptionsFilter() {
+  if (isShowingOptionsFilter.value) {
+    focusElement(optionsFilterRef)
+  }
+}
 </script>
 
 <template>
@@ -155,20 +202,39 @@ function calculatePosition() {
         leave-active-class="transition ease-in duration-75"
         leave-from-class="transform opacity-100 scale-100"
         leave-to-class="transform opacity-0 scale-95"
+        @after-enter="maybeFocusOptionsFilter"
       >
         <MenuItems
           :style="[
             { top: top + 'px' },
             alignToRight ? { right: right + 'px' } : { left: left + 'px' }
           ]"
-          class="absolute z-50 mt-2.5 max-h-[16.5rem] min-w-[10rem] overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50"
+          class="absolute z-50 mt-2.5 max-h-[17.2rem] min-w-[10rem] overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50"
         >
-          <MenuItem v-if="showClearFilter && kind == 'checkbox'" as="div" class="py-2">
+          <div v-if="isShowingOptionsFilter" class="py-2">
+            <label class="sr-only" :for="`${componentId}-options-filter`">
+              {{ optionsFilterPlaceholder }}
+            </label>
+            <NeTextInput
+              :id="`${componentId}-options-filter`"
+              ref="optionsFilterRef"
+              v-model="optionsFilter"
+              :placeholder="optionsFilterPlaceholder"
+              is-search
+              @keydown.stop
+            />
+          </div>
+          <div v-if="showClearFilter && kind == 'checkbox'" class="py-2">
             <NeLink @click.stop="checkboxModel = []">
               {{ clearFilterLabel }}
             </NeLink>
-          </MenuItem>
-          <MenuItem v-for="option in options" :key="option.id" as="div" :disabled="option.disabled">
+          </div>
+          <MenuItem
+            v-for="option in optionsToDisplay"
+            :key="option.id"
+            as="div"
+            :disabled="option.disabled"
+          >
             <!-- divider -->
             <hr
               v-if="option.id.includes('divider')"
@@ -235,6 +301,16 @@ function calculatePosition() {
               </div>
             </div>
           </MenuItem>
+          <!-- showing a limited number of options for performance, but more options are available -->
+          <div v-if="moreOptionsHidden" class="cursor-default py-2 opacity-50">
+            {{ moreOptionsHiddenLabel }}
+          </div>
+          <!-- no option matching filter -->
+          <div v-if="!filteredOptions.length">
+            <div class="py-2 opacity-50">
+              {{ noOptionsLabel }}
+            </div>
+          </div>
         </MenuItems>
       </transition>
     </Teleport>
