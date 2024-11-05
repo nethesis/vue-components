@@ -20,7 +20,7 @@ const meta = {
     invalidMessage: '',
     optional: false,
     isSearch: false,
-    clearSearchLabel: 'Clear search',
+    clearSearchLabel: 'Clear',
     disabled: false,
     id: '',
     isPassword: false,
@@ -33,7 +33,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const template = '<NeTextInput v-bind="args" class="max-w-md" />'
+const template = '<NeTextInput v-bind="args" class="max-w-xs" />'
 
 export const Default: Story = {
   render: (args) => ({
@@ -100,10 +100,10 @@ export const Password: Story = {
     },
     template: template
   }),
-  args: { isPassword: true, label: 'Enter password', placeholder: '' }
+  args: { isPassword: true, label: 'Enter password', placeholder: 'Current password' }
 }
 
-const typeNumberTemplate = '<NeTextInput v-bind="args" type="number" class="max-w-md" />'
+const typeNumberTemplate = '<NeTextInput v-bind="args" type="number" class="max-w-xs" />'
 
 export const TypeNumber: Story = {
   render: (args) => ({
@@ -117,7 +117,7 @@ export const TypeNumber: Story = {
 }
 
 const templateWithTooltip =
-  '<NeTextInput v-bind="args" class="max-w-md">\
+  '<NeTextInput v-bind="args" class="max-w-xs">\
       <template #tooltip>\
         <NeTooltip>\
           <template #content>Tooltip</template>\

@@ -47,7 +47,7 @@ const props = defineProps({
   },
   clearSearchLabel: {
     type: String,
-    default: 'Clear search'
+    default: 'Clear'
   },
   isPassword: {
     type: Boolean,
@@ -234,7 +234,7 @@ function clearText() {
         v-else-if="isSearch && modelValue"
         class="absolute inset-y-0 right-0 flex items-center pr-3"
       >
-        <button type="button" :disabled="disabled" @click="clearText">
+        <button type="button" :disabled="disabled" class="flex items-center" @click="clearText">
           <span class="sr-only">{{ clearSearchLabel }}</span>
           <FontAwesomeIcon
             :icon="faXmark"
