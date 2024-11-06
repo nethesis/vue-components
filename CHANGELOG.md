@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.0](https://github.com/nethesis/vue-components/compare/v1.6.0...v1.7.0) (2024-11-06)
+
+
+### Features
+
+* add options filtering to NeDropdownFilter ([#78](https://github.com/nethesis/vue-components/issues/78)) ([bf3f4b2](https://github.com/nethesis/vue-components/commit/bf3f4b2620c423ea808298b9e15cf07d3bc268e0))
+* **NeTextInput:** add isSearch prop, prefix & suffix slots ([#79](https://github.com/nethesis/vue-components/issues/79)) ([30aa720](https://github.com/nethesis/vue-components/commit/30aa7203a3c14cb2b75f35ee8b8fee8a10a8a6b1))
+
 ## [1.6.0](https://github.com/nethesis/vue-components/compare/v1.5.1...v1.6.0) (2024-10-28)
 
 
