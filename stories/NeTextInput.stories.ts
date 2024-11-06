@@ -4,6 +4,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import { NeTextInput, NeTooltip } from '../src/main'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faEnvelope, faDollarSign } from '@fortawesome/free-solid-svg-icons'
 
 const meta = {
   title: 'NeTextInput',
@@ -17,6 +19,8 @@ const meta = {
     helperText: '',
     invalidMessage: '',
     optional: false,
+    isSearch: false,
+    clearSearchLabel: 'Clear',
     disabled: false,
     id: '',
     isPassword: false,
@@ -29,7 +33,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const template = '<NeTextInput v-bind="args" class="max-w-md" />'
+const template = '<NeTextInput v-bind="args" class="max-w-xs" />'
 
 export const Default: Story = {
   render: (args) => ({
@@ -96,10 +100,10 @@ export const Password: Story = {
     },
     template: template
   }),
-  args: { isPassword: true, label: 'Enter password', placeholder: '' }
+  args: { isPassword: true, label: 'Enter password', placeholder: 'Current password' }
 }
 
-const typeNumberTemplate = '<NeTextInput v-bind="args" type="number" class="max-w-md" />'
+const typeNumberTemplate = '<NeTextInput v-bind="args" type="number" class="max-w-xs" />'
 
 export const TypeNumber: Story = {
   render: (args) => ({
@@ -113,7 +117,7 @@ export const TypeNumber: Story = {
 }
 
 const templateWithTooltip =
-  '<NeTextInput v-bind="args" class="max-w-md">\
+  '<NeTextInput v-bind="args" class="max-w-xs">\
       <template #tooltip>\
         <NeTooltip>\
           <template #content>Tooltip</template>\
@@ -130,4 +134,49 @@ export const WithTooltip: Story = {
     template: templateWithTooltip
   }),
   args: {}
+}
+
+const templateWithPrefix = `<NeTextInput v-bind="args" class="max-w-xs">
+      <template #prefix>
+        <FontAwesomeIcon :icon="faEnvelope" class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+      </template>
+    </NeTextInput>`
+
+export const WithPrefix: Story = {
+  render: (args) => ({
+    components: { NeTextInput, FontAwesomeIcon },
+    setup() {
+      return { args, faEnvelope }
+    },
+    template: templateWithPrefix
+  }),
+  args: {}
+}
+
+const templateWithSuffix = `<NeTextInput v-bind="args" class="max-w-xs">
+      <template #suffix>
+        <FontAwesomeIcon :icon="faDollarSign" class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+      </template>
+    </NeTextInput>`
+
+export const WithSuffix: Story = {
+  render: (args) => ({
+    components: { NeTextInput, FontAwesomeIcon },
+    setup() {
+      return { args, faDollarSign }
+    },
+    template: templateWithSuffix
+  }),
+  args: {}
+}
+
+export const Search: Story = {
+  render: (args) => ({
+    components: { NeTextInput },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: { isSearch: true }
 }
