@@ -32,13 +32,26 @@ const meta = {
       {
         id: 'option4',
         label: 'Option 4'
+      },
+      {
+        id: 'option5',
+        label: 'Option 5'
+      },
+      {
+        id: 'option6',
+        label: 'Option 6'
       }
     ],
     kind: 'checkbox',
-    clearFilterLabel: 'Clear filter',
+    clearFilterLabel: 'Clear selection',
     openMenuAriaLabel: 'Open filter',
     showClearFilter: true,
     showSelectionCount: true,
+    noOptionsLabel: 'No options',
+    showOptionsFilter: false,
+    optionsFilterPlaceholder: 'Filter options',
+    maxOptionsShown: 25,
+    moreOptionsHiddenLabel: 'Continue typing to show more options',
     alignToRight: false,
     size: 'md',
     disabled: false,
@@ -172,4 +185,49 @@ export const ButtonSlot: Story = {
     template: withSlotTemplate
   }),
   args: {}
+}
+
+export const NoOptions: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilter },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    options: []
+  }
+}
+
+export const ShowOptionsFilter: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilter },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    showOptionsFilter: true
+  }
+}
+
+const manyOptions: any = []
+
+for (let i = 0; i < 150; i++) {
+  manyOptions.push({ id: i.toString(), label: `Option ${i}` })
+}
+
+export const ManyOptions: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilter },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    options: manyOptions
+  }
 }
