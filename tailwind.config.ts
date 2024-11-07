@@ -1,6 +1,7 @@
 import { Config } from 'tailwindcss'
 import defaultTheme from 'tailwindcss/defaultTheme'
-import colors = require('tailwindcss/colors')
+import twColors from 'tailwindcss/colors'
+import twFormsPlugin from '@tailwindcss/forms'
 
 export default {
   content: [
@@ -13,7 +14,7 @@ export default {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        primary: colors.cyan
+        primary: twColors.cyan
       },
       keyframes: {
         indeterminateProgressBar: {
@@ -36,6 +37,6 @@ export default {
       textColor: ['group-hover']
     }
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [twFormsPlugin],
   darkMode: 'class'
 } satisfies Config

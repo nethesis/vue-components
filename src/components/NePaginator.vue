@@ -25,7 +25,7 @@ const props = defineProps({
     default: 10
   },
   pageSizes: {
-    type: Array<Number>,
+    type: Array<number>,
     default: [10, 25, 50, 100]
   },
   previousLabel: {
