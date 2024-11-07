@@ -12,7 +12,7 @@ import NeButton, { type ButtonKind } from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
 import type { PropType } from 'vue'
 
-type ModalKind = 'neutral' | 'info' | 'warning' | 'error' | 'success'
+export type ModalKind = 'neutral' | 'info' | 'warning' | 'error' | 'success'
 type PrimaryButtonKind = 'primary' | 'danger'
 type ModalSize = 'md' | 'lg' | 'xl' | 'xxl'
 
