@@ -98,7 +98,7 @@ const inputInvalidStyle =
 
 const descriptionBaseStyle = 'mt-2 text-sm'
 
-let isPasswordVisible = ref(false)
+const isPasswordVisible = ref(false)
 
 const componentId = computed(() => (props.id ? props.id : uuidv4()))
 

@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   srTabsLabel: 'Tabs'
 })
 
-let currentTab = ref('')
+const currentTab = ref('')
 
 onMounted(() => {
   selectTabFromSelectedProp()
@@ -46,7 +46,7 @@ function selectTabFromSelectedProp() {
   let selectedTab = props.tabs[0]
 
   if (props.selected) {
-    let selectedTabFound = props.tabs.find((tab: any) => tab.name === props.selected)
+    const selectedTabFound = props.tabs.find((tab: any) => tab.name === props.selected)
 
     if (selectedTabFound) {
       selectedTab = selectedTabFound
