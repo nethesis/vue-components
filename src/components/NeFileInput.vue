@@ -13,7 +13,7 @@ interface FileInputProps {
   modelValue?: File | File[] | null
   label?: string
   invalidMessage?: string
-  dropzoneLabel?: string
+  dropzoneLabel: string
   progress?: number
   showProgress?: boolean
   accept?: string | undefined
@@ -25,7 +25,6 @@ const props = withDefaults(defineProps<FileInputProps>(), {
   invalidMessage: '',
   progress: 0,
   showProgress: false,
-  dropzoneLabel: 'Drag and drop or click to upload',
   accept: undefined
 })
 
