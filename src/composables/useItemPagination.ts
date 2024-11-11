@@ -27,7 +27,7 @@ export function useItemPagination<T>(
     onPageChange: settings.onPageChange
   })
 
-  const paginatedItems = computed(() => {
+  const paginatedItems = computed((): T[] => {
     const start = (currentPage.value - 1) * toValue(settings.itemsPerPage)
     const end = start + toValue(settings.itemsPerPage)
     const itemsArray = toValue(items)
