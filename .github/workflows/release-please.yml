@@ -1,4 +1,4 @@
-name: Tools
+name: Release Please
 
 on:
   push:
@@ -7,12 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  release-please:
-    name: Release Please
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
         id: release-please
         with:
           release-type: node
-          token: '${{ secrets.RELEASE_PLEASE }}'
+          token: '${{ secrets.RELEASE_PLEASE_TOKEN }}'
