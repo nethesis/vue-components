@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots } from 'vue'
+import { computed, ref, useAttrs } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -82,7 +82,7 @@ defineOptions({
   inheritAttrs: false
 })
 
-const slots = useSlots()
+const slots = defineSlots()
 
 // add fontawesome icons
 library.add(fasCircleExclamation)
@@ -115,7 +115,7 @@ const inputRef = ref()
 
 const attrs = useAttrs()
 
-const rootAttrs = computed(() => {
+const rootAttrs = computed((): string[] => {
   const allowed = ['class']
   return Object.keys(attrs)
     .filter((key) => allowed.includes(key))
@@ -125,7 +125,7 @@ const rootAttrs = computed(() => {
     }, {})
 })
 
-const inputAttrs = computed(() => {
+const inputAttrs = computed((): string[] => {
   const notAllowed = ['class']
   return Object.keys(attrs)
     .filter((key) => !notAllowed.includes(key))
