@@ -2,7 +2,7 @@
 
 set -e
 
-dev_image=${DEV_IMAGE:-"vue-components:dev-20.10.0"}
+dev_image=${DEV_IMAGE:-"vue-components:dev-22.14.0"}
 container_name=vue-components-dev
 
 build_image() {

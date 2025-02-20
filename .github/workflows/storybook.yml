@@ -1,4 +1,4 @@
-name: Publish Storybook
+name: Storybook
 
 on:
   push:
@@ -16,12 +16,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  publish:
+    name: Publish
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Build dist
-        run: ./build.sh dist
       - name: Build storybook
         run: ./build.sh storybook
       - name: Upload artifact to Pages

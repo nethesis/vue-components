@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: NPM package
+    runs-on: ubuntu-latest
+    concurrency:
+      group: publish-npm
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./build.sh dist
+      - name: Publish to NPM
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
