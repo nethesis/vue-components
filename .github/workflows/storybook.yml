@@ -24,8 +24,8 @@ jobs:
       - name: Build storybook
         run: ./build.sh storybook
       - name: Upload artifact to Pages
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: "storybook-static/"
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4

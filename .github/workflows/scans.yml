@@ -18,6 +18,7 @@ jobs:
         uses: anchore/sbom-action@v0
         with:
           output-file: sbom.spdx.json
+          dependency-snapshot: true
       - name: Scan
         uses: anchore/scan-action@v6
         id: scan
