@@ -7,15 +7,15 @@
 import { computed } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
-import NeProgressBar from '@/components/NeProgressBar.vue'
+import NeProgressBar from './NeProgressBar.vue'
 
 interface FileInputProps {
   modelValue?: File | File[] | null
   label?: string
-  invalidMessage: string
+  invalidMessage?: string
   dropzoneLabel: string
-  progress: number
-  showProgress: boolean
+  progress?: number
+  showProgress?: boolean
   accept?: string | undefined
 }
 
@@ -25,7 +25,6 @@ const props = withDefaults(defineProps<FileInputProps>(), {
   invalidMessage: '',
   progress: 0,
   showProgress: false,
-  dropzoneLabel: 'Drag and drop or click to upload',
   accept: undefined
 })
 

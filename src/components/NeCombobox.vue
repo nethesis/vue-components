@@ -34,7 +34,6 @@ export interface NeComboboxOption {
 }
 
 export interface Props {
-  modelValue: string | Array<NeComboboxOption>
   options: NeComboboxOption[]
   label?: string
   placeholder?: string
@@ -44,20 +43,19 @@ export interface Props {
   maxOptionsShown?: number
   multiple?: boolean
   disabled?: boolean
-  showOptionsType: boolean
+  showOptionsType?: boolean
   optional?: boolean
-  selectedLabel: string
+  selectedLabel?: string
   showSelectedLabel?: boolean
   noResultsLabel: string
-  limitedOptionsLabel: string
+  limitedOptionsLabel?: string
   noOptionsLabel: string
   acceptUserInput?: boolean
-  userInputLabel: string
+  userInputLabel?: string
   optionalLabel: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  options: () => [],
   label: '',
   placeholder: '',
   helperText: '',
@@ -68,8 +66,13 @@ const props = withDefaults(defineProps<Props>(), {
   showOptionsType: true,
   optional: false,
   showSelectedLabel: true,
-  acceptUserInput: false
+  acceptUserInput: false,
+  selectedLabel: 'Selected',
+  limitedOptionsLabel: 'Continue typing to show more options',
+  userInputLabel: 'User input'
 })
+
+const model = defineModel<string | Array<NeComboboxOption>>()
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -174,7 +177,7 @@ onMounted(() => {
 })
 
 watch(
-  () => props.modelValue,
+  () => model,
   () => {
     if (props.multiple) {
       selectMultipleOptionsFromModelValue()
@@ -255,14 +258,14 @@ function onOptionSelected(selectedOption: NeComboboxOption) {
 }
 
 function selectSingleOptionFromModelValue() {
-  const optionFound = allOptions.value.find((option) => option.id === props.modelValue)
+  const optionFound = allOptions.value.find((option) => option.id === model.value)
 
   if (optionFound) {
     selected.value = optionFound
-  } else if (props.acceptUserInput && props.modelValue) {
+  } else if (props.acceptUserInput && model.value) {
     const userInputOption = {
-      id: props.modelValue as string,
-      label: props.modelValue as string,
+      id: model.value as string,
+      label: model.value as string,
       description: props.userInputLabel
     }
     userInputOptions.value.push(userInputOption)
@@ -273,7 +276,7 @@ function selectSingleOptionFromModelValue() {
 function selectMultipleOptionsFromModelValue() {
   const selectedList: NeComboboxOption[] = []
 
-  for (const selectedOption of props.modelValue as NeComboboxOption[]) {
+  for (const selectedOption of model.value as NeComboboxOption[]) {
     const optionFound = allOptions.value.find((option) => option.id === selectedOption.id)
 
     if (optionFound) {
