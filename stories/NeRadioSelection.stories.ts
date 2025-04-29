@@ -4,20 +4,12 @@
 import { Meta, StoryObj } from '@storybook/vue3'
 
 import { NeRadioSelection, NeTooltip } from '../src/main'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faEarthAmericas,
   faLocationDot,
   faShield,
-  faUserGroup,
-  faHardDrive
+  faUserGroup
 } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faLocationDot)
-library.add(faEarthAmericas)
-library.add(faUserGroup)
-library.add(faShield)
-library.add(faHardDrive)
 
 const meta: Meta<typeof NeRadioSelection> = {
   title: 'NeRadioSelection',
@@ -101,36 +93,31 @@ export const CardPicker: StoryObj<typeof NeRadioSelection> = {
         id: '1',
         label: 'LAN',
         description: 'green',
-        icon: 'location-dot',
-        iconStyle: 'fas'
+        icon: faLocationDot
       },
       {
         id: '2',
         label: 'WAN',
         description: 'red',
-        icon: 'earth-americas',
-        iconStyle: 'fas'
+        icon: faEarthAmericas
       },
       {
         id: '3',
         label: 'Guests',
         description: 'blue',
-        icon: 'user-group',
-        iconStyle: 'fas'
+        icon: faUserGroup
       },
       {
         id: '4',
         label: 'DMZ',
         description: 'orange',
-        icon: 'shield',
-        iconStyle: 'fas',
+        icon: faShield,
         disabled: true
       },
       {
         id: '5',
         label: 'Custom Role',
-        icon: 'location-dot',
-        iconStyle: 'fas'
+        icon: faLocationDot
       }
     ]
   }

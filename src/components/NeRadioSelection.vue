@@ -6,7 +6,7 @@
 <script lang="ts" setup>
 import { computed, type PropType, type Ref, ref, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { type IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import NeFormItemLabel from '@/components/NeFormItemLabel.vue'
 import { v4 as uuidv4 } from 'uuid'
@@ -17,8 +17,7 @@ type RadioOption = {
   id: string
   label: string
   description?: string
-  icon?: string
-  iconStyle?: string
+  icon?: IconDefinition
   disabled?: boolean
 }
 
@@ -76,8 +75,6 @@ const emit = defineEmits(['update:modelValue'])
 defineExpose({
   focus
 })
-
-library.add(faCircleCheck)
 
 const value: Ref<any> = ref(props.modelValue ?? '')
 
@@ -154,7 +151,7 @@ function focus() {
       >
         <FontAwesomeIcon
           v-if="option.icon"
-          :icon="[option.iconStyle ?? 'fas', option.icon]"
+          :icon="option.icon"
           :class="`${iconClasses[cardSize]}`"
         />
         <!-- custom content -->
@@ -171,7 +168,7 @@ function focus() {
         <!-- top-right selection icon -->
         <FontAwesomeIcon
           v-if="value == option.id && cardSelectionMark"
-          :icon="['fas', 'circle-check']"
+          :icon="faCircleCheck"
           :class="`absolute text-primary-700 dark:text-primary-500 ${selectionMarkClasses[cardSize]}`"
         />
       </button>
