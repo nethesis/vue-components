@@ -4,19 +4,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import { NeDropdown, NeButton } from '../src/main'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPenToSquare as fasPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { faFloppyDisk as fasFloppyDisk } from '@fortawesome/free-solid-svg-icons'
-import { faTrashCan as fasTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { faCopy as fasCopy } from '@fortawesome/free-solid-svg-icons'
-import { faChevronDown as fasChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(fasPenToSquare)
-library.add(fasFloppyDisk)
-library.add(fasTrashCan)
-library.add(fasCopy)
-library.add(fasChevronDown)
 
 const meta = {
   title: 'NeDropdown',
@@ -27,22 +20,19 @@ const meta = {
       {
         id: 'edit',
         label: 'Edit',
-        icon: 'pen-to-square',
-        iconStyle: 'fas',
+        icon: faPenToSquare,
         action: () => {}
       },
       {
         id: 'copy',
         label: 'Copy',
-        icon: 'copy',
-        iconStyle: 'fas',
+        icon: faCopy,
         action: () => {}
       },
       {
         id: 'save',
         label: 'Save',
-        icon: 'floppy-disk',
-        iconStyle: 'fas',
+        icon: faFloppyDisk,
         action: () => {},
         disabled: true
       },
@@ -52,8 +42,7 @@ const meta = {
       {
         id: 'delete',
         label: 'Delete',
-        icon: 'trash-can',
-        iconStyle: 'fas',
+        icon: faTrashCan,
         danger: true,
         action: () => {}
       }
@@ -98,7 +87,7 @@ const withSlotTemplate =
     <template #button>\
       <NeButton>\
         <template #suffix>\
-          <FontAwesomeIcon :icon="[\'fas\', \'chevron-down\']" class="h-4 w-4" aria-hidden="true" />\
+          <FontAwesomeIcon :icon="faChevronDown" class="h-4 w-4" aria-hidden="true" />\
         </template>\
         Menu\
       </NeButton>\
@@ -109,7 +98,7 @@ export const WithSlot: Story = {
   render: (args) => ({
     components: { NeDropdown, NeButton, FontAwesomeIcon },
     setup() {
-      return { args }
+      return { args, faChevronDown }
     },
     template: withSlotTemplate
   }),
