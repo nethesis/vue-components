@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/nethesis/vue-components/compare/v1.7.0...v2.0.0) (2025-05-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* replace string icons with IconDefinition ([#84](https://github.com/nethesis/vue-components/issues/84))
+
+### Bug Fixes
+
+* replace string icons with IconDefinition ([#84](https://github.com/nethesis/vue-components/issues/84)) ([49edca4](https://github.com/nethesis/vue-components/commit/49edca4203515b526e8502c268e5f84c1e7dcda5))
+
 ## [1.7.0](https://github.com/nethesis/vue-components/compare/v1.6.0...v1.7.0) (2024-11-06)
 
 
