@@ -6,9 +6,9 @@
 <script lang="ts" setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import NeButton from './NeButton.vue'
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { type IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEllipsisVertical as fasEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import { ref, watch } from 'vue'
 
 export interface Props {
@@ -28,14 +28,11 @@ const props = withDefaults(defineProps<Props>(), {
 export interface NeDropdownItem {
   id: string
   label?: string
-  icon?: string
-  iconStyle?: string
+  icon?: IconDefinition
   danger?: boolean
   action?: () => void
   disabled?: boolean
 }
-
-library.add(fasEllipsisVertical)
 
 function onItemClick(item: NeDropdownItem) {
   if (!item.disabled && item.action) {
@@ -84,11 +81,7 @@ watch(
       <slot name="button">
         <!-- default kebab button -->
         <NeButton class="py-2" kind="tertiary">
-          <FontAwesomeIcon
-            :icon="['fas', 'ellipsis-vertical']"
-            aria-hidden="true"
-            class="h-5 w-5 shrink-0"
-          />
+          <FontAwesomeIcon :icon="faEllipsisVertical" aria-hidden="true" class="h-5 w-5 shrink-0" />
         </NeButton>
       </slot>
     </MenuButton>
@@ -129,7 +122,7 @@ watch(
               >
                 <FontAwesomeIcon
                   v-if="item.icon"
-                  :icon="[item.iconStyle || 'fas', item.icon]"
+                  :icon="item.icon"
                   aria-hidden="true"
                   class="mr-2 h-5 w-5 shrink-0"
                 />

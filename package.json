@@ -48,7 +48,8 @@
     "format": "prettier --list-different src/",
     "format-fix": "prettier --write src/",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build-pack": "npm version patch --no-git-tag-version && npm run build && npm pack"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
