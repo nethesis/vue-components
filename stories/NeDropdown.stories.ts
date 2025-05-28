@@ -114,6 +114,6 @@ export const MenuClasses: Story = {
     template: template
   }),
   args: {
-    menuClasses: '!bg-fuchsia-200 dark:!bg-fuchsia-900'
+    menuClasses: 'bg-fuchsia-200! dark:bg-fuchsia-900!'
   }
 }

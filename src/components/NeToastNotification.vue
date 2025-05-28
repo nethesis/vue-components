@@ -76,7 +76,7 @@ library.add(fasXmark)
         <button
           v-if="showCloseButton"
           type="button"
-          class="rounded-md leading-none text-gray-600 transition-colors hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-300 dark:hover:text-gray-200 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
+          class="rounded-md leading-none text-gray-600 transition-colors hover:text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-300 dark:hover:text-gray-200 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
           @click="$emit('close')"
         >
           <span class="sr-only">{{ srCloseLabel }}</span>
@@ -97,7 +97,7 @@ library.add(fasXmark)
         </NeTooltip>
       </div>
       <div class="flex items-start">
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
           <!-- custom icon -->
           <template v-if="$slots.icon">
             <slot name="icon" />
@@ -111,7 +111,7 @@ library.add(fasXmark)
               'font-semibold text-gray-900 dark:text-gray-50',
               {
                 'mr-6': showCloseButton,
-                '!mr-24': showTimestamp && notification.timestamp && !showCloseButton
+                'mr-24!': showTimestamp && notification.timestamp && !showCloseButton
               }
             ]"
           >
@@ -127,7 +127,7 @@ library.add(fasXmark)
       </div>
       <div
         v-if="notification.primaryLabel || notification.secondaryLabel"
-        class="ml-10 flex flex-shrink-0"
+        class="ml-10 flex shrink-0"
       >
         <div
           :class="[

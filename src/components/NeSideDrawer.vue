@@ -47,7 +47,7 @@ function onKeyUp(event: any) {
 
 <template>
   <TransitionRoot :show="isShown" as="template">
-    <Dialog as="div" class="relative z-[100]" @close="maybeCloseDrawer">
+    <Dialog as="div" class="relative z-100" @close="maybeCloseDrawer">
       <TransitionChild
         as="template"
         enter="transition-opacity ease-linear duration-300"
@@ -73,7 +73,7 @@ function onKeyUp(event: any) {
           leave-to="translate-x-full"
         >
           <DialogPanel
-            class="3xl:w-[35rem] relative ml-16 flex w-[80vw] flex-1 overflow-y-auto bg-gray-50 text-gray-700 shadow-[0px_20px_40px_0_rgba(0,0,0,0.2)] dark:bg-gray-900 dark:text-gray-100 dark:shadow-[0px_20px_40px_0_rgba(0,0,0,0.6)] sm:w-[25rem] lg:w-[30rem]"
+            class="3xl:w-[35rem] relative ml-16 flex w-[80vw] flex-1 overflow-y-auto bg-gray-50 text-gray-700 shadow-[0px_20px_40px_0_rgba(0,0,0,0.2)] dark:bg-gray-900 dark:text-gray-100 dark:shadow-[0px_20px_40px_0_rgba(0,0,0,0.6)] sm:w-100 lg:w-120"
           >
             <TransitionChild
               v-if="!title"
@@ -104,7 +104,7 @@ function onKeyUp(event: any) {
                     {{ props.title }}
                   </div>
                   <button
-                    class="inline-flex rounded-md p-1.5 text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
+                    class="inline-flex rounded-md p-1.5 text-gray-700 hover:bg-gray-200 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
                     type="button"
                     @click="closeDrawer"
                   >
