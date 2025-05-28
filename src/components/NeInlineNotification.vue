@@ -114,7 +114,7 @@ const closeIconKindStyle: { [index: string]: string } = {
 <template>
   <div :class="`rounded-md border-l-4 p-4 text-sm ${containerKindStyle[props.kind as string]}`">
     <div class="flex">
-      <div class="flex-shrink-0">
+      <div class="shrink-0">
         <FontAwesomeIcon
           :class="`h-4 w-4 ${iconKindStyle[props.kind as string]}`"
           :icon="iconName[props.kind as string]"
@@ -143,7 +143,7 @@ const closeIconKindStyle: { [index: string]: string } = {
         <!-- expandable details -->
         <template v-if="$slots.details">
           <button
-            :class="`-ml-2 mt-3 rounded-md px-2 py-1.5 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+            :class="`-ml-2 mt-3 rounded-md px-2 py-1.5 font-medium transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
               buttonsKindStyle[props.kind as string]
             }`"
             @click="isExpandedDetails = !isExpandedDetails"
@@ -169,7 +169,7 @@ const closeIconKindStyle: { [index: string]: string } = {
           <div class="-mx-2 flex">
             <button
               v-if="primaryButtonLabel"
-              :class="`rounded-md px-2 py-1.5 text-sm font-medium ring-1 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+              :class="`rounded-md px-2 py-1.5 text-sm font-medium ring-1 transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
                 buttonsKindStyle[props.kind as string]
               }`"
               type="button"
@@ -180,7 +180,7 @@ const closeIconKindStyle: { [index: string]: string } = {
             <button
               v-if="secondaryButtonLabel"
               :class="[
-                `rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                `rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
                   buttonsKindStyle[props.kind as string]
                 }`,
                 { 'ml-3': primaryButtonLabel }
@@ -197,7 +197,7 @@ const closeIconKindStyle: { [index: string]: string } = {
       <div v-if="props.showCloseButton" class="ml-auto pl-3">
         <div class="-mx-1.5 -my-1.5">
           <button
-            :class="`inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+            :class="`inline-flex rounded-md p-1.5 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
               closeIconKindStyle[props.kind as string]
             }`"
             type="button"

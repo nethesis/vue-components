@@ -1,3 +1,5 @@
+@reference "../src/main.css";
+
 .sb-show-main.sb-main-padded {
   /* remove default padding from component area */
   padding: 0;

@@ -1,5 +1,4 @@
 import { Config } from 'tailwindcss'
-import defaultTheme from 'tailwindcss/defaultTheme'
 import twColors from 'tailwindcss/colors'
 import twFormsPlugin from '@tailwindcss/forms'
 
@@ -26,15 +25,10 @@ export default {
       animation: {
         'spin-fast': 'spin 0.5s linear infinite',
         'indeterminate-progress-bar': 'indeterminateProgressBar 1s infinite linear'
-      },
-      fontFamily: {
-        sans: ['Poppins', ...defaultTheme.fontFamily.sans]
       }
-    }
-  },
-  variants: {
-    extend: {
-      textColor: ['group-hover']
+      // fontFamily: { ////
+      //   sans: ['Poppins', 'sans-serif']
+      // }
     }
   },
   plugins: [twFormsPlugin],

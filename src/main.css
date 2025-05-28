@@ -1,27 +1,55 @@
-@import 'tippy.js/dist/tippy.css';
+@layer theme, base, components, utilities;
 
-@tailwind base;
-@tailwind components;
+@import 'tippy.js/dist/tippy.css' layer(vendor);
 
-/* Tippy Styling */
-.tippy-box[data-theme~='tailwind'] {
-  @apply border border-gray-700 bg-gray-700 text-gray-50 shadow-2xl dark:border-gray-200 dark:bg-gray-200 dark:text-gray-700;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+/* //// */
+@config '../tailwind.config.ts';
+
+@theme {
+  --font-sans: 'Poppins', sans-serif;
 }
 
-.tippy-box[data-theme~='tailwind'][data-placement^='top'] > .tippy-arrow::before {
-  @apply border-t-gray-700 dark:border-t-gray-200;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
-.tippy-box[data-theme~='tailwind'][data-placement^='bottom'] > .tippy-arrow::before {
-  @apply border-b-gray-700 dark:border-b-gray-200;
-}
+@layer components {
+  /* Tippy Styling */
+  .tippy-box[data-theme~='tailwind'] {
+    @apply border border-gray-700 bg-gray-700 text-gray-50 shadow-2xl dark:border-gray-200 dark:bg-gray-200 dark:text-gray-700;
+  }
 
-.tippy-box[data-theme~='tailwind'][data-placement^='left'] > .tippy-arrow::before {
-  @apply border-l-gray-700 dark:border-l-gray-200;
-}
+  .tippy-box[data-theme~='tailwind'][data-placement^='top'] > .tippy-arrow::before {
+    @apply border-t-gray-700 dark:border-t-gray-200;
+  }
 
-.tippy-box[data-theme~='tailwind'][data-placement^='right'] > .tippy-arrow::before {
-  @apply border-r-gray-700 dark:border-r-gray-200;
-}
+  .tippy-box[data-theme~='tailwind'][data-placement^='bottom'] > .tippy-arrow::before {
+    @apply border-b-gray-700 dark:border-b-gray-200;
+  }
 
-@tailwind utilities;
+  .tippy-box[data-theme~='tailwind'][data-placement^='left'] > .tippy-arrow::before {
+    @apply border-l-gray-700 dark:border-l-gray-200;
+  }
+
+  .tippy-box[data-theme~='tailwind'][data-placement^='right'] > .tippy-arrow::before {
+    @apply border-r-gray-700 dark:border-r-gray-200;
+  }
+}

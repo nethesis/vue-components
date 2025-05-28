@@ -345,7 +345,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
         />
         <ComboboxButton
           :class="[
-            'absolute inset-y-0 right-0 flex items-center rounded-r-md pl-4 pr-3 text-gray-500 focus:outline-none dark:text-gray-400',
+            'absolute inset-y-0 right-0 flex items-center rounded-r-md pl-4 pr-3 text-gray-500 focus:outline-hidden dark:text-gray-400',
             { 'cursor-not-allowed opacity-50': disabled }
           ]"
         >
@@ -355,7 +355,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           <ComboboxOptions
             v-if="filteredOptions.length > 0"
             static
-            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 ring-opacity-5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50 sm:text-sm"
+            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 ring-opacity-5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50 sm:text-sm"
           >
             <ComboboxOption
               v-for="option in filteredOptions"

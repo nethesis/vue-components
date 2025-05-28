@@ -71,7 +71,7 @@ const emit = defineEmits(['selectTab'])
         id="tabs_select"
         v-model="currentTab"
         name="tabs_select"
-        class="block w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 text-base text-gray-700 focus:border-primary-500 focus:outline-none focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
+        class="block w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 text-base text-gray-700 focus:border-primary-500 focus:outline-hidden focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
       >
         <option
           v-for="tab in props.tabs"

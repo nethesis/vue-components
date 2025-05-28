@@ -102,7 +102,7 @@ function onSecondaryClick() {
 
 <template>
   <TransitionRoot as="template" :show="visible">
-    <Dialog as="div" class="relative z-[100]" @close="onClose">
+    <Dialog as="div" class="relative z-100" @close="onClose">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"
@@ -117,7 +117,7 @@ function onSecondaryClick() {
         />
       </TransitionChild>
 
-      <div class="fixed inset-0 z-[100] overflow-y-auto">
+      <div class="fixed inset-0 z-100 overflow-y-auto">
         <div
           class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
         >
@@ -137,7 +137,7 @@ function onSecondaryClick() {
                 <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
                   <button
                     type="button"
-                    class="rounded-md p-1 leading-none text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-200 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
+                    class="rounded-md p-1 leading-none text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-200 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
                     @click="onClose"
                   >
                     <span class="sr-only">{{ closeAriaLabel }}</span>
@@ -148,7 +148,7 @@ function onSecondaryClick() {
                   <template v-if="kind !== 'neutral'">
                     <NeRoundedIcon
                       :kind="kind"
-                      class="mx-auto mb-3 flex-shrink-0 sm:mx-0 sm:mb-0 sm:mr-4"
+                      class="mx-auto mb-3 shrink-0 sm:mx-0 sm:mb-0 sm:mr-4"
                     />
                   </template>
                   <div class="grow text-center sm:text-left">

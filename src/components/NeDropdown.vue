@@ -99,7 +99,7 @@ watch(
             { top: top + 'px' },
             alignToRight ? { right: right + 'px' } : { left: left + 'px' }
           ]"
-          :class="`absolute z-50 mt-2.5 min-w-[10rem] rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950 dark:ring-gray-500/50 ${menuClasses}`"
+          :class="`absolute z-50 mt-2.5 min-w-40 rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50 ${menuClasses}`"
         >
           <template v-for="item in items" :key="item.id">
             <!-- divider -->
