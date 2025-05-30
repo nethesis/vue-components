@@ -1,16 +1,42 @@
-@layer theme, base, components, utilities;
+@layer vendor, theme, base, components, utilities;
 
-@import 'tippy.js/dist/tippy.css' layer(vendor);
+@import 'tippy.js/dist/tippy.css' layer(components);
+@import './styles/tippy-tailwind.css' layer(components);
 
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css";
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css';
 
-/* //// */
-@config '../tailwind.config.ts';
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Poppins', sans-serif;
+  /* primary palette */
+  --color-transparent: transparent;
+  --color-primary-50: var(--color-cyan-50);
+  --color-primary-100: var(--color-cyan-100);
+  --color-primary-200: var(--color-cyan-200);
+  --color-primary-300: var(--color-cyan-300);
+  --color-primary-400: var(--color-cyan-400);
+  --color-primary-500: var(--color-cyan-500);
+  --color-primary-600: var(--color-cyan-600);
+  --color-primary-700: var(--color-cyan-700);
+  --color-primary-800: var(--color-cyan-800);
+  --color-primary-900: var(--color-cyan-900);
+  --color-primary-950: var(--color-cyan-950);
+
+  /* animation for NeProgressBar */
+  --animate-indeterminate-progress-bar: indeterminateProgressBar 1s infinite linear;
+  @keyframes indeterminateProgressBar {
+    0% {
+      transform: 'translateX(0) scaleX(0)';
+    }
+    40% {
+      transform: 'translateX(0) scaleX(0.4)';
+    }
+    100% {
+      transform: 'translateX(100%) scaleX(0.5)';
+    }
+  }
 }
 
 /*
@@ -20,6 +46,8 @@
 
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
+
+  See: https://tailwindcss.com/docs/upgrade-guide#default-border-color
 */
 @layer base {
   *,
@@ -29,27 +57,13 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
-}
 
-@layer components {
-  /* Tippy Styling */
-  .tippy-box[data-theme~='tailwind'] {
-    @apply border border-gray-700 bg-gray-700 text-gray-50 shadow-2xl dark:border-gray-200 dark:bg-gray-200 dark:text-gray-700;
-  }
-
-  .tippy-box[data-theme~='tailwind'][data-placement^='top'] > .tippy-arrow::before {
-    @apply border-t-gray-700 dark:border-t-gray-200;
-  }
-
-  .tippy-box[data-theme~='tailwind'][data-placement^='bottom'] > .tippy-arrow::before {
-    @apply border-b-gray-700 dark:border-b-gray-200;
-  }
-
-  .tippy-box[data-theme~='tailwind'][data-placement^='left'] > .tippy-arrow::before {
-    @apply border-l-gray-700 dark:border-l-gray-200;
-  }
-
-  .tippy-box[data-theme~='tailwind'][data-placement^='right'] > .tippy-arrow::before {
-    @apply border-r-gray-700 dark:border-r-gray-200;
+  /*
+    Use cursor-pointer for buttons (behavior changed from Tailwind CSS v3)
+    See: https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor
+  */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
   }
 }

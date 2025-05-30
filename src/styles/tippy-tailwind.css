@@ -1,0 +1,43 @@
+.tippy-box[data-theme~='tailwind'] {
+  @apply border border-gray-700 bg-gray-700 text-gray-50 shadow-2xl dark:border-gray-200 dark:bg-gray-200 dark:text-gray-700;
+}
+
+/* top placement */
+
+.tippy-box[data-theme~='tailwind'][data-placement^='top'] > .tippy-arrow::before {
+  @apply border-t-gray-700;
+}
+/* NOTE: 'dark:' rules don't work inside @apply when using pseudo-elements like ::before (they did in Tailwind CSS 3) */
+.dark .tippy-box[data-theme~='tailwind'][data-placement^='top'] > .tippy-arrow::before {
+  @apply border-t-gray-200;
+}
+
+/* bottom placement */
+
+.tippy-box[data-theme~='tailwind'][data-placement^='bottom'] > .tippy-arrow::before {
+  @apply border-b-gray-700;
+}
+/* NOTE: 'dark:' rules don't work inside @apply when using pseudo-elements like ::before (they did in Tailwind CSS 3) */
+.dark .tippy-box[data-theme~='tailwind'][data-placement^='bottom'] > .tippy-arrow::before {
+  @apply border-b-gray-200;
+}
+
+/* left placement */
+
+.tippy-box[data-theme~='tailwind'][data-placement^='left'] > .tippy-arrow::before {
+  @apply border-l-gray-700;
+}
+/* NOTE: 'dark:' rules don't work inside @apply when using pseudo-elements like ::before (they did in Tailwind CSS 3) */
+.dark .tippy-box[data-theme~='tailwind'][data-placement^='left'] > .tippy-arrow::before {
+  @apply border-l-gray-200;
+}
+
+/* right placement */
+
+.tippy-box[data-theme~='tailwind'][data-placement^='right'] > .tippy-arrow::before {
+  @apply border-r-gray-700;
+}
+/* NOTE: 'dark:' rules don't work inside @apply when using pseudo-elements like ::before (they did in Tailwind CSS 3) */
+.dark .tippy-box[data-theme~='tailwind'][data-placement^='right'] > .tippy-arrow::before {
+  @apply border-r-gray-200;
+}
