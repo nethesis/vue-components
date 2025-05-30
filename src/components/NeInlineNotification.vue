@@ -143,7 +143,7 @@ const closeIconKindStyle: { [index: string]: string } = {
         <!-- expandable details -->
         <template v-if="$slots.details">
           <button
-            :class="`-ml-2 mt-3 rounded-md px-2 py-1.5 font-medium transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
+            :class="`mt-3 -ml-2 rounded-md px-2 py-1.5 font-medium transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-hidden ${
               buttonsKindStyle[props.kind as string]
             }`"
             @click="isExpandedDetails = !isExpandedDetails"
@@ -169,7 +169,7 @@ const closeIconKindStyle: { [index: string]: string } = {
           <div class="-mx-2 flex">
             <button
               v-if="primaryButtonLabel"
-              :class="`rounded-md px-2 py-1.5 text-sm font-medium ring-1 transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
+              :class="`rounded-md px-2 py-1.5 text-sm font-medium ring-1 transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-hidden ${
                 buttonsKindStyle[props.kind as string]
               }`"
               type="button"
@@ -180,7 +180,7 @@ const closeIconKindStyle: { [index: string]: string } = {
             <button
               v-if="secondaryButtonLabel"
               :class="[
-                `rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
+                `rounded-md px-2 py-1.5 text-sm font-medium transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-hidden ${
                   buttonsKindStyle[props.kind as string]
                 }`,
                 { 'ml-3': primaryButtonLabel }
@@ -197,7 +197,7 @@ const closeIconKindStyle: { [index: string]: string } = {
       <div v-if="props.showCloseButton" class="ml-auto pl-3">
         <div class="-mx-1.5 -my-1.5">
           <button
-            :class="`inline-flex rounded-md p-1.5 focus:outline-hidden focus:ring-2 focus:ring-offset-2 ${
+            :class="`inline-flex rounded-md p-1.5 focus:ring-2 focus:ring-offset-2 focus:outline-hidden ${
               closeIconKindStyle[props.kind as string]
             }`"
             type="button"

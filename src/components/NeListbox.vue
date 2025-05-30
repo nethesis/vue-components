@@ -193,7 +193,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
     >
       <ListboxLabel
         v-if="props.label"
-        class="mb-2 flex justify-between text-sm font-medium leading-6 text-gray-700 dark:text-gray-200"
+        class="mb-2 flex justify-between text-sm leading-6 font-medium text-gray-700 dark:text-gray-200"
       >
         <div>
           <span>{{ props.label }}</span>
@@ -208,7 +208,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
           ref="buttonRef"
           :class="`${
             props.invalidMessage ? inputInvalidStyle : inputValidStyle
-          } min-h-9 w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-left text-base text-gray-900 shadow-sm ring-1 ring-inset transition-colors duration-200 hover:bg-gray-200/70 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-gray-50 dark:hover:bg-gray-600/30 sm:text-sm sm:leading-6`"
+          } min-h-9 w-full rounded-md border-0 bg-white py-1.5 pr-10 pl-3 text-left text-base text-gray-900 shadow-sm ring-1 transition-colors duration-200 ring-inset hover:bg-gray-200/70 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-50 dark:hover:bg-gray-600/30`"
           @click="calculatePosition()"
         >
           <template v-if="!multiple">
@@ -232,7 +232,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
           </template>
           <div
             :class="[
-              'absolute inset-y-0 right-0 flex items-center pl-4 pr-3 text-gray-500 focus:outline-hidden dark:text-gray-400',
+              'absolute inset-y-0 right-0 flex items-center pr-3 pl-4 text-gray-500 focus:outline-hidden dark:text-gray-400',
               { 'cursor-not-allowed opacity-50': disabled }
             ]"
           >
@@ -243,7 +243,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
           <div v-show="open || showOptions">
             <ListboxOptions
               static
-              class="absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 ring-opacity-5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50 sm:text-sm"
+              class="ring-opacity-5 absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-500/50"
               :style="[{ top: top + 'px' }, { left: left + 'px' }]"
             >
               <ListboxOption
@@ -257,7 +257,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
               >
                 <li
                   :class="[
-                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    'relative cursor-default py-2 pr-9 pl-3 select-none',
                     active
                       ? 'cursor-pointer bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-100'
                       : option.disabled
@@ -280,7 +280,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
                   <span
                     v-if="optionSelected"
                     :class="[
-                      'absolute inset-y-0 right-0 flex items-center pr-4 text-primary-700 dark:text-primary-500'
+                      'text-primary-700 dark:text-primary-500 absolute inset-y-0 right-0 flex items-center pr-4'
                     ]"
                   >
                     <FontAwesomeIcon :icon="fasCheck" class="h-4 w-4 shrink-0" aria-hidden="true" />

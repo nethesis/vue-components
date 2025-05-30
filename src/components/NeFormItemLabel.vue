@@ -6,7 +6,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <label class="mb-2 block text-sm font-medium leading-6 text-gray-700 dark:text-gray-200">
+  <label class="mb-2 block text-sm leading-6 font-medium text-gray-700 dark:text-gray-200">
     <slot></slot>
   </label>
 </template>

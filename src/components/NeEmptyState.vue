@@ -23,7 +23,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="bg-gray-100 px-6 py-7 text-sm dark:bg-gray-800 sm:rounded-md sm:px-8">
+  <div class="bg-gray-100 px-6 py-7 text-sm sm:rounded-md sm:px-8 dark:bg-gray-800">
     <div class="flex flex-col items-center">
       <FontAwesomeIcon
         v-if="icon"

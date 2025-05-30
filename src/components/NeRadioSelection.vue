@@ -142,9 +142,9 @@ function focus() {
         type="button"
         :class="[
           `${cardClasses[cardSize]}`,
-          value == option.id ? 'ring-2 ring-primary-700 dark:ring-primary-500' : ''
+          value == option.id ? 'ring-primary-700 dark:ring-primary-500 ring-2' : ''
         ]"
-        class="relative flex w-full items-center overflow-hidden rounded-md border text-gray-700 shadow-sm hover:bg-gray-200/70 focus:outline-hidden focus:ring-2 focus:ring-primary-700 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-600/30 dark:focus:ring-primary-500 dark:focus:ring-offset-primary-950"
+        class="focus:ring-primary-700 dark:focus:ring-primary-500 dark:focus:ring-offset-primary-950 relative flex w-full items-center overflow-hidden rounded-md border text-gray-700 shadow-sm hover:bg-gray-200/70 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-600/30"
         role="button"
         :disabled="option.disabled || disabled"
         @click="value = option.id"
@@ -169,7 +169,7 @@ function focus() {
         <FontAwesomeIcon
           v-if="value == option.id && cardSelectionMark"
           :icon="faCircleCheck"
-          :class="`absolute text-primary-700 dark:text-primary-500 ${selectionMarkClasses[cardSize]}`"
+          :class="`text-primary-700 dark:text-primary-500 absolute ${selectionMarkClasses[cardSize]}`"
         />
       </button>
     </div>
@@ -186,7 +186,7 @@ function focus() {
               :name="radioName"
               :checked="value == option.id"
               :value="option.id"
-              class="peer border-gray-300 text-primary-700 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 focus:dark:ring-primary-200 focus:dark:ring-offset-gray-900"
+              class="peer text-primary-700 focus:ring-primary-500 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 focus:dark:ring-primary-200 border-gray-300 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 focus:dark:ring-offset-gray-900"
               type="radio"
               :disabled="option.disabled || disabled"
             />

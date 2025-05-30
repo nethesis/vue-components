@@ -85,7 +85,7 @@ const toggleBallClasses = computed(() => {
   <div class="text-sm">
     <label
       v-if="topLabel"
-      class="mb-2 flex items-end justify-between font-medium leading-6 text-gray-700 dark:text-gray-200"
+      class="mb-2 flex items-end justify-between leading-6 font-medium text-gray-700 dark:text-gray-200"
     >
       <span>
         {{ topLabel }}

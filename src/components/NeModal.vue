@@ -113,7 +113,7 @@ function onSecondaryClick() {
         leave-to="opacity-0"
       >
         <div
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-gray-700 dark:bg-opacity-75"
+          class="bg-opacity-75 dark:bg-opacity-75 fixed inset-0 bg-gray-500 transition-opacity dark:bg-gray-700"
         />
       </TransitionChild>
 
@@ -131,13 +131,13 @@ function onSecondaryClick() {
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              :class="`relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full ${sizeStyle[size]} bg-gray-50 dark:bg-gray-900 sm:p-6`"
+              :class="`relative transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full ${sizeStyle[size]} bg-gray-50 sm:p-6 dark:bg-gray-900`"
             >
               <form @submit.prevent>
-                <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+                <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
                   <button
                     type="button"
-                    class="rounded-md p-1 leading-none text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-200 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
+                    class="focus:ring-primary-500 dark:focus:ring-primary-300 rounded-md p-1 leading-none text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:outline-hidden dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-200 dark:focus:ring-offset-gray-900"
                     @click="onClose"
                   >
                     <span class="sr-only">{{ closeAriaLabel }}</span>
@@ -148,14 +148,14 @@ function onSecondaryClick() {
                   <template v-if="kind !== 'neutral'">
                     <NeRoundedIcon
                       :kind="kind"
-                      class="mx-auto mb-3 shrink-0 sm:mx-0 sm:mb-0 sm:mr-4"
+                      class="mx-auto mb-3 shrink-0 sm:mx-0 sm:mr-4 sm:mb-0"
                     />
                   </template>
                   <div class="grow text-center sm:text-left">
                     <DialogTitle
                       v-if="title"
                       as="h3"
-                      class="mb-4 text-base font-semibold leading-6 text-gray-900 dark:text-gray-50"
+                      class="mb-4 text-base leading-6 font-semibold text-gray-900 dark:text-gray-50"
                       >{{ title }}</DialogTitle
                     >
                     <div>
@@ -182,7 +182,7 @@ function onSecondaryClick() {
                     size="lg"
                     :disabled="secondaryButtonDisabled"
                     :loading="secondaryButtonLoading"
-                    class="mt-3 w-full sm:ml-3 sm:mt-0 sm:w-auto"
+                    class="mt-3 w-full sm:mt-0 sm:ml-3 sm:w-auto"
                     @click="onSecondaryClick"
                     >{{ secondaryLabel }}</NeButton
                   >
