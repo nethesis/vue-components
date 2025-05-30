@@ -63,7 +63,7 @@ library.add(fasXmark)
 <template>
   <div
     :class="[
-      `ring-opacity-5 pointer-events-auto w-full overflow-hidden rounded-lg bg-white text-sm shadow-lg ring-1 ring-black dark:bg-gray-800 dark:shadow-gray-950`,
+      `pointer-events-auto w-full overflow-hidden rounded-lg bg-white text-sm shadow-lg ring-1 ring-gray-500/5 dark:bg-gray-800 dark:shadow-gray-950`,
       { 'max-w-sm': !fullWidth }
     ]"
   >
