@@ -337,7 +337,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
         <ComboboxInput
           :class="`${
             props.invalidMessage ? inputInvalidStyle : inputValidStyle
-          } w-full rounded-md border-0 bg-white py-1.5 pr-10 pl-3 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-50 dark:placeholder:text-gray-500`"
+          } w-full rounded-md border-0 bg-white py-1.5 pr-10 pl-3 text-gray-900 shadow-sm ring-1 outline-hidden ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-50 dark:placeholder:text-gray-500`"
           :display-value="(option: any) => option?.label"
           :placeholder="props.placeholder"
           @change="query = $event.target.value"
@@ -355,7 +355,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           <ComboboxOptions
             v-if="filteredOptions.length > 0"
             static
-            class="ring-opacity-5 absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-500/50"
+            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-500/5 focus:outline-hidden sm:text-sm dark:bg-gray-950"
           >
             <ComboboxOption
               v-for="option in filteredOptions"

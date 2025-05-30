@@ -57,9 +57,7 @@ function onKeyUp(event: any) {
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div
-          class="bg-opacity-75 dark:bg-opacity-75 fixed top-0 right-0 bottom-0 left-0 bg-gray-500 dark:bg-gray-700"
-        />
+        <div class="fixed top-0 right-0 bottom-0 left-0 bg-gray-500/75 dark:bg-gray-700/75" />
       </TransitionChild>
 
       <div class="fixed top-0 right-0 bottom-0 flex">

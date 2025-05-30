@@ -112,9 +112,7 @@ function onSecondaryClick() {
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div
-          class="bg-opacity-75 dark:bg-opacity-75 fixed inset-0 bg-gray-500 transition-opacity dark:bg-gray-700"
-        />
+        <div class="fixed inset-0 bg-gray-500/75 transition-opacity dark:bg-gray-700/75" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-100 overflow-y-auto">
