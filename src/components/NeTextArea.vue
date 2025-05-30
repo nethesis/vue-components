@@ -82,7 +82,7 @@ function emitModelValue(ev: any) {
     <label
       v-if="label"
       :for="componentId"
-      class="mb-2 flex items-end justify-between text-sm font-medium leading-6 text-gray-700 dark:text-gray-200"
+      class="mb-2 flex items-end justify-between text-sm leading-6 font-medium text-gray-700 dark:text-gray-200"
     >
       <span>
         {{ label }}
@@ -105,7 +105,7 @@ function emitModelValue(ev: any) {
         @input="($event) => emitModelValue($event)"
       />
       <!-- invalid icon -->
-      <div v-if="invalidMessage" class="pointer-events-none absolute inset-y-0 right-0 pr-3 pt-2">
+      <div v-if="invalidMessage" class="pointer-events-none absolute inset-y-0 right-0 pt-2 pr-3">
         <FontAwesomeIcon
           :icon="['fas', 'circle-exclamation']"
           class="h-4 w-4 text-rose-700 dark:text-rose-400"

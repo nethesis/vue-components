@@ -58,11 +58,11 @@ function onKeyUp(event: any) {
         leave-to="opacity-0"
       >
         <div
-          class="fixed bottom-0 left-0 right-0 top-0 bg-gray-500 bg-opacity-75 dark:bg-gray-700 dark:bg-opacity-75"
+          class="bg-opacity-75 dark:bg-opacity-75 fixed top-0 right-0 bottom-0 left-0 bg-gray-500 dark:bg-gray-700"
         />
       </TransitionChild>
 
-      <div class="fixed bottom-0 right-0 top-0 flex">
+      <div class="fixed top-0 right-0 bottom-0 flex">
         <TransitionChild
           as="template"
           enter="transition ease-in-out duration-300 transform"
@@ -73,7 +73,7 @@ function onKeyUp(event: any) {
           leave-to="translate-x-full"
         >
           <DialogPanel
-            class="3xl:w-[35rem] relative ml-16 flex w-[80vw] flex-1 overflow-y-auto bg-gray-50 text-gray-700 shadow-[0px_20px_40px_0_rgba(0,0,0,0.2)] dark:bg-gray-900 dark:text-gray-100 dark:shadow-[0px_20px_40px_0_rgba(0,0,0,0.6)] sm:w-100 lg:w-120"
+            class="3xl:w-[35rem] relative ml-16 flex w-[80vw] flex-1 overflow-y-auto bg-gray-50 text-gray-700 shadow-[0px_20px_40px_0_rgba(0,0,0,0.2)] sm:w-100 lg:w-120 dark:bg-gray-900 dark:text-gray-100 dark:shadow-[0px_20px_40px_0_rgba(0,0,0,0.6)]"
           >
             <TransitionChild
               v-if="!title"
@@ -85,7 +85,7 @@ function onKeyUp(event: any) {
               leave-from="opacity-100"
               leave-to="opacity-0"
             >
-              <div class="absolute right-full top-0 flex w-16 justify-center pt-5">
+              <div class="absolute top-0 right-full flex w-16 justify-center pt-5">
                 <button class="-m-2.5 p-2.5" type="button" @click="closeDrawer">
                   <span class="sr-only">{{ props.closeAriaLabel }}</span>
                   <FontAwesomeIcon
@@ -104,7 +104,7 @@ function onKeyUp(event: any) {
                     {{ props.title }}
                   </div>
                   <button
-                    class="inline-flex rounded-md p-1.5 text-gray-700 hover:bg-gray-200 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
+                    class="focus:ring-primary-500 dark:focus:ring-primary-300 inline-flex rounded-md p-1.5 text-gray-700 hover:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:outline-hidden dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-offset-gray-900"
                     type="button"
                     @click="closeDrawer"
                   >

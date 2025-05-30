@@ -8,7 +8,7 @@ import {
   NeEmptyState,
   NePaginator
 } from '../src/main'
-import { Meta, StoryObj } from '@storybook/vue3'
+import { Meta, StoryObj } from '@storybook/vue3-vite'
 import { faTable } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 

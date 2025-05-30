@@ -1,6 +1,6 @@
-import type { Preview, VueRenderer } from '@storybook/vue3'
+import type { Preview, VueRenderer } from '@storybook/vue3-vite'
 import { withThemeByClassName } from '@storybook/addon-themes'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 import '../src/main.css'
 import './storybook.css'
