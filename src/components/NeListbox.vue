@@ -40,6 +40,7 @@ export interface Props {
   optional?: boolean
   noOptionsLabel: string
   optionalLabel: string
+  optionsPanelStyle?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -51,7 +52,8 @@ const props = withDefaults(defineProps<Props>(), {
   multiple: false,
   disabled: false,
   showOptionsType: true,
-  optional: false
+  optional: false,
+  optionsPanelStyle: ''
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -243,7 +245,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
           <div v-show="open || showOptions">
             <ListboxOptions
               static
-              class="ring-opacity-5 absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-500/50"
+              :class="`absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-500/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 ${optionsPanelStyle}`"
               :style="[{ top: top + 'px' }, { left: left + 'px' }]"
             >
               <ListboxOption
