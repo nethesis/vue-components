@@ -1,7 +1,7 @@
 //  Copyright (C) 2024 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import { NeDropdown, NeButton } from '../src/main'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
@@ -114,6 +114,6 @@ export const MenuClasses: Story = {
     template: template
   }),
   args: {
-    menuClasses: '!bg-fuchsia-200 dark:!bg-fuchsia-900'
+    menuClasses: 'bg-fuchsia-200! dark:bg-fuchsia-900!'
   }
 }

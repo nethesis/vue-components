@@ -63,20 +63,20 @@ library.add(fasXmark)
 <template>
   <div
     :class="[
-      `pointer-events-auto w-full overflow-hidden rounded-lg bg-white text-sm shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800 dark:shadow-gray-950`,
+      `pointer-events-auto w-full overflow-hidden rounded-lg bg-white text-sm shadow-lg ring-1 ring-gray-500/5 dark:bg-gray-800 dark:shadow-gray-950`,
       { 'max-w-sm': !fullWidth }
     ]"
   >
     <div class="relative p-4">
       <div
         v-if="showCloseButton || (showTimestamp && notification.timestamp)"
-        class="absolute right-0 top-0 block pr-4 pt-4"
+        class="absolute top-0 right-0 block pt-4 pr-4"
       >
         <!-- close button -->
         <button
           v-if="showCloseButton"
           type="button"
-          class="rounded-md leading-none text-gray-600 transition-colors hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-300 dark:hover:text-gray-200 dark:focus:ring-primary-300 dark:focus:ring-offset-gray-900"
+          class="focus:ring-primary-500 dark:focus:ring-primary-300 rounded-md leading-none text-gray-600 transition-colors hover:text-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:outline-hidden dark:text-gray-300 dark:hover:text-gray-200 dark:focus:ring-offset-gray-900"
           @click="$emit('close')"
         >
           <span class="sr-only">{{ srCloseLabel }}</span>
@@ -97,7 +97,7 @@ library.add(fasXmark)
         </NeTooltip>
       </div>
       <div class="flex items-start">
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
           <!-- custom icon -->
           <template v-if="$slots.icon">
             <slot name="icon" />
@@ -111,7 +111,7 @@ library.add(fasXmark)
               'font-semibold text-gray-900 dark:text-gray-50',
               {
                 'mr-6': showCloseButton,
-                '!mr-24': showTimestamp && notification.timestamp && !showCloseButton
+                'mr-24!': showTimestamp && notification.timestamp && !showCloseButton
               }
             ]"
           >
@@ -127,7 +127,7 @@ library.add(fasXmark)
       </div>
       <div
         v-if="notification.primaryLabel || notification.secondaryLabel"
-        class="ml-10 flex flex-shrink-0"
+        class="ml-10 flex shrink-0"
       >
         <div
           :class="[
@@ -139,7 +139,7 @@ library.add(fasXmark)
             v-if="notification.secondaryLabel && notification.secondaryAction"
             kind="tertiary"
             size="md"
-            class="ml-3 mt-0 w-auto"
+            class="mt-0 ml-3 w-auto"
             @click="notification.secondaryAction"
           >
             {{ notification.secondaryLabel }}

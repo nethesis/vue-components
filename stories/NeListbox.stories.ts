@@ -1,7 +1,7 @@
 //  Copyright (C) 2024 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import { NeListbox, NeTooltip } from '../src/main'
 
@@ -20,6 +20,7 @@ const meta = {
     optional: false,
     noOptionsLabel: 'No options available',
     optionalLabel: 'Optional',
+    optionsPanelStyle: '',
     modelValue: '1',
     options: [
       { id: '1', label: 'Cherry' },
@@ -165,4 +166,19 @@ export const WithTooltip: Story = {
     template: templateWithTooltip
   }),
   args: {}
+}
+
+const withOptionsPanelStyleTemplate = `<NeListbox v-bind="args" class="max-w-md" />`
+
+export const WithOptionsPanelStyle: Story = {
+  render: (args) => ({
+    components: { NeListbox, NeTooltip },
+    setup() {
+      return { args }
+    },
+    template: withOptionsPanelStyleTemplate
+  }),
+  args: {
+    optionsPanelStyle: 'w-md'
+  }
 }
