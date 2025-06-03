@@ -9,7 +9,7 @@ import { range } from 'lodash-es'
 import { faChevronLeft as fasChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { faChevronRight as fasChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { NeListbox } from '@/main'
+import NeListbox from './NeListbox.vue'
 
 const props = defineProps({
   currentPage: {
