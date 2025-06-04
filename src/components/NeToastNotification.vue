@@ -63,7 +63,7 @@ library.add(fasXmark)
 <template>
   <div
     :class="[
-      `pointer-events-auto w-full overflow-hidden rounded-lg bg-white text-sm shadow-lg ring-1 ring-gray-500/5 dark:bg-gray-800 dark:shadow-gray-950`,
+      `pointer-events-auto w-full overflow-hidden rounded-lg bg-white text-sm shadow-lg ring-1 ring-gray-500/5 dark:bg-gray-950 dark:ring-gray-500/10`,
       { 'max-w-sm': !fullWidth }
     ]"
   >
@@ -106,9 +106,9 @@ library.add(fasXmark)
           <NeRoundedIcon v-else :kind="notification.kind" />
         </div>
         <div class="ml-3 w-0 flex-1 pt-0.5">
-          <p
+          <h6
             :class="[
-              'font-semibold text-gray-900 dark:text-gray-50',
+              'font-medium text-gray-900 dark:text-gray-50',
               {
                 'mr-6': showCloseButton,
                 'mr-24!': showTimestamp && notification.timestamp && !showCloseButton
@@ -116,7 +116,7 @@ library.add(fasXmark)
             ]"
           >
             {{ notification.title }}
-          </p>
+          </h6>
           <p
             v-if="notification.description"
             class="mt-2 break-words text-gray-700 dark:text-gray-200"

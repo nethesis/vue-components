@@ -25,7 +25,9 @@ const preview: Preview = {
     }),
     (story) => ({
       components: { story },
-      template: '<div class="bg-gray-50 p-10 dark:bg-gray-900"><story /></div>'
+      template: `<div class="bg-gray-50 text-sm p-10 text-gray-700 dark:bg-gray-900 dark:text-gray-100">
+        <story />
+      </div>`
     })
   ]
 }

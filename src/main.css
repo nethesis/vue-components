@@ -7,6 +7,7 @@
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css';
 
+/* load tailwind forms plugin, used in some components */
 @plugin '@tailwindcss/forms';
 
 @custom-variant dark (&:where(.dark, .dark *));

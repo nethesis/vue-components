@@ -355,7 +355,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           <ComboboxOptions
             v-if="filteredOptions.length > 0"
             static
-            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-500/5 focus:outline-hidden sm:text-sm dark:bg-gray-950"
+            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-200 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-700"
           >
             <ComboboxOption
               v-for="option in filteredOptions"
@@ -370,10 +370,10 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
                 :class="[
                   'relative cursor-default py-2 pr-9 pl-3 select-none',
                   active
-                    ? 'cursor-pointer bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-100'
+                    ? 'cursor-pointer bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-50'
                     : option.disabled
-                      ? 'cursor-not-allowed text-gray-500 dark:text-gray-500'
-                      : 'text-gray-900 dark:text-gray-100'
+                      ? 'cursor-not-allowed opacity-50 dark:opacity-50'
+                      : 'text-gray-700 dark:text-gray-200'
                 ]"
               >
                 <div class="flex items-center truncate">

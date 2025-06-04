@@ -44,7 +44,7 @@ function getMenuItemActiveClasses(item: NeDropdownItem) {
   if (item.danger) {
     return 'bg-rose-700 text-white dark:bg-rose-600 dark:text-white'
   } else {
-    return 'bg-gray-100 dark:bg-gray-800'
+    return 'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-50'
   }
 }
 
@@ -99,7 +99,7 @@ watch(
             { top: top + 'px' },
             alignToRight ? { right: right + 'px' } : { left: left + 'px' }
           ]"
-          :class="`absolute z-50 mt-2.5 min-w-40 rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50 ${menuClasses}`"
+          :class="`absolute z-50 mt-2.5 min-w-40 rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-200 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-700 ${menuClasses}`"
         >
           <template v-for="item in items" :key="item.id">
             <!-- divider -->
@@ -111,7 +111,7 @@ watch(
             <MenuItem v-else v-slot="{ active }" :disabled="item.disabled">
               <a
                 :class="[
-                  active ? getMenuItemActiveClasses(item) : '',
+                  active ? getMenuItemActiveClasses(item) : 'text-gray-700 dark:text-gray-200',
                   'group flex items-center px-4 py-2 text-sm',
                   item.disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
                   item.danger
