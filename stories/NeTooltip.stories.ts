@@ -2,7 +2,7 @@
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { NeTooltip } from '../src/main'
+import { NeLink, NeTooltip } from '../src/main'
 
 const placementValues = [
   'top',
@@ -108,4 +108,24 @@ export const Placement: Story = {
     template: placementsTemplate
   }),
   args: { triggerEvent: 'mouseenter focus' }
+}
+
+const containsLinkTemplate = `<div class="mt-8 ml-16">
+    <NeTooltip v-bind="args">
+      <template #content>
+        <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <NeLink invertedTheme href="https://www.wikipedia.org/" target="_blank">Go to Wikipedia</NeLink>
+      </template>
+    </NeTooltip>
+  </div>`
+
+export const ContainsLink: Story = {
+  render: (args) => ({
+    components: { NeTooltip, NeLink },
+    setup() {
+      return { args }
+    },
+    template: containsLinkTemplate
+  }),
+  args: { placement: 'right' }
 }
