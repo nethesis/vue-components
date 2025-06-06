@@ -1,6 +1,6 @@
-@import "@fortawesome/fontawesome-svg-core/styles" layer(vendor);
-@import "tailwindcss";
-@import "./styles/theme.css";
-@import "@fontsource/poppins";
+@import '@fortawesome/fontawesome-svg-core/styles' layer(vendor);
+@import 'tailwindcss';
+@import './styles/theme.css';
+@import '@fontsource/poppins';
 
 @custom-variant dark (&:where(.dark, .dark *));
