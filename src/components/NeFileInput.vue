@@ -98,7 +98,7 @@ const dragOverHandler = (event: Event) => {
           >
             <FontAwesomeIcon :icon="faFileArrowUp" class="mb-4 h-8 w-8" />
             <div v-if="!model">
-              <p class="!-mb-2 font-medium">
+              <p class="-mb-2! font-medium">
                 <span>{{ dropzoneLabel }}</span>
               </p>
               <slot />

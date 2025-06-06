@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/vue3'
+import { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeSkeleton } from '../src/main'
 
 const meta: Meta<typeof NeSkeleton> = {

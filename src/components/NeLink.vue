@@ -12,10 +12,10 @@ defineProps({
 })
 
 const standardThemeStyle =
-  'text-primary-700 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200'
+  'text-primary-700 hover:text-primary-800 dark:text-primary-500 dark:hover:text-primary-400'
 
 const invertedThemeStyle =
-  'text-primary-300 hover:text-primary-200 dark:text-primary-700 dark:hover:text-primary-800'
+  'text-primary-500 hover:text-primary-400 dark:text-primary-700 dark:hover:text-primary-800'
 </script>
 <template>
   <a

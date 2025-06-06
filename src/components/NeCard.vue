@@ -52,7 +52,7 @@ defineEmits(['titleClick'])
 <template>
   <div
     :class="[
-      `overflow-hidden px-4 py-5 text-sm text-gray-700 dark:text-gray-200 sm:rounded-lg sm:px-6 sm:shadow`,
+      `overflow-hidden px-4 py-5 text-sm text-gray-700 sm:rounded-lg sm:px-6 sm:shadow dark:text-gray-200`,
       props.alternateBackground ? 'bg-gray-50 dark:bg-gray-900' : 'bg-white dark:bg-gray-950'
     ]"
   >
@@ -62,7 +62,7 @@ defineEmits(['titleClick'])
       <div class="mb-3 flex items-center gap-1">
         <h3
           v-if="title || $slots.title"
-          class="font-semibold leading-6 text-gray-900 dark:text-gray-50"
+          class="leading-6 font-semibold text-gray-900 dark:text-gray-50"
         >
           <span v-if="title">
             {{ title }}
@@ -82,7 +82,7 @@ defineEmits(['titleClick'])
       <!-- top-right slot (e.g. for kebab menu) -->
       <div
         v-if="$slots.topRight || menuItems?.length"
-        class="relative -right-1.5 -top-1.5 flex items-center"
+        class="relative -top-1.5 -right-1.5 flex items-center"
       >
         <div v-if="$slots.topRight">
           <slot name="topRight"></slot>

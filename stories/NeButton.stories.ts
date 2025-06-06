@@ -1,7 +1,7 @@
 //  Copyright (C) 2024 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeButton } from '../src/main'
 
 const meta = {

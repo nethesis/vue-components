@@ -122,7 +122,7 @@ function navigateToPage(page: number) {
 
 <template>
   <div
-    class="flex flex-col justify-between gap-6 border-t border-gray-300 bg-white px-6 py-3 text-sm text-gray-700 dark:border-gray-600 dark:bg-gray-950 dark:text-gray-100 sm:flex-row sm:items-center"
+    class="flex flex-col justify-between gap-6 border-t border-gray-300 bg-white px-6 py-3 text-sm text-gray-700 sm:flex-row sm:items-center dark:border-gray-600 dark:bg-gray-950 dark:text-gray-100"
   >
     <!-- range information and page size selection -->
     <div class="flex items-center gap-6">

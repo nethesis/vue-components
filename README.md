@@ -6,38 +6,29 @@ This library contains:
 
 ## Installation
 
-You can add this library via npm:
-
+1. Install TailwindCSS 4 on your project.
+2. Add this library via npm:
 ```sh
 npm install @nethesis/vue-components
 ```
+3. Add to your main CSS file (change `node_modules` path if needed):
+```css
+@layer vendor, theme, base, components, utilities;
 
-After this, you'll need to import a few files to make everything work:
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css';
 
-1. You need to import the main CSS file, if you're using PostCSS (this is the default if you're using Vite + TailwindCSS) you can import it in your `main.css` file:
+/* import styles from @nethesis/vue-components */
+@import '../../node_modules/@nethesis/vue-components/dist/main.css' layer(components);
 
-    ```postcss
-    @import '@nethesis/vue-components/main.css';
-    ```
+/* detect tailwind classes used in @nethesis/vue-components */
+@source '../../node_modules/@nethesis/vue-components/dist/**/*.js';
 
-2. Import the default preset for tailwind, this can be done editing the `tailwind.config.js/ts` with the following lines:
-
-    ```js
-    export default {
-      // ...
-      presets: [require('@nethesis/vue-components/tailwind.config.ts')],
-      content: [
-        // ...
-        './node_modules/@nethesis/vue-components/dist/**/*.js',
-        // ...
-      ],
-      // ...
-    }
-    ```
-
-You can still override the theme adding your customizations, more info can be found in the [Tailwind documentation](https://tailwindcss.com/docs/presets).
-
-After this, you're golden! You can browse the [Storybook](https://nethesis.github.io/vue-components) to see the available components and their usage.
+/* load tailwind forms plugin, needed for some components */
+@plugin '@tailwindcss/forms';
+```
+4. After this, you're golden! You can browse the [Storybook](https://nethesis.github.io/vue-components) to see the available components and their usage.
 
 ## Contributing
 

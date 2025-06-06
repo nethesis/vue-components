@@ -71,7 +71,7 @@ const emit = defineEmits(['selectTab'])
         id="tabs_select"
         v-model="currentTab"
         name="tabs_select"
-        class="block w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 text-base text-gray-700 focus:border-primary-500 focus:outline-none focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
+        class="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500 block w-full rounded-md border-gray-300 bg-white py-2 pr-10 pl-3 text-base text-gray-700 focus:outline-hidden sm:text-sm dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50"
       >
         <option
           v-for="tab in props.tabs"
@@ -94,7 +94,7 @@ const emit = defineEmits(['selectTab'])
               currentTab === tab.name
                 ? 'border-primary-600 text-primary-700 dark:border-primary-400 dark:text-primary-500'
                 : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-700 dark:hover:text-gray-100',
-              'cursor-pointer whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium'
+              'cursor-pointer border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap'
             ]"
             :aria-current="currentTab === tab.name ? 'page' : undefined"
             @click="selectTab(tab.name)"

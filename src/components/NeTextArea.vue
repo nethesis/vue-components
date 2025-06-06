@@ -58,7 +58,7 @@ const emit = defineEmits(['update:modelValue'])
 library.add(fasCircleExclamation)
 
 const textAreaBaseStyle =
-  'block w-full rounded-md border-0 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900 bg-white placeholder:text-gray-400 transition-colors duration-200 dark:text-gray-50 dark:bg-gray-950 dark:placeholder:text-gray-500'
+  'block w-full rounded-md border-0 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900 bg-white outline-hidden placeholder:text-gray-400 transition-colors duration-200 dark:text-gray-50 dark:bg-gray-950 dark:placeholder:text-gray-500'
 const textAreaValidStyle =
   'ring-gray-300 focus:ring-primary-500 dark:ring-gray-600 dark:focus:ring-primary-300'
 const textAreaInvalidStyle =
@@ -82,7 +82,7 @@ function emitModelValue(ev: any) {
     <label
       v-if="label"
       :for="componentId"
-      class="mb-2 flex items-end justify-between text-sm font-medium leading-6 text-gray-700 dark:text-gray-200"
+      class="mb-2 flex items-end justify-between text-sm leading-6 font-medium text-gray-700 dark:text-gray-200"
     >
       <span>
         {{ label }}
@@ -105,7 +105,7 @@ function emitModelValue(ev: any) {
         @input="($event) => emitModelValue($event)"
       />
       <!-- invalid icon -->
-      <div v-if="invalidMessage" class="pointer-events-none absolute inset-y-0 right-0 pr-3 pt-2">
+      <div v-if="invalidMessage" class="pointer-events-none absolute inset-y-0 right-0 pt-2 pr-3">
         <FontAwesomeIcon
           :icon="['fas', 'circle-exclamation']"
           class="h-4 w-4 text-rose-700 dark:text-rose-400"
