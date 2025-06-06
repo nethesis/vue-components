@@ -20,7 +20,8 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "src/styles/theme.css"
   ],
   "main": "./dist/vue-components.umd.cjs",
   "module": "./dist/vue-components.js",
@@ -31,6 +32,7 @@
       "import": "./dist/vue-components.js",
       "require": "./dist/vue-components.umd.cjs"
     },
+    "./theme.css": "./src/styles/theme.css",
     "./main.css": {
       "import": "./dist/main.css",
       "require": "./dist/main.css"

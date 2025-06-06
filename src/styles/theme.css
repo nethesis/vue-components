@@ -1,0 +1,70 @@
+@import './tippy-tailwind.css';
+
+/* load tailwind forms plugin, used in some components */
+@plugin '@tailwindcss/forms';
+
+@theme {
+  /* default font family */
+  --default-font-family: Poppins, sans-serif;
+
+  /* primary palette */
+  --color-transparent: transparent;
+  --color-primary-50: var(--color-cyan-50);
+  --color-primary-100: var(--color-cyan-100);
+  --color-primary-200: var(--color-cyan-200);
+  --color-primary-300: var(--color-cyan-300);
+  --color-primary-400: var(--color-cyan-400);
+  --color-primary-500: var(--color-cyan-500);
+  --color-primary-600: var(--color-cyan-600);
+  --color-primary-700: var(--color-cyan-700);
+  --color-primary-800: var(--color-cyan-800);
+  --color-primary-900: var(--color-cyan-900);
+  --color-primary-950: var(--color-cyan-950);
+
+  /* animations */
+  --animate-spin-fast: spin 0.5s linear infinite;
+  --animate-spin-relaxed: spin 1.5s linear infinite;
+
+  /* animation for NeProgressBar */
+  --animate-indeterminate-progress-bar: indeterminateProgressBar 1s infinite linear;
+  @keyframes indeterminateProgressBar {
+    0% {
+      transform: translateX(0) scaleX(0);
+    }
+    40% {
+      transform: translateX(0) scaleX(0.4);
+    }
+    100% {
+      transform: translateX(100%) scaleX(0.5);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+
+  See: https://tailwindcss.com/docs/upgrade-guide#default-border-color
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  /*
+    Use cursor-pointer for buttons (behavior changed from Tailwind CSS v3)
+    See: https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor
+  */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
