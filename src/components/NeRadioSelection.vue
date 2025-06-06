@@ -8,7 +8,7 @@ import { computed, type PropType, type Ref, ref, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { type IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-import NeFormItemLabel from '@/components/NeFormItemLabel.vue'
+import NeFormItemLabel from './NeFormItemLabel.vue'
 import { v4 as uuidv4 } from 'uuid'
 
 export type RadioCardSize = 'md' | 'lg' | 'xl'

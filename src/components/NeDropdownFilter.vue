@@ -14,7 +14,7 @@ import NeBadge from './NeBadge.vue'
 import NeLink from './NeLink.vue'
 import type { ButtonSize } from './NeButton.vue'
 import NeTextInput from './NeTextInput.vue'
-import { focusElement } from '@/main'
+import { focusElement } from '../lib/utils'
 
 export type FilterKind = 'radio' | 'checkbox'
 

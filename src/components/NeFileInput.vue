@@ -7,7 +7,7 @@
 import { computed } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
-import NeProgressBar from '@/components/NeProgressBar.vue'
+import NeProgressBar from './NeProgressBar.vue'
 
 interface FileInputProps {
   modelValue?: File | File[] | null

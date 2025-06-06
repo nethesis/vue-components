@@ -7,7 +7,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { onMounted, ref, watch } from 'vue'
-import { NeButton } from '@/main'
+import NeButton from './NeButton.vue'
 
 const props = defineProps({
   label: {
