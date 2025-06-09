@@ -9,16 +9,16 @@ This library contains:
 1. Install TailwindCSS 4 on your project, follow [the official documentation](https://tailwindcss.com/docs/installation)
    on how to do so.
 2. Add this library via npm:
-    ```sh
-    npm install @nethesis/vue-components
-    ```
+   ```sh
+   npm install @nethesis/vue-components
+   ```
 3. Add to your main CSS file (change `node_modules` path if needed):
-    ```css
-    /* import the Theme and the CSS for the components */
-    @import '@nethesis/vue-components/theme.css';
-    /* detect tailwind classes used in @nethesis/vue-components (change this path accordingly if needed) */
-    @source 'node_modules/@nethesis/vue-components';
-    ```
+   ```css
+   /* import the Theme and the CSS for the components */
+   @import '@nethesis/vue-components/theme.css';
+   /* detect tailwind classes used in @nethesis/vue-components (change this path accordingly if needed) */
+   @source 'node_modules/@nethesis/vue-components';
+   ```
 4. After this, you're golden! You can browse the [Storybook](https://nethesis.github.io/vue-components) to see the available components and their usage.
 
 ## Fontawesome
