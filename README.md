@@ -6,29 +6,32 @@ This library contains:
 
 ## Installation
 
-1. Install TailwindCSS 4 on your project.
+1. Install TailwindCSS 4 on your project, follow [the official documentation](https://tailwindcss.com/docs/installation)
+   on how to do so.
 2. Add this library via npm:
-```sh
-npm install @nethesis/vue-components
-```
+    ```sh
+    npm install @nethesis/vue-components
+    ```
 3. Add to your main CSS file (change `node_modules` path if needed):
-```css
-@layer vendor, theme, base, components, utilities;
-
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/preflight.css' layer(base);
-@import 'tailwindcss/utilities.css';
-
-/* import styles from @nethesis/vue-components */
-@import '../../node_modules/@nethesis/vue-components/dist/main.css' layer(components);
-
-/* detect tailwind classes used in @nethesis/vue-components */
-@source '../../node_modules/@nethesis/vue-components/dist/**/*.js';
-
-/* load tailwind forms plugin, needed for some components */
-@plugin '@tailwindcss/forms';
-```
+    ```css
+    /* import the Theme and the CSS for the components */
+    @import '@nethesis/vue-components/theme.css';
+    /* detect tailwind classes used in @nethesis/vue-components (change this path accordingly if needed) */
+    @source 'node_modules/@nethesis/vue-components';
+    ```
 4. After this, you're golden! You can browse the [Storybook](https://nethesis.github.io/vue-components) to see the available components and their usage.
+
+## Fontawesome
+
+Due to fontawesome having issues overriding your icons, it's suggested to set to false the `autoAddCss` option from the
+icons, and adding the required CSS by yourself in a lower priority layer than tailwindcss.
+
+```css
+/* fontawesome styles */
+@import '@fortawesome/fontawesome-svg-core/styles.css' layer(fontawesome);
+```
+
+Official documentation can be found here: https://docs.fontawesome.com/apis/javascript/configuration
 
 ## Contributing
 
