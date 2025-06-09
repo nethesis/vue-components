@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.0.0](https://github.com/nethesis/vue-components/compare/v2.0.0...v3.0.0) (2025-06-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to tailwindcss 4 ([#86](https://github.com/nethesis/vue-components/issues/86))
+* enforcing types on parent projects ([#81](https://github.com/nethesis/vue-components/issues/81))
+
+### Bug Fixes
+
+* enforcing types on parent projects ([#81](https://github.com/nethesis/vue-components/issues/81)) ([c8a54da](https://github.com/nethesis/vue-components/commit/c8a54da1b111600560418ebef21e8dce5b45343a))
+* fixed issue with missing dependencies ([#70](https://github.com/nethesis/vue-components/issues/70)) ([7583bff](https://github.com/nethesis/vue-components/commit/7583bffe70134b0e87c749d94a6211add314c4a0))
+
+
+### Code Refactoring
+
+* upgrade to tailwindcss 4 ([#86](https://github.com/nethesis/vue-components/issues/86)) ([3ca2f43](https://github.com/nethesis/vue-components/commit/3ca2f430d35b7e0476192213a0bee9f0ea2fba95))
+
 ## [2.0.0](https://github.com/nethesis/vue-components/compare/v1.7.0...v2.0.0) (2025-05-07)
 
 
