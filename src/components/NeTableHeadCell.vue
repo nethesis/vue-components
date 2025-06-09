@@ -50,7 +50,7 @@ const sort = () => {
 <template>
   <th scope="col" class="px-6 py-3 font-medium" :aria-sort="ariaSort">
     <!-- sortable column header -->
-    <button v-if="sortable" class="group flex items-center gap-2" @click="sort">
+    <button v-if="sortable" class="group flex cursor-pointer items-center gap-2" @click="sort">
       <slot></slot>
       <template v-if="props.columnKey === sortKey">
         <FontAwesomeIcon

@@ -97,13 +97,13 @@ const boundedProgress = computed(() => {
     >
       <div
         v-if="indeterminate"
-        :class="`h-full w-full origin-[0%_50%] animate-indeterminate-progress-bar rounded-full ${sizeClasses[size]} ${colorClasses[color]}`"
+        :class="`animate-indeterminate-progress-bar h-full w-full origin-[0%_50%] rounded-full ${sizeClasses[size]} ${colorClasses[color]}`"
       ></div>
       <div
         v-else
         :class="`${sizeClasses[size]} ${colorClasses[color]}`"
         :style="{ width: boundedProgress + '%' }"
-        class="rounded-full p-0.5 text-center font-medium text-primary-100 duration-300 ease-out"
+        class="text-primary-100 rounded-full p-0.5 text-center font-medium duration-300 ease-out"
       ></div>
     </div>
   </div>
