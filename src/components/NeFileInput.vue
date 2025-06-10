@@ -14,8 +14,8 @@ interface FileInputProps {
   label?: string
   invalidMessage: string
   dropzoneLabel: string
-  progress: number
-  showProgress: boolean
+  progress?: number
+  showProgress?: boolean
   accept?: string | undefined
 }
 
