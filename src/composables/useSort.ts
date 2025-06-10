@@ -4,10 +4,7 @@ export function useSort<T>(
   items: MaybeRefOrGetter<T[]>,
   sortKey: MaybeRefOrGetter<keyof T>,
   descending: MaybeRefOrGetter<boolean> = false,
-  sortFunctions: Record<keyof T, (a: T, b: T) => number> = {} as Record<
-    keyof T,
-    (a: T, b: T) => number
-  >
+  sortFunctions: Partial<Record<keyof T, (a: T, b: T) => number>> = {}
 ) {
   const sortedItems = ref<T[]>([])
 

@@ -7,6 +7,11 @@ import { computed, inject, toValue } from 'vue'
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+export type SortEvent = {
+  key: string
+  descending: boolean
+}
+
 const props = defineProps({
   columnKey: {
     type: String,
@@ -19,7 +24,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  sort: [{ key: string; descending: boolean }]
+  sort: [SortEvent]
 }>()
 
 // inject from NeTable.vue

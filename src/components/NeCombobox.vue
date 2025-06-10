@@ -44,7 +44,7 @@ export interface Props {
   maxOptionsShown?: number
   multiple?: boolean
   disabled?: boolean
-  showOptionsType: boolean
+  showOptionsType?: boolean
   optional?: boolean
   selectedLabel: string
   showSelectedLabel?: boolean

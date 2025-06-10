@@ -21,6 +21,9 @@
   --color-primary-900: var(--color-cyan-900);
   --color-primary-950: var(--color-cyan-950);
 
+  /* breakpoints */
+  --breakpoint-3xl: 112rem;
+
   /* animations */
   --animate-spin-fast: spin 0.5s linear infinite;
   --animate-spin-relaxed: spin 1.5s linear infinite;
