@@ -3,23 +3,26 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
-<script lang="ts" setup>
-import { computed, type PropType, type Ref, ref, watch } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { type IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-import NeFormItemLabel from './NeFormItemLabel.vue'
-import { v4 as uuidv4 } from 'uuid'
+<script lang="ts">
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
-export type RadioCardSize = 'md' | 'lg' | 'xl'
-
-type RadioOption = {
+export type RadioOption = {
   id: string
   label: string
   description?: string
   icon?: IconDefinition
   disabled?: boolean
 }
+</script>
+
+<script lang="ts" setup generic="T extends RadioOption">
+import { computed, type PropType, type Ref, ref, watch } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import NeFormItemLabel from './NeFormItemLabel.vue'
+import { v4 as uuidv4 } from 'uuid'
+
+export type RadioCardSize = 'md' | 'lg' | 'xl'
 
 const props = defineProps({
   modelValue: {
@@ -41,7 +44,7 @@ const props = defineProps({
   },
   options: {
     required: true,
-    type: Array<RadioOption>
+    type: Array<T>
   },
   card: {
     type: Boolean,
