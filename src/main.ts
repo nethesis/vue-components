@@ -46,6 +46,9 @@ export type { NeNotification } from './components/NeToastNotification.vue'
 export type { NeListboxOption } from './components/NeListbox.vue'
 export type { NeDropdownItem } from './components/NeDropdown.vue'
 export type { FilterOption, FilterKind } from './components/NeDropdownFilter.vue'
+export type { RadioOption } from './components/NeRadioSelection.vue'
+export type { SortEvent } from './components/NeTableHeadCell.vue'
+export type { ModalKind, PrimaryButtonKind, ModalSize } from './components/NeModal.vue'
 
 // library functions export
 export {
