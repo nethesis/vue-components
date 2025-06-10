@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1](https://github.com/nethesis/vue-components/compare/v3.0.0...v3.0.1) (2025-06-10)
+
+
+### Bug Fixes
+
+* adjustments to types ([#90](https://github.com/nethesis/vue-components/issues/90)) ([06ddf7f](https://github.com/nethesis/vue-components/commit/06ddf7f36b9409d3766ed9d63736af0d0c2a43b5))
+* **css:** import was missing in importing project ([#88](https://github.com/nethesis/vue-components/issues/88)) ([2c5523d](https://github.com/nethesis/vue-components/commit/2c5523d18d28fe172d459096d7131344607873a7))
+
 ## [3.0.0](https://github.com/nethesis/vue-components/compare/v2.0.0...v3.0.0) (2025-06-09)
 
 
