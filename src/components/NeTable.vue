@@ -3,54 +3,41 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <script lang="ts" setup>
-import { computed, provide, type PropType } from 'vue'
+import { computed, provide } from 'vue'
 import NeTableSkeleton from './NeTableSkeleton.vue'
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
-const props = defineProps({
-  ariaLabel: {
-    type: String,
-    required: true
-  },
-  cardBreakpoint: {
-    type: String as PropType<Breakpoint>,
-    default: 'md'
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  },
-  skeletonRows: {
-    type: Number,
-    default: 8
-  },
-  skeletonColumns: {
-    type: Number,
-    default: 4
-  },
-  sortKey: {
-    type: String,
-    default: ''
-  },
-  sortDescending: {
-    type: Boolean,
-    default: false
-  }
-})
+const {
+  ariaLabel,
+  cardBreakpoint = 'md',
+  loading = false,
+  skeletonRows = 8,
+  skeletonColumns = 4,
+  sortKey = '',
+  sortDescending = false
+} = defineProps<{
+  ariaLabel?: string
+  cardBreakpoint?: Breakpoint
+  loading?: boolean
+  skeletonRows?: number
+  skeletonColumns?: number
+  sortKey?: string
+  sortDescending?: boolean
+}>()
 
 // provide props to children components
 provide(
   'cardBreakpoint',
-  computed(() => props.cardBreakpoint)
+  computed(() => cardBreakpoint)
 )
 provide(
   'sortKey',
-  computed(() => props.sortKey)
+  computed(() => sortKey)
 )
 provide(
   'sortDescending',
-  computed(() => props.sortDescending)
+  computed(() => sortDescending)
 )
 
 const tableCardStyle: Record<Breakpoint, string> = {
