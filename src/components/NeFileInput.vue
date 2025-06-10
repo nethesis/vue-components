@@ -12,7 +12,7 @@ import NeProgressBar from './NeProgressBar.vue'
 interface FileInputProps {
   modelValue?: File | File[] | null
   label?: string
-  invalidMessage: string
+  invalidMessage?: string
   dropzoneLabel: string
   progress?: number
   showProgress?: boolean
