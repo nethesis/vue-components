@@ -82,7 +82,7 @@ export const AlignToRight: Story = {
   args: { alignToRight: true }
 }
 
-const withSlotTemplate =
+const buttonSlotTemplate =
   '<NeDropdown v-bind="args">\
     <template #button>\
       <NeButton>\
@@ -94,13 +94,13 @@ const withSlotTemplate =
     </template>\
   </NeDropdown>'
 
-export const WithSlot: Story = {
+export const ButtonSlot: Story = {
   render: (args) => ({
     components: { NeDropdown, NeButton, FontAwesomeIcon },
     setup() {
       return { args, faChevronDown }
     },
-    template: withSlotTemplate
+    template: buttonSlotTemplate
   }),
   args: {}
 }
@@ -116,4 +116,30 @@ export const MenuClasses: Story = {
   args: {
     menuClasses: 'bg-fuchsia-200! dark:bg-fuchsia-900!'
   }
+}
+
+const menuHeaderSlotTemplate = `<NeDropdown v-bind="args">
+  <template #menuHeader>
+    <div class="space-y-1 px-4 py-2 text-sm">
+      <div class="font-medium text-gray-900 dark:text-gray-100">
+        Adam Reynolds
+      </div>
+      <div class="text-gray-500 dark:text-gray-400">
+        adamreynolds@example.com
+      </div>
+    </div>
+    <hr class="my-1 border-gray-200 dark:border-gray-700"
+    />
+  </template>
+</NeDropdown>`
+
+export const MenuHeaderSlot: Story = {
+  render: (args) => ({
+    components: { NeDropdown },
+    setup() {
+      return { args }
+    },
+    template: menuHeaderSlotTemplate
+  }),
+  args: {}
 }
