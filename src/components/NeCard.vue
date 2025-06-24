@@ -102,7 +102,7 @@ const isHeaderShown = computed(() => {
     </div>
     <!-- description and content -->
     <div class="flex h-full flex-row items-center justify-between">
-      <div class="h-full min-w-0 grow overflow-hidden text-ellipsis">
+      <div class="h-full grow">
         <NeSkeleton v-if="loading" :lines="skeletonLines"></NeSkeleton>
         <NeInlineNotification
           v-else-if="errorTitle"
