@@ -85,7 +85,7 @@ function setImageError() {
     <div v-else-if="!initials && hasPlaceholder">
       <slot name="placeholder" />
     </div>
-    <div v-else-if="!img && !initials" :class="placeholderContainerClasses">
+    <div v-else-if="(imageError || !img) && !initials" :class="placeholderContainerClasses">
       <FontAwesomeIcon
         :icon="faUser"
         :class="`${placeholderColorClasses} ${placeholderIconSizeClasses[size]}`"
