@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import NeSkeleton from './NeSkeleton.vue'
 import NeInlineNotification from './NeInlineNotification.vue'
 import NeDropdown, { type NeDropdownItem } from './NeDropdown.vue'
+import { computed, useSlots } from 'vue'
 
 const props = defineProps({
   title: {
@@ -46,7 +47,13 @@ const props = defineProps({
   }
 })
 
-defineEmits(['titleClick'])
+const slots = useSlots()
+
+const isHeaderShown = computed(() => {
+  return (
+    props.title || slots.title || props.icon?.length || slots.topRight || props.menuItems?.length
+  )
+})
 </script>
 
 <template>
@@ -57,12 +64,12 @@ defineEmits(['titleClick'])
     ]"
   >
     <!-- header -->
-    <div class="flex justify-between">
+    <div v-if="isHeaderShown" class="flex justify-between">
       <!-- title -->
       <div class="mb-3 flex items-center gap-1">
         <h3
           v-if="title || $slots.title"
-          class="leading-6 font-semibold text-gray-900 dark:text-gray-50"
+          class="leading-6 font-medium text-gray-900 dark:text-gray-50"
         >
           <span v-if="title">
             {{ title }}
@@ -94,8 +101,8 @@ defineEmits(['titleClick'])
       </div>
     </div>
     <!-- description and content -->
-    <div class="flex flex-row items-center justify-between">
-      <div class="grow">
+    <div class="flex h-full flex-row items-center justify-between">
+      <div class="h-full grow">
         <NeSkeleton v-if="loading" :lines="skeletonLines"></NeSkeleton>
         <NeInlineNotification
           v-else-if="errorTitle"

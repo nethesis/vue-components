@@ -38,6 +38,7 @@ export { default as NeHeading } from './components/NeHeading.vue'
 export { default as NeListbox } from './components/NeListbox.vue'
 export { default as NeDropdownFilter } from './components/NeDropdownFilter.vue'
 export { default as NeSortDropdown } from './components/NeSortDropdown.vue'
+export { default as NeAvatar } from './components/NeAvatar.vue'
 
 // types export
 export type { NeComboboxOption } from './components/NeCombobox.vue'
@@ -49,6 +50,7 @@ export type { FilterOption, FilterKind } from './components/NeDropdownFilter.vue
 export type { RadioOption } from './components/NeRadioSelection.vue'
 export type { SortEvent } from './components/NeTableHeadCell.vue'
 export type { ModalKind, PrimaryButtonKind, ModalSize } from './components/NeModal.vue'
+export type { AvatarSize } from './components/NeAvatar.vue'
 
 // library functions export
 export {
