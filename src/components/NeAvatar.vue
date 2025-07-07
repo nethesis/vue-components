@@ -88,7 +88,7 @@ function setImageError() {
     <div v-else-if="(imageError || !img) && !initials" :class="placeholderContainerClasses">
       <FontAwesomeIcon
         :icon="faUser"
-        :class="`${placeholderColorClasses} ${placeholderIconSizeClasses[size]}`"
+        :class="[placeholderColorClasses, placeholderIconSizeClasses[size]]"
       />
     </div>
     <div v-else :class="`${placeholderContainerClasses} font-medium`">
