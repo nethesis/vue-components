@@ -91,7 +91,7 @@ function setImageError() {
         :class="[placeholderColorClasses, placeholderIconSizeClasses[size]]"
       />
     </div>
-    <div v-else :class="`${placeholderContainerClasses} font-medium`">
+    <div v-else :class="[placeholderContainerClasses, 'font-medium']">
       <div :class="initialsSizeClasses[size]">
         {{ initials }}
       </div>
