@@ -5,80 +5,48 @@
 
 <script lang="ts" setup>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { faXmark as fasXmark } from '@fortawesome/free-solid-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import NeButton, { type ButtonKind } from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
-import type { PropType } from 'vue'
+import { watch } from 'vue'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export type ModalKind = 'neutral' | 'info' | 'warning' | 'error' | 'success'
 export type PrimaryButtonKind = 'primary' | 'danger'
 export type ModalSize = 'md' | 'lg' | 'xl' | 'xxl'
 
-defineProps({
-  visible: {
-    type: Boolean,
-    required: true
-  },
-  title: {
-    type: String,
-    default: ''
-  },
-  kind: {
-    type: String as PropType<ModalKind>,
-    default: 'neutral'
-  },
-  size: {
-    type: String as PropType<ModalSize>,
-    default: 'md'
-  },
-  primaryLabel: {
-    type: String,
-    default: ''
-  },
-  secondaryLabel: {
-    type: String,
-    default: ''
-  },
-  cancelLabel: {
-    type: String,
-    default: ''
-  },
-  primaryButtonKind: {
-    type: String as PropType<PrimaryButtonKind>,
-    default: 'primary'
-  },
-  primaryButtonDisabled: {
-    type: Boolean,
-    default: false
-  },
-  primaryButtonLoading: {
-    type: Boolean,
-    default: false
-  },
-  secondaryButtonKind: {
-    type: String as PropType<ButtonKind>,
-    default: 'secondary'
-  },
-  secondaryButtonDisabled: {
-    type: Boolean,
-    default: false
-  },
-  secondaryButtonLoading: {
-    type: Boolean,
-    default: false
-  },
-  closeAriaLabel: {
-    type: String,
-    required: true
-  }
-})
+const {
+  visible = true,
+  title = '',
+  kind = 'neutral',
+  size = 'md',
+  primaryLabel = '',
+  secondaryLabel = '',
+  cancelLabel = '',
+  primaryButtonKind = 'primary',
+  primaryButtonDisabled = false,
+  primaryButtonLoading = false,
+  secondaryButtonKind = 'secondary',
+  secondaryButtonDisabled = false,
+  secondaryButtonLoading = false
+} = defineProps<{
+  visible?: boolean
+  title?: string
+  kind?: ModalKind
+  size?: ModalSize
+  primaryLabel?: string
+  secondaryLabel?: string
+  cancelLabel?: string
+  primaryButtonKind?: ButtonKind
+  primaryButtonDisabled?: boolean
+  primaryButtonLoading?: boolean
+  secondaryButtonKind?: ButtonKind
+  secondaryButtonDisabled?: boolean
+  secondaryButtonLoading?: boolean
+  closeAriaLabel: string
+}>()
 
-const emit = defineEmits(['close', 'primaryClick', 'secondaryClick'])
-
-// add fontawesome icons
-library.add(fasXmark)
+const emit = defineEmits(['close', 'primaryClick', 'secondaryClick', 'show'])
 
 const sizeStyle: Record<ModalSize, string> = {
   md: 'sm:max-w-lg',
@@ -86,6 +54,15 @@ const sizeStyle: Record<ModalSize, string> = {
   xl: 'sm:max-w-4xl',
   xxl: 'sm:max-w-6xl'
 }
+
+watch(
+  () => visible,
+  () => {
+    if (visible) {
+      emit('show')
+    }
+  }
+)
 
 function onClose() {
   emit('close')
@@ -139,7 +116,7 @@ function onSecondaryClick() {
                     @click="onClose"
                   >
                     <span class="sr-only">{{ closeAriaLabel }}</span>
-                    <FontAwesomeIcon :icon="['fas', 'xmark']" class="h-5 w-5" aria-hidden="true" />
+                    <FontAwesomeIcon :icon="faXmark" class="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
                 <div class="sm:flex sm:items-start">
@@ -153,7 +130,7 @@ function onSecondaryClick() {
                     <DialogTitle
                       v-if="title"
                       as="h3"
-                      class="mb-4 text-base leading-6 font-semibold text-gray-900 dark:text-gray-50"
+                      class="mb-4 text-base leading-6 font-medium text-gray-900 dark:text-gray-50"
                       >{{ title }}</DialogTitle
                     >
                     <div>
