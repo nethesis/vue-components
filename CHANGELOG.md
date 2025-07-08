@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/nethesis/vue-components/compare/v3.0.1...v3.1.0) (2025-07-08)
+
+
+### Features
+
+* add NeAvatar component ([#91](https://github.com/nethesis/vue-components/issues/91)) ([a0cee05](https://github.com/nethesis/vue-components/commit/a0cee0535514a043b8e623ca1a7c9415cb96acdd))
+
 ## [3.0.1](https://github.com/nethesis/vue-components/compare/v3.0.0...v3.0.1) (2025-06-10)
 
 
