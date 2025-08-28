@@ -89,7 +89,9 @@ library.add(fasXmark)
           class="text-gray-500 dark:text-gray-400"
         >
           <template #trigger>
-            {{ humanDistanceToNowLoc(notification.timestamp) }}
+            <span class="cursor-pointer">
+              {{ humanDistanceToNowLoc(notification.timestamp) }}
+            </span>
           </template>
           <template #content>
             {{ formatDateLoc(notification.timestamp, 'Pp') }}
