@@ -7,7 +7,7 @@
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, watch } from 'vue'
 
 const props = defineProps({
   isShown: { type: Boolean, default: false },
@@ -16,7 +16,16 @@ const props = defineProps({
   closeAriaLabel: { type: String, default: 'Close side drawer' }
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'show'])
+
+watch(
+  () => props.isShown,
+  () => {
+    if (props.isShown) {
+      emit('show')
+    }
+  }
+)
 
 onMounted(() => {
   window.addEventListener('keydown', onKeyUp)
