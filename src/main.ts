@@ -39,6 +39,7 @@ export { default as NeListbox } from './components/NeListbox.vue'
 export { default as NeDropdownFilter } from './components/NeDropdownFilter.vue'
 export { default as NeSortDropdown } from './components/NeSortDropdown.vue'
 export { default as NeAvatar } from './components/NeAvatar.vue'
+export { default as NeBadgeV2 } from './components/NeBadgeV2.vue'
 
 // types export
 export type { NeComboboxOption } from './components/NeCombobox.vue'
