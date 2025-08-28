@@ -49,6 +49,7 @@ const meta = {
     showSelectionCount: true,
     noOptionsLabel: 'No options',
     showOptionsFilter: false,
+    clearSearchLabel: 'Clear',
     optionsFilterPlaceholder: 'Filter options',
     maxOptionsShown: 25,
     moreOptionsHiddenLabel: 'Continue typing to show more options',
