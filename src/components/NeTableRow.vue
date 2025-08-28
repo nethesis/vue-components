@@ -18,7 +18,7 @@ const trCardStyle: Record<Breakpoint, string> = {
 }
 </script>
 <template>
-  <tr :class="[`grid`, trCardStyle[cardBreakpoint]]">
+  <tr :class="[`grid`, `hover:bg-gray-100 dark:hover:bg-gray-800`, trCardStyle[cardBreakpoint]]">
     <slot />
   </tr>
 </template>
