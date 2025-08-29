@@ -3,6 +3,8 @@
 
 import { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeBadgeV2 } from '../src/main'
+import { faAward } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const meta: Meta<typeof NeBadgeV2> = {
   title: 'NeBadgeV2',
@@ -10,7 +12,7 @@ const meta: Meta<typeof NeBadgeV2> = {
   tags: ['autodocs'],
   argTypes: {
     size: {
-      options: ['xs', 'sm', 'md'],
+      options: ['xs', 'sm'],
       control: { type: 'inline-radio' }
     },
     kind: {
@@ -20,7 +22,7 @@ const meta: Meta<typeof NeBadgeV2> = {
   },
   args: {
     size: 'sm',
-    kind: 'indigo',
+    kind: 'gray',
     pill: true,
     dismissable: false,
     customKindClasses: '',
@@ -44,7 +46,7 @@ export const Default: Story = {
   args: {}
 }
 
-export const Kinds: Story = {
+export const Kind: Story = {
   render: (args) => ({
     components: { NeBadgeV2 },
     setup() {
@@ -52,9 +54,9 @@ export const Kinds: Story = {
     },
     template: `
       <div class="flex flex-wrap gap-8">
-        <NeBadgeV2 v-bind="args" kind="indigo">indigo</NeBadgeV2>
-        <NeBadgeV2 v-bind="args" kind="primary">primary</NeBadgeV2>
         <NeBadgeV2 v-bind="args" kind="gray">gray</NeBadgeV2>
+        <NeBadgeV2 v-bind="args" kind="primary">primary</NeBadgeV2>
+        <NeBadgeV2 v-bind="args" kind="indigo">indigo</NeBadgeV2>
         <NeBadgeV2 v-bind="args" kind="green">green</NeBadgeV2>
         <NeBadgeV2 v-bind="args" kind="amber">amber</NeBadgeV2>
         <NeBadgeV2 v-bind="args" kind="rose">rose</NeBadgeV2>
@@ -78,6 +80,22 @@ export const CustomKind: Story = {
     kind: 'custom',
     customKindClasses: 'text-white bg-linear-to-br from-fuchsia-500 to-blue-500'
   }
+}
+
+const withIconTemplate = `<NeBadgeV2 v-bind="args">
+  <FontAwesomeIcon :icon="faAward" class="size-4" />
+  Badge
+</NeBadgeV2>`
+
+export const WithIcon: Story = {
+  render: (args) => ({
+    components: { NeBadgeV2, FontAwesomeIcon },
+    setup() {
+      return { args, faAward }
+    },
+    template: withIconTemplate
+  }),
+  args: {}
 }
 
 export const Dismissable: Story = {

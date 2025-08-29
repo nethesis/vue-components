@@ -10,13 +10,13 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const {
   size = 'sm',
-  kind = 'indigo',
+  kind = 'gray',
   pill = true,
   dismissable = false,
   customKindClasses = '',
   dismissAriaLabel = 'Dismiss'
 } = defineProps<{
-  size?: 'xs' | 'sm' | 'md'
+  size?: 'xs' | 'sm'
   kind?: 'primary' | 'indigo' | 'gray' | 'green' | 'amber' | 'rose' | 'blue' | 'custom'
   pill?: boolean
   dismissable?: boolean
@@ -30,8 +30,6 @@ const textClasses = computed(() => {
   switch (size) {
     case 'xs':
       return 'text-xs'
-    case 'md':
-      return 'text-base'
     case 'sm':
     default:
       return 'text-sm'
@@ -39,8 +37,13 @@ const textClasses = computed(() => {
 })
 
 const paddingClasses = computed(() => {
-  ////
-  return 'px-2.5'
+  switch (size) {
+    case 'xs':
+      return 'px-3'
+    case 'sm':
+    default:
+      return 'px-2.5'
+  }
 })
 
 const spacingClasses = computed(() => {
@@ -51,8 +54,8 @@ const kindClasses = computed(() => {
   switch (kind) {
     case 'primary':
       return 'bg-primary-100 text-primary-800 dark:bg-primary-700 dark:text-primary-100'
-    case 'gray':
-      return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-100'
+    case 'indigo':
+      return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100'
     case 'green':
       return 'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-50'
     case 'amber':
@@ -63,9 +66,9 @@ const kindClasses = computed(() => {
       return 'bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100'
     case 'custom':
       return `${customKindClasses}`
-    case 'indigo':
+    case 'gray':
     default:
-      return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100'
+      return 'bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-100'
   }
 })
 
@@ -73,8 +76,8 @@ const dismissButtonClasses = computed(() => {
   switch (kind) {
     case 'primary':
       return 'hover:bg-primary-200 hover:dark:bg-primary-600'
-    case 'gray':
-      return 'hover:bg-gray-300 hover:dark:bg-gray-500'
+    case 'indigo':
+      return 'hover:bg-indigo-200 hover:dark:bg-indigo-500'
     case 'green':
       return 'hover:bg-green-200 hover:dark:bg-green-600'
     case 'amber':
@@ -83,15 +86,17 @@ const dismissButtonClasses = computed(() => {
       return 'hover:bg-rose-200 hover:dark:bg-rose-600'
     case 'blue':
       return 'hover:bg-blue-200 hover:dark:bg-blue-600'
-    case 'indigo':
+    case 'custom':
+      return 'hover:bg-white/20'
+    case 'gray':
     default:
-      return 'hover:bg-indigo-200 hover:dark:bg-indigo-500'
+      return 'hover:bg-gray-300 hover:dark:bg-gray-500'
   }
 })
 </script>
 
 <template>
-  <span
+  <div
     :class="[
       textClasses,
       spacingClasses,
@@ -99,7 +104,7 @@ const dismissButtonClasses = computed(() => {
       kindClasses,
       pill ? 'rounded-full' : 'rounded'
     ]"
-    class="flex w-fit items-center py-0.5 font-medium"
+    class="inline-flex w-fit items-center py-0.5 font-medium"
   >
     <slot />
     <button
@@ -111,5 +116,5 @@ const dismissButtonClasses = computed(() => {
       <span class="sr-only">{{ dismissAriaLabel }}</span>
       <FontAwesomeIcon :icon="faXmark" class="size-4" aria-hidden="true" />
     </button>
-  </span>
+  </div>
 </template>
