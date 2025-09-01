@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.2.0](https://github.com/nethesis/vue-components/compare/v3.1.0...v3.2.0) (2025-09-01)
+
+
+### Features
+
+* add NeBadgeV2 ([#93](https://github.com/nethesis/vue-components/issues/93)) ([466de89](https://github.com/nethesis/vue-components/commit/466de89e594235c0d61de710a78fa302cde55211))
+* **NeTable:** add hover color to table rows ([466de89](https://github.com/nethesis/vue-components/commit/466de89e594235c0d61de710a78fa302cde55211))
+
+
+### Bug Fixes
+
+* **NeButton:** add story for icon only button ([466de89](https://github.com/nethesis/vue-components/commit/466de89e594235c0d61de710a78fa302cde55211))
+* **NeDropdownFilter:** add clearSearchLabel prop ([466de89](https://github.com/nethesis/vue-components/commit/466de89e594235c0d61de710a78fa302cde55211))
+* **NeListbox:** fix width of options list ([466de89](https://github.com/nethesis/vue-components/commit/466de89e594235c0d61de710a78fa302cde55211))
+* **NeSideDrawer:** add show event ([466de89](https://github.com/nethesis/vue-components/commit/466de89e594235c0d61de710a78fa302cde55211))
+* **NeTooltip:** prevent nesting of button elements ([466de89](https://github.com/nethesis/vue-components/commit/466de89e594235c0d61de710a78fa302cde55211))
+
 ## [3.1.0](https://github.com/nethesis/vue-components/compare/v3.0.1...v3.1.0) (2025-07-08)
 
 
