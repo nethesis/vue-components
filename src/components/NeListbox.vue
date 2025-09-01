@@ -69,6 +69,7 @@ const showOptions = ref(false)
 const listboxRef = ref<HTMLDivElement | null>(null)
 const top = ref(0)
 const left = ref(0)
+const width = ref(0)
 const buttonRef = ref<InstanceType<typeof Listbox> | null>(null)
 
 const inputValidStyle =
@@ -137,6 +138,7 @@ watch(
 function calculatePosition() {
   top.value = buttonRef.value?.$el.getBoundingClientRect().bottom + window.scrollY
   left.value = buttonRef.value?.$el.getBoundingClientRect().left - window.scrollX
+  width.value = buttonRef.value?.$el.getBoundingClientRect().width || 0
 }
 
 function onClickOutsideListbox() {
@@ -246,7 +248,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
             <ListboxOptions
               static
               :class="`absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-500/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 ${optionsPanelStyle}`"
-              :style="[{ top: top + 'px' }, { left: left + 'px' }]"
+              :style="[{ top: top + 'px' }, { left: left + 'px' }, { 'min-width': width + 'px' }]"
             >
               <ListboxOption
                 v-for="option in allOptions"

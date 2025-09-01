@@ -51,12 +51,14 @@ export interface Props {
   size?: ButtonSize
   disabled?: boolean
   id?: string
+  clearSearchLabel: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   showClearFilter: true,
   showSelectionCount: true,
   showOptionsFilter: false,
+  clearSearchLabel: 'Clear',
   optionsFilterPlaceholder: '',
   maxOptionsShown: 25,
   alignToRight: false,
@@ -220,6 +222,7 @@ function maybeFocusOptionsFilter() {
               ref="optionsFilterRef"
               v-model="optionsFilter"
               :placeholder="optionsFilterPlaceholder"
+              :clear-search-label="clearSearchLabel"
               is-search
               @keydown.stop
             />

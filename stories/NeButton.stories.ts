@@ -3,6 +3,8 @@
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeButton } from '../src/main'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
 
 const meta = {
   title: 'NeButton',
@@ -131,6 +133,24 @@ export const WithSuffix: Story = {
     template: templateWithSuffix
   }),
   args: { loadingPosition: 'suffix' }
+}
+
+const templateIconOnly = `<div>
+  <NeButton v-bind="args">
+    <FontAwesomeIcon :icon="faCopy" class="h-6 w-4" aria-hidden="true" />
+  </NeButton>
+  <div class="mt-4">It is recommended to show a tooltip when the cursor hovers over the button.</div>
+</div>`
+
+export const IconOnly: Story = {
+  render: (args) => ({
+    components: { NeButton, FontAwesomeIcon },
+    setup() {
+      return { args, faCopy }
+    },
+    template: templateIconOnly
+  }),
+  args: {}
 }
 
 export const Disabled: Story = {
