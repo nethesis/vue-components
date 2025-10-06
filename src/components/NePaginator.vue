@@ -47,6 +47,10 @@ const props = defineProps({
   pageSizeLabel: {
     type: String,
     required: true
+  },
+  listboxOptionsPanelStyle: {
+    type: String,
+    default: ''
   }
 })
 
@@ -136,6 +140,7 @@ function navigateToPage(page: number) {
           no-options-label=""
           optional-label=""
           aria-labelledby="page-size-label"
+          :options-panel-style="listboxOptionsPanelStyle"
         />
       </div>
     </div>
