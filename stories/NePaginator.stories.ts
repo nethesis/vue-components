@@ -17,7 +17,8 @@ const meta: Meta<typeof NePaginator> = {
     nextLabel: 'Go to next page',
     navPaginationLabel: 'Pagination',
     rangeOfTotalLabel: 'of',
-    pageSizeLabel: 'Show'
+    pageSizeLabel: 'Show',
+    listboxOptionsPanelStyle: ''
   }
 }
 
