@@ -13,7 +13,7 @@ import { ref, watch } from 'vue'
 
 export interface Props {
   items: NeDropdownItem[]
-  alignToRight: boolean
+  alignToRight?: boolean
   openMenuAriaLabel?: string
   menuClasses?: string
 }
