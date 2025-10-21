@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0](https://github.com/nethesis/vue-components/compare/v3.3.0...v3.4.0) (2025-10-21)
+
+
+### Features
+
+* add NeStepper and minor fixes ([#97](https://github.com/nethesis/vue-components/issues/97)) ([c31d655](https://github.com/nethesis/vue-components/commit/c31d6552e379b02f29840f78a6d743485dc157c2))
+
 ## [3.3.0](https://github.com/nethesis/vue-components/compare/v3.2.0...v3.3.0) (2025-10-06)
 
 
