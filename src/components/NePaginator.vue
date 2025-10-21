@@ -230,7 +230,7 @@ function navigateToPage(page: number) {
         </template>
         <li>
           <button
-            :disabled="currentPage === totalPages"
+            :disabled="currentPage >= totalPages"
             :aria-label="nextLabel"
             class="flex h-10 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-4 leading-tight text-gray-500 hover:bg-gray-50 hover:text-gray-700 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-white"
             @click="navigateToPage(currentPage + 1)"
