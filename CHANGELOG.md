@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.1](https://github.com/nethesis/vue-components/compare/v3.4.0...v3.4.1) (2025-12-09)
+
+
+### Miscellaneous Chores
+
+* release 3.4.1 ([eb58011](https://github.com/nethesis/vue-components/commit/eb580114719eba2cdd555b83334c0c9fb97a47b3))
+
 ## [3.4.0](https://github.com/nethesis/vue-components/compare/v3.3.0...v3.4.0) (2025-10-21)
 
 
