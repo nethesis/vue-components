@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./build.sh dist
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: dist
           path: dist
@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./build.sh storybook
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: storybook
           path: storybook-static
