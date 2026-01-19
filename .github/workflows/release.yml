@@ -14,7 +14,7 @@ jobs:
       group: publish-npm
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: ./build.sh dist
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v3

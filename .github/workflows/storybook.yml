@@ -20,7 +20,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build storybook
         run: ./build.sh storybook
       - name: Upload artifact to Pages
