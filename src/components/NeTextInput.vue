@@ -68,6 +68,10 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  readonly: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -90,11 +94,13 @@ library.add(fasEye)
 library.add(fasEyeSlash)
 
 const inputBaseStyle =
-  'block w-full rounded-md border-0 py-1.5 ring-1 ring-inset outline-hidden focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 mt-0 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900 bg-white placeholder:text-gray-400 transition-colors duration-200 dark:text-gray-50 dark:bg-gray-950 dark:placeholder:text-gray-500'
+  'block w-full rounded-md border-0 py-1.5 ring-1 ring-inset outline-hidden focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 mt-0 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900 placeholder:text-gray-400 transition-colors duration-200 dark:text-gray-50 dark:placeholder:text-gray-500'
 const inputValidStyle =
   'ring-gray-300 focus:ring-primary-500 dark:ring-gray-600 dark:focus:ring-primary-300'
 const inputInvalidStyle =
   'pr-10 ring-rose-700 focus:ring-rose-500 dark:ring-rose-500 dark:focus:ring-rose-500'
+const inputReadonlyStyle = 'bg-transparent'
+const inputWritableStyle = 'bg-white dark:bg-gray-950'
 
 const descriptionBaseStyle = 'mt-2 text-sm'
 
@@ -106,6 +112,7 @@ const inputStyles = computed(() =>
   [
     inputBaseStyle,
     props.invalidMessage ? inputInvalidStyle : inputValidStyle,
+    props.readonly ? inputReadonlyStyle : inputWritableStyle,
     (slots.prefix || props.isSearch) && 'pl-10',
     (slots.suffix || props.isSearch) && 'pr-10'
   ].join(' ')
@@ -198,6 +205,7 @@ function clearText() {
         :aria-describedby="componentId + '-description'"
         v-bind="inputAttrs"
         :disabled="disabled"
+        :readonly="readonly"
         @input="($event) => emitModelValue($event)"
       />
       <!-- show/hide password toggle -->
