@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -58,8 +58,15 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
+// expose focus function
+defineExpose({
+  focus
+})
+
 // add fontawesome icons
 library.add(fasCircleExclamation)
+
+const textAreaRef = ref()
 
 const textAreaBaseStyle =
   'block w-full rounded-md border-0 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900 outline-hidden placeholder:text-gray-400 transition-colors duration-200 dark:text-gray-50 dark:placeholder:text-gray-500'
@@ -85,6 +92,10 @@ const textAreaStyles = computed(() =>
 function emitModelValue(ev: any) {
   emit('update:modelValue', ev.target.value)
 }
+
+function focus() {
+  textAreaRef.value.focus()
+}
 </script>
 
 <template>
@@ -105,6 +116,7 @@ function emitModelValue(ev: any) {
     <div class="relative rounded-md shadow-sm">
       <textarea
         :id="componentId"
+        ref="textAreaRef"
         :value="modelValue"
         :rows="rows"
         :placeholder="placeholder"
