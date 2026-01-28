@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -49,31 +49,52 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  readonly: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits(['update:modelValue'])
 
+// expose focus function
+defineExpose({
+  focus
+})
+
 // add fontawesome icons
 library.add(fasCircleExclamation)
 
+const textAreaRef = ref()
+
 const textAreaBaseStyle =
-  'block w-full rounded-md border-0 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900 bg-white outline-hidden placeholder:text-gray-400 transition-colors duration-200 dark:text-gray-50 dark:bg-gray-950 dark:placeholder:text-gray-500'
+  'block w-full rounded-md border-0 py-1.5 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900 outline-hidden placeholder:text-gray-400 transition-colors duration-200 dark:text-gray-50 dark:placeholder:text-gray-500'
 const textAreaValidStyle =
   'ring-gray-300 focus:ring-primary-500 dark:ring-gray-600 dark:focus:ring-primary-300'
 const textAreaInvalidStyle =
   'pr-10 ring-rose-300 focus:ring-rose-500 ring-rose-700 focus:ring-rose-500'
+const textAreaReadonlyStyle = 'bg-transparent'
+const textAreaWritableStyle = 'bg-white dark:bg-gray-950'
 
 const descriptionBaseStyle = 'mt-2 text-sm'
 
 const componentId = computed(() => (props.id ? props.id : uuidv4()))
 
 const textAreaStyles = computed(() =>
-  [textAreaBaseStyle, props.invalidMessage ? textAreaInvalidStyle : textAreaValidStyle].join(' ')
+  [
+    textAreaBaseStyle,
+    props.invalidMessage ? textAreaInvalidStyle : textAreaValidStyle,
+    props.readonly ? textAreaReadonlyStyle : textAreaWritableStyle
+  ].join(' ')
 )
 
-function emitModelValue(ev: any) {
-  emit('update:modelValue', ev.target.value)
+function emitModelValue(ev: Event) {
+  emit('update:modelValue', (ev.target as HTMLTextAreaElement).value)
+}
+
+function focus() {
+  textAreaRef.value.focus()
 }
 </script>
 
@@ -95,6 +116,7 @@ function emitModelValue(ev: any) {
     <div class="relative rounded-md shadow-sm">
       <textarea
         :id="componentId"
+        ref="textAreaRef"
         :value="modelValue"
         :rows="rows"
         :placeholder="placeholder"
@@ -102,6 +124,7 @@ function emitModelValue(ev: any) {
         v-bind="$attrs"
         :disabled="disabled"
         :class="textAreaStyles"
+        :readonly="readonly"
         @input="($event) => emitModelValue($event)"
       />
       <!-- invalid icon -->

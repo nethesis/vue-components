@@ -20,7 +20,8 @@ const meta = {
     optional: false,
     disabled: false,
     id: '',
-    optionalLabel: 'Optional'
+    optionalLabel: 'Optional',
+    readonly: false
   }
 } satisfies Meta<typeof NeTextArea>
 
@@ -106,4 +107,15 @@ export const WithTooltip: Story = {
     template: templateWithTooltip
   }),
   args: {}
+}
+
+export const Readonly: Story = {
+  render: (args) => ({
+    components: { NeTextArea },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: { readonly: true }
 }

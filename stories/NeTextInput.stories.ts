@@ -26,7 +26,8 @@ const meta = {
     isPassword: false,
     showPasswordLabel: 'Show password',
     hidePasswordLabel: 'Hide password',
-    optionalLabel: 'Optional'
+    optionalLabel: 'Optional',
+    readonly: false
   }
 } satisfies Meta<typeof NeTextInput>
 
@@ -179,4 +180,15 @@ export const Search: Story = {
     template: template
   }),
   args: { isSearch: true }
+}
+
+export const Readonly: Story = {
+  render: (args) => ({
+    components: { NeTextInput },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: { readonly: true }
 }
