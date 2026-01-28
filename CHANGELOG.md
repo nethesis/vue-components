@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.0](https://github.com/nethesis/vue-components/compare/v3.4.1...v3.5.0) (2026-01-28)
+
+
+### Features
+
+* add readonly prop to NeTextInput & NeTextArea ([#122](https://github.com/nethesis/vue-components/issues/122)) ([ecc3c85](https://github.com/nethesis/vue-components/commit/ecc3c850c3193bfb2cdae689ae53ca50465ec151))
+
 ## [3.4.1](https://github.com/nethesis/vue-components/compare/v3.4.0...v3.4.1) (2025-12-09)
 
 
