@@ -142,8 +142,8 @@ const inputAttrs = computed((): string[] => {
     }, {})
 })
 
-function emitModelValue(ev: any) {
-  emit('update:modelValue', ev.target.value)
+function emitModelValue(ev: Event) {
+  emit('update:modelValue', (ev.target as HTMLInputElement).value)
 }
 
 function togglePasswordVisible() {
