@@ -80,7 +80,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/eslint-config-prettier": "^10.0.0",
     "@vue/eslint-config-typescript": "^14.1.1",
-    "@vue/tsconfig": "^0.4.0",
+    "@vue/tsconfig": "^0.8.0",
     "autoprefixer": "^10.4.16",
     "eslint": "^9.13.0",
     "eslint-plugin-storybook": "^9.0.1",
