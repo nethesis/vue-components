@@ -25,6 +25,11 @@ export type FilterOption = {
   disabled?: boolean
 }
 
+export type FilterOptionGroup = {
+  group: string
+  options: FilterOption[]
+}
+
 const sizeStyle: { [index: string]: string } = {
   xs: 'rounded px-2 py-1 text-xs',
   sm: 'rounded px-2 py-1 text-sm',
@@ -35,7 +40,7 @@ const sizeStyle: { [index: string]: string } = {
 
 export interface Props {
   label: string
-  options: FilterOption[]
+  options: (FilterOption | FilterOptionGroup)[]
   kind: FilterKind
   clearFilterLabel: string
   openMenuAriaLabel: string
@@ -67,6 +72,12 @@ const props = withDefaults(defineProps<Props>(), {
   id: ''
 })
 
+function isFilterOptionGroup(
+  item: FilterOption | FilterOptionGroup
+): item is FilterOptionGroup {
+  return 'group' in item && Array.isArray((item as FilterOptionGroup).options)
+}
+
 const model = defineModel<string[]>()
 const radioModel = ref('')
 const checkboxModel = ref<string[]>([])
@@ -83,32 +94,82 @@ const isSelectionCountShown = computed(() => {
   return props.showSelectionCount && props.kind == 'checkbox' && checkboxModel.value.length > 0
 })
 
-const optionsToDisplay = computed(() => {
-  return filteredOptions.value.slice(0, props.maxOptionsShown)
+const allFlatOptions = computed((): FilterOption[] => {
+  return props.options.flatMap((item) =>
+    isFilterOptionGroup(item) ? item.options : [item]
+  )
+})
+
+const isShowingOptionsFilter = computed(() => {
+  return props.showOptionsFilter || allFlatOptions.value.length > props.maxOptionsShown
+})
+
+const filteredOptions = computed((): FilterOption[] => {
+  if (!isShowingOptionsFilter.value) {
+    return allFlatOptions.value
+  }
+
+  const regex = /[^a-zA-Z0-9-]/g
+  const queryText = optionsFilter.value.replace(regex, '')
+
+  // build a set of matching option IDs, also matching group names
+  const matchingIds = new Set<string>()
+
+  for (const entry of props.options) {
+    if (isFilterOptionGroup(entry)) {
+      const groupMatches = new RegExp(queryText, 'i').test(entry.group?.replace(regex, ''))
+
+      for (const opt of entry.options) {
+        if (groupMatches || new RegExp(queryText, 'i').test(opt.label?.replace(regex, ''))) {
+          matchingIds.add(opt.id)
+        }
+      }
+    } else {
+      if (new RegExp(queryText, 'i').test(entry.label?.replace(regex, ''))) {
+        matchingIds.add(entry.id)
+      }
+    }
+  }
+
+  return allFlatOptions.value.filter((opt) => matchingIds.has(opt.id))
 })
 
 const moreOptionsHidden = computed(() => {
   return filteredOptions.value.length > props.maxOptionsShown
 })
 
-const isShowingOptionsFilter = computed(() => {
-  return props.showOptionsFilter || props.options.length > props.maxOptionsShown
-})
+const displayItems = computed(() => {
+  const filteredSet = new Set(filteredOptions.value.map((o) => o.id))
+  const items: { type: 'group' | 'option'; label?: string; option?: FilterOption; key: string }[] =
+    []
+  let optionCount = 0
 
-const filteredOptions = computed(() => {
-  if (!isShowingOptionsFilter.value) {
-    // return all options
-    return props.options
+  for (const entry of props.options) {
+    if (optionCount >= props.maxOptionsShown) break
+
+    if (isFilterOptionGroup(entry)) {
+      const visibleOptions = entry.options.filter((o) => filteredSet.has(o.id))
+      if (visibleOptions.length === 0) continue
+
+      items.push({ type: 'group', label: entry.group, key: `group-${entry.group}` })
+      for (const opt of visibleOptions) {
+        if (optionCount >= props.maxOptionsShown) break
+        items.push({ type: 'option', option: opt, key: opt.id })
+        optionCount++
+      }
+    } else {
+      if (!filteredSet.has(entry.id)) continue
+      items.push({ type: 'option', option: entry, key: entry.id })
+      optionCount++
+    }
   }
 
-  // show only options that match the options filter
+  // remove trailing group headers with no options after them
+  while (items.length > 0 && items[items.length - 1].type === 'group') {
+    items.pop()
+  }
 
-  const regex = /[^a-zA-Z0-9-]/g
-  const queryText = optionsFilter.value.replace(regex, '')
-
-  return props.options.filter((option) => {
-    return new RegExp(queryText, 'i').test(option.label?.replace(regex, ''))
-  })
+  return items
 })
 
 watch(
@@ -232,78 +293,84 @@ function maybeFocusOptionsFilter() {
               {{ clearFilterLabel }}
             </NeLink>
           </div>
-          <MenuItem
-            v-for="option in optionsToDisplay"
-            :key="option.id"
-            as="div"
-            :disabled="option.disabled"
-          >
-            <!-- divider -->
-            <hr
-              v-if="option.id.includes('divider')"
-              class="my-1 border-gray-200 dark:border-gray-700"
-            />
-            <!-- filter option -->
-            <div v-if="kind === 'radio'" class="flex items-center py-2" @click.stop>
-              <!-- radio button -->
-              <input
-                :id="`${componentId}-${option.id}`"
-                v-model="radioModel"
-                type="radio"
-                :name="componentId"
-                :value="option.id"
-                :aria-describedby="`${componentId}-${option.id}-description`"
-                class="peer text-primary-700 focus:ring-primary-500 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 border-gray-300 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 focus:dark:ring-offset-gray-900"
-                :disabled="option.disabled || disabled"
-              />
-              <label
-                :for="`${componentId}-${option.id}`"
-                class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
-              >
-                <span>{{ option.label }}</span>
-                <span
-                  v-if="option.description"
-                  :id="`${componentId}-${option.id}-description`"
-                  class="text-gray-500 dark:text-gray-400"
-                >
-                  {{ option.description }}
-                </span>
-              </label>
+          <template v-for="(item, idx) in displayItems" :key="item.key">
+            <!-- group header -->
+            <div
+              v-if="item.type === 'group'"
+              :class="[
+                'pb-1 pt-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400',
+                idx > 0 ? 'mt-1 border-t border-gray-200 dark:border-gray-700' : ''
+              ]"
+            >
+              {{ item.label }}
             </div>
-            <div v-else-if="kind === 'checkbox'" class="flex items-center py-2" @click.stop>
-              <!-- checkbox -->
-              <div class="flex h-6 items-center">
+            <!-- option -->
+            <MenuItem v-else as="div" :disabled="item.option?.disabled">
+              <!-- divider -->
+              <hr
+                v-if="item.option?.id.includes('divider')"
+                class="my-1 border-gray-200 dark:border-gray-700"
+              />
+              <!-- radio option -->
+              <div v-if="kind === 'radio'" class="flex items-center py-2" @click.stop>
                 <input
-                  :id="`${componentId}-${option.id}`"
-                  v-model="checkboxModel"
-                  type="checkbox"
-                  :value="option.id"
-                  :aria-describedby="`${componentId}-${option.id}-description`"
-                  :disabled="option.disabled || disabled"
-                  class="text-primary-700 focus:ring-primary-500 dark:text-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950 h-5 w-5 rounded-sm border-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 sm:h-4 sm:w-4 dark:border-gray-500"
+                  :id="`${componentId}-${item.option?.id}`"
+                  v-model="radioModel"
+                  type="radio"
+                  :name="componentId"
+                  :value="item.option?.id"
+                  :aria-describedby="`${componentId}-${item.option?.id}-description`"
+                  class="peer text-primary-700 focus:ring-primary-500 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 border-gray-300 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 focus:dark:ring-offset-gray-900"
+                  :disabled="item.option?.disabled || disabled"
                 />
-              </div>
-              <div class="ml-3 text-sm leading-6">
-                <!-- show label prop or default slot -->
                 <label
-                  :class="[
-                    'flex flex-col font-medium text-gray-700 dark:text-gray-50',
-                    { 'cursor-not-allowed opacity-50': option.disabled }
-                  ]"
-                  :for="`${componentId}-${option.id}`"
+                  :for="`${componentId}-${item.option?.id}`"
+                  class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
                 >
-                  <span>{{ option.label }}</span>
+                  <span>{{ item.option?.label }}</span>
                   <span
-                    v-if="option.description"
-                    :id="`${componentId}-${option.id}-description`"
+                    v-if="item.option?.description"
+                    :id="`${componentId}-${item.option?.id}-description`"
                     class="text-gray-500 dark:text-gray-400"
                   >
-                    {{ option.description }}
+                    {{ item.option?.description }}
                   </span>
                 </label>
               </div>
-            </div>
-          </MenuItem>
+              <!-- checkbox option -->
+              <div v-else-if="kind === 'checkbox'" class="flex items-center py-2" @click.stop>
+                <div class="flex h-6 items-center">
+                  <input
+                    :id="`${componentId}-${item.option?.id}`"
+                    v-model="checkboxModel"
+                    type="checkbox"
+                    :value="item.option?.id"
+                    :aria-describedby="`${componentId}-${item.option?.id}-description`"
+                    :disabled="item.option?.disabled || disabled"
+                    class="text-primary-700 focus:ring-primary-500 dark:text-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950 h-5 w-5 rounded-sm border-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 sm:h-4 sm:w-4 dark:border-gray-500"
+                  />
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                  <label
+                    :class="[
+                      'flex flex-col font-medium text-gray-700 dark:text-gray-50',
+                      { 'cursor-not-allowed opacity-50': item.option?.disabled }
+                    ]"
+                    :for="`${componentId}-${item.option?.id}`"
+                  >
+                    <span>{{ item.option?.label }}</span>
+                    <span
+                      v-if="item.option?.description"
+                      :id="`${componentId}-${item.option?.id}-description`"
+                      class="text-gray-500 dark:text-gray-400"
+                    >
+                      {{ item.option?.description }}
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </MenuItem>
+          </template>
           <!-- showing a limited number of options for performance, but more options are available -->
           <div v-if="moreOptionsHidden" class="cursor-default py-2 opacity-50">
             {{ moreOptionsHiddenLabel }}
