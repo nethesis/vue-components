@@ -289,7 +289,7 @@ function maybeFocusOptionsFilter() {
               {{ clearFilterLabel }}
             </NeLink>
           </div>
-          <template v-for="(item, idx) in displayItems" :key="item.key">
+          <template v-for="item in displayItems" :key="item.key">
             <!-- group header -->
             <div
               v-if="item.type === 'group'"
