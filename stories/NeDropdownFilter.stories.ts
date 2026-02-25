@@ -220,6 +220,38 @@ for (let i = 0; i < 150; i++) {
   manyOptions.push({ id: i.toString(), label: `Option ${i}` })
 }
 
+export const GroupedOptions: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilter },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    showOptionsFilter: true,
+    options: [
+      {
+        group: 'NethServer',
+        options: [
+          { id: 'ns8:latest', label: 'latest' },
+          { id: 'ns8:3.18.0-dev.1', label: '3.18.0-dev.1' },
+          { id: 'ns8:3.17.1', label: '3.17.1' },
+          { id: 'ns8:3.17.0-dev.6', label: '3.17.0-dev.6' }
+        ]
+      },
+      {
+        group: 'NethSecurity',
+        options: [
+          { id: 'nsec:8.7.1-monitoring', label: '8.7.1-monitoring' },
+          { id: 'nsec:8.7.1-dev', label: '8.7.1-dev+504e1c0eb' },
+          { id: 'nsec:8.7.1', label: '8.7.1' }
+        ]
+      }
+    ]
+  }
+}
+
 export const ManyOptions: Story = {
   render: (args) => ({
     components: { NeDropdownFilter },
