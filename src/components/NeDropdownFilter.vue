@@ -72,9 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
   id: ''
 })
 
-function isFilterOptionGroup(
-  item: FilterOption | FilterOptionGroup
-): item is FilterOptionGroup {
+function isFilterOptionGroup(item: FilterOption | FilterOptionGroup): item is FilterOptionGroup {
   return 'group' in item && Array.isArray((item as FilterOptionGroup).options)
 }
 
@@ -95,9 +93,7 @@ const isSelectionCountShown = computed(() => {
 })
 
 const allFlatOptions = computed((): FilterOption[] => {
-  return props.options.flatMap((item) =>
-    isFilterOptionGroup(item) ? item.options : [item]
-  )
+  return props.options.flatMap((item) => (isFilterOptionGroup(item) ? item.options : [item]))
 })
 
 const isShowingOptionsFilter = computed(() => {
@@ -297,10 +293,7 @@ function maybeFocusOptionsFilter() {
             <!-- group header -->
             <div
               v-if="item.type === 'group'"
-              :class="[
-                'pb-1 pt-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400',
-                idx > 0 ? 'mt-1 border-t border-gray-200 dark:border-gray-700' : ''
-              ]"
+              class="pt-3 pb-1 text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400"
             >
               {{ item.label }}
             </div>
