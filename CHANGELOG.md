@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.6.0](https://github.com/nethesis/vue-components/compare/v3.5.0...v3.6.0) (2026-02-25)
+
+
+### Features
+
+* **NeDropdownFilter:** add option groups support ([#127](https://github.com/nethesis/vue-components/issues/127)) ([9ed7860](https://github.com/nethesis/vue-components/commit/9ed7860a4431902e501d7d726e34fefc853005c6))
+
 ## [3.5.0](https://github.com/nethesis/vue-components/compare/v3.4.1...v3.5.0) (2026-01-28)
 
 
