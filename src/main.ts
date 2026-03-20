@@ -41,6 +41,7 @@ export { default as NeSortDropdown } from './components/NeSortDropdown.vue'
 export { default as NeAvatar } from './components/NeAvatar.vue'
 export { default as NeBadgeV2 } from './components/NeBadgeV2.vue'
 export { default as NeStepper } from './components/NeStepper.vue'
+export { default as NeToastNotificationV2 } from './components/NeToastNotificationV2.vue'
 
 // types export
 export type { NeComboboxOption } from './components/NeCombobox.vue'
@@ -53,6 +54,7 @@ export type { RadioOption } from './components/NeRadioSelection.vue'
 export type { SortEvent } from './components/NeTableHeadCell.vue'
 export type { ModalKind, PrimaryButtonKind, ModalSize } from './components/NeModal.vue'
 export type { AvatarSize } from './components/NeAvatar.vue'
+export type { NeNotificationV2 } from './components/NeToastNotificationV2.vue'
 
 // library functions export
 export {
