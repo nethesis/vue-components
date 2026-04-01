@@ -11,8 +11,11 @@ import { humanDistanceToNowLoc, formatDateLoc } from '../main'
 import NeButton from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
 import NeTooltip from './NeTooltip.vue'
-import { type PropType } from 'vue'
+import { onMounted, type PropType } from 'vue'
 
+/**
+ * @deprecated Use NeNotificationV2 instead. This type will be removed in a future release.
+ */
 export interface NeNotification {
   id: string
   kind: 'info' | 'warning' | 'error' | 'success'
@@ -27,6 +30,15 @@ export interface NeNotification {
   secondaryAction?: (...args: any[]) => void
 }
 
+onMounted(() => {
+  console.warn(
+    '[NeToastNotification] NeToastNotification is deprecated and will be removed in a future release. Please migrate to NeToastNotificationV2.'
+  )
+})
+
+/**
+ * @deprecated Use NeToastNotificationV2 instead. This component will be removed in a future release.
+ */
 defineProps({
   notification: {
     type: Object as PropType<NeNotification>,

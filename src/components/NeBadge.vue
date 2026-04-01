@@ -4,9 +4,18 @@
 -->
 
 <script lang="ts" setup>
-import { computed, type PropType } from 'vue'
+import { computed, onMounted, type PropType } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+onMounted(() => {
+  console.warn(
+    '[NeBadge] NeBadge is deprecated and will be removed in a future release. Please migrate to NeBadgeV2.'
+  )
+})
+
+/**
+ * @deprecated Use NeBadgeV2 instead. This component will be removed in a future release.
+ */
 const props = defineProps({
   /**
    * Size of the badge, can be 'sm' or 'xs', defaults to 'sm'.

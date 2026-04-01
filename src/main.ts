@@ -11,6 +11,9 @@ export { default as NeInlineNotification } from './components/NeInlineNotificati
 export { default as NeRoundedIcon } from './components/NeRoundedIcon.vue'
 export { default as NeSideDrawer } from './components/NeSideDrawer.vue'
 export { default as NeTooltip } from './components/NeTooltip.vue'
+/**
+ * @deprecated Use NeBadgeV2 instead. This component will be removed in a future release.
+ */
 export { default as NeBadge } from './components/NeBadge.vue'
 export { default as NeButton } from './components/NeButton.vue'
 export { default as NeCheckbox } from './components/NeCheckbox.vue'
@@ -32,6 +35,9 @@ export { default as NeTabs } from './components/NeTabs.vue'
 export { default as NeTextArea } from './components/NeTextArea.vue'
 export { default as NeTextInput } from './components/NeTextInput.vue'
 export { default as NeToggle } from './components/NeToggle.vue'
+/**
+ * @deprecated Use NeToastNotificationV2 instead. This component will be removed in a future release.
+ */
 export { default as NeToastNotification } from './components/NeToastNotification.vue'
 export { default as NeModal } from './components/NeModal.vue'
 export { default as NeHeading } from './components/NeHeading.vue'
@@ -46,6 +52,9 @@ export { default as NeToastNotificationV2 } from './components/NeToastNotificati
 // types export
 export type { NeComboboxOption } from './components/NeCombobox.vue'
 export type { Tab } from './components/NeTabs.vue'
+/**
+ * @deprecated Use NeNotificationV2 instead. This type will be removed in a future release.
+ */
 export type { NeNotification } from './components/NeToastNotification.vue'
 export type { NeListboxOption } from './components/NeListbox.vue'
 export type { NeDropdownItem } from './components/NeDropdown.vue'

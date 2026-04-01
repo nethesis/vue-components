@@ -10,6 +10,14 @@ const meta = {
   title: 'NeToastNotification',
   component: NeToastNotification,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Deprecated: use NeToastNotificationV2 instead. This component will be removed in a future release.'
+      }
+    }
+  },
   args: {
     srCloseLabel: 'Close',
     primaryButtonRightAligned: false,
