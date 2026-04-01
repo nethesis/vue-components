@@ -21,7 +21,8 @@ const meta = {
     errorTitle: '',
     errorDescription: '',
     menuItems: [],
-    alternateBackground: false
+    alternateBackground: false,
+    uppercaseTitle: false
   }
 } satisfies Meta<typeof NeCard>
 
@@ -233,4 +234,15 @@ export const WithoutTitle: Story = {
     template: withoutTitleTemplate
   }),
   args: { title: '' }
+}
+
+export const UppercaseTitle: Story = {
+  render: (args) => ({
+    components: { NeCard },
+    setup() {
+      return { args }
+    },
+    template: defaultTemplate
+  }),
+  args: { uppercaseTitle: true }
 }
