@@ -148,12 +148,14 @@ const closeIconKindStyle: { [index: string]: string } = {
             }`"
             @click="isExpandedDetails = !isExpandedDetails"
           >
-            <span>{{ showDetailsLabel }}</span>
-            <FontAwesomeIcon
-              :icon="isExpandedDetails ? faChevronUp : faChevronDown"
-              aria-hidden="true"
-              class="ml-2 h-3 w-3"
-            />
+            <div class="flex items-center justify-center">
+              <span>{{ showDetailsLabel }}</span>
+              <FontAwesomeIcon
+                :icon="isExpandedDetails ? faChevronUp : faChevronDown"
+                aria-hidden="true"
+                class="ml-2 h-3 w-3"
+              />
+            </div>
           </button>
           <Transition name="slide-down">
             <div
