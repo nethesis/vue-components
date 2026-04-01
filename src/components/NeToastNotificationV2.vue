@@ -27,8 +27,6 @@ export interface NeNotificationV2 {
   secondButtonLabel?: string
   secondButtonAction?: string
   secondButtonKind?: ButtonKind
-  /** If true, the consuming notification manager should not persist this notification after it is dismissed. */
-  ephemeral?: boolean
 }
 
 defineProps({
