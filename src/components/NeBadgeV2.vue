@@ -8,6 +8,16 @@ import { computed } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
+export type NeBadgeV2Kind =
+  | 'primary'
+  | 'indigo'
+  | 'gray'
+  | 'green'
+  | 'amber'
+  | 'rose'
+  | 'blue'
+  | 'custom'
+
 const {
   size = 'sm',
   kind = 'gray',
@@ -17,7 +27,7 @@ const {
   dismissAriaLabel = 'Dismiss'
 } = defineProps<{
   size?: 'xs' | 'sm'
-  kind?: 'primary' | 'indigo' | 'gray' | 'green' | 'amber' | 'rose' | 'blue' | 'custom'
+  kind?: NeBadgeV2Kind
   pill?: boolean
   dismissable?: boolean
   customKindClasses?: string

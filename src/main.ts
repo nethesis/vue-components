@@ -55,6 +55,7 @@ export type { SortEvent } from './components/NeTableHeadCell.vue'
 export type { ModalKind, PrimaryButtonKind, ModalSize } from './components/NeModal.vue'
 export type { AvatarSize } from './components/NeAvatar.vue'
 export type { NeNotificationV2 } from './components/NeToastNotificationV2.vue'
+export type { NeBadgeV2Kind } from './components/NeBadgeV2.vue'
 
 // library functions export
 export {
