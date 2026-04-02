@@ -78,7 +78,11 @@ function setImageError() {
     <img
       v-if="img && !imageError"
       :alt="alt"
-      :class="[avatarSizeClasses[size], squared ? 'rounded-sm' : 'rounded-full']"
+      :class="[
+        avatarSizeClasses[size],
+        squared ? 'rounded-sm' : 'rounded-full',
+        'object-cover object-center'
+      ]"
       :src="img"
       @error="setImageError"
     />
