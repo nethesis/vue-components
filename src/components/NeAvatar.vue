@@ -81,7 +81,7 @@ function setImageError() {
       :class="[
         avatarSizeClasses[size],
         squared ? 'rounded-sm' : 'rounded-full',
-        'object-cover object-center'
+        'inline-block object-cover object-center'
       ]"
       :src="img"
       @error="setImageError"
