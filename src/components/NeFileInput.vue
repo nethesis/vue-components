@@ -12,6 +12,7 @@ import NeProgressBar from './NeProgressBar.vue'
 interface FileInputProps {
   modelValue?: File | File[] | null
   label?: string
+  helperText?: string
   invalidMessage?: string
   dropzoneLabel: string
   progress?: number
@@ -22,6 +23,7 @@ interface FileInputProps {
 const props = withDefaults(defineProps<FileInputProps>(), {
   modelValue: null,
   label: '',
+  helperText: '',
   invalidMessage: '',
   progress: 0,
   showProgress: false,
@@ -120,6 +122,10 @@ const dragOverHandler = (event: Event) => {
       <!-- invalid message -->
       <p v-if="invalidMessage" class="mt-2 text-rose-700 dark:text-rose-400">
         {{ invalidMessage }}
+      </p>
+      <!-- helper text -->
+      <p v-else-if="helperText" class="mt-2 text-gray-500 dark:text-gray-400">
+        {{ helperText }}
       </p>
     </div>
   </div>

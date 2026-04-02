@@ -11,6 +11,7 @@ const meta = {
   argTypes: {},
   args: {
     label: 'Label',
+    helperText: '',
     invalidMessage: '',
     progress: 0,
     showProgress: false,
@@ -46,6 +47,19 @@ export const Invalid: Story = {
   }),
   args: {
     invalidMessage: 'Invalid file'
+  }
+}
+
+export const HelperText: Story = {
+  render: (args) => ({
+    components: { NeFileInput },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    helperText: 'Supported formats: PDF, JPG, PNG'
   }
 }
 
