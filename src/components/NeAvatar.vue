@@ -74,7 +74,7 @@ function setImageError() {
 }
 </script>
 <template>
-  <div>
+  <div class="inline-block">
     <img
       v-if="img && !imageError"
       :alt="alt"
