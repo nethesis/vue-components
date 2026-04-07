@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.7.0](https://github.com/nethesis/vue-components/compare/v3.6.0...v3.7.0) (2026-04-07)
+
+
+### Features
+
+* add NeToastNotificationV2 component ([#137](https://github.com/nethesis/vue-components/issues/137)) ([de5f7db](https://github.com/nethesis/vue-components/commit/de5f7db4835af22a80b638ce7991cf5dd4ed1ef3))
+* **NeCard:** add uppercaseTitle prop
+* **NeFileInput:** add helperText prop
+
+### Bug Fixes
+
+* export NeBadgeV2Kind type
+* **NeInlineNotification:** fix show details button
+* **NeAvatar:** keep image aspect radio
+* **NeFileInput:** add focus support
+* change info color from indigo to blue
+
+### Miscellaneous Chores
+
+* deprecate NeBadge and NeToastNotification
+* rename devcontainer to "vue-components"
+
 ## [3.6.0](https://github.com/nethesis/vue-components/compare/v3.5.0...v3.6.0) (2026-02-25)
 
 
