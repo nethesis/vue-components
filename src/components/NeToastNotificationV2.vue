@@ -1,5 +1,5 @@
 <!--
-  Copyright (C) 2024 Nethesis S.r.l.
+  Copyright (C) 2026 Nethesis S.r.l.
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
@@ -8,47 +8,37 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark as fasXmark } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { humanDistanceToNowLoc, formatDateLoc } from '../main'
-import NeButton from './NeButton.vue'
+import NeButton, { type ButtonKind } from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
 import NeTooltip from './NeTooltip.vue'
-import { onMounted, type PropType } from 'vue'
+import { type PropType } from 'vue'
 
-/**
- * @deprecated Use NeNotificationV2 instead. This type will be removed in a future release.
- */
-export interface NeNotification {
+export interface NeNotificationV2 {
   id: string
   kind: 'info' | 'warning' | 'error' | 'success'
   title: string
   description?: string
   timestamp?: Date
-  payload?: any
+  payload?: Record<string, unknown>
   isShown?: boolean
-  primaryLabel?: string
-  primaryAction?: (...args: any[]) => void
-  secondaryLabel?: string
-  secondaryAction?: (...args: any[]) => void
+  firstButtonLabel?: string
+  firstButtonAction?: string
+  firstButtonKind?: ButtonKind
+  secondButtonLabel?: string
+  secondButtonAction?: string
+  secondButtonKind?: ButtonKind
 }
 
-onMounted(() => {
-  console.warn(
-    '[NeToastNotification] NeToastNotification is deprecated and will be removed in a future release. Please migrate to NeToastNotificationV2.'
-  )
-})
-
-/**
- * @deprecated Use NeToastNotificationV2 instead. This component will be removed in a future release.
- */
 defineProps({
   notification: {
-    type: Object as PropType<NeNotification>,
+    type: Object as PropType<NeNotificationV2>,
     required: true
   },
   srCloseLabel: {
     type: String,
     required: true
   },
-  primaryButtonRightAligned: {
+  firstActionOnRight: {
     type: Boolean,
     default: false
   },
@@ -66,7 +56,7 @@ defineProps({
   }
 })
 
-defineEmits(['close'])
+defineEmits(['close', 'action'])
 
 // add fontawesome icons
 library.add(fasXmark)
@@ -110,7 +100,7 @@ library.add(fasXmark)
           </template>
         </NeTooltip>
       </div>
-      <div class="flex items-start">
+      <div class="flex items-start gap-3">
         <div class="shrink-0">
           <!-- custom icon -->
           <template v-if="$slots.icon">
@@ -119,7 +109,7 @@ library.add(fasXmark)
           <!-- standard icon -->
           <NeRoundedIcon v-else :kind="notification.kind" />
         </div>
-        <div class="ml-3 w-0 flex-1 pt-0.5">
+        <div class="w-0 flex-1 pt-0.5">
           <h6
             :class="[
               'font-medium text-gray-900 dark:text-gray-50',
@@ -140,32 +130,32 @@ library.add(fasXmark)
         </div>
       </div>
       <div
-        v-if="notification.primaryLabel || notification.secondaryLabel"
+        v-if="notification.firstButtonLabel || notification.secondButtonLabel"
         class="ml-10 flex shrink-0"
       >
         <div
           :class="[
-            `mt-4 flex grow justify-end`,
-            primaryButtonRightAligned ? 'flex-row' : 'flex-row-reverse'
+            `mt-4 flex grow justify-end gap-3`,
+            firstActionOnRight ? 'flex-row' : 'flex-row-reverse'
           ]"
         >
           <NeButton
-            v-if="notification.secondaryLabel && notification.secondaryAction"
-            kind="tertiary"
-            size="md"
-            class="mt-0 ml-3 w-auto"
-            @click="notification.secondaryAction"
+            v-if="notification.secondButtonLabel && notification.secondButtonAction"
+            :kind="notification.secondButtonKind ?? 'tertiary'"
+            size="sm"
+            class="w-auto"
+            @click="$emit('action', notification.secondButtonAction)"
           >
-            {{ notification.secondaryLabel }}
+            {{ notification.secondButtonLabel }}
           </NeButton>
           <NeButton
-            v-if="notification.primaryLabel && notification.primaryAction"
-            kind="primary"
-            size="md"
-            class="ml-3 w-auto"
-            @click="notification.primaryAction"
+            v-if="notification.firstButtonLabel && notification.firstButtonAction"
+            :kind="notification.firstButtonKind ?? 'secondary'"
+            size="sm"
+            class="w-auto"
+            @click="$emit('action', notification.firstButtonAction)"
           >
-            {{ notification.primaryLabel }}
+            {{ notification.firstButtonLabel }}
           </NeButton>
         </div>
       </div>

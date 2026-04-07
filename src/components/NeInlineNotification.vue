@@ -56,7 +56,7 @@ const emit = defineEmits(['close', 'primaryClick', 'secondaryClick'])
 const isExpandedDetails = ref(false)
 
 const containerKindStyle: { [index: string]: string } = {
-  info: 'border-indigo-500 bg-indigo-100 dark:border-indigo-300 dark:bg-indigo-900',
+  info: 'border-blue-500 bg-blue-100 dark:border-blue-300 dark:bg-blue-900',
   warning: 'border-amber-500 bg-amber-100 dark:border-amber-300 dark:bg-amber-700',
   error: 'border-rose-500 bg-rose-100 dark:border-rose-300 dark:bg-rose-900',
   success: 'border-green-600 bg-green-100 dark:border-green-500 dark:bg-green-900'
@@ -70,28 +70,28 @@ const iconName: { [index: string]: IconDefinition } = {
 }
 
 const iconKindStyle: { [index: string]: string } = {
-  info: 'text-indigo-700 dark:text-indigo-200',
+  info: 'text-blue-700 dark:text-blue-200',
   warning: 'text-amber-700 dark:text-amber-100',
   error: 'text-rose-700 dark:text-rose-200',
   success: 'text-green-700 dark:text-green-200'
 }
 
 const titleKindStyle: { [index: string]: string } = {
-  info: 'text-indigo-800 dark:text-indigo-100',
+  info: 'text-blue-800 dark:text-blue-100',
   warning: 'text-amber-800 dark:text-amber-50',
   error: 'text-rose-800 dark:text-rose-100',
   success: 'text-green-800 dark:text-green-100'
 }
 
 const descriptionKindStyle: { [index: string]: string } = {
-  info: 'text-indigo-700 dark:text-indigo-200',
+  info: 'text-blue-700 dark:text-blue-200',
   warning: 'text-amber-700 dark:text-amber-100',
   error: 'text-rose-700 dark:text-rose-200',
   success: 'text-green-700 dark:text-green-200'
 }
 
 const buttonsKindStyle: { [index: string]: string } = {
-  info: 'ring-indigo-400 dark:ring-indigo-400 bg-indigo-100 text-indigo-800 hover:bg-indigo-200 focus:ring-indigo-600 focus:ring-offset-indigo-100 dark:bg-indigo-900 dark:text-indigo-100 dark:hover:bg-indigo-800 dark:focus:ring-indigo-400 dark:focus:ring-offset-indigo-900',
+  info: 'ring-blue-400 dark:ring-blue-400 bg-blue-100 text-blue-800 hover:bg-blue-200 focus:ring-blue-600 focus:ring-offset-blue-100 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 dark:focus:ring-blue-400 dark:focus:ring-offset-blue-900',
   warning:
     'ring-amber-500 dark:ring-amber-400 bg-amber-100 text-amber-800 hover:bg-amber-200 focus:ring-amber-600 focus:ring-offset-amber-100 dark:bg-amber-700 dark:text-amber-50 dark:hover:bg-amber-600 dark:focus:ring-amber-400 dark:focus:ring-offset-amber-700',
   error:
@@ -101,7 +101,7 @@ const buttonsKindStyle: { [index: string]: string } = {
 }
 
 const closeIconKindStyle: { [index: string]: string } = {
-  info: 'text-indigo-700 hover:bg-indigo-200 focus:ring-indigo-600 focus:ring-offset-indigo-100 dark:text-indigo-200 dark:hover:bg-indigo-700 dark:focus:ring-indigo-300 dark:focus:ring-offset-indigo-900',
+  info: 'text-blue-700 hover:bg-blue-200 focus:ring-blue-600 focus:ring-offset-blue-100 dark:text-blue-200 dark:hover:bg-blue-700 dark:focus:ring-blue-300 dark:focus:ring-offset-blue-900',
   warning:
     'text-amber-700 hover:bg-amber-200 focus:ring-amber-600 focus:ring-offset-amber-100 dark:text-amber-100 dark:hover:bg-amber-600 dark:focus:ring-amber-400 dark:focus:ring-offset-amber-700',
   error:
@@ -148,12 +148,14 @@ const closeIconKindStyle: { [index: string]: string } = {
             }`"
             @click="isExpandedDetails = !isExpandedDetails"
           >
-            <span>{{ showDetailsLabel }}</span>
-            <FontAwesomeIcon
-              :icon="isExpandedDetails ? faChevronUp : faChevronDown"
-              aria-hidden="true"
-              class="ml-2 h-3 w-3"
-            />
+            <div class="flex items-center justify-center">
+              <span>{{ showDetailsLabel }}</span>
+              <FontAwesomeIcon
+                :icon="isExpandedDetails ? faChevronUp : faChevronDown"
+                aria-hidden="true"
+                class="ml-2 h-3 w-3"
+              />
+            </div>
           </button>
           <Transition name="slide-down">
             <div

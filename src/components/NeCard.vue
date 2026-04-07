@@ -44,6 +44,9 @@ const props = defineProps({
   },
   alternateBackground: {
     type: Boolean
+  },
+  uppercaseTitle: {
+    type: Boolean
   }
 })
 
@@ -69,7 +72,10 @@ const isHeaderShown = computed(() => {
       <div class="mb-3 flex items-center gap-1">
         <h3
           v-if="title || $slots.title"
-          class="leading-6 font-medium text-gray-900 dark:text-gray-50"
+          :class="[
+            'leading-6 font-medium text-gray-900 dark:text-gray-50',
+            { uppercase: uppercaseTitle }
+          ]"
         >
           <span v-if="title">
             {{ title }}

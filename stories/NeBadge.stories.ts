@@ -10,6 +10,14 @@ const meta: Meta<typeof NeBadge> = {
   title: 'NeBadge',
   component: NeBadge,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Deprecated: use NeBadgeV2 instead. This component will be removed in a future release.'
+      }
+    }
+  },
   argTypes: {
     size: {
       options: ['sm', 'xs'],

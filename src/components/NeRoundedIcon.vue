@@ -32,14 +32,14 @@ const iconName: Record<RoundedIconKind, IconDefinition> = {
 }
 
 const iconBackgroundStyle: Record<RoundedIconKind, string> = {
-  info: 'bg-indigo-100 dark:bg-indigo-800',
+  info: 'bg-blue-100 dark:bg-blue-800',
   warning: 'bg-amber-100 dark:bg-amber-800',
   error: 'bg-rose-100 dark:bg-rose-800',
   success: 'bg-green-100 dark:bg-green-800'
 }
 
 const iconForegroundStyle: Record<RoundedIconKind, string> = {
-  info: 'text-indigo-700 dark:text-indigo-50',
+  info: 'text-blue-700 dark:text-blue-50',
   warning: 'text-amber-700 dark:text-amber-50',
   error: 'text-rose-700 dark:text-rose-50',
   success: 'text-green-700 dark:text-green-50'

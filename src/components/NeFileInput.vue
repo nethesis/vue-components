@@ -4,7 +4,7 @@
 -->
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFileArrowUp } from '@fortawesome/free-solid-svg-icons'
 import NeProgressBar from './NeProgressBar.vue'
@@ -12,6 +12,7 @@ import NeProgressBar from './NeProgressBar.vue'
 interface FileInputProps {
   modelValue?: File | File[] | null
   label?: string
+  helperText?: string
   invalidMessage?: string
   dropzoneLabel: string
   progress?: number
@@ -22,6 +23,7 @@ interface FileInputProps {
 const props = withDefaults(defineProps<FileInputProps>(), {
   modelValue: null,
   label: '',
+  helperText: '',
   invalidMessage: '',
   progress: 0,
   showProgress: false,
@@ -30,6 +32,14 @@ const props = withDefaults(defineProps<FileInputProps>(), {
 })
 
 const emit = defineEmits(['update:modelValue', 'select'])
+
+const inputRef = ref<HTMLInputElement | null>(null)
+
+function focus() {
+  inputRef.value?.focus()
+}
+
+defineExpose({ focus })
 
 const model = computed({
   get() {
@@ -91,7 +101,7 @@ const dragOverHandler = (event: Event) => {
       </label>
       <div class="flex items-center justify-center">
         <label
-          class="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 hover:border-gray-400 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-500 dark:hover:bg-gray-700"
+          class="focus-within:ring-primary-500 dark:focus-within:ring-primary-300 flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 focus-within:ring-2 focus-within:ring-offset-2 focus-within:outline-none hover:border-gray-400 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-500 dark:hover:bg-gray-700"
         >
           <div
             class="flex flex-col items-center justify-center p-6 text-gray-600 dark:text-gray-300"
@@ -107,7 +117,7 @@ const dragOverHandler = (event: Event) => {
               {{ dropZoneText }}
             </p>
           </div>
-          <input class="hidden" type="file" :accept="accept" />
+          <input ref="inputRef" class="sr-only" type="file" :accept="accept" />
           <!-- progress bar -->
           <NeProgressBar
             v-if="showProgress"
@@ -120,6 +130,10 @@ const dragOverHandler = (event: Event) => {
       <!-- invalid message -->
       <p v-if="invalidMessage" class="mt-2 text-rose-700 dark:text-rose-400">
         {{ invalidMessage }}
+      </p>
+      <!-- helper text -->
+      <p v-else-if="helperText" class="mt-2 text-gray-500 dark:text-gray-400">
+        {{ helperText }}
       </p>
     </div>
   </div>
