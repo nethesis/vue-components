@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.7.0](https://github.com/nethesis/vue-components/compare/v3.6.0...v3.7.0) (2026-04-07)
+
+
+### Features
+
+* add NeToastNotificationV2 and other fixes ([#137](https://github.com/nethesis/vue-components/issues/137)) ([de5f7db](https://github.com/nethesis/vue-components/commit/de5f7db4835af22a80b638ce7991cf5dd4ed1ef3))
+
 ## [3.6.0](https://github.com/nethesis/vue-components/compare/v3.5.0...v3.6.0) (2026-02-25)
 
 
