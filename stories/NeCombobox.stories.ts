@@ -252,3 +252,34 @@ export const AcceptUserInputMultiple: Story = {
   }),
   args: { acceptUserInput: true, multiple: true, placeholder: 'Choose or type any fruit' }
 }
+
+export const CustomOptionsWidth: Story = {
+  render: (args) => ({
+    components: { NeCombobox },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    label: 'Choose',
+    customOptionsWidth: '42rem',
+    options: [
+      {
+        id: '1',
+        label: 'This is a very long option text that would normally overflow the combobox width',
+        description: 'Description that is also quite long'
+      },
+      {
+        id: '2',
+        label: 'Another lengthy option with extensive information',
+        description: 'More details about this option'
+      },
+      {
+        id: '3',
+        label: 'Yet another option with a very long descriptive text',
+        description: 'Additional context and information'
+      }
+    ]
+  }
+}
