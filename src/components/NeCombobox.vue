@@ -54,6 +54,7 @@ export interface Props {
   acceptUserInput?: boolean
   userInputLabel: string
   optionalLabel: string
+  customOptionsWidth?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -68,7 +69,8 @@ const props = withDefaults(defineProps<Props>(), {
   showOptionsType: true,
   optional: false,
   showSelectedLabel: true,
-  acceptUserInput: false
+  acceptUserInput: false,
+  customOptionsWidth: ''
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -355,7 +357,11 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           <ComboboxOptions
             v-if="filteredOptions.length > 0"
             static
-            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-200 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-700"
+            :style="{ width: customOptionsWidth }"
+            :class="[
+              'absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-200 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-700',
+              !customOptionsWidth && 'w-full'
+            ]"
           >
             <ComboboxOption
               v-for="option in filteredOptions"
