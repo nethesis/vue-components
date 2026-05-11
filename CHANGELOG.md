@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.8.0](https://github.com/nethesis/vue-components/compare/v3.7.0...v3.8.0) (2026-05-11)
+
+
+### Features
+
+* **NeCombobox:** add customOptionsWidth prop ([#145](https://github.com/nethesis/vue-components/issues/145)) ([79923fc](https://github.com/nethesis/vue-components/commit/79923fc8d95ac070524177e10fc8a2827df8e6aa))
+
 ## [3.7.0](https://github.com/nethesis/vue-components/compare/v3.6.0...v3.7.0) (2026-04-07)
 
 
