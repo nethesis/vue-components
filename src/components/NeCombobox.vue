@@ -29,7 +29,7 @@ export interface NeComboboxOption {
   label: string
   description?: string
   icon?: IconDefinition
-  rawObj?: any
+  rawObj?: unknown
   disabled?: boolean
 }
 

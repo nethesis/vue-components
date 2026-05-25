@@ -3,6 +3,7 @@
 
 import { round } from 'lodash-es'
 import { nextTick } from 'vue'
+import type { Ref } from 'vue'
 
 /**
  * Sort function to order array elements by a specific property (for array of objects) or by a specific index (for arrays of arrays)
@@ -24,7 +25,7 @@ export const sortByProperty = (property: string | number) => {
  * Set the focus on an element. To set the focus on a custom component, it needs to expose focus() function (see NeTextInput for an example)
  *
  */
-export const focusElement = (elementRef: any) => {
+export const focusElement = (elementRef: Ref<{ focus: () => void } | null | undefined>) => {
   nextTick(() => {
     if (elementRef && elementRef.value) {
       elementRef.value.focus()

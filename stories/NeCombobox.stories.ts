@@ -69,7 +69,7 @@ export const Optional: Story = {
   }
 }
 
-const manyOptions: any = []
+const manyOptions: unknown[] = []
 
 for (let i = 0; i < 150; i++) {
   manyOptions.push({ id: i.toString(), label: `Option ${i}` })
