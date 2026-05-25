@@ -1,9 +1,38 @@
 //  Copyright (C) 2024 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
+import { ref } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeDropdownFilter, NeButton } from '../src/main'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+const defaultOptions = [
+  {
+    id: 'option1',
+    label: 'Option 1'
+  },
+  {
+    id: 'option2',
+    label: 'Option 2'
+  },
+  {
+    id: 'option3',
+    label: 'Option 3',
+    disabled: true
+  },
+  {
+    id: 'option4',
+    label: 'Option 4'
+  },
+  {
+    id: 'option5',
+    label: 'Option 5'
+  },
+  {
+    id: 'option6',
+    label: 'Option 6'
+  }
+]
 
 const meta = {
   title: 'NeDropdownFilter',
@@ -15,33 +44,7 @@ const meta = {
   },
   args: {
     label: 'Filter label',
-    options: [
-      {
-        id: 'option1',
-        label: 'Option 1'
-      },
-      {
-        id: 'option2',
-        label: 'Option 2'
-      },
-      {
-        id: 'option3',
-        label: 'Option 3',
-        disabled: true
-      },
-      {
-        id: 'option4',
-        label: 'Option 4'
-      },
-      {
-        id: 'option5',
-        label: 'Option 5'
-      },
-      {
-        id: 'option6',
-        label: 'Option 6'
-      }
-    ],
+    options: defaultOptions,
     kind: 'checkbox',
     clearFilterLabel: 'Clear selection',
     openMenuAriaLabel: 'Open filter',
@@ -56,7 +59,9 @@ const meta = {
     alignToRight: false,
     size: 'md',
     disabled: false,
-    id: ''
+    id: '',
+    externalFilter: false,
+    loadingOptions: false
   }
 } satisfies Meta<typeof NeDropdownFilter>
 
@@ -262,5 +267,42 @@ export const ManyOptions: Story = {
   }),
   args: {
     options: manyOptions
+  }
+}
+
+export const ExternalFilter: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilter },
+    setup() {
+      const options = ref(defaultOptions)
+
+      function onSearch(query: string) {
+        options.value = defaultOptions.filter((o) =>
+          o.label.toLowerCase().includes(query.toLowerCase())
+        )
+      }
+
+      return { args, options, onSearch }
+    },
+    template: '<NeDropdownFilter v-bind="args" :options="options" @search="onSearch" />'
+  }),
+  args: {
+    externalFilter: true,
+    showOptionsFilter: true
+  }
+}
+
+export const LoadingOptions: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilter },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    showOptionsFilter: true,
+    externalFilter: true,
+    loadingOptions: true
   }
 }

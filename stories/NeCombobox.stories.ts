@@ -2,7 +2,7 @@
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-
+import { ref } from 'vue'
 import { NeCombobox, NeTooltip } from '../src/main'
 import { faStar, faBell, faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -29,6 +29,8 @@ const meta = {
     acceptUserInput: false,
     userInputLabel: 'User input',
     optionalLabel: 'Optional',
+    externalFilter: false,
+    loadingOptions: false,
     modelValue: '',
     options: [
       { id: '1', label: 'Cherry' },
@@ -281,5 +283,44 @@ export const CustomOptionsWidth: Story = {
         description: 'Additional context and information'
       }
     ]
+  }
+}
+
+export const ExternalFilter: Story = {
+  render: (args) => ({
+    components: { NeCombobox },
+    setup() {
+      const options = ref([...meta.args.options])
+      const modelValue = ref('')
+      function onFilter(query: string) {
+        options.value = meta.args.options.filter((opt) =>
+          opt.label.toLowerCase().includes(query.toLowerCase())
+        )
+      }
+      return { args, options, modelValue, onFilter }
+    },
+    template:
+      '<NeCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
+  }),
+  args: {
+    externalFilter: true,
+    label: 'Choose fruit (external filter)',
+    placeholder: 'Type to filter...'
+  }
+}
+
+export const LoadingOptions: Story = {
+  render: (args) => ({
+    components: { NeCombobox },
+    setup() {
+      return { args }
+    },
+    template: template
+  }),
+  args: {
+    externalFilter: true,
+    loadingOptions: true,
+    label: 'Choose fruit (external filter)',
+    placeholder: 'Type to filter...'
   }
 }

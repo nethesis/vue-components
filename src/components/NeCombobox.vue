@@ -21,6 +21,7 @@ import {
 import { faCheck as fasCheck } from '@fortawesome/free-solid-svg-icons'
 import { faXmark as fasXmark } from '@fortawesome/free-solid-svg-icons'
 import NeBadge from './NeBadge.vue'
+import NeSkeleton from './NeSkeleton.vue'
 import { onClickOutside } from '@vueuse/core'
 import { uniqBy, isEqual } from 'lodash-es'
 
@@ -55,6 +56,8 @@ export interface Props {
   userInputLabel: string
   optionalLabel: string
   customOptionsWidth?: string
+  externalFilter?: boolean
+  loadingOptions?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -70,10 +73,12 @@ const props = withDefaults(defineProps<Props>(), {
   optional: false,
   showSelectedLabel: true,
   acceptUserInput: false,
-  customOptionsWidth: ''
+  customOptionsWidth: '',
+  externalFilter: false,
+  loadingOptions: false
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'filter'])
 
 // expose focus function
 defineExpose({
@@ -98,6 +103,13 @@ const allOptions = computed(() => {
 })
 
 const filteredOptions = computed(() => {
+  if (props.externalFilter) {
+    if (!allOptions.value.length && query.value) {
+      return [{ id: 'no_results', label: props.noResultsLabel, disabled: true }]
+    }
+    return getLimitedNumberOfOptions(allOptions.value)
+  }
+
   if (!query.value) {
     return getLimitedNumberOfOptions(allOptions.value)
   }
@@ -233,6 +245,33 @@ function getLimitedNumberOfOptions(options: NeComboboxOption[]) {
 }
 
 function onClickOutsideCombobox() {
+  if (props.acceptUserInput && query.value.trim()) {
+    const trimmedQuery = query.value.trim()
+
+    // find an existing option matching the typed text, or create a new one
+    let option = allOptions.value.find((opt) => opt.label === trimmedQuery)
+
+    if (!option) {
+      option = {
+        id: trimmedQuery,
+        label: trimmedQuery,
+        description: props.userInputLabel
+      }
+      userInputOptions.value.push(option)
+    }
+
+    if (props.multiple) {
+      const alreadySelected = (selected.value as NeComboboxOption[]).find(
+        (opt) => opt.id === option!.id
+      )
+      if (!alreadySelected) {
+        selected.value = [...selected.value, option]
+      }
+    } else {
+      selected.value = option
+    }
+  }
+
   query.value = ''
   showOptions.value = false
 }
@@ -303,6 +342,11 @@ function onInputClick() {
   showOptions.value = true
 }
 
+function onInputChange(event: Event) {
+  query.value = (event.target as HTMLInputElement).value
+  emit('filter', query.value)
+}
+
 function removeFromSelection(optionToRemove: NeComboboxOption) {
   selected.value = selected.value.filter(
     (option: NeComboboxOption) => option.id !== optionToRemove.id
@@ -342,7 +386,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           } w-full rounded-md border-0 bg-white py-1.5 pr-10 pl-3 text-gray-900 shadow-sm ring-1 outline-hidden ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-50 dark:placeholder:text-gray-500`"
           :display-value="(option: any) => option?.label"
           :placeholder="props.placeholder"
-          @change="query = $event.target.value"
+          @change="onInputChange"
           @click="onInputClick"
         />
         <ComboboxButton
@@ -354,8 +398,18 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           <FontAwesomeIcon :icon="fasChevronDown" class="h-3 w-3 shrink-0" aria-hidden="true" />
         </ComboboxButton>
         <div v-show="open || showOptions">
+          <div
+            v-if="loadingOptions && (open || showOptions)"
+            :style="{ width: customOptionsWidth }"
+            :class="[
+              'absolute z-10 mt-1 overflow-auto rounded-md bg-white px-3 py-3 text-base shadow-lg ring-1 ring-gray-200 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-700',
+              !customOptionsWidth && 'w-full'
+            ]"
+          >
+            <NeSkeleton :lines="3" />
+          </div>
           <ComboboxOptions
-            v-if="filteredOptions.length > 0"
+            v-else-if="filteredOptions.length > 0"
             static
             :style="{ width: customOptionsWidth }"
             :class="[

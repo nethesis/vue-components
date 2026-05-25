@@ -12,6 +12,7 @@ import { isEqual } from 'lodash-es'
 import { v4 as uuidv4 } from 'uuid'
 import NeBadge from './NeBadge.vue'
 import NeLink from './NeLink.vue'
+import NeSkeleton from './NeSkeleton.vue'
 import type { ButtonSize } from './NeButton.vue'
 import NeTextInput from './NeTextInput.vue'
 import { focusElement } from '../lib/utils'
@@ -57,6 +58,8 @@ export interface Props {
   disabled?: boolean
   id?: string
   clearSearchLabel: string
+  externalFilter?: boolean
+  loadingOptions?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -69,8 +72,14 @@ const props = withDefaults(defineProps<Props>(), {
   alignToRight: false,
   size: 'md',
   disabled: false,
-  id: ''
+  id: '',
+  externalFilter: false,
+  loadingOptions: false
 })
+
+const emit = defineEmits<{
+  search: [query: string]
+}>()
 
 function isFilterOptionGroup(item: FilterOption | FilterOptionGroup): item is FilterOptionGroup {
   return 'group' in item && Array.isArray((item as FilterOptionGroup).options)
@@ -101,7 +110,7 @@ const isShowingOptionsFilter = computed(() => {
 })
 
 const filteredOptions = computed((): FilterOption[] => {
-  if (!isShowingOptionsFilter.value) {
+  if (props.externalFilter || !isShowingOptionsFilter.value) {
     return allFlatOptions.value
   }
 
@@ -197,6 +206,10 @@ watch(
   { immediate: true }
 )
 
+watch(optionsFilter, (query) => {
+  emit('search', query)
+})
+
 function updateInternalModel() {
   if (props.kind === 'radio') {
     // update only if the value is different to avoid "Maximum recursive updates exceeded" error
@@ -289,7 +302,11 @@ function maybeFocusOptionsFilter() {
               {{ clearFilterLabel }}
             </NeLink>
           </div>
-          <template v-for="item in displayItems" :key="item.key">
+          <!-- skeleton while loading -->
+          <div v-if="loadingOptions" class="py-2">
+            <NeSkeleton :lines="3" />
+          </div>
+          <template v-for="item in displayItems" v-else :key="item.key">
             <!-- group header -->
             <div
               v-if="item.type === 'group'"
@@ -369,7 +386,7 @@ function maybeFocusOptionsFilter() {
             {{ moreOptionsHiddenLabel }}
           </div>
           <!-- no option matching filter -->
-          <div v-if="!filteredOptions.length">
+          <div v-if="!loadingOptions && !filteredOptions.length">
             <div class="py-2 opacity-50">
               {{ noOptionsLabel }}
             </div>
