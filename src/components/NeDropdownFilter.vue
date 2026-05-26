@@ -250,6 +250,16 @@ function maybeFocusOptionsFilter() {
     focusElement(optionsFilterRef)
   }
 }
+
+function clearOptionsFilter() {
+  optionsFilter.value = ''
+}
+
+function clearFilter() {
+  checkboxModel.value = []
+  optionsFilter.value = ''
+  maybeFocusOptionsFilter()
+}
 </script>
 
 <template>
@@ -287,7 +297,7 @@ function maybeFocusOptionsFilter() {
         leave-from-class="transform opacity-100 scale-100"
         leave-to-class="transform opacity-0 scale-95"
         @after-enter="maybeFocusOptionsFilter"
-        @after-leave="optionsFilter = ''"
+        @after-leave="clearOptionsFilter"
       >
         <MenuItems
           :style="[
@@ -314,7 +324,7 @@ function maybeFocusOptionsFilter() {
             <NeLink v-if="customActionLabel" @click.stop="emit('customAction')">
               {{ customActionLabel }}
             </NeLink>
-            <NeLink v-else @click.stop="checkboxModel = []">
+            <NeLink v-else @click.stop="clearFilter">
               {{ clearFilterLabel }}
             </NeLink>
           </div>
