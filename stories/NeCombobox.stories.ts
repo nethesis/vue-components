@@ -309,6 +309,31 @@ export const ExternalFilter: Story = {
   }
 }
 
+export const ExternalFilterWithUserInput: Story = {
+  render: (args) => ({
+    components: { NeCombobox },
+    setup() {
+      const options = ref([...meta.args.options])
+      const modelValue = ref('')
+      function onFilter(query: string) {
+        options.value = meta.args.options.filter((opt) =>
+          opt.label.toLowerCase().includes(query.toLowerCase())
+        )
+      }
+      return { args, options, modelValue, onFilter }
+    },
+    template:
+      '<NeCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
+  }),
+  args: {
+    externalFilter: true,
+    acceptUserInput: true,
+    label: 'Choose fruit (external filter + user input)',
+    placeholder: 'Type to filter or create custom value...',
+    userInputLabel: 'custom value'
+  }
+}
+
 export const LoadingOptions: Story = {
   render: (args) => ({
     components: { NeCombobox },

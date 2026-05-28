@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import {
   Combobox,
   ComboboxButton,
@@ -104,10 +104,38 @@ const allOptions = computed(() => {
 
 const filteredOptions = computed(() => {
   if (props.externalFilter) {
-    if (!allOptions.value.length && query.value) {
+    // combine externally-filtered options with matching user input options
+    let results: NeComboboxOption[] = [...props.options]
+
+    if (query.value.trim()) {
+      // when filtering, only include user input options that match the query
+      const matchingUserInputs = userInputOptions.value.filter((opt) =>
+        opt.label.trim().toLowerCase().includes(query.value.trim().toLowerCase())
+      )
+      results = results.concat(matchingUserInputs)
+    } else {
+      // when not filtering, include all user input options
+      results = results.concat(userInputOptions.value)
+    }
+
+    // add user input suggestion if acceptUserInput is enabled
+    if (props.acceptUserInput && query.value.trim()) {
+      const trimmedQuery = query.value.trim()
+      const optionFound = results.find((option) => option.label === trimmedQuery)
+
+      if (!optionFound) {
+        results.push({
+          id: trimmedQuery,
+          label: trimmedQuery,
+          description: props.userInputLabel
+        })
+      }
+    }
+
+    if (!results.length && query.value) {
       return [{ id: 'no_results', label: props.noResultsLabel, disabled: true }]
     }
-    return getLimitedNumberOfOptions(allOptions.value)
+    return getLimitedNumberOfOptions(results)
   }
 
   if (!query.value) {
@@ -169,6 +197,12 @@ watch(selected, () => {
 watch(
   () => props.options,
   () => {
+    // don't update selection while user is actively filtering with external filter,
+    // as it would overwrite the input text and cause focus loss
+    if (props.externalFilter && showOptions.value) {
+      return
+    }
+
     // update selection
 
     if (props.multiple) {
@@ -185,11 +219,39 @@ onMounted(() => {
   } else {
     selectSingleOptionFromModelValue()
   }
+
+  // Guard focus for external filter: when options update while user is typing,
+  // Headless UI may move focus away from the input (e.g. if the component is
+  // briefly disabled during a refetch). Listen on the input's blur event and
+  // immediately restore focus if we're actively filtering.
+  if (props.externalFilter) {
+    const input = comboboxRef.value?.querySelector('input')
+    if (input) {
+      const handleBlur = () => {
+        if (showOptions.value && query.value) {
+          setTimeout(() => {
+            if (showOptions.value && query.value) {
+              input.focus()
+            }
+          }, 0)
+        }
+      }
+      input.addEventListener('blur', handleBlur)
+      onBeforeUnmount(() => {
+        input.removeEventListener('blur', handleBlur)
+      })
+    }
+  }
 })
 
 watch(
   () => props.modelValue,
   () => {
+    // don't update selection while user is actively filtering with external filter
+    if (props.externalFilter && showOptions.value) {
+      return
+    }
+
     if (props.multiple) {
       selectMultipleOptionsFromModelValue()
     } else {
@@ -274,11 +336,20 @@ function onClickOutsideCombobox() {
 
   query.value = ''
   showOptions.value = false
+
+  if (props.externalFilter) {
+    emit('filter', '')
+  }
 }
 
 function onOptionSelected(selectedOption: NeComboboxOption) {
   if (!props.multiple) {
     showOptions.value = false
+    query.value = ''
+
+    if (props.externalFilter) {
+      emit('filter', '')
+    }
   }
 
   if (props.acceptUserInput) {
@@ -340,6 +411,10 @@ function focus() {
 
 function onInputClick() {
   showOptions.value = true
+
+  if (props.externalFilter) {
+    emit('filter', '')
+  }
 }
 
 function onInputChange(event: Event) {
@@ -364,6 +439,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
       v-model="selected"
       as="div"
       :multiple="multiple"
+      nullable
       v-bind="$attrs"
       :disabled="disabled"
     >
@@ -409,7 +485,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
             <NeSkeleton :lines="3" />
           </div>
           <ComboboxOptions
-            v-else-if="filteredOptions.length > 0"
+            v-show="!loadingOptions && filteredOptions.length > 0"
             static
             :style="{ width: customOptionsWidth }"
             :class="[
