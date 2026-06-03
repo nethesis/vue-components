@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.9.0](https://github.com/nethesis/vue-components/compare/v3.8.0...v3.9.0) (2026-06-03)
+
+
+### Features
+
+* external filtering for NeDropdownFilter & NeCombobox ([#154](https://github.com/nethesis/vue-components/issues/154)) ([1e36021](https://github.com/nethesis/vue-components/commit/1e36021f1688019f91c440a04cc95da0191b4076))
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to v11 [security] ([#150](https://github.com/nethesis/vue-components/issues/150)) ([2427edf](https://github.com/nethesis/vue-components/commit/2427edf97d5beb9e5ea578542adaf82b8eefac62))
+
 ## [3.8.0](https://github.com/nethesis/vue-components/compare/v3.7.0...v3.8.0) (2026-05-11)
 
 
