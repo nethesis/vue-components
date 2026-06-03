@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { isEqual } from 'lodash-es'
 import { v4 as uuidv4 } from 'uuid'
-import NeBadge from './NeBadge.vue'
+import NeBadgeV2 from './NeBadgeV2.vue'
 import NeLink from './NeLink.vue'
+import NeSkeleton from './NeSkeleton.vue'
 import type { ButtonSize } from './NeButton.vue'
 import NeTextInput from './NeTextInput.vue'
 import { focusElement } from '../lib/utils'
@@ -46,6 +47,7 @@ export interface Props {
   openMenuAriaLabel: string
   showClearFilter?: boolean
   showSelectionCount?: boolean
+  showRadioSelection?: boolean
   noOptionsLabel: string
   showOptionsFilter?: boolean
   optionsFilterPlaceholder?: string
@@ -57,11 +59,15 @@ export interface Props {
   disabled?: boolean
   id?: string
   clearSearchLabel: string
+  externalFilter?: boolean
+  loadingOptions?: boolean
+  customActionLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   showClearFilter: true,
   showSelectionCount: true,
+  showRadioSelection: false,
   showOptionsFilter: false,
   clearSearchLabel: 'Clear',
   optionsFilterPlaceholder: '',
@@ -69,8 +75,16 @@ const props = withDefaults(defineProps<Props>(), {
   alignToRight: false,
   size: 'md',
   disabled: false,
-  id: ''
+  id: '',
+  externalFilter: false,
+  loadingOptions: false,
+  customActionLabel: ''
 })
+
+const emit = defineEmits<{
+  search: [query: string]
+  customAction: []
+}>()
 
 function isFilterOptionGroup(item: FilterOption | FilterOptionGroup): item is FilterOptionGroup {
   return 'group' in item && Array.isArray((item as FilterOptionGroup).options)
@@ -92,6 +106,13 @@ const isSelectionCountShown = computed(() => {
   return props.showSelectionCount && props.kind == 'checkbox' && checkboxModel.value.length > 0
 })
 
+const currentRadioSelectionLabel = computed(() => {
+  if (!props.showRadioSelection || props.kind !== 'radio' || !radioModel.value) {
+    return ''
+  }
+  return allFlatOptions.value.find((o) => o.id === radioModel.value)?.label ?? ''
+})
+
 const allFlatOptions = computed((): FilterOption[] => {
   return props.options.flatMap((item) => (isFilterOptionGroup(item) ? item.options : [item]))
 })
@@ -101,7 +122,7 @@ const isShowingOptionsFilter = computed(() => {
 })
 
 const filteredOptions = computed((): FilterOption[] => {
-  if (!isShowingOptionsFilter.value) {
+  if (props.externalFilter || !isShowingOptionsFilter.value) {
     return allFlatOptions.value
   }
 
@@ -197,6 +218,10 @@ watch(
   { immediate: true }
 )
 
+watch(optionsFilter, (query) => {
+  emit('search', query)
+})
+
 function updateInternalModel() {
   if (props.kind === 'radio') {
     // update only if the value is different to avoid "Maximum recursive updates exceeded" error
@@ -225,6 +250,16 @@ function maybeFocusOptionsFilter() {
     focusElement(optionsFilterRef)
   }
 }
+
+function clearOptionsFilter() {
+  optionsFilter.value = ''
+}
+
+function clearFilter() {
+  checkboxModel.value = []
+  optionsFilter.value = ''
+  maybeFocusOptionsFilter()
+}
 </script>
 
 <template>
@@ -242,12 +277,12 @@ function maybeFocusOptionsFilter() {
           <span class="flex items-center justify-center">
             <slot v-if="$slots.label" name="label"></slot>
             <span v-else>{{ label }}</span>
-            <NeBadge
-              v-if="isSelectionCountShown"
-              :text="checkboxModel.length.toString()"
-              size="xs"
-              class="ml-2"
-            />
+            <NeBadgeV2 v-if="isSelectionCountShown" size="xs" class="ml-2">{{
+              checkboxModel.length
+            }}</NeBadgeV2>
+            <NeBadgeV2 v-else-if="currentRadioSelectionLabel" size="xs" class="ml-2">{{
+              currentRadioSelectionLabel
+            }}</NeBadgeV2>
             <FontAwesomeIcon :icon="faChevronDown" class="ml-2 h-3 w-3" aria-hidden="true" />
           </span>
         </button>
@@ -262,6 +297,7 @@ function maybeFocusOptionsFilter() {
         leave-from-class="transform opacity-100 scale-100"
         leave-to-class="transform opacity-0 scale-95"
         @after-enter="maybeFocusOptionsFilter"
+        @after-leave="clearOptionsFilter"
       >
         <MenuItems
           :style="[
@@ -284,12 +320,19 @@ function maybeFocusOptionsFilter() {
               @keydown.stop
             />
           </div>
-          <div v-if="showClearFilter && kind == 'checkbox'" class="py-2">
-            <NeLink @click.stop="checkboxModel = []">
+          <div v-if="customActionLabel || (showClearFilter && kind == 'checkbox')" class="py-2">
+            <NeLink v-if="customActionLabel" @click.stop="emit('customAction')">
+              {{ customActionLabel }}
+            </NeLink>
+            <NeLink v-else @click.stop="clearFilter">
               {{ clearFilterLabel }}
             </NeLink>
           </div>
-          <template v-for="item in displayItems" :key="item.key">
+          <!-- skeleton while loading -->
+          <div v-if="loadingOptions" class="py-2">
+            <NeSkeleton :lines="3" />
+          </div>
+          <template v-for="item in displayItems" v-else :key="item.key">
             <!-- group header -->
             <div
               v-if="item.type === 'group'"
@@ -305,7 +348,7 @@ function maybeFocusOptionsFilter() {
                 class="my-1 border-gray-200 dark:border-gray-700"
               />
               <!-- radio option -->
-              <div v-if="kind === 'radio'" class="flex items-center py-2" @click.stop>
+              <div v-if="kind === 'radio'" class="flex items-center py-2">
                 <input
                   :id="`${componentId}-${item.option?.id}`"
                   v-model="radioModel"
@@ -365,12 +408,15 @@ function maybeFocusOptionsFilter() {
             </MenuItem>
           </template>
           <!-- showing a limited number of options for performance, but more options are available -->
-          <div v-if="moreOptionsHidden" class="cursor-default py-2 opacity-50">
+          <div
+            v-if="moreOptionsHidden"
+            class="cursor-default py-2 text-gray-500 dark:text-gray-400"
+          >
             {{ moreOptionsHiddenLabel }}
           </div>
           <!-- no option matching filter -->
-          <div v-if="!filteredOptions.length">
-            <div class="py-2 opacity-50">
+          <div v-if="!loadingOptions && !filteredOptions.length">
+            <div class="py-2 text-gray-500 dark:text-gray-400">
               {{ noOptionsLabel }}
             </div>
           </div>

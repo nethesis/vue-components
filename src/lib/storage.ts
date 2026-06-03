@@ -51,7 +51,7 @@ export const deleteFromStorage = (name: string) => {
  */
 export const savePreference = (
   preferenceName: string,
-  preferenceValue: any,
+  preferenceValue: unknown,
   currentUsername: string
 ) => {
   const preferences = getJsonFromStorage(`preferences-${currentUsername}`) || {}
