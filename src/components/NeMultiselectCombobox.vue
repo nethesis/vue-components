@@ -36,7 +36,7 @@ export interface NeMultiselectComboboxOption {
 }
 
 export interface Props {
-  modelValue: NeMultiselectComboboxOption[]
+  modelValue: string[]
   options: NeMultiselectComboboxOption[]
   label?: string
   placeholder?: string
@@ -72,7 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
   optional: false,
   acceptUserInput: false,
   customOptionsWidth: '',
-  maxHeight: '',
+  maxHeight: '8.5rem',
   maxOptionsShown: 50,
   externalFilter: false,
   loadingOptions: false,
@@ -81,7 +81,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [value: NeMultiselectComboboxOption[]]
+  'update:modelValue': [value: string[]]
   filter: [query: string]
 }>()
 
@@ -196,7 +196,10 @@ watch(selected, (newVal, oldVal) => {
     }
   }
 
-  emit('update:modelValue', selected.value)
+  emit(
+    'update:modelValue',
+    selected.value.map((opt) => opt.id)
+  )
 })
 
 watch(
@@ -310,18 +313,27 @@ function onOptionSelected(selectedOption: NeMultiselectComboboxOption) {
 function selectOptionsFromModelValue() {
   const selectedList: NeMultiselectComboboxOption[] = []
 
-  for (const selectedOption of props.modelValue) {
-    const optionFound = allOptions.value.find((option) => option.id === selectedOption.id)
+  for (const id of props.modelValue) {
+    const realOption = props.options.find((option) => option.id === id)
 
-    if (optionFound) {
-      selectedList.push(optionFound)
-    } else if (props.acceptUserInput) {
-      const userInputOption = {
-        ...selectedOption,
-        description: selectedOption.description || props.userInputLabel
+    if (realOption) {
+      // Real option found — remove any stale userInput entry for this id
+      userInputOptions.value = userInputOptions.value.filter((opt) => opt.id !== id)
+      selectedList.push(realOption)
+    } else {
+      const userInputOption = userInputOptions.value.find((opt) => opt.id === id)
+
+      if (userInputOption) {
+        selectedList.push(userInputOption)
+      } else if (props.acceptUserInput) {
+        const newOption: NeMultiselectComboboxOption = {
+          id,
+          label: id,
+          description: props.userInputLabel
+        }
+        userInputOptions.value.push(newOption)
+        selectedList.push(newOption)
       }
-      userInputOptions.value.push(userInputOption)
-      selectedList.push(userInputOption)
     }
   }
 
