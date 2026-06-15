@@ -4,6 +4,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import { NeMultiselectCombobox, NeTooltip } from '../src/main'
+import type { NeMultiselectComboboxOption } from '../src/main'
 import { faBell, faEarthAmericas, faStar } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -33,7 +34,7 @@ const meta = {
     userInputLabel: 'User input',
     optionalLabel: 'Optional',
     customOptionsWidth: '',
-    maxHeight: '',
+    maxHeight: '8.5rem',
     maxOptionsShown: 50,
     limitedOptionsLabel: 'Continue typing to show more options',
     externalFilter: false,
@@ -70,7 +71,7 @@ export const WithSelectedOptions: Story = {
     template
   }),
   args: {
-    modelValue: [baseOptions[0], baseOptions[1]]
+    modelValue: ['1', '2']
   }
 }
 
@@ -87,7 +88,7 @@ export const Optional: Story = {
   }
 }
 
-const manyOptions: unknown[] = []
+const manyOptions: NeMultiselectComboboxOption[] = []
 
 for (let i = 0; i < 150; i++) {
   manyOptions.push({ id: i.toString(), label: `Option ${i}` })
@@ -117,7 +118,7 @@ export const GrowingInput: Story = {
   }),
   args: {
     options: manyOptions,
-    modelValue: manyOptions.slice(0, 14),
+    modelValue: manyOptions.slice(0, 14).map((opt) => opt.id),
     maxHeight: '8rem',
     label: 'Choose many options'
   }
@@ -341,7 +342,7 @@ export const BadgeKindPrimary: Story = {
     template
   }),
   args: {
-    modelValue: [baseOptions[0], baseOptions[1], baseOptions[2]],
+    modelValue: ['1', '2', '3'],
     badgeKind: 'primary',
     label: 'Primary badges'
   }
@@ -356,7 +357,7 @@ export const BadgeKindCustom: Story = {
     template
   }),
   args: {
-    modelValue: [baseOptions[0], baseOptions[1], baseOptions[2]],
+    modelValue: ['1', '2', '3'],
     badgeKind: 'custom',
     badgeCustomKindClasses: 'text-white bg-linear-to-br from-fuchsia-500 to-blue-500',
     label: 'Custom badge classes'
