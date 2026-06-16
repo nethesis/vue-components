@@ -3,7 +3,7 @@
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { NeCombobox, NeTooltip } from '../src/main'
+import { NeCombobox, NeComboboxOption, NeTooltip } from '../src/main'
 import { faStar, faBell, faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -71,7 +71,7 @@ export const Optional: Story = {
   }
 }
 
-const manyOptions: unknown[] = []
+const manyOptions: NeComboboxOption[] = []
 
 for (let i = 0; i < 150; i++) {
   manyOptions.push({ id: i.toString(), label: `Option ${i}` })
@@ -127,6 +127,15 @@ export const Disabled: Story = {
 }
 
 export const Multiple: Story = {
+  name: 'Multiple [Deprecated]',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Deprecated: use NeMultiselectCombobox instead. This usage will be removed in a future release.'
+      }
+    }
+  },
   render: (args) => ({
     components: { NeCombobox },
     setup() {
@@ -141,6 +150,15 @@ export const Multiple: Story = {
 }
 
 export const MultipleWithManyOptions: Story = {
+  name: 'Multiple With Many Options [Deprecated]',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Deprecated: use NeMultiselectCombobox instead. This usage will be removed in a future release.'
+      }
+    }
+  },
   render: (args) => ({
     components: { NeCombobox },
     setup() {
@@ -245,6 +263,15 @@ export const AcceptUserInput: Story = {
 }
 
 export const AcceptUserInputMultiple: Story = {
+  name: 'Accept User Input Multiple [Deprecated]',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Deprecated: use NeMultiselectCombobox instead. This usage will be removed in a future release.'
+      }
+    }
+  },
   render: (args) => ({
     components: { NeCombobox },
     setup() {

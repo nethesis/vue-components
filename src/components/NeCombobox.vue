@@ -43,6 +43,9 @@ export interface Props {
   invalidMessage?: string
   // limit the number of options displayed for performance
   maxOptionsShown?: number
+  /**
+   * @deprecated Use NeMultiselectCombobox instead. This prop will be removed in a future release.
+   */
   multiple?: boolean
   disabled?: boolean
   showOptionsType?: boolean
@@ -215,6 +218,9 @@ watch(
 
 onMounted(() => {
   if (props.multiple) {
+    console.warn(
+      '[NeCombobox] The "multiple" prop is deprecated and will be removed in a future release. Please migrate to NeMultiselectCombobox.'
+    )
     selectMultipleOptionsFromModelValue()
   } else {
     selectSingleOptionFromModelValue()
