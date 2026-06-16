@@ -49,7 +49,8 @@
     "format-fix": "prettier --write src/",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build-pack": "npm version patch --no-git-tag-version && npm run build && npm pack"
+    "build-pack": "npm version patch --no-git-tag-version && npm run build && npm pack",
+    "playground": "vite --config playground/vite.config.ts"
   },
   "dependencies": {
     "@fontsource/poppins": "^5.2.6",
