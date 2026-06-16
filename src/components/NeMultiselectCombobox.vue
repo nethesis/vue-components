@@ -36,7 +36,6 @@ export interface NeMultiselectComboboxOption {
 }
 
 export interface Props {
-  modelValue: string[]
   options: NeMultiselectComboboxOption[]
   label?: string
   placeholder?: string
@@ -61,7 +60,6 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: () => [],
   options: () => [],
   label: '',
   placeholder: '',
@@ -81,9 +79,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string[]]
   filter: [query: string]
 }>()
+
+const modelValue = defineModel<string[]>({ default: () => [] })
 
 defineExpose({
   focus
@@ -196,10 +195,7 @@ watch(selected, (newVal, oldVal) => {
     }
   }
 
-  emit(
-    'update:modelValue',
-    selected.value.map((opt) => opt.id)
-  )
+  modelValue.value = selected.value.map((opt) => opt.id)
 })
 
 watch(
@@ -213,7 +209,7 @@ watch(
 )
 
 watch(
-  () => props.modelValue,
+  () => modelValue.value,
   () => {
     if (props.externalFilter && showOptions.value) {
       return
@@ -313,7 +309,7 @@ function onOptionSelected(selectedOption: NeMultiselectComboboxOption) {
 function selectOptionsFromModelValue() {
   const selectedList: NeMultiselectComboboxOption[] = []
 
-  for (const id of props.modelValue) {
+  for (const id of modelValue.value) {
     const realOption = props.options.find((option) => option.id === id)
 
     if (realOption) {
@@ -565,12 +561,3 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
     </Combobox>
   </div>
 </template>
-
-<style>
-/* remove white background and border (css rule applied by user agent) */
-div[multiple] {
-  background-color: inherit;
-  border: none;
-  padding: 0;
-}
-</style>
