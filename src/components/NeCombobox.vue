@@ -24,6 +24,7 @@ import NeBadge from './NeBadge.vue'
 import NeSkeleton from './NeSkeleton.vue'
 import { onClickOutside } from '@vueuse/core'
 import { uniqBy, isEqual } from 'lodash-es'
+import { warnDeprecated } from '../lib/utils'
 
 export interface NeComboboxOption {
   id: string
@@ -218,8 +219,9 @@ watch(
 
 onMounted(() => {
   if (props.multiple) {
-    console.warn(
-      '[NeCombobox] The "multiple" prop is deprecated and will be removed in a future release. Please migrate to NeMultiselectCombobox.'
+    warnDeprecated(
+      'NeCombobox',
+      'The "multiple" prop is deprecated and will be removed in a future release. Please migrate to NeMultiselectCombobox.'
     )
     selectMultipleOptionsFromModelValue()
   } else {
