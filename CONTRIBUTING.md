@@ -24,6 +24,18 @@ To access the container's shell, run
 
 With `bash` you can replace any command you want to run inside the container, bash since it's an interactive command will keep the container open. The only special command is `build`, which will rebuild the container even if it already exists.
 
+### Playground
+
+The playground is a lightweight Vite app (separate from Storybook) intended as a quick interactive testing ground for components. Use it to set up ad-hoc test scenarios, experiment with component configurations, and validate behavior. Unlike Storybook, features like `v-model` and other Vue instance features fully work in the playground.
+
+To start it, run:
+
+```bash
+npm run playground
+```
+
+Edit `playground/App.vue` to add the components you want to test. The app will be hot-reloaded on any change.
+
 ## IDE support
 
 Due to the usage of podman, you need to configure the IDE to use `podman` instead of `docker` as container runtime.
