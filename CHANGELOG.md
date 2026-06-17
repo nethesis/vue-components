@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.10.0](https://github.com/nethesis/vue-components/compare/v3.9.0...v3.10.0) (2026-06-17)
+
+
+### Features
+
+* add NeMultiselectCombobox component ([#159](https://github.com/nethesis/vue-components/issues/159)) ([a8e5123](https://github.com/nethesis/vue-components/commit/a8e512356aebef772dbd767e36943314112050b8))
+
 ## [3.9.0](https://github.com/nethesis/vue-components/compare/v3.8.0...v3.9.0) (2026-06-03)
 
 
