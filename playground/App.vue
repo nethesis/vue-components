@@ -18,8 +18,8 @@ const isDark = useDark()
     <p class="mb-8 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300">
       This playground serves as an interactive testing ground for the Nethesis Vue components
       library. It's designed to facilitate development and debugging by allowing you to quickly set
-      up test scenarios. Use this space to experiment with components and validate behavior across
-      different configurations.
+      up test scenarios. Unlike Storybook, features like <code>v-model</code> and other Vue instance
+      features fully work in this playground.
     </p>
 
     <!-- Add components below -->

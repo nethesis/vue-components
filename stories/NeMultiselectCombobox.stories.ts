@@ -1,77 +1,94 @@
-//  Copyright (C) 2024 Nethesis S.r.l.
+//  Copyright (C) 2026 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { NeCombobox, NeComboboxOption, NeTooltip } from '../src/main'
-import { faStar, faBell, faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
+import { NeMultiselectCombobox, NeTooltip } from '../src/main'
+import type { NeMultiselectComboboxOption } from '../src/main'
+import { faBell, faEarthAmericas, faStar } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
+const baseOptions = [
+  { id: '1', label: 'Cherry' },
+  { id: '2', label: 'Apple' },
+  { id: '3', label: 'Banana' },
+  { id: '4', label: 'Avocado', disabled: true },
+  { id: '5', label: 'Peach' }
+]
+
 const meta = {
-  title: 'NeCombobox',
-  component: NeCombobox,
+  title: 'NeMultiselectCombobox',
+  component: NeMultiselectCombobox,
   tags: ['autodocs'],
   args: {
     label: 'Choose fruit',
     placeholder: 'Placeholder',
     helperText: '',
     invalidMessage: '',
-    maxOptionsShown: 50,
-    multiple: false,
     disabled: false,
     showOptionsType: true,
     optional: false,
-    selectedLabel: 'Selected',
-    showSelectedLabel: true,
     noResultsLabel: 'No results',
-    limitedOptionsLabel: 'Continue typing to show more options',
     noOptionsLabel: 'No options available',
     acceptUserInput: false,
     userInputLabel: 'User input',
     optionalLabel: 'Optional',
+    customOptionsWidth: '',
+    maxHeight: '8.5rem',
+    maxOptionsShown: 50,
+    limitedOptionsLabel: 'Continue typing to show more options',
     externalFilter: false,
     loadingOptions: false,
-    modelValue: '',
-    options: [
-      { id: '1', label: 'Cherry' },
-      { id: '2', label: 'Apple' },
-      { id: '3', label: 'Banana' },
-      { id: '4', label: 'Avocado', disabled: true },
-      { id: '5', label: 'Peach' }
-    ]
-  } // default values
-} satisfies Meta<typeof NeCombobox>
+    badgeKind: 'gray',
+    badgeCustomKindClasses: '',
+    modelValue: [],
+    options: baseOptions
+  }
+} satisfies Meta<typeof NeMultiselectCombobox>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-const template = '<NeCombobox v-bind="args" class="max-w-md" />'
+const template = '<NeMultiselectCombobox v-bind="args" class="max-w-md" />'
 
 export const Default: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: {}
 }
 
-export const Optional: Story = {
+export const WithSelectedOptions: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
+  }),
+  args: {
+    modelValue: ['1', '2']
+  }
+}
+
+export const Optional: Story = {
+  render: (args) => ({
+    components: { NeMultiselectCombobox },
+    setup() {
+      return { args }
+    },
+    template
   }),
   args: {
     optional: true
   }
 }
 
-const manyOptions: NeComboboxOption[] = []
+const manyOptions: NeMultiselectComboboxOption[] = []
 
 for (let i = 0; i < 150; i++) {
   manyOptions.push({ id: i.toString(), label: `Option ${i}` })
@@ -79,36 +96,52 @@ for (let i = 0; i < 150; i++) {
 
 export const ManyOptions: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: {
     options: manyOptions,
-    label: 'Choose'
+    label: 'Choose options'
+  }
+}
+
+export const GrowingInput: Story = {
+  render: (args) => ({
+    components: { NeMultiselectCombobox },
+    setup() {
+      return { args }
+    },
+    template
+  }),
+  args: {
+    options: manyOptions,
+    modelValue: manyOptions.slice(0, 14).map((opt) => opt.id),
+    maxHeight: '8rem',
+    label: 'Choose many options'
   }
 }
 
 export const HelperText: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: { helperText: 'Helper text' }
 }
 
 export const Invalid: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: {
     invalidMessage: 'Invalid value'
@@ -117,83 +150,31 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: { disabled: true }
 }
 
-export const Multiple: Story = {
-  name: 'Multiple [Deprecated]',
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Deprecated: use NeMultiselectCombobox instead. This usage will be removed in a future release.'
-      }
-    }
-  },
-  render: (args) => ({
-    components: { NeCombobox },
-    setup() {
-      return { args }
-    },
-    template: template
-  }),
-  args: {
-    label: 'Choose one or more options',
-    multiple: true
-  }
-}
-
-export const MultipleWithManyOptions: Story = {
-  name: 'Multiple With Many Options [Deprecated]',
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Deprecated: use NeMultiselectCombobox instead. This usage will be removed in a future release.'
-      }
-    }
-  },
-  render: (args) => ({
-    components: { NeCombobox },
-    setup() {
-      return { args }
-    },
-    template: template
-  }),
-  args: {
-    options: manyOptions,
-    label: 'Choose one or more options',
-    multiple: true
-  }
-}
-
 export const OptionsWithDescription: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: {
-    label: 'Choose',
+    label: 'Choose people',
     options: [
       { id: '1', label: 'Wade Cooper', description: '@wadecooper' },
       { id: '2', label: 'Arlene Mccoy', description: '@arlenemccoy' },
       { id: '3', label: 'Devon Webb', description: '@devonwebb' },
       { id: '4', label: 'Tom Cook', description: '@tomcook' },
-      { id: '5', label: 'Tanya Fox', description: '@tanyafox' },
-      { id: '6', label: 'Hellen Schmidt', description: '@hellenschmidt' },
-      { id: '7', label: 'Caroline Schultz', description: '@carolineschultz' },
-      { id: '8', label: 'Mason Heaney', description: '@masonheaney' },
-      { id: '9', label: 'Claudie Smitham', description: '@claudiesmitham' },
-      { id: '10', label: 'Emil Schaefer', description: '@emilschaefer' }
+      { id: '5', label: 'Tanya Fox', description: '@tanyafox' }
     ]
   }
 }
@@ -204,11 +185,11 @@ library.add(faEarthAmericas)
 
 export const OptionsWithIcon: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: {
     label: 'Choose',
@@ -222,27 +203,27 @@ export const OptionsWithIcon: Story = {
 
 export const NoOptions: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: { options: [] }
 }
 
 const templateWithTooltip =
-  '<NeCombobox v-bind="args" class="max-w-md">\
+  '<NeMultiselectCombobox v-bind="args" class="max-w-md">\
       <template #tooltip>\
         <NeTooltip>\
           <template #content>Tooltip</template>\
         </NeTooltip>\
       </template>\
-    </NeCombobox>'
+    </NeMultiselectCombobox>'
 
 export const WithTooltip: Story = {
   render: (args) => ({
-    components: { NeCombobox, NeTooltip },
+    components: { NeMultiselectCombobox, NeTooltip },
     setup() {
       return { args }
     },
@@ -253,42 +234,22 @@ export const WithTooltip: Story = {
 
 export const AcceptUserInput: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: { acceptUserInput: true, placeholder: 'Choose or type any fruit' }
 }
 
-export const AcceptUserInputMultiple: Story = {
-  name: 'Accept User Input Multiple [Deprecated]',
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Deprecated: use NeMultiselectCombobox instead. This usage will be removed in a future release.'
-      }
-    }
-  },
-  render: (args) => ({
-    components: { NeCombobox },
-    setup() {
-      return { args }
-    },
-    template: template
-  }),
-  args: { acceptUserInput: true, multiple: true, placeholder: 'Choose or type any fruit' }
-}
-
 export const CustomOptionsWidth: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: {
     label: 'Choose',
@@ -303,11 +264,6 @@ export const CustomOptionsWidth: Story = {
         id: '2',
         label: 'Another lengthy option with extensive information',
         description: 'More details about this option'
-      },
-      {
-        id: '3',
-        label: 'Yet another option with a very long descriptive text',
-        description: 'Additional context and information'
       }
     ]
   }
@@ -315,19 +271,19 @@ export const CustomOptionsWidth: Story = {
 
 export const ExternalFilter: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
-      const options = ref([...meta.args.options])
-      const modelValue = ref('')
+      const options = ref([...baseOptions])
+      const modelValue = ref([])
       function onFilter(query: string) {
-        options.value = meta.args.options.filter((opt) =>
+        options.value = baseOptions.filter((opt) =>
           opt.label.toLowerCase().includes(query.toLowerCase())
         )
       }
       return { args, options, modelValue, onFilter }
     },
     template:
-      '<NeCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
+      '<NeMultiselectCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
   }),
   args: {
     externalFilter: true,
@@ -338,19 +294,19 @@ export const ExternalFilter: Story = {
 
 export const ExternalFilterWithUserInput: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
-      const options = ref([...meta.args.options])
-      const modelValue = ref('')
+      const options = ref([...baseOptions])
+      const modelValue = ref([])
       function onFilter(query: string) {
-        options.value = meta.args.options.filter((opt) =>
+        options.value = baseOptions.filter((opt) =>
           opt.label.toLowerCase().includes(query.toLowerCase())
         )
       }
       return { args, options, modelValue, onFilter }
     },
     template:
-      '<NeCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
+      '<NeMultiselectCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
   }),
   args: {
     externalFilter: true,
@@ -363,16 +319,47 @@ export const ExternalFilterWithUserInput: Story = {
 
 export const LoadingOptions: Story = {
   render: (args) => ({
-    components: { NeCombobox },
+    components: { NeMultiselectCombobox },
     setup() {
       return { args }
     },
-    template: template
+    template
   }),
   args: {
     externalFilter: true,
     loadingOptions: true,
     label: 'Choose fruit (external filter)',
     placeholder: 'Type to filter...'
+  }
+}
+
+export const BadgeKindPrimary: Story = {
+  render: (args) => ({
+    components: { NeMultiselectCombobox },
+    setup() {
+      return { args }
+    },
+    template
+  }),
+  args: {
+    modelValue: ['1', '2', '3'],
+    badgeKind: 'primary',
+    label: 'Primary badges'
+  }
+}
+
+export const BadgeKindCustom: Story = {
+  render: (args) => ({
+    components: { NeMultiselectCombobox },
+    setup() {
+      return { args }
+    },
+    template
+  }),
+  args: {
+    modelValue: ['1', '2', '3'],
+    badgeKind: 'custom',
+    badgeCustomKindClasses: 'text-white bg-linear-to-br from-fuchsia-500 to-blue-500',
+    label: 'Custom badge classes'
   }
 }
