@@ -6,10 +6,12 @@
 <script lang="ts" setup>
 import { computed, onMounted, type PropType } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { warnDeprecated } from '../lib/utils'
 
 onMounted(() => {
-  console.warn(
-    '[NeBadge] NeBadge is deprecated and will be removed in a future release. Please migrate to NeBadgeV2.'
+  warnDeprecated(
+    'NeBadge',
+    'NeBadge is deprecated and will be removed in a future release. Please migrate to NeBadgeV2.'
   )
 })
 

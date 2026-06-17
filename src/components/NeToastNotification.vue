@@ -12,6 +12,7 @@ import NeButton from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
 import NeTooltip from './NeTooltip.vue'
 import { onMounted, type PropType } from 'vue'
+import { warnDeprecated } from '../lib/utils'
 
 /**
  * @deprecated Use NeNotificationV2 instead. This type will be removed in a future release.
@@ -31,8 +32,9 @@ export interface NeNotification {
 }
 
 onMounted(() => {
-  console.warn(
-    '[NeToastNotification] NeToastNotification is deprecated and will be removed in a future release. Please migrate to NeToastNotificationV2.'
+  warnDeprecated(
+    'NeToastNotification',
+    'NeToastNotification is deprecated and will be removed in a future release. Please migrate to NeToastNotificationV2.'
   )
 })
 
