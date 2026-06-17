@@ -128,3 +128,10 @@ export const kbpsFormat = (kbps: number) => {
       return round(kbps / Math.pow(1000, 3), 2) + ' Tbps'
   }
 }
+
+/**
+ * Prints a deprecation warning in the browser console
+ */
+export const warnDeprecated = (componentName: string, message: string) => {
+  console.warn(`[${componentName}] ${message}`)
+}

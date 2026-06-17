@@ -24,6 +24,7 @@ import NeBadge from './NeBadge.vue'
 import NeSkeleton from './NeSkeleton.vue'
 import { onClickOutside } from '@vueuse/core'
 import { uniqBy, isEqual } from 'lodash-es'
+import { warnDeprecated } from '../lib/utils'
 
 export interface NeComboboxOption {
   id: string
@@ -43,6 +44,9 @@ export interface Props {
   invalidMessage?: string
   // limit the number of options displayed for performance
   maxOptionsShown?: number
+  /**
+   * @deprecated Use NeMultiselectCombobox instead. This prop will be removed in a future release.
+   */
   multiple?: boolean
   disabled?: boolean
   showOptionsType?: boolean
@@ -215,6 +219,10 @@ watch(
 
 onMounted(() => {
   if (props.multiple) {
+    warnDeprecated(
+      'NeCombobox',
+      'The "multiple" prop is deprecated and will be removed in a future release. Please migrate to NeMultiselectCombobox.'
+    )
     selectMultipleOptionsFromModelValue()
   } else {
     selectSingleOptionFromModelValue()
