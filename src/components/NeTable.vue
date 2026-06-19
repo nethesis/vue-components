@@ -3,7 +3,7 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 <script lang="ts" setup>
-import { computed, provide } from 'vue'
+import { computed, provide, ref } from 'vue'
 import NeTableSkeleton from './NeTableSkeleton.vue'
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
@@ -15,7 +15,8 @@ const {
   skeletonRows = 8,
   skeletonColumns = 4,
   sortKey = '',
-  sortDescending = false
+  sortDescending = false,
+  highlightRowOnClick = true
 } = defineProps<{
   ariaLabel?: string
   cardBreakpoint?: Breakpoint
@@ -24,7 +25,14 @@ const {
   skeletonColumns?: number
   sortKey?: string
   sortDescending?: boolean
+  highlightRowOnClick?: boolean
 }>()
+
+const highlightedRow = ref<HTMLElement | null>(null)
+
+function highlightRow(el: HTMLElement | null) {
+  highlightedRow.value = highlightedRow.value === el ? null : el
+}
 
 // provide props to children components
 provide(
@@ -39,6 +47,12 @@ provide(
   'sortDescending',
   computed(() => sortDescending)
 )
+provide(
+  'highlightRowOnClick',
+  computed(() => highlightRowOnClick)
+)
+provide('highlightedRow', highlightedRow)
+provide('highlightRow', highlightRow)
 
 const tableCardStyle: Record<Breakpoint, string> = {
   sm: 'sm:table sm:divide-y sm:divide-gray-300 sm:dark:divide-gray-600',

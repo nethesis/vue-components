@@ -27,7 +27,8 @@ const meta: Meta<typeof NeTable> = {
   component: NeTable,
   tags: ['autodocs'],
   argTypes: {
-    cardBreakpoint: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl', '2xl'] }
+    cardBreakpoint: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    highlightRowOnClick: { control: 'boolean' }
   },
   args: {
     ariaLabel: 'Aria label for the table',
@@ -36,7 +37,8 @@ const meta: Meta<typeof NeTable> = {
     skeletonRows: 8,
     skeletonColumns: 4,
     sortKey: '',
-    sortDescending: false
+    sortDescending: false,
+    highlightRowOnClick: true
   },
   render: (args) => ({
     components: {
