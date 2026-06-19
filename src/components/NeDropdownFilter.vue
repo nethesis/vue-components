@@ -99,6 +99,11 @@ const right = ref(0)
 const buttonRef = ref()
 const optionsFilter = ref('')
 const optionsFilterRef = ref()
+// Stores full option data (label, description, …) for every selected ID so that
+// selected items can still be pinned at the top even when externalFilter causes
+// the parent to remove them from props.options (e.g. because they don't match
+// the current search query).
+const cachedSelectedOptions = ref<Map<string, FilterOption>>(new Map())
 
 const componentId = computed(() => (props.id ? props.id : uuidv4()))
 
@@ -110,7 +115,13 @@ const currentRadioSelectionLabel = computed(() => {
   if (!props.showRadioSelection || props.kind !== 'radio' || !radioModel.value) {
     return ''
   }
-  return allFlatOptions.value.find((o) => o.id === radioModel.value)?.label ?? ''
+  return (
+    // Prefer live data from the current options list; fall back to the cache
+    // when the option has been removed by an external filter.
+    allFlatOptions.value.find((o) => o.id === radioModel.value)?.label ??
+    cachedSelectedOptions.value.get(radioModel.value)?.label ??
+    ''
+  )
 })
 
 const allFlatOptions = computed((): FilterOption[] => {
@@ -155,7 +166,7 @@ const moreOptionsHidden = computed(() => {
   return filteredOptions.value.length > props.maxOptionsShown
 })
 
-const displayItems = computed(() => {
+const regularItems = computed(() => {
   const filteredSet = new Set(filteredOptions.value.map((o) => o.id))
   const items: { type: 'group' | 'option'; label?: string; option?: FilterOption; key: string }[] =
     []
@@ -189,6 +200,53 @@ const displayItems = computed(() => {
   return items
 })
 
+// Returns selected options that are NOT currently visible in displayItems.
+// This happens when a selection is beyond maxOptionsShown, filtered out by the
+// internal search query, or removed from props.options by an external filter.
+// These options are rendered at the top of the list so users can always see and
+// toggle their selections regardless of scroll position or active search state.
+const pinnedOptions = computed((): FilterOption[] => {
+  const selectedIds =
+    props.kind === 'radio' ? (radioModel.value ? [radioModel.value] : []) : checkboxModel.value
+
+  if (selectedIds.length === 0) return []
+
+  // Don't pin while the user is actively searching: search results should be
+  // uncluttered, and the button badge already communicates that selections exist.
+  if (optionsFilter.value) return []
+
+  // Collect IDs already shown in the regular list to guarantee no duplicates.
+  const displayedIds = new Set(
+    regularItems.value.filter((item) => item.type === 'option').map((item) => item.option!.id)
+  )
+
+  return (
+    selectedIds
+      .filter((id) => !displayedIds.has(id))
+      // Use live option data when available; fall back to the cache for IDs that
+      // have been removed from props.options by an external filter.
+      .map(
+        (id) =>
+          allFlatOptions.value.find((o) => o.id === id) ??
+          cachedSelectedOptions.value.get(id) ??
+          null
+      )
+      .filter((opt): opt is FilterOption => opt !== null)
+  )
+})
+
+// Merges pinned options (prepended) with the regular filtered/grouped list.
+// Pinned items appear first so selections are always visible regardless of
+// scroll position, active search query, or maxOptionsShown.
+const displayItems = computed(() => {
+  const pinned = pinnedOptions.value.map((opt) => ({
+    type: 'option' as const,
+    option: opt,
+    key: `pinned-${opt.id}`
+  }))
+  return [...pinned, ...regularItems.value]
+})
+
 watch(
   () => props.alignToRight,
   () => {
@@ -220,6 +278,52 @@ watch(
 
 watch(optionsFilter, (query) => {
   emit('search', query)
+})
+
+// Populates the cache for already-selected options at mount time and whenever
+// props.options is replaced — e.g. after loadingOptions resolves or after the
+// parent pushes a new page of external results. Reading model.value directly
+// (rather than checkboxModel / radioModel) ensures the correct IDs are used
+// even before the internal refs have been synchronised by updateInternalModel.
+watch(
+  allFlatOptions,
+  (options) => {
+    const selectedSet = new Set(model.value ?? [])
+    for (const opt of options) {
+      if (selectedSet.has(opt.id)) {
+        cachedSelectedOptions.value.set(opt.id, { ...opt })
+      }
+    }
+  },
+  { immediate: true }
+)
+
+// Keeps the cache in sync as individual checkboxes are toggled:
+// newly checked options are inserted, unchecked options are evicted.
+watch(checkboxModel, (newIds, oldIds) => {
+  const oldSet = new Set(oldIds ?? [])
+  const newSet = new Set(newIds)
+  for (const id of newSet) {
+    if (!oldSet.has(id)) {
+      const opt = allFlatOptions.value.find((o) => o.id === id)
+      if (opt) cachedSelectedOptions.value.set(id, { ...opt })
+    }
+  }
+  for (const id of oldSet) {
+    if (!newSet.has(id)) {
+      cachedSelectedOptions.value.delete(id)
+    }
+  }
+})
+
+// Keeps the cache in sync when the radio selection changes:
+// the previous selection is evicted and the new one is inserted.
+watch(radioModel, (newId, oldId) => {
+  if (oldId) cachedSelectedOptions.value.delete(oldId)
+  if (newId) {
+    const opt = allFlatOptions.value.find((o) => o.id === newId)
+    if (opt) cachedSelectedOptions.value.set(newId, { ...opt })
+  }
 })
 
 function updateInternalModel() {
@@ -332,67 +436,38 @@ function clearFilter() {
           <div v-if="loadingOptions" class="py-2">
             <NeSkeleton :lines="3" />
           </div>
-          <template v-for="item in displayItems" v-else :key="item.key">
-            <!-- group header -->
-            <div
-              v-if="item.type === 'group'"
-              class="pt-3 pb-1 text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400"
-            >
-              {{ item.label }}
-            </div>
-            <!-- option -->
-            <MenuItem v-else as="div" :disabled="item.option?.disabled">
-              <!-- divider -->
-              <hr
-                v-if="item.option?.id.includes('divider')"
-                class="my-1 border-gray-200 dark:border-gray-700"
-              />
-              <!-- radio option -->
-              <div v-if="kind === 'radio'" class="flex items-center py-2">
-                <input
-                  :id="`${componentId}-${item.option?.id}`"
-                  v-model="radioModel"
-                  type="radio"
-                  :name="componentId"
-                  :value="item.option?.id"
-                  :aria-describedby="`${componentId}-${item.option?.id}-description`"
-                  class="peer text-primary-700 focus:ring-primary-500 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 border-gray-300 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 focus:dark:ring-offset-gray-900"
-                  :disabled="item.option?.disabled || disabled"
-                />
-                <label
-                  :for="`${componentId}-${item.option?.id}`"
-                  class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
-                >
-                  <span>{{ item.option?.label }}</span>
-                  <span
-                    v-if="item.option?.description"
-                    :id="`${componentId}-${item.option?.id}-description`"
-                    class="text-gray-500 dark:text-gray-400"
-                  >
-                    {{ item.option?.description }}
-                  </span>
-                </label>
+          <template v-else>
+            <!-- items: pinned selections first, then regular filtered/grouped options -->
+            <template v-for="item in displayItems" :key="item.key">
+              <!-- group header -->
+              <div
+                v-if="item.type === 'group'"
+                class="pt-3 pb-1 text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400"
+              >
+                {{ item.label }}
               </div>
-              <!-- checkbox option -->
-              <div v-else-if="kind === 'checkbox'" class="flex items-center py-2" @click.stop>
-                <div class="flex h-6 items-center">
+              <!-- option -->
+              <MenuItem v-else as="div" :disabled="item.option?.disabled">
+                <!-- divider -->
+                <hr
+                  v-if="item.option?.id.includes('divider')"
+                  class="my-1 border-gray-200 dark:border-gray-700"
+                />
+                <!-- radio option -->
+                <div v-if="kind === 'radio'" class="flex items-center py-2">
                   <input
                     :id="`${componentId}-${item.option?.id}`"
-                    v-model="checkboxModel"
-                    type="checkbox"
+                    v-model="radioModel"
+                    type="radio"
+                    :name="componentId"
                     :value="item.option?.id"
                     :aria-describedby="`${componentId}-${item.option?.id}-description`"
+                    class="peer text-primary-700 focus:ring-primary-500 dark:text-primary-500 checked:dark:bg-primary-500 dark:focus:ring-primary-300 border-gray-300 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-950 focus:dark:ring-offset-gray-900"
                     :disabled="item.option?.disabled || disabled"
-                    class="text-primary-700 focus:ring-primary-500 dark:text-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950 h-5 w-5 rounded-sm border-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 sm:h-4 sm:w-4 dark:border-gray-500"
                   />
-                </div>
-                <div class="ml-3 text-sm leading-6">
                   <label
-                    :class="[
-                      'flex flex-col font-medium text-gray-700 dark:text-gray-50',
-                      { 'cursor-not-allowed opacity-50': item.option?.disabled }
-                    ]"
                     :for="`${componentId}-${item.option?.id}`"
+                    class="ms-2 flex flex-col text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
                   >
                     <span>{{ item.option?.label }}</span>
                     <span
@@ -404,8 +479,40 @@ function clearFilter() {
                     </span>
                   </label>
                 </div>
-              </div>
-            </MenuItem>
+                <!-- checkbox option -->
+                <div v-else-if="kind === 'checkbox'" class="flex items-center py-2" @click.stop>
+                  <div class="flex h-6 items-center">
+                    <input
+                      :id="`${componentId}-${item.option?.id}`"
+                      v-model="checkboxModel"
+                      type="checkbox"
+                      :value="item.option?.id"
+                      :aria-describedby="`${componentId}-${item.option?.id}-description`"
+                      :disabled="item.option?.disabled || disabled"
+                      class="text-primary-700 focus:ring-primary-500 dark:text-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950 h-5 w-5 rounded-sm border-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 sm:h-4 sm:w-4 dark:border-gray-500"
+                    />
+                  </div>
+                  <div class="ml-3 text-sm leading-6">
+                    <label
+                      :class="[
+                        'flex flex-col font-medium text-gray-700 dark:text-gray-50',
+                        { 'cursor-not-allowed opacity-50': item.option?.disabled }
+                      ]"
+                      :for="`${componentId}-${item.option?.id}`"
+                    >
+                      <span>{{ item.option?.label }}</span>
+                      <span
+                        v-if="item.option?.description"
+                        :id="`${componentId}-${item.option?.id}-description`"
+                        class="text-gray-500 dark:text-gray-400"
+                      >
+                        {{ item.option?.description }}
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </MenuItem>
+            </template>
           </template>
           <!-- showing a limited number of options for performance, but more options are available -->
           <div
