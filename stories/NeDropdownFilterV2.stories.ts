@@ -1,12 +1,12 @@
-//  Copyright (C) 2024 Nethesis S.r.l.
+//  Copyright (C) 2026 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
 import { ref } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { NeDropdownFilter, NeButton, FilterOption } from '../src/main'
+import { NeDropdownFilterV2, NeButton, NeDropdownFilterV2Option } from '../src/main'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-const defaultOptions = [
+const defaultOptions: NeDropdownFilterV2Option[] = [
   {
     id: 'option1',
     label: 'Option 1'
@@ -35,17 +35,9 @@ const defaultOptions = [
 ]
 
 const meta = {
-  title: 'NeDropdownFilter [Deprecated]',
-  component: NeDropdownFilter,
+  title: 'NeDropdownFilterV2',
+  component: NeDropdownFilterV2,
   tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component:
-          'Deprecated: use NeDropdownFilterV2 instead. This component will be removed in a future release.'
-      }
-    }
-  },
   argTypes: {
     kind: { control: 'inline-radio', options: ['radio', 'checkbox'] },
     size: { control: 'inline-radio', options: ['xs', 'sm', 'md', 'lg', 'xl'] }
@@ -73,16 +65,16 @@ const meta = {
     loadingOptions: false,
     customActionLabel: ''
   }
-} satisfies Meta<typeof NeDropdownFilter>
+} satisfies Meta<typeof NeDropdownFilterV2>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-const template = '<NeDropdownFilter v-bind="args" />'
+const template = '<NeDropdownFilterV2 v-bind="args" />'
 
 export const CheckboxOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -93,7 +85,7 @@ export const CheckboxOptions: Story = {
 
 export const RadioOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -106,7 +98,7 @@ export const RadioOptions: Story = {
 
 export const RadioWithSelectionShown: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -120,7 +112,7 @@ export const RadioWithSelectionShown: Story = {
 
 export const OptionsWithDescription: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -158,7 +150,7 @@ export const OptionsWithDescription: Story = {
 
 export const NoClearFilter: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -171,12 +163,12 @@ export const NoClearFilter: Story = {
 }
 
 const alignToRightTemplate = `<div class="flex justify-end w-72">
-  <NeDropdownFilter v-bind="args" />
+  <NeDropdownFilterV2 v-bind="args" />
 </div>`
 
 export const AlignToRight: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -187,7 +179,7 @@ export const AlignToRight: Story = {
 
 export const Disabled: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -198,17 +190,17 @@ export const Disabled: Story = {
   }
 }
 
-const withSlotTemplate = `<NeDropdownFilter v-bind="args">
+const withSlotTemplate = `<NeDropdownFilterV2 v-bind="args">
   <template #button>
     <span class="text-gray-700 dark:text-gray-100">
       Button slot
     </span>
   </template>
-</NeDropdownFilter>`
+</NeDropdownFilterV2>`
 
 export const ButtonSlot: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter, NeButton, FontAwesomeIcon },
+    components: { NeDropdownFilterV2, NeButton, FontAwesomeIcon },
     setup() {
       return { args }
     },
@@ -219,7 +211,7 @@ export const ButtonSlot: Story = {
 
 export const NoOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -232,7 +224,7 @@ export const NoOptions: Story = {
 
 export const ShowOptionsFilter: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -243,7 +235,7 @@ export const ShowOptionsFilter: Story = {
   }
 }
 
-const manyOptions: FilterOption[] = []
+const manyOptions: NeDropdownFilterV2Option[] = []
 
 for (let i = 0; i < 150; i++) {
   manyOptions.push({ id: i.toString(), label: `Option ${i}` })
@@ -251,7 +243,7 @@ for (let i = 0; i < 150; i++) {
 
 export const GroupedOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -283,7 +275,7 @@ export const GroupedOptions: Story = {
 
 export const ManyOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -294,9 +286,27 @@ export const ManyOptions: Story = {
   }
 }
 
+// Pre-selected options that are beyond the maxOptionsShown limit stay pinned at
+// the top of the list, so the current selection is always visible.
+export const PinnedSelectedOptions: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilterV2 },
+    setup() {
+      const model = ref<NeDropdownFilterV2Option[]>([manyOptions[40], manyOptions[60]])
+      return { args, model }
+    },
+    template: '<NeDropdownFilterV2 v-bind="args" v-model="model" />'
+  }),
+  args: {
+    options: manyOptions,
+    maxOptionsShown: 25,
+    showOptionsFilter: true
+  }
+}
+
 export const ExternalFilter: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       const options = ref(defaultOptions)
 
@@ -308,7 +318,33 @@ export const ExternalFilter: Story = {
 
       return { args, options, onSearch }
     },
-    template: '<NeDropdownFilter v-bind="args" :options="options" @search="onSearch" />'
+    template: '<NeDropdownFilterV2 v-bind="args" :options="options" @search="onSearch" />'
+  }),
+  args: {
+    externalFilter: true,
+    showOptionsFilter: true
+  }
+}
+
+// With externalFilter, a selected option stays pinned at the top even after the
+// parent removes it from the options list (e.g. while searching for something else).
+export const ExternalFilterPinnedSelection: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilterV2 },
+    setup() {
+      const options = ref(defaultOptions)
+      const model = ref<NeDropdownFilterV2Option[]>([defaultOptions[0]])
+
+      function onSearch(query: string) {
+        options.value = defaultOptions.filter((o) =>
+          o.label.toLowerCase().includes(query.toLowerCase())
+        )
+      }
+
+      return { args, options, model, onSearch }
+    },
+    template:
+      '<NeDropdownFilterV2 v-bind="args" :options="options" v-model="model" @search="onSearch" />'
   }),
   args: {
     externalFilter: true,
@@ -318,7 +354,7 @@ export const ExternalFilter: Story = {
 
 export const LoadingOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -333,14 +369,14 @@ export const LoadingOptions: Story = {
 
 export const CustomAction: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       function onCustomAction() {
         alert('Custom action triggered!')
       }
       return { args, onCustomAction }
     },
-    template: '<NeDropdownFilter v-bind="args" @custom-action="onCustomAction" />'
+    template: '<NeDropdownFilterV2 v-bind="args" @custom-action="onCustomAction" />'
   }),
   args: {
     customActionLabel: 'Custom action'

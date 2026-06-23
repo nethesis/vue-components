@@ -3,8 +3,8 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
-<script setup lang="ts">
-import { ref, watch, computed, onMounted } from 'vue'
+<script setup lang="ts" generic="T extends NeDropdownFilterV2Option = NeDropdownFilterV2Option">
+import { ref, watch, computed } from 'vue'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
@@ -15,20 +15,22 @@ import NeLink from './NeLink.vue'
 import NeSkeleton from './NeSkeleton.vue'
 import type { ButtonSize } from './NeButton.vue'
 import NeTextInput from './NeTextInput.vue'
-import { focusElement, warnDeprecated } from '../lib/utils'
+import { focusElement } from '../lib/utils'
 
 export type FilterKind = 'radio' | 'checkbox'
 
-export type FilterOption = {
+export type NeDropdownFilterV2Option = {
   id: string
   label: string
   description?: string
   disabled?: boolean
 }
 
-export type FilterOptionGroup = {
+export type NeDropdownFilterV2OptionGroup<
+  T extends NeDropdownFilterV2Option = NeDropdownFilterV2Option
+> = {
   group: string
-  options: FilterOption[]
+  options: T[]
 }
 
 const sizeStyle: { [index: string]: string } = {
@@ -39,68 +41,61 @@ const sizeStyle: { [index: string]: string } = {
   xl: 'rounded-md px-3.5 py-2.5 text-sm'
 }
 
-export interface Props {
-  label: string
-  options: (FilterOption | FilterOptionGroup)[]
-  kind: FilterKind
-  clearFilterLabel: string
-  openMenuAriaLabel: string
-  showClearFilter?: boolean
-  showSelectionCount?: boolean
-  showRadioSelection?: boolean
-  noOptionsLabel: string
-  showOptionsFilter?: boolean
-  optionsFilterPlaceholder?: string
-  // limit the number of options displayed for performance
-  maxOptionsShown?: number
-  moreOptionsHiddenLabel: string
-  alignToRight?: boolean
-  size?: ButtonSize
-  disabled?: boolean
-  id?: string
-  clearSearchLabel: string
-  externalFilter?: boolean
-  loadingOptions?: boolean
-  customActionLabel?: string
-}
-
-/**
- * @deprecated Use NeDropdownFilterV2 instead. This component will be removed in a future release.
- */
-const props = withDefaults(defineProps<Props>(), {
-  showClearFilter: true,
-  showSelectionCount: true,
-  showRadioSelection: false,
-  showOptionsFilter: false,
-  clearSearchLabel: 'Clear',
-  optionsFilterPlaceholder: '',
-  maxOptionsShown: 25,
-  alignToRight: false,
-  size: 'md',
-  disabled: false,
-  id: '',
-  externalFilter: false,
-  loadingOptions: false,
-  customActionLabel: ''
-})
+const props = withDefaults(
+  defineProps<{
+    label: string
+    options: (T | NeDropdownFilterV2OptionGroup<T>)[]
+    kind: FilterKind
+    clearFilterLabel: string
+    openMenuAriaLabel: string
+    showClearFilter?: boolean
+    showSelectionCount?: boolean
+    showRadioSelection?: boolean
+    noOptionsLabel: string
+    showOptionsFilter?: boolean
+    optionsFilterPlaceholder?: string
+    // limit the number of options displayed for performance
+    maxOptionsShown?: number
+    moreOptionsHiddenLabel: string
+    alignToRight?: boolean
+    size?: ButtonSize
+    disabled?: boolean
+    id?: string
+    clearSearchLabel: string
+    externalFilter?: boolean
+    loadingOptions?: boolean
+    customActionLabel?: string
+  }>(),
+  {
+    showClearFilter: true,
+    showSelectionCount: true,
+    showRadioSelection: false,
+    showOptionsFilter: false,
+    clearSearchLabel: 'Clear',
+    optionsFilterPlaceholder: '',
+    maxOptionsShown: 25,
+    alignToRight: false,
+    size: 'md',
+    disabled: false,
+    id: '',
+    externalFilter: false,
+    loadingOptions: false,
+    customActionLabel: ''
+  }
+)
 
 const emit = defineEmits<{
   search: [query: string]
   customAction: []
 }>()
 
-onMounted(() => {
-  warnDeprecated(
-    'NeDropdownFilter',
-    'NeDropdownFilter is deprecated and will be removed in a future release. Please migrate to NeDropdownFilterV2.'
-  )
-})
-
-function isFilterOptionGroup(item: FilterOption | FilterOptionGroup): item is FilterOptionGroup {
-  return 'group' in item && Array.isArray((item as FilterOptionGroup).options)
+function isFilterOptionGroup(
+  item: T | NeDropdownFilterV2OptionGroup<T>
+): item is NeDropdownFilterV2OptionGroup<T> {
+  return 'group' in item && Array.isArray((item as NeDropdownFilterV2OptionGroup<T>).options)
 }
 
-const model = defineModel<string[]>()
+const model = defineModel<T[]>({ default: () => [] })
 const radioModel = ref('')
 const checkboxModel = ref<string[]>([])
 const top = ref(0)
@@ -120,10 +115,22 @@ const currentRadioSelectionLabel = computed(() => {
   if (!props.showRadioSelection || props.kind !== 'radio' || !radioModel.value) {
     return ''
   }
-  return allFlatOptions.value.find((o) => o.id === radioModel.value)?.label ?? ''
+  return resolveOption(radioModel.value)?.label ?? ''
 })
 
-const allFlatOptions = computed((): FilterOption[] => {
+// resolve an option id to a full option object, looking first in the options
+// passed by the parent, then in the current model (to preserve selected options
+// that are no longer present in the options list, e.g. with externalFilter or
+// when truncated by maxOptionsShown)
+function resolveOption(id: string): T {
+  return (
+    allFlatOptions.value.find((o) => o.id === id) ??
+    model.value?.find((o) => o.id === id) ??
+    ({ id, label: id } as T)
+  )
+}
+
+const allFlatOptions = computed((): T[] => {
   return props.options.flatMap((item) => (isFilterOptionGroup(item) ? item.options : [item]))
 })
 
@@ -131,7 +138,7 @@ const isShowingOptionsFilter = computed(() => {
   return props.showOptionsFilter || allFlatOptions.value.length > props.maxOptionsShown
 })
 
-const filteredOptions = computed((): FilterOption[] => {
+const filteredOptions = computed((): T[] => {
   if (props.externalFilter || !isShowingOptionsFilter.value) {
     return allFlatOptions.value
   }
@@ -167,8 +174,12 @@ const moreOptionsHidden = computed(() => {
 
 const displayItems = computed(() => {
   const filteredSet = new Set(filteredOptions.value.map((o) => o.id))
-  const items: { type: 'group' | 'option'; label?: string; option?: FilterOption; key: string }[] =
-    []
+  const items: {
+    type: 'group' | 'option'
+    label?: string
+    option?: T
+    key: string
+  }[] = []
   let optionCount = 0
 
   for (const entry of props.options) {
@@ -199,6 +210,42 @@ const displayItems = computed(() => {
   return items
 })
 
+// ids of the options currently rendered in the list (after filter and limit)
+const displayedOptionIds = computed(() => {
+  return new Set(
+    displayItems.value.filter((item) => item.type === 'option').map((item) => item.option!.id)
+  )
+})
+
+// selected options that are not naturally rendered in the list (absent from the
+// options passed by the parent or truncated by maxOptionsShown). They are pinned
+// at the top so that selected options are always visible.
+const pinnedOptions = computed((): T[] => {
+  let candidates = (model.value ?? []).filter((o) => !displayedOptionIds.value.has(o.id))
+
+  // hide pinned options that don't match the search query (also when filtering
+  // externally, so that only matching options are shown while searching)
+  if (isShowingOptionsFilter.value && optionsFilter.value) {
+    const regex = /[^a-zA-Z0-9-]/g
+    const queryText = optionsFilter.value.replace(regex, '')
+    candidates = candidates.filter((o) =>
+      new RegExp(queryText, 'i').test(o.label?.replace(regex, ''))
+    )
+  }
+
+  return candidates
+})
+
+// pinned selected options followed by the regular (limited) list of options
+const renderItems = computed(() => {
+  const pinned = pinnedOptions.value.map((option) => ({
+    type: 'option' as const,
+    option,
+    key: `pinned-${option.id}`
+  }))
+  return [...pinned, ...displayItems.value]
+})
+
 watch(
   () => props.alignToRight,
   () => {
@@ -209,14 +256,14 @@ watch(
 watch(
   () => radioModel.value,
   () => {
-    model.value = [radioModel.value]
+    model.value = radioModel.value ? [resolveOption(radioModel.value)] : []
   }
 )
 
 watch(
   () => checkboxModel.value,
   () => {
-    model.value = checkboxModel.value
+    model.value = checkboxModel.value.map((id) => resolveOption(id))
   }
 )
 
@@ -233,15 +280,16 @@ watch(optionsFilter, (query) => {
 })
 
 function updateInternalModel() {
+  const modelIds = (model.value ?? []).map((o) => o.id)
   if (props.kind === 'radio') {
     // update only if the value is different to avoid "Maximum recursive updates exceeded" error
-    if (model.value && radioModel.value !== model.value[0]) {
-      radioModel.value = model.value[0]
+    if (radioModel.value !== (modelIds[0] ?? '')) {
+      radioModel.value = modelIds[0] ?? ''
     }
   } else if (props.kind === 'checkbox') {
     // update only if the value is different to avoid "Maximum recursive updates exceeded" error
-    if (model.value && !isEqual(checkboxModel.value, model.value)) {
-      checkboxModel.value = model.value
+    if (!isEqual(checkboxModel.value, modelIds)) {
+      checkboxModel.value = modelIds
     }
   }
 }
@@ -342,7 +390,7 @@ function clearFilter() {
           <div v-if="loadingOptions" class="py-2">
             <NeSkeleton :lines="3" />
           </div>
-          <template v-for="item in displayItems" v-else :key="item.key">
+          <template v-for="item in renderItems" v-else :key="item.key">
             <!-- group header -->
             <div
               v-if="item.type === 'group'"
@@ -425,7 +473,7 @@ function clearFilter() {
             {{ moreOptionsHiddenLabel }}
           </div>
           <!-- no option matching filter -->
-          <div v-if="!loadingOptions && !filteredOptions.length">
+          <div v-if="!loadingOptions && !filteredOptions.length && !pinnedOptions.length">
             <div class="py-2 text-gray-500 dark:text-gray-400">
               {{ noOptionsLabel }}
             </div>

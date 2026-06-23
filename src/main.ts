@@ -43,7 +43,11 @@ export { default as NeToastNotification } from './components/NeToastNotification
 export { default as NeModal } from './components/NeModal.vue'
 export { default as NeHeading } from './components/NeHeading.vue'
 export { default as NeListbox } from './components/NeListbox.vue'
+/**
+ * @deprecated Use NeDropdownFilterV2 instead. This component will be removed in a future release.
+ */
 export { default as NeDropdownFilter } from './components/NeDropdownFilter.vue'
+export { default as NeDropdownFilterV2 } from './components/NeDropdownFilterV2.vue'
 export { default as NeSortDropdown } from './components/NeSortDropdown.vue'
 export { default as NeAvatar } from './components/NeAvatar.vue'
 export { default as NeBadgeV2 } from './components/NeBadgeV2.vue'
@@ -61,6 +65,10 @@ export type { NeNotification } from './components/NeToastNotification.vue'
 export type { NeListboxOption } from './components/NeListbox.vue'
 export type { NeDropdownItem } from './components/NeDropdown.vue'
 export type { FilterOption, FilterOptionGroup, FilterKind } from './components/NeDropdownFilter.vue'
+export type {
+  NeDropdownFilterV2Option,
+  NeDropdownFilterV2OptionGroup
+} from './components/NeDropdownFilterV2.vue'
 export type { RadioOption } from './components/NeRadioSelection.vue'
 export type { SortEvent } from './components/NeTableHeadCell.vue'
 export type { ModalKind, PrimaryButtonKind, ModalSize } from './components/NeModal.vue'
