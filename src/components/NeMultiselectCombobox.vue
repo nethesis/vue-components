@@ -3,8 +3,8 @@
   SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
-<script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+<script setup lang="ts" generic="T extends NeMultiselectComboboxOption">
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
 import {
   Combobox,
   ComboboxButton,
@@ -35,64 +35,65 @@ export interface NeMultiselectComboboxOption {
   disabled?: boolean
 }
 
-export interface Props {
-  options: NeMultiselectComboboxOption[]
-  label?: string
-  placeholder?: string
-  helperText?: string
-  invalidMessage?: string
-  disabled?: boolean
-  showOptionsType?: boolean
-  optional?: boolean
-  noResultsLabel: string
-  noOptionsLabel: string
-  acceptUserInput?: boolean
-  userInputLabel: string
-  optionalLabel: string
-  customOptionsWidth?: string
-  maxHeight?: string
-  maxOptionsShown?: number
-  limitedOptionsLabel: string
-  externalFilter?: boolean
-  loadingOptions?: boolean
-  badgeKind?: NeBadgeV2Kind
-  badgeCustomKindClasses?: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  options: () => [],
-  label: '',
-  placeholder: '',
-  helperText: '',
-  invalidMessage: '',
-  disabled: false,
-  showOptionsType: true,
-  optional: false,
-  acceptUserInput: false,
-  customOptionsWidth: '',
-  maxHeight: '8.5rem',
-  maxOptionsShown: 50,
-  externalFilter: false,
-  loadingOptions: false,
-  badgeKind: 'gray',
-  badgeCustomKindClasses: ''
-})
+const props = withDefaults(
+  defineProps<{
+    options: T[]
+    label?: string
+    placeholder?: string
+    helperText?: string
+    invalidMessage?: string
+    disabled?: boolean
+    showOptionsType?: boolean
+    optional?: boolean
+    noResultsLabel: string
+    noOptionsLabel: string
+    acceptUserInput?: boolean
+    userInputLabel: string
+    optionalLabel: string
+    customOptionsWidth?: string
+    maxHeight?: string
+    maxOptionsShown?: number
+    limitedOptionsLabel: string
+    externalFilter?: boolean
+    loadingOptions?: boolean
+    badgeKind?: NeBadgeV2Kind
+    badgeCustomKindClasses?: string
+  }>(),
+  {
+    options: () => [],
+    label: '',
+    placeholder: '',
+    helperText: '',
+    invalidMessage: '',
+    disabled: false,
+    showOptionsType: true,
+    optional: false,
+    acceptUserInput: false,
+    customOptionsWidth: '',
+    maxHeight: '8.5rem',
+    maxOptionsShown: 50,
+    externalFilter: false,
+    loadingOptions: false,
+    badgeKind: 'gray',
+    badgeCustomKindClasses: ''
+  }
+)
 
 const emit = defineEmits<{
   filter: [query: string]
 }>()
 
-const modelValue = defineModel<string[]>({ default: () => [] })
+const modelValue = defineModel<T[]>({ default: () => [] })
 
 defineExpose({
   focus
 })
 
 const query = ref('')
-const selected = ref<NeMultiselectComboboxOption[]>([])
+const selected = ref<T[]>([]) as Ref<T[]>
 const showOptions = ref(false)
 const comboboxRef = ref<HTMLDivElement | null>(null)
-const userInputOptions = ref<NeMultiselectComboboxOption[]>([])
+const userInputOptions = ref<T[]>([]) as Ref<T[]>
 const componentId = `ne-multiselect-combobox-${uuidv4()}`
 
 const byId = (a: NeMultiselectComboboxOption, b: NeMultiselectComboboxOption) => a?.id === b?.id
@@ -104,9 +105,9 @@ const descriptionBaseStyle = 'mt-2 text-sm'
 
 const allOptions = computed(() => props.options.concat(userInputOptions.value))
 
-const filteredOptions = computed(() => {
+const filteredOptions = computed<T[]>(() => {
   if (props.externalFilter) {
-    let results: NeMultiselectComboboxOption[] = [...props.options]
+    let results: T[] = [...props.options]
 
     if (query.value.trim()) {
       const matchingUserInputs = userInputOptions.value.filter((opt) =>
@@ -115,25 +116,48 @@ const filteredOptions = computed(() => {
       results = results.concat(matchingUserInputs)
     } else {
       results = results.concat(userInputOptions.value)
+
+      // When not filtering, ensure selected items always appear at top even if
+      // the server response doesn't include them (e.g. initial load, page change)
+      for (const sel of selected.value) {
+        if (!results.find((r) => r.id === sel.id)) {
+          results.unshift(sel)
+        }
+      }
     }
 
+    // Keep the user-input "add" entry separate so it is never counted toward
+    // maxOptionsShown and never gets sliced off by getLimitedNumberOfOptions.
+    let userInputEntry: T | undefined
     if (props.acceptUserInput && query.value.trim()) {
       const trimmedQuery = query.value.trim()
       const optionFound = results.find((option) => option.label === trimmedQuery)
-
       if (!optionFound) {
-        results.push({
+        userInputEntry = {
           id: trimmedQuery,
           label: trimmedQuery,
           description: props.userInputLabel
-        })
+        } as unknown as T
       }
     }
 
     if (!results.length && query.value) {
-      return [{ id: 'no_results', label: props.noResultsLabel, disabled: true }]
+      if (userInputEntry) {
+        return [userInputEntry]
+      }
+      return [{ id: 'no_results', label: props.noResultsLabel, disabled: true } as unknown as T]
     }
-    return getLimitedNumberOfOptions(results)
+
+    const limited = getLimitedNumberOfOptions(results)
+    if (userInputEntry) {
+      const hintIdx = limited.findIndex((o) => o.id === 'limited_options_hint')
+      if (hintIdx === -1) {
+        limited.push(userInputEntry)
+      } else {
+        limited.splice(hintIdx, 0, userInputEntry)
+      }
+    }
+    return limited
   }
 
   if (!query.value) {
@@ -148,23 +172,37 @@ const filteredOptions = computed(() => {
     )
   })
 
+  // Same separation: keep user-input entry outside getLimitedNumberOfOptions.
+  let userInputEntry: T | undefined
   if (props.acceptUserInput && query.value.trim()) {
     const trimmedQuery = query.value.trim()
     const optionFound = results.find((option) => option.label === trimmedQuery)
-
     if (!optionFound) {
-      results.push({
+      userInputEntry = {
         id: trimmedQuery,
         label: trimmedQuery,
         description: props.userInputLabel
-      })
+      } as unknown as T
     }
   }
 
-  if (results.length) {
-    return getLimitedNumberOfOptions(results)
+  if (!results.length) {
+    if (userInputEntry) {
+      return [userInputEntry]
+    }
+    return [{ id: 'no_results', label: props.noResultsLabel, disabled: true } as unknown as T]
   }
-  return [{ id: 'no_results', label: props.noResultsLabel, disabled: true }]
+
+  const limited = getLimitedNumberOfOptions(results)
+  if (userInputEntry) {
+    const hintIdx = limited.findIndex((o) => o.id === 'limited_options_hint')
+    if (hintIdx === -1) {
+      limited.push(userInputEntry)
+    } else {
+      limited.splice(hintIdx, 0, userInputEntry)
+    }
+  }
+  return limited
 })
 
 const inputShellStyle = computed(() => ({
@@ -195,7 +233,7 @@ watch(selected, (newVal, oldVal) => {
     }
   }
 
-  modelValue.value = selected.value.map((opt) => opt.id)
+  modelValue.value = selected.value
 })
 
 watch(
@@ -241,12 +279,12 @@ onMounted(() => {
   }
 })
 
-function getLimitedNumberOfOptions(options: NeMultiselectComboboxOption[]) {
+function getLimitedNumberOfOptions(options: T[]): T[] {
   if (!options.length && !props.acceptUserInput) {
-    return [{ id: 'no_option', label: props.noOptionsLabel, disabled: true }]
+    return [{ id: 'no_option', label: props.noOptionsLabel, disabled: true } as unknown as T]
   }
 
-  if (options.length <= props.maxOptionsShown) {
+  if (options.length < props.maxOptionsShown) {
     return options
   }
 
@@ -255,7 +293,7 @@ function getLimitedNumberOfOptions(options: NeMultiselectComboboxOption[]) {
     id: 'limited_options_hint',
     label: props.limitedOptionsLabel,
     disabled: true
-  })
+  } as unknown as T)
 
   if (selected.value.length) {
     for (const selectedOption of selected.value) {
@@ -283,16 +321,12 @@ function onClickOutsideCombobox() {
   }
 }
 
-function onOptionSelected(selectedOption: NeMultiselectComboboxOption) {
+function onOptionSelected(selectedOption: T) {
   if (props.acceptUserInput) {
     const optionFound = allOptions.value.find((option) => option.id === selectedOption.id)
 
     if (!optionFound) {
-      userInputOptions.value.push({
-        id: selectedOption.id,
-        label: selectedOption.label,
-        description: props.userInputLabel
-      })
+      userInputOptions.value.push({ ...selectedOption, description: props.userInputLabel } as T)
     }
   }
 
@@ -307,28 +341,26 @@ function onOptionSelected(selectedOption: NeMultiselectComboboxOption) {
 }
 
 function selectOptionsFromModelValue() {
-  const selectedList: NeMultiselectComboboxOption[] = []
+  const selectedList: T[] = []
 
-  for (const id of modelValue.value) {
-    const realOption = props.options.find((option) => option.id === id)
+  for (const opt of modelValue.value) {
+    const realOption = props.options.find((option) => option.id === opt.id)
 
     if (realOption) {
       // Real option found — remove any stale userInput entry for this id
-      userInputOptions.value = userInputOptions.value.filter((opt) => opt.id !== id)
+      userInputOptions.value = userInputOptions.value.filter((u) => u.id !== opt.id)
       selectedList.push(realOption)
     } else {
-      const userInputOption = userInputOptions.value.find((opt) => opt.id === id)
+      const userInputOption = userInputOptions.value.find((u) => u.id === opt.id)
 
       if (userInputOption) {
         selectedList.push(userInputOption)
       } else if (props.acceptUserInput) {
-        const newOption: NeMultiselectComboboxOption = {
-          id,
-          label: id,
-          description: props.userInputLabel
-        }
+        const newOption = { ...opt, description: props.userInputLabel } as T
         userInputOptions.value.push(newOption)
         selectedList.push(newOption)
+      } else {
+        selectedList.push(opt)
       }
     }
   }
@@ -347,7 +379,7 @@ function addQueryToSelection() {
       id: trimmedQuery,
       label: trimmedQuery,
       description: props.userInputLabel
-    }
+    } as unknown as T
     userInputOptions.value.push(option)
   }
 

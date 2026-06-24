@@ -2,7 +2,7 @@
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { NeMultiselectCombobox, NeTooltip } from '../src/main'
 import type { NeMultiselectComboboxOption } from '../src/main'
 import { faBell, faEarthAmericas, faStar } from '@fortawesome/free-solid-svg-icons'
@@ -71,7 +71,7 @@ export const WithSelectedOptions: Story = {
     template
   }),
   args: {
-    modelValue: ['1', '2']
+    modelValue: [baseOptions[0], baseOptions[1]]
   }
 }
 
@@ -118,7 +118,7 @@ export const GrowingInput: Story = {
   }),
   args: {
     options: manyOptions,
-    modelValue: manyOptions.slice(0, 14).map((opt) => opt.id),
+    modelValue: manyOptions.slice(0, 14),
     maxHeight: '8rem',
     label: 'Choose many options'
   }
@@ -269,26 +269,54 @@ export const CustomOptionsWidth: Story = {
   }
 }
 
+interface WikipediaSearchResult {
+  pageid: number
+  title: string
+  snippet: string
+}
+
+async function searchWikipedia(query: string): Promise<NeMultiselectComboboxOption[]> {
+  const searchQuery = query.trim() || 'a'
+  const res = await fetch(
+    `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(searchQuery)}&srlimit=50&format=json&origin=*`
+  )
+  const data = await res.json()
+  const results: WikipediaSearchResult[] = data.query?.search || []
+  return results.map((r) => ({
+    id: r.pageid.toString(),
+    label: r.title,
+    description: r.snippet.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 60) + '...'
+  }))
+}
+
 export const ExternalFilter: Story = {
   render: (args) => ({
     components: { NeMultiselectCombobox },
     setup() {
-      const options = ref([...baseOptions])
-      const modelValue = ref([])
-      function onFilter(query: string) {
-        options.value = baseOptions.filter((opt) =>
-          opt.label.toLowerCase().includes(query.toLowerCase())
-        )
+      const options = ref<NeMultiselectComboboxOption[]>([])
+      const modelValue = ref<NeMultiselectComboboxOption[]>([])
+      const loadingOptions = ref(false)
+
+      async function onFilter(query: string) {
+        loadingOptions.value = true
+        try {
+          options.value = await searchWikipedia(query)
+        } finally {
+          loadingOptions.value = false
+        }
       }
-      return { args, options, modelValue, onFilter }
+
+      onMounted(() => onFilter(''))
+
+      return { args, options, modelValue, loadingOptions, onFilter }
     },
     template:
-      '<NeMultiselectCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
+      '<NeMultiselectCombobox v-bind="args" :options="options" v-model="modelValue" :loading-options="loadingOptions" @filter="onFilter" class="max-w-md" />'
   }),
   args: {
     externalFilter: true,
-    label: 'Choose fruit (external filter)',
-    placeholder: 'Type to filter...'
+    label: 'Wikipedia articles',
+    placeholder: 'Type to search Wikipedia...'
   }
 }
 
@@ -296,24 +324,32 @@ export const ExternalFilterWithUserInput: Story = {
   render: (args) => ({
     components: { NeMultiselectCombobox },
     setup() {
-      const options = ref([...baseOptions])
-      const modelValue = ref([])
-      function onFilter(query: string) {
-        options.value = baseOptions.filter((opt) =>
-          opt.label.toLowerCase().includes(query.toLowerCase())
-        )
+      const options = ref<NeMultiselectComboboxOption[]>([])
+      const modelValue = ref<NeMultiselectComboboxOption[]>([])
+      const loadingOptions = ref(false)
+
+      async function onFilter(query: string) {
+        loadingOptions.value = true
+        try {
+          options.value = await searchWikipedia(query)
+        } finally {
+          loadingOptions.value = false
+        }
       }
-      return { args, options, modelValue, onFilter }
+
+      onMounted(() => onFilter(''))
+
+      return { args, options, modelValue, loadingOptions, onFilter }
     },
     template:
-      '<NeMultiselectCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
+      '<NeMultiselectCombobox v-bind="args" :options="options" v-model="modelValue" :loading-options="loadingOptions" @filter="onFilter" class="max-w-md" />'
   }),
   args: {
     externalFilter: true,
     acceptUserInput: true,
-    label: 'Choose fruit (external filter + user input)',
-    placeholder: 'Type to filter or create custom value...',
-    userInputLabel: 'custom value'
+    label: 'Wikipedia articles (+ custom)',
+    placeholder: 'Type to search or add custom value...',
+    userInputLabel: 'Custom value'
   }
 }
 
@@ -342,7 +378,7 @@ export const BadgeKindPrimary: Story = {
     template
   }),
   args: {
-    modelValue: ['1', '2', '3'],
+    modelValue: baseOptions.slice(0, 3),
     badgeKind: 'primary',
     label: 'Primary badges'
   }
@@ -357,7 +393,7 @@ export const BadgeKindCustom: Story = {
     template
   }),
   args: {
-    modelValue: ['1', '2', '3'],
+    modelValue: baseOptions.slice(0, 3),
     badgeKind: 'custom',
     badgeCustomKindClasses: 'text-white bg-linear-to-br from-fuchsia-500 to-blue-500',
     label: 'Custom badge classes'
