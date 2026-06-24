@@ -169,7 +169,7 @@ const filteredOptions = computed((): T[] => {
 })
 
 const moreOptionsHidden = computed(() => {
-  return filteredOptions.value.length > props.maxOptionsShown
+  return filteredOptions.value.length >= props.maxOptionsShown
 })
 
 const displayItems = computed(() => {

@@ -1,7 +1,7 @@
 //  Copyright (C) 2026 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeDropdownFilterV2, NeButton, NeDropdownFilterV2Option } from '../src/main'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -286,65 +286,49 @@ export const ManyOptions: Story = {
   }
 }
 
-// Pre-selected options that are beyond the maxOptionsShown limit stay pinned at
-// the top of the list, so the current selection is always visible.
-export const PinnedSelectedOptions: Story = {
-  render: (args) => ({
-    components: { NeDropdownFilterV2 },
-    setup() {
-      const model = ref<NeDropdownFilterV2Option[]>([manyOptions[40], manyOptions[60]])
-      return { args, model }
-    },
-    template: '<NeDropdownFilterV2 v-bind="args" v-model="model" />'
-  }),
-  args: {
-    options: manyOptions,
-    maxOptionsShown: 25,
-    showOptionsFilter: true
-  }
+interface WikipediaSearchResult {
+  pageid: number
+  title: string
+  snippet: string
 }
 
 export const ExternalFilter: Story = {
   render: (args) => ({
     components: { NeDropdownFilterV2 },
     setup() {
-      const options = ref(defaultOptions)
+      const options = ref<NeDropdownFilterV2Option[]>([])
 
-      function onSearch(query: string) {
-        options.value = defaultOptions.filter((o) =>
-          o.label.toLowerCase().includes(query.toLowerCase())
-        )
+      async function fetchWikipedia(query: string) {
+        try {
+          const res = await fetch(
+            `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=25&format=json&origin=*`
+          )
+          const data = await res.json()
+          const results = data.query?.search || []
+          options.value = results.map((r: WikipediaSearchResult) => ({
+            id: r.pageid.toString(),
+            label: r.title,
+            description: r.snippet.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 60) + '...' // Remove HTML tags and truncate
+          }))
+        } catch (e) {
+          console.error('Failed to fetch Wikipedia results:', e)
+        }
+      }
+
+      onMounted(() => {
+        fetchWikipedia('a') // default to "a" to show some results when the component is mounted
+      })
+
+      async function onSearch(query: string) {
+        if (!query.trim()) {
+          query = 'a' // default to "a" to show some results when the search is cleared
+        }
+        await fetchWikipedia(query)
       }
 
       return { args, options, onSearch }
     },
     template: '<NeDropdownFilterV2 v-bind="args" :options="options" @search="onSearch" />'
-  }),
-  args: {
-    externalFilter: true,
-    showOptionsFilter: true
-  }
-}
-
-// With externalFilter, a selected option stays pinned at the top even after the
-// parent removes it from the options list (e.g. while searching for something else).
-export const ExternalFilterPinnedSelection: Story = {
-  render: (args) => ({
-    components: { NeDropdownFilterV2 },
-    setup() {
-      const options = ref(defaultOptions)
-      const model = ref<NeDropdownFilterV2Option[]>([defaultOptions[0]])
-
-      function onSearch(query: string) {
-        options.value = defaultOptions.filter((o) =>
-          o.label.toLowerCase().includes(query.toLowerCase())
-        )
-      }
-
-      return { args, options, model, onSearch }
-    },
-    template:
-      '<NeDropdownFilterV2 v-bind="args" :options="options" v-model="model" @search="onSearch" />'
   }),
   args: {
     externalFilter: true,
