@@ -399,3 +399,48 @@ export const BadgeKindCustom: Story = {
     label: 'Custom badge classes'
   }
 }
+
+// Custom type extending NeMultiselectComboboxOption with additional attribute
+interface EmployeeOption extends NeMultiselectComboboxOption {
+  department: string
+  email: string
+}
+
+const employeeOptions: EmployeeOption[] = [
+  { id: '1', label: 'Alice Johnson', department: 'Engineering', email: 'alice@example.com' },
+  { id: '2', label: 'Bob Smith', department: 'Sales', email: 'bob@example.com' },
+  { id: '3', label: 'Carol Davis', department: 'Engineering', email: 'carol@example.com' },
+  { id: '4', label: 'David Brown', department: 'HR', email: 'david@example.com' },
+  { id: '5', label: 'Eve Wilson', department: 'Marketing', email: 'eve@example.com' }
+]
+
+export const CustomTypeExtension: Story = {
+  render: (args) => ({
+    components: { NeMultiselectCombobox },
+    setup() {
+      const modelValue = ref<EmployeeOption[]>([])
+
+      return { args, modelValue }
+    },
+    template: `
+      <div class="space-y-4">
+        <NeMultiselectCombobox 
+          v-bind="args" 
+          :options="modelValue.length ? args.options : args.options" 
+          v-model="modelValue" 
+          class="max-w-md" 
+        />
+        <div v-if="modelValue.length" class="p-4 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700">
+          <p class="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Selected employees (v-model):</p>
+          <pre class="text-xs overflow-auto text-gray-600 dark:text-gray-400">{{ JSON.stringify(modelValue, null, 2) }}</pre>
+        </div>
+      </div>
+    `
+  }),
+  args: {
+    label: 'Select employees',
+    placeholder: 'Choose employees...',
+    helperText: 'Select team members from different departments',
+    options: employeeOptions
+  }
+}

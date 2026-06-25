@@ -366,3 +366,47 @@ export const CustomAction: Story = {
     customActionLabel: 'Custom action'
   }
 }
+
+// Custom type extending NeDropdownFilterV2Option w/ extra attributes
+interface ServiceOption extends NeDropdownFilterV2Option {
+  status: 'active' | 'inactive' | 'maintenance'
+  version: string
+  uptime: number
+}
+
+const serviceOptions: ServiceOption[] = [
+  { id: 'svc1', label: 'API Server', status: 'active', version: '2.1.0', uptime: 99.9 },
+  { id: 'svc2', label: 'Database', status: 'active', version: '14.5', uptime: 99.95 },
+  { id: 'svc3', label: 'Cache Layer', status: 'maintenance', version: '7.0.1', uptime: 98.5 },
+  { id: 'svc4', label: 'Auth Service', status: 'active', version: '1.8.3', uptime: 99.99 },
+  { id: 'svc5', label: 'Queue Worker', status: 'inactive', version: '3.2.1', uptime: 0 }
+]
+
+export const CustomTypeExtension: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilterV2 },
+    setup() {
+      const selected = ref<ServiceOption[]>([])
+
+      return { args, selected }
+    },
+    template: `
+      <div class="space-y-4">
+        <NeDropdownFilterV2 
+          v-bind="args" 
+          :options="args.options" 
+          v-model="selected" 
+        />
+        <div v-if="selected.length" class="p-4 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700">
+          <p class="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Selected services (v-model w/ custom attrs):</p>
+          <pre class="text-xs overflow-auto text-gray-600 dark:text-gray-400">{{ JSON.stringify(selected, null, 2) }}</pre>
+        </div>
+      </div>
+    `
+  }),
+  args: {
+    label: 'Filter services',
+    kind: 'checkbox',
+    options: serviceOptions
+  }
+}
