@@ -96,6 +96,7 @@ const comboboxRef = ref<HTMLDivElement | null>(null)
 const userInputOptions = ref<T[]>([]) as Ref<T[]>
 const componentId = `ne-multiselect-combobox-${uuidv4()}`
 
+// Comparison fn for combobox v-model (match by id)
 const byId = (a: NeMultiselectComboboxOption, b: NeMultiselectComboboxOption) => a?.id === b?.id
 
 const inputValidStyle =
@@ -103,8 +104,10 @@ const inputValidStyle =
 const inputInvalidStyle = 'ring-rose-700 focus-within:ring-rose-500 dark:ring-rose-500'
 const descriptionBaseStyle = 'mt-2 text-sm'
 
+// Parent options + user-typed entries
 const allOptions = computed(() => props.options.concat(userInputOptions.value))
 
+// Filter options by search query or externalFilter mode
 const filteredOptions = computed<T[]>(() => {
   if (props.externalFilter) {
     let results: T[] = [...props.options]
@@ -205,15 +208,20 @@ const filteredOptions = computed<T[]>(() => {
   return limited
 })
 
+// Styling for input shell container
 const inputShellStyle = computed(() => ({
   maxHeight: props.maxHeight || undefined
 }))
 
+// Hide placeholder when items selected
 const inputPlaceholder = computed(() => (selected.value.length ? '' : props.placeholder))
+
+// ID for error/help text aria-describedby
 const descriptionId = computed(() =>
   props.invalidMessage || props.helperText ? `${componentId}-description` : undefined
 )
 
+// Sync selections to v-model, clear query on add (with dedup), emit filter event
 watch(selected, (newVal, oldVal) => {
   const uniqueSelected = uniqBy(selected.value, 'id')
 
@@ -236,6 +244,7 @@ watch(selected, (newVal, oldVal) => {
   modelValue.value = selected.value
 })
 
+// Sync props.options → selected (unless externally filtering + dropdown open)
 watch(
   () => props.options,
   () => {
@@ -246,6 +255,7 @@ watch(
   }
 )
 
+// Sync v-model changes → selected (unless externally filtering + dropdown open)
 watch(
   () => modelValue.value,
   () => {
@@ -280,14 +290,17 @@ onMounted(() => {
 })
 
 function getLimitedNumberOfOptions(options: T[]): T[] {
+  // No options + no user input allowed = show "no options" msg
   if (!options.length && !props.acceptUserInput) {
     return [{ id: 'no_option', label: props.noOptionsLabel, disabled: true } as unknown as T]
   }
 
+  // Under limit = return all
   if (options.length < props.maxOptionsShown) {
     return options
   }
 
+  // Over limit: slice + add hint
   const limitedOptions = options.slice(0, props.maxOptionsShown)
   limitedOptions.push({
     id: 'limited_options_hint',
@@ -295,6 +308,7 @@ function getLimitedNumberOfOptions(options: T[]): T[] {
     disabled: true
   } as unknown as T)
 
+  // Pin selected items not in display list
   if (selected.value.length) {
     for (const selectedOption of selected.value) {
       const selectedOptionFound = limitedOptions.find((option) => option.id === selectedOption.id)
@@ -309,6 +323,7 @@ function getLimitedNumberOfOptions(options: T[]): T[] {
 }
 
 function onClickOutsideCombobox() {
+  // Add search text to selection if acceptUserInput enabled
   if (props.acceptUserInput && query.value.trim()) {
     addQueryToSelection()
   }
@@ -321,6 +336,7 @@ function onClickOutsideCombobox() {
   }
 }
 
+// Handle option click: add to selection if new, clear query, focus input
 function onOptionSelected(selectedOption: T) {
   if (props.acceptUserInput) {
     const optionFound = allOptions.value.find((option) => option.id === selectedOption.id)
@@ -341,6 +357,7 @@ function onOptionSelected(selectedOption: T) {
 }
 
 function selectOptionsFromModelValue() {
+  // Sync v-model to selected, handling real options + user-input entries + missing items
   const selectedList: T[] = []
 
   for (const opt of modelValue.value) {
@@ -371,6 +388,7 @@ function selectOptionsFromModelValue() {
 }
 
 function addQueryToSelection() {
+  // Add search query text as new selection (real option or user-input)
   const trimmedQuery = query.value.trim()
   let option = allOptions.value.find((opt) => opt.label === trimmedQuery)
 
@@ -421,6 +439,7 @@ function onInputKeydown(event: KeyboardEvent) {
 }
 
 function removeFromSelection(optionToRemove: NeMultiselectComboboxOption) {
+  // Remove selection by id + refocus input
   selected.value = selected.value.filter((option) => option.id !== optionToRemove.id)
   nextTick(() => focus())
 }
