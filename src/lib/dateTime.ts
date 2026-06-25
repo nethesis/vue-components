@@ -18,13 +18,14 @@ export const formatInTimeZoneLoc = (date: any, fmt: string, tz: any) => {
 }
 
 /**
- * Get browser locale (english fallback)
+ * Get date-fns locale. Accepts optional two-letter locale string (e.g., 'en', 'it').
+ * Defaults to browser language via navigator.language. Falls back to English.
  */
-export const getDateFnsLocale = () => {
+export const getDateFnsLocale = (localeArg?: string) => {
   let loc = enGB
+  const lang = localeArg || navigator?.language.substring(0, 2)
 
-  if (navigator) {
-    const lang = navigator.language.substring(0, 2)
+  if (lang) {
     switch (lang) {
       case 'it':
         loc = it
