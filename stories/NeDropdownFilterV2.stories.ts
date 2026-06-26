@@ -1,12 +1,12 @@
-//  Copyright (C) 2024 Nethesis S.r.l.
+//  Copyright (C) 2026 Nethesis S.r.l.
 //  SPDX-License-Identifier: GPL-3.0-or-later
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { NeDropdownFilter, NeButton, FilterOption } from '../src/main'
+import { NeDropdownFilterV2, NeButton, NeDropdownFilterV2Option } from '../src/main'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-const defaultOptions = [
+const defaultOptions: NeDropdownFilterV2Option[] = [
   {
     id: 'option1',
     label: 'Option 1'
@@ -35,17 +35,9 @@ const defaultOptions = [
 ]
 
 const meta = {
-  title: 'NeDropdownFilter [Deprecated]',
-  component: NeDropdownFilter,
+  title: 'NeDropdownFilterV2',
+  component: NeDropdownFilterV2,
   tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component:
-          'Deprecated: use NeDropdownFilterV2 instead. This component will be removed in a future release.'
-      }
-    }
-  },
   argTypes: {
     kind: { control: 'inline-radio', options: ['radio', 'checkbox'] },
     size: { control: 'inline-radio', options: ['xs', 'sm', 'md', 'lg', 'xl'] }
@@ -73,16 +65,16 @@ const meta = {
     loadingOptions: false,
     customActionLabel: ''
   }
-} satisfies Meta<typeof NeDropdownFilter>
+} satisfies Meta<typeof NeDropdownFilterV2>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-const template = '<NeDropdownFilter v-bind="args" />'
+const template = '<NeDropdownFilterV2 v-bind="args" />'
 
 export const CheckboxOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -93,7 +85,7 @@ export const CheckboxOptions: Story = {
 
 export const RadioOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -106,7 +98,7 @@ export const RadioOptions: Story = {
 
 export const RadioWithSelectionShown: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -120,7 +112,7 @@ export const RadioWithSelectionShown: Story = {
 
 export const OptionsWithDescription: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -158,7 +150,7 @@ export const OptionsWithDescription: Story = {
 
 export const NoClearFilter: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -171,12 +163,12 @@ export const NoClearFilter: Story = {
 }
 
 const alignToRightTemplate = `<div class="flex justify-end w-72">
-  <NeDropdownFilter v-bind="args" />
+  <NeDropdownFilterV2 v-bind="args" />
 </div>`
 
 export const AlignToRight: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -187,7 +179,7 @@ export const AlignToRight: Story = {
 
 export const Disabled: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -198,17 +190,17 @@ export const Disabled: Story = {
   }
 }
 
-const withSlotTemplate = `<NeDropdownFilter v-bind="args">
+const withSlotTemplate = `<NeDropdownFilterV2 v-bind="args">
   <template #button>
     <span class="text-gray-700 dark:text-gray-100">
       Button slot
     </span>
   </template>
-</NeDropdownFilter>`
+</NeDropdownFilterV2>`
 
 export const ButtonSlot: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter, NeButton, FontAwesomeIcon },
+    components: { NeDropdownFilterV2, NeButton, FontAwesomeIcon },
     setup() {
       return { args }
     },
@@ -219,7 +211,7 @@ export const ButtonSlot: Story = {
 
 export const NoOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -232,7 +224,7 @@ export const NoOptions: Story = {
 
 export const ShowOptionsFilter: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -243,7 +235,7 @@ export const ShowOptionsFilter: Story = {
   }
 }
 
-const manyOptions: FilterOption[] = []
+const manyOptions: NeDropdownFilterV2Option[] = []
 
 for (let i = 0; i < 150; i++) {
   manyOptions.push({ id: i.toString(), label: `Option ${i}` })
@@ -251,7 +243,7 @@ for (let i = 0; i < 150; i++) {
 
 export const GroupedOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -283,7 +275,7 @@ export const GroupedOptions: Story = {
 
 export const ManyOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -294,21 +286,49 @@ export const ManyOptions: Story = {
   }
 }
 
+interface WikipediaSearchResult {
+  pageid: number
+  title: string
+  snippet: string
+}
+
 export const ExternalFilter: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
-      const options = ref(defaultOptions)
+      const options = ref<NeDropdownFilterV2Option[]>([])
 
-      function onSearch(query: string) {
-        options.value = defaultOptions.filter((o) =>
-          o.label.toLowerCase().includes(query.toLowerCase())
-        )
+      async function fetchWikipedia(query: string) {
+        try {
+          const res = await fetch(
+            `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=25&format=json&origin=*`
+          )
+          const data = await res.json()
+          const results = data.query?.search || []
+          options.value = results.map((r: WikipediaSearchResult) => ({
+            id: r.pageid.toString(),
+            label: r.title,
+            description: r.snippet.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 60) + '...' // Remove HTML tags and truncate
+          }))
+        } catch (e) {
+          console.error('Failed to fetch Wikipedia results:', e)
+        }
+      }
+
+      onMounted(() => {
+        fetchWikipedia('a') // default to "a" to show some results when the component is mounted
+      })
+
+      async function onSearch(query: string) {
+        if (!query.trim()) {
+          query = 'a' // default to "a" to show some results when the search is cleared
+        }
+        await fetchWikipedia(query)
       }
 
       return { args, options, onSearch }
     },
-    template: '<NeDropdownFilter v-bind="args" :options="options" @search="onSearch" />'
+    template: '<NeDropdownFilterV2 v-bind="args" :options="options" @search="onSearch" />'
   }),
   args: {
     externalFilter: true,
@@ -318,7 +338,7 @@ export const ExternalFilter: Story = {
 
 export const LoadingOptions: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       return { args }
     },
@@ -333,16 +353,60 @@ export const LoadingOptions: Story = {
 
 export const CustomAction: Story = {
   render: (args) => ({
-    components: { NeDropdownFilter },
+    components: { NeDropdownFilterV2 },
     setup() {
       function onCustomAction() {
         alert('Custom action triggered!')
       }
       return { args, onCustomAction }
     },
-    template: '<NeDropdownFilter v-bind="args" @custom-action="onCustomAction" />'
+    template: '<NeDropdownFilterV2 v-bind="args" @custom-action="onCustomAction" />'
   }),
   args: {
     customActionLabel: 'Custom action'
+  }
+}
+
+// Custom type extending NeDropdownFilterV2Option w/ extra attributes
+interface ServiceOption extends NeDropdownFilterV2Option {
+  status: 'active' | 'inactive' | 'maintenance'
+  version: string
+  uptime: number
+}
+
+const serviceOptions: ServiceOption[] = [
+  { id: 'svc1', label: 'API Server', status: 'active', version: '2.1.0', uptime: 99.9 },
+  { id: 'svc2', label: 'Database', status: 'active', version: '14.5', uptime: 99.95 },
+  { id: 'svc3', label: 'Cache Layer', status: 'maintenance', version: '7.0.1', uptime: 98.5 },
+  { id: 'svc4', label: 'Auth Service', status: 'active', version: '1.8.3', uptime: 99.99 },
+  { id: 'svc5', label: 'Queue Worker', status: 'inactive', version: '3.2.1', uptime: 0 }
+]
+
+export const CustomTypeExtension: Story = {
+  render: (args) => ({
+    components: { NeDropdownFilterV2 },
+    setup() {
+      const selected = ref<ServiceOption[]>([])
+
+      return { args, selected }
+    },
+    template: `
+      <div class="space-y-4">
+        <NeDropdownFilterV2 
+          v-bind="args" 
+          :options="args.options" 
+          v-model="selected" 
+        />
+        <div v-if="selected.length" class="p-4 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700">
+          <p class="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Selected services (v-model w/ custom attrs):</p>
+          <pre class="text-xs overflow-auto text-gray-600 dark:text-gray-400">{{ JSON.stringify(selected, null, 2) }}</pre>
+        </div>
+      </div>
+    `
+  }),
+  args: {
+    label: 'Filter services',
+    kind: 'checkbox',
+    options: serviceOptions
   }
 }
