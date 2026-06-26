@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.11.0](https://github.com/nethesis/vue-components/compare/v3.10.0...v3.11.0) (2026-06-26)
+
+
+### Features
+
+* add NeDropdownFilterV2 & improve NeMultiselectCombobox ([#161](https://github.com/nethesis/vue-components/issues/161)) ([09ef404](https://github.com/nethesis/vue-components/commit/09ef404749e394f0224b22b951bf235fc63f658d))
+
 ## [3.10.0](https://github.com/nethesis/vue-components/compare/v3.9.0...v3.10.0) (2026-06-17)
 
 
