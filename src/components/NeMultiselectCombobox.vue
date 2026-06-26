@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts" generic="T extends NeMultiselectComboboxOption">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch, type Ref } from 'vue'
 import {
   Combobox,
   ComboboxButton,
@@ -21,7 +21,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { onClickOutside } from '@vueuse/core'
 import { isEqual, uniqBy } from 'lodash-es'
-import { v4 as uuidv4 } from 'uuid'
 import NeBadgeV2 from './NeBadgeV2.vue'
 import type { NeBadgeV2Kind } from './NeBadgeV2.vue'
 import NeSkeleton from './NeSkeleton.vue'
@@ -94,7 +93,8 @@ const selected = ref<T[]>([]) as Ref<T[]>
 const showOptions = ref(false)
 const comboboxRef = ref<HTMLDivElement | null>(null)
 const userInputOptions = ref<T[]>([]) as Ref<T[]>
-const componentId = `ne-multiselect-combobox-${uuidv4()}`
+const generatedId = useId()
+const componentId = `ne-multiselect-combobox-${generatedId}`
 
 // Comparison fn for combobox v-model (match by id)
 const byId = (a: NeMultiselectComboboxOption, b: NeMultiselectComboboxOption) => a?.id === b?.id
