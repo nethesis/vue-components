@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeSkeleton } from '../src/main'
 
 const meta: Meta<typeof NeSkeleton> = {
-  title: 'NeSkeleton',
+  title: 'Components/NeSkeleton',
   component: NeSkeleton,
   tags: ['autodocs'],
   argTypes: {

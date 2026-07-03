@@ -5,7 +5,7 @@ import { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeExpandable } from '../src/main'
 
 const meta: Meta<typeof NeExpandable> = {
-  title: 'NeExpandable',
+  title: 'Components/NeExpandable',
   component: NeExpandable,
   tags: ['autodocs'],
   args: {

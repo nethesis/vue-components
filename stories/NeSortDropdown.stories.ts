@@ -6,7 +6,7 @@ import { NeSortDropdown, NeButton } from '../src/main'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const meta = {
-  title: 'NeSortDropdown',
+  title: 'Components/NeSortDropdown',
   component: NeSortDropdown,
   tags: ['autodocs'],
   argTypes: {

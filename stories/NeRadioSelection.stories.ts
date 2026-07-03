@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const meta: Meta<typeof NeRadioSelection> = {
-  title: 'NeRadioSelection',
+  title: 'Components/NeRadioSelection',
   component: NeRadioSelection,
   tags: ['autodocs'],
   argTypes: {

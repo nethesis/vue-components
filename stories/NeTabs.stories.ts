@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeTabs } from '../src/main'
 
 const meta = {
-  title: 'NeTabs',
+  title: 'Components/NeTabs',
   component: NeTabs,
   tags: ['autodocs'],
   argTypes: {},

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
 
 const meta = {
-  title: 'NeButton',
+  title: 'Components/NeButton',
   component: NeButton,
   tags: ['autodocs'],
   argTypes: {

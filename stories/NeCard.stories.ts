@@ -9,7 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faHeart)
 
 const meta = {
-  title: 'NeCard',
+  title: 'Components/NeCard',
   component: NeCard,
   tags: ['autodocs'],
   args: {

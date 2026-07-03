@@ -35,7 +35,7 @@ const defaultOptions: NeDropdownFilterV2Option[] = [
 ]
 
 const meta = {
-  title: 'NeDropdownFilterV2',
+  title: 'Components/NeDropdownFilterV2',
   component: NeDropdownFilterV2,
   tags: ['autodocs'],
   argTypes: {

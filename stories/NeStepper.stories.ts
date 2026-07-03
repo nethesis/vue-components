@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeStepper } from '../src/main'
 
 const meta = {
-  title: 'NeStepper',
+  title: 'Components/NeStepper',
   component: NeStepper,
   tags: ['autodocs'],
   args: {

@@ -5,7 +5,7 @@ import { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NePaginator } from '../src/main'
 
 const meta: Meta<typeof NePaginator> = {
-  title: 'NePaginator',
+  title: 'Components/NePaginator',
   component: NePaginator,
   tags: ['autodocs'],
   args: {

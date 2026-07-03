@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeSpinner } from '../src/main'
 
 const meta = {
-  title: 'NeSpinner',
+  title: 'Components/NeSpinner',
   component: NeSpinner,
   tags: ['autodocs'],
   argTypes: {

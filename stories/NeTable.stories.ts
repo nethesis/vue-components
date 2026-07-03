@@ -23,7 +23,7 @@ const items = [
 ]
 
 const meta: Meta<typeof NeTable> = {
-  title: 'NeTable',
+  title: 'Components/NeTable',
   component: NeTable,
   tags: ['autodocs'],
   argTypes: {

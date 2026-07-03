@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeFileInput } from '../src/main'
 
 const meta = {
-  title: 'NeFileInput',
+  title: 'Components/NeFileInput',
   component: NeFileInput,
   tags: ['autodocs'],
   argTypes: {},

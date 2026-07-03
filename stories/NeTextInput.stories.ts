@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelope, faDollarSign } from '@fortawesome/free-solid-svg-icons'
 
 const meta = {
-  title: 'NeTextInput',
+  title: 'Components/NeTextInput',
   component: NeTextInput,
   tags: ['autodocs'],
   // default values

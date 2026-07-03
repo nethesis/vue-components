@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeFormItemLabel } from '../src/main'
 
 const meta = {
-  title: 'NeFormItemLabel',
+  title: 'Components/NeFormItemLabel',
   component: NeFormItemLabel,
   tags: ['autodocs']
 } satisfies Meta<typeof NeFormItemLabel>
