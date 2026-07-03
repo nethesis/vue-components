@@ -7,6 +7,11 @@ import './storybook.css'
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: ['Patterns', 'Components', '*']
+      }
+    },
     actions: { onClick: fn() },
     controls: {
       matchers: {
