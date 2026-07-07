@@ -5,6 +5,10 @@ import { fn } from 'storybook/test'
 import '../src/main.css'
 import './storybook.css'
 
+const prefersDark =
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-color-scheme: dark)').matches
+
 const preview: Preview = {
   parameters: {
     options: {
@@ -26,7 +30,7 @@ const preview: Preview = {
         light: 'light',
         dark: 'dark'
       },
-      defaultTheme: 'light'
+      defaultTheme: prefersDark ? 'dark' : 'light'
     }),
     (story) => ({
       components: { story },
