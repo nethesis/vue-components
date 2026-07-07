@@ -6,24 +6,6 @@ import { fn } from 'storybook/test'
 import { NeToastNotificationV2 } from '../src/main'
 import type { NeNotificationV2 } from '../src/main'
 
-const meta = {
-  title: 'Patterns/Success toast notification',
-  component: NeToastNotificationV2,
-  args: {
-    srCloseLabel: 'Close',
-    firstActionOnRight: false,
-    showCloseButton: false,
-    showTimestamp: true,
-    fullWidth: false,
-    notification: undefined,
-    onAction: fn(),
-    onClose: fn()
-  }
-} satisfies Meta<typeof NeToastNotificationV2>
-
-export default meta
-type Story = StoryObj<typeof meta>
-
 const baseNotification: NeNotificationV2 = {
   id: '1',
   kind: 'success',
@@ -34,19 +16,29 @@ const baseNotification: NeNotificationV2 = {
   isShown: true
 }
 
-const template = '<NeToastNotificationV2 v-bind="args"/>'
-
-const render: Story['render'] = (args) => ({
-  components: { NeToastNotificationV2 },
-  setup() {
-    return { args }
+const meta = {
+  title: 'Patterns/Success toast notification',
+  component: NeToastNotificationV2,
+  argTypes: {
+    // The notification is set per story as a whole object; an object control adds noise.
+    notification: { table: { disable: true } }
   },
-  template: template
-})
+  args: {
+    firstActionOnRight: false,
+    showCloseButton: false,
+    showTimestamp: true,
+    fullWidth: false,
+    srCloseLabel: 'Close',
+    onAction: fn(),
+    onClose: fn()
+  }
+} satisfies Meta<typeof NeToastNotificationV2>
+
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const ItemCreated: Story = {
   name: 'Item created',
-  render,
   args: {
     notification: {
       ...baseNotification,
@@ -58,7 +50,6 @@ export const ItemCreated: Story = {
 
 export const ItemUpdated: Story = {
   name: 'Item updated',
-  render,
   args: {
     notification: {
       ...baseNotification,
@@ -70,7 +61,6 @@ export const ItemUpdated: Story = {
 
 export const ItemCreatedItalian: Story = {
   name: 'Item created (Italian)',
-  render,
   args: {
     srCloseLabel: 'Chiudi',
     notification: {
@@ -83,7 +73,6 @@ export const ItemCreatedItalian: Story = {
 
 export const ItemUpdatedItalian: Story = {
   name: 'Item updated (Italian)',
-  render,
   args: {
     srCloseLabel: 'Chiudi',
     notification: {

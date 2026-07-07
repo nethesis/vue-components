@@ -21,109 +21,91 @@ const meta = {
   },
   args: {
     visible: true,
-    title: 'Delete item',
     kind: 'warning',
     size: 'md',
-    primaryLabel: 'Delete',
     secondaryLabel: '',
+    primaryLabel: 'Delete',
     cancelLabel: 'Cancel',
+    closeAriaLabel: 'Close',
     primaryButtonKind: 'danger',
     primaryButtonDisabled: false,
     primaryButtonLoading: false,
     secondaryButtonKind: 'secondary',
     secondaryButtonDisabled: false,
-    secondaryButtonLoading: false,
-    closeAriaLabel: 'Close'
+    secondaryButtonLoading: false
   }
 } satisfies Meta<typeof NeModal>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
+// The modal body (and the confirmation input) is default-slot content, which
+// can't be an arg, so these stories use a render function. Title and button
+// labels still come from args; only the slot text is passed via setup.
 const standardTemplate = `<NeModal v-bind="args">
-  <p>
-    Phonebook contact Jane Doe will be deleted.
-  </p>
+  <p>{{ body }}</p>
+</NeModal>`
+
+const typeToConfirmTemplate = `<NeModal v-bind="args">
+  <p class="mb-5">{{ body }}</p>
+  <NeTextInput v-model="confirmText" :label="inputLabel" />
 </NeModal>`
 
 export const Standard: Story = {
+  args: { title: 'Delete phonebook contact' },
   render: (args) => ({
     components: { NeModal },
-    setup() {
-      return { args }
-    },
+    setup: () => ({ args, body: 'Phonebook contact Jane Doe will be deleted.' }),
     template: standardTemplate
-  }),
-  args: {
-    title: 'Delete phonebook contact'
-  }
+  })
 }
-
-const typeToConfirmTemplate = `<NeModal v-bind="args">
-  <p class="mb-5">
-    User Alice Fox will be permanently deleted. Their personal files will be deleted too.
-  </p>
-  <NeTextInput v-model="confirmText" label="Type 'Alice Fox' to confirm" />
-</NeModal>`
 
 export const TypeToConfirm: Story = {
+  name: 'Type to confirm',
+  args: { title: 'Delete user' },
   render: (args) => ({
     components: { NeModal, NeTextInput },
-    setup() {
-      const confirmText = ref('')
-      return { args, confirmText }
-    },
+    setup: () => ({
+      args,
+      confirmText: ref(''),
+      body: 'User Alice Fox will be permanently deleted. Their personal files will be deleted too.',
+      inputLabel: "Type 'Alice Fox' to confirm"
+    }),
     template: typeToConfirmTemplate
-  }),
-  args: {
-    title: 'Delete user'
-  }
+  })
 }
-
-const standardItalianTemplate = `<NeModal v-bind="args">
-  <p>
-    Il contatto della rubrica Jane Doe verrà eliminato.
-  </p>
-</NeModal>`
 
 export const StandardItalian: Story = {
   name: 'Standard (Italian)',
-  render: (args) => ({
-    components: { NeModal },
-    setup() {
-      return { args }
-    },
-    template: standardItalianTemplate
-  }),
   args: {
     title: 'Elimina contatto della rubrica',
     primaryLabel: 'Elimina',
     cancelLabel: 'Annulla',
     closeAriaLabel: 'Chiudi'
-  }
+  },
+  render: (args) => ({
+    components: { NeModal },
+    setup: () => ({ args, body: 'Il contatto della rubrica Jane Doe verrà eliminato.' }),
+    template: standardTemplate
+  })
 }
-
-const typeToConfirmItalianTemplate = `<NeModal v-bind="args">
-  <p class="mb-5">
-    L'utente Alice Fox verrà eliminato definitivamente. Anche i suoi file personali verranno eliminati.
-  </p>
-  <NeTextInput v-model="confirmText" label="Digita 'Alice Fox' per confermare" />
-</NeModal>`
 
 export const TypeToConfirmItalian: Story = {
   name: 'Type to confirm (Italian)',
-  render: (args) => ({
-    components: { NeModal, NeTextInput },
-    setup() {
-      const confirmText = ref('')
-      return { args, confirmText }
-    },
-    template: typeToConfirmItalianTemplate
-  }),
   args: {
     title: 'Elimina utente',
     primaryLabel: 'Elimina',
     cancelLabel: 'Annulla',
     closeAriaLabel: 'Chiudi'
-  }
+  },
+  render: (args) => ({
+    components: { NeModal, NeTextInput },
+    setup: () => ({
+      args,
+      confirmText: ref(''),
+      body: "L'utente Alice Fox verrà eliminato definitivamente. Anche i suoi file personali verranno eliminati.",
+      inputLabel: "Digita 'Alice Fox' per confermare"
+    }),
+    template: typeToConfirmTemplate
+  })
 }
