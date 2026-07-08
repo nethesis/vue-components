@@ -1,6 +1,7 @@
 import type { Preview, VueRenderer } from '@storybook/vue3-vite'
 import { withThemeByClassName } from '@storybook/addon-themes'
 import { fn } from 'storybook/test'
+import { themes } from 'storybook/theming'
 
 import '../src/main.css'
 import './storybook.css'
@@ -13,9 +14,10 @@ const preview: Preview = {
   parameters: {
     options: {
       storySort: {
-        order: ['Patterns', 'Components', '*']
+        order: ['Introduction', 'Patterns', ['Overview', '*'], 'Components', ['Overview', '*'], '*']
       }
     },
+    docs: { theme: prefersDark ? themes.dark : themes.light },
     actions: { onClick: fn() },
     controls: {
       matchers: {
