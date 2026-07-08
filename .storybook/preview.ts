@@ -17,6 +17,9 @@ const preview: Preview = {
         order: ['Introduction', 'Patterns', ['Overview', '*'], 'Components', ['Overview', '*'], '*']
       }
     },
+    // Set once at load from the system preference. Unlike the story canvas (driven
+    // by addon-themes), the docs theme is not reactive to the toolbar toggle, so
+    // switching themes there only takes effect after a reload.
     docs: { theme: prefersDark ? themes.dark : themes.light },
     actions: { onClick: fn() },
     controls: {
