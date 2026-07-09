@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeListbox, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'NeListbox',
+  title: 'Components/NeListbox',
   component: NeListbox,
   tags: ['autodocs'],
   args: {

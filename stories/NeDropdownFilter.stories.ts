@@ -35,7 +35,7 @@ const defaultOptions = [
 ]
 
 const meta = {
-  title: 'NeDropdownFilter [Deprecated]',
+  title: 'Components/NeDropdownFilter [Deprecated]',
   component: NeDropdownFilter,
   tags: ['autodocs'],
   parameters: {

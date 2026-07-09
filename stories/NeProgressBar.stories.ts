@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeProgressBar } from '../src/main'
 
 const meta = {
-  title: 'NeProgressBar',
+  title: 'Components/NeProgressBar',
   component: NeProgressBar,
   tags: ['autodocs'],
   argTypes: {

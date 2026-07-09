@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faUsers)
 
 const meta = {
-  title: 'NeEmptyState',
+  title: 'Components/NeEmptyState',
   component: NeEmptyState,
   tags: ['autodocs'],
   argTypes: {},

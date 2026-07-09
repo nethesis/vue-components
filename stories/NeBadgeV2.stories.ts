@@ -7,7 +7,7 @@ import { faAward } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const meta: Meta<typeof NeBadgeV2> = {
-  title: 'NeBadgeV2',
+  title: 'Components/NeBadgeV2',
   component: NeBadgeV2,
   tags: ['autodocs'],
   argTypes: {

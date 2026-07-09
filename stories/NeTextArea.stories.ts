@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeTextArea, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'NeTextArea',
+  title: 'Components/NeTextArea',
   component: NeTextArea,
   tags: ['autodocs'],
   // default values

@@ -6,7 +6,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { NeRoundedIcon } from '../src/main'
 
 const meta = {
-  title: 'NeRoundedIcon',
+  title: 'Components/NeRoundedIcon',
   component: NeRoundedIcon,
   tags: ['autodocs'],
   argTypes: {

@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeToggle, NeTooltip } from '../src/main'
 
 const meta = {
-  title: 'NeToggle',
+  title: 'Components/NeToggle',
   component: NeToggle,
   tags: ['autodocs'],
   argTypes: {

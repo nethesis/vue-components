@@ -17,7 +17,7 @@ const baseOptions = [
 ]
 
 const meta = {
-  title: 'NeMultiselectCombobox',
+  title: 'Components/NeMultiselectCombobox',
   component: NeMultiselectCombobox,
   tags: ['autodocs'],
   args: {

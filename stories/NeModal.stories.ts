@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { NeModal } from '../src/main'
 
 const meta = {
-  title: 'NeModal',
+  title: 'Components/NeModal',
   component: NeModal,
   argTypes: {
     kind: { control: 'inline-radio', options: ['neutral', 'info', 'warning', 'error', 'success'] },

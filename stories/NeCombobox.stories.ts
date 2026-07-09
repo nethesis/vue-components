@@ -8,7 +8,7 @@ import { faStar, faBell, faEarthAmericas } from '@fortawesome/free-solid-svg-ico
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 const meta = {
-  title: 'NeCombobox',
+  title: 'Components/NeCombobox',
   component: NeCombobox,
   tags: ['autodocs'],
   args: {

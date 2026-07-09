@@ -12,7 +12,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const meta = {
-  title: 'NeDropdown',
+  title: 'Components/NeDropdown',
   component: NeDropdown,
   tags: ['autodocs'],
   args: {

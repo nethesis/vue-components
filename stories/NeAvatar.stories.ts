@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 
 const meta = {
-  title: 'NeAvatar',
+  title: 'Components/NeAvatar',
   component: NeAvatar,
   tags: ['autodocs'],
   argTypes: {

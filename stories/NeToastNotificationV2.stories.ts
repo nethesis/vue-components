@@ -9,7 +9,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 const meta = {
-  title: 'NeToastNotificationV2',
+  title: 'Components/NeToastNotificationV2',
   component: NeToastNotificationV2,
   tags: ['autodocs'],
   args: {

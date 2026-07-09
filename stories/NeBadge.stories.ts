@@ -7,7 +7,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 
 const meta: Meta<typeof NeBadge> = {
-  title: 'NeBadge [Deprecated]',
+  title: 'Components/NeBadge [Deprecated]',
   component: NeBadge,
   tags: ['autodocs'],
   parameters: {
