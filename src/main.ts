@@ -75,6 +75,7 @@ export type { ModalKind, PrimaryButtonKind, ModalSize } from './components/NeMod
 export type { AvatarSize } from './components/NeAvatar.vue'
 export type { NeNotificationV2 } from './components/NeToastNotificationV2.vue'
 export type { NeBadgeV2Kind } from './components/NeBadgeV2.vue'
+export type { RoundedIconKind } from './components/NeRoundedIcon.vue'
 
 // library functions export
 export {
