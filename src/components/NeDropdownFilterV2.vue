@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts" generic="T extends NeDropdownFilterV2Option = NeDropdownFilterV2Option">
-import { ref, watch, computed, useId } from 'vue'
+import { ref, shallowRef, watch, computed, useId } from 'vue'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
@@ -91,6 +91,9 @@ const emit = defineEmits<{
 const model = defineModel<T[]>({ default: () => [] })
 const radioModel = ref('')
 const checkboxModel = ref<string[]>([])
+// selected options hoisted to the top of the list, frozen while the menu is open
+const selectionSnapshot = shallowRef<T[]>([])
+const isMenuOpen = ref(false)
 const top = ref(0)
 const left = ref(0)
 const right = ref(0)
@@ -164,16 +167,41 @@ const filteredOptions = computed((): T[] => {
   return allFlatOptions.value.filter((opt) => matchingIds.has(opt.id))
 })
 
-// True when hit maxOptionsShown limit
-const moreOptionsHidden = computed(() => {
-  return filteredOptions.value.length >= props.maxOptionsShown
+// Pinned selections still matching the search query. Options coming from props.options
+// reuse the filteredOptions result (so a group name match keeps them, and with
+// externalFilter the caller's own filtering wins); selections that are not part of
+// props.options are matched on their label
+const visiblePinnedOptions = computed((): T[] => {
+  if (!optionsFilter.value || !isShowingOptionsFilter.value) {
+    return selectionSnapshot.value
+  }
+
+  const filteredIds = new Set(filteredOptions.value.map((o) => o.id))
+  const knownIds = new Set(allFlatOptions.value.map((o) => o.id))
+  const regex = /[^a-zA-Z0-9-]/g
+  const queryText = optionsFilter.value.replace(regex, '')
+
+  return selectionSnapshot.value.filter((o) =>
+    knownIds.has(o.id)
+      ? filteredIds.has(o.id)
+      : new RegExp(queryText, 'i').test(o.label?.replace(regex, ''))
+  )
 })
 
-// Build list with group headers + options, respecting maxOptionsShown
+// Pinned selections consume the maxOptionsShown budget first, so the total number of
+// rendered options never exceeds it
+const pinnedItems = computed((): T[] => {
+  return visiblePinnedOptions.value.slice(0, props.maxOptionsShown)
+})
+
+// Build list with group headers + options, respecting the remaining maxOptionsShown budget.
+// Pinned selections are skipped here to avoid rendering an option twice
 const displayItems = computed(() => {
   const filteredSet = new Set(filteredOptions.value.map((o) => o.id))
+  const pinnedIds = new Set(selectionSnapshot.value.map((o) => o.id))
+  const maxOptions = props.maxOptionsShown - pinnedItems.value.length
   const items: {
-    type: 'group' | 'option'
+    type: 'group' | 'option' | 'divider'
     label?: string
     option?: T
     key: string
@@ -181,31 +209,42 @@ const displayItems = computed(() => {
   let optionCount = 0
 
   for (const entry of props.options) {
-    if (optionCount >= props.maxOptionsShown) break
+    if (optionCount >= maxOptions) break
 
     if (isFilterOptionGroup(entry)) {
-      const visibleOptions = entry.options.filter((o) => filteredSet.has(o.id))
+      const visibleOptions = entry.options.filter(
+        (o) => filteredSet.has(o.id) && !pinnedIds.has(o.id)
+      )
       if (visibleOptions.length === 0) continue
 
       items.push({ type: 'group', label: entry.group, key: `group-${entry.group}` })
       for (const opt of visibleOptions) {
-        if (optionCount >= props.maxOptionsShown) break
+        if (optionCount >= maxOptions) break
+        if (isDivider(opt)) {
+          items.push({ type: 'divider', key: opt.id })
+          continue
+        }
         items.push({ type: 'option', option: opt, key: opt.id })
         optionCount++
       }
+    } else if (isDivider(entry)) {
+      // dividers are not options: they don't consume the maxOptionsShown budget
+      items.push({ type: 'divider', key: entry.id })
     } else {
-      if (!filteredSet.has(entry.id)) continue
+      if (!filteredSet.has(entry.id) || pinnedIds.has(entry.id)) continue
       items.push({ type: 'option', option: entry, key: entry.id })
       optionCount++
     }
   }
 
-  // remove trailing group headers with no options after them
-  while (items.length > 0 && items[items.length - 1].type === 'group') {
+  // drop group headers and dividers that ended up with no option after them, as well as
+  // leading and repeated dividers (e.g. when the options around them are pinned or filtered out)
+  while (items.length > 0 && items[items.length - 1].type !== 'option') {
     items.pop()
   }
-
-  return items
+  return items.filter(
+    (item, index) => item.type !== 'divider' || items[index - 1]?.type === 'option'
+  )
 })
 
 // IDs of options visible after filter + limit (not pinned)
@@ -215,26 +254,18 @@ const displayedOptionIds = computed(() => {
   )
 })
 
-// Selected options not in display list (hidden by filter/limit). Pin at top so always visible
-const pinnedOptions = computed((): T[] => {
-  let candidates = (model.value ?? []).filter((o) => !displayedOptionIds.value.has(o.id))
-
-  // hide pinned options that don't match the search query (also when filtering
-  // externally, so that only matching options are shown while searching)
-  if (isShowingOptionsFilter.value && optionsFilter.value) {
-    const regex = /[^a-zA-Z0-9-]/g
-    const queryText = optionsFilter.value.replace(regex, '')
-    candidates = candidates.filter((o) =>
-      new RegExp(queryText, 'i').test(o.label?.replace(regex, ''))
-    )
-  }
-
-  return candidates
+// True when some options matching the current filter are left out of the rendered list
+const moreOptionsHidden = computed(() => {
+  const shownIds = new Set([...pinnedItems.value.map((o) => o.id), ...displayedOptionIds.value])
+  return (
+    pinnedItems.value.length < visiblePinnedOptions.value.length ||
+    filteredOptions.value.some((o) => !isDivider(o) && !shownIds.has(o.id))
+  )
 })
 
 // Render order: pinned selections first, then limited display list
 const renderItems = computed(() => {
-  const pinned = pinnedOptions.value.map((option) => ({
+  const pinned = pinnedItems.value.map((option) => ({
     type: 'option' as const,
     option,
     key: `pinned-${option.id}`
@@ -280,6 +311,23 @@ watch(optionsFilter, (query) => {
   emit('search', query)
 })
 
+// Keep the selection snapshot up to date while the menu is closed, so that selected
+// options are hoisted to the top only when the menu is (re)opened
+watch(
+  [() => model.value, () => props.options],
+  () => {
+    if (!isMenuOpen.value) {
+      snapshotSelection()
+    }
+  },
+  { immediate: true }
+)
+
+// Options whose id contains 'divider' are rendered as a separator, not as an option
+function isDivider(item: T | NeDropdownFilterV2OptionGroup<T>): boolean {
+  return !isFilterOptionGroup(item) && item.id.includes('divider')
+}
+
 function isFilterOptionGroup(
   item: T | NeDropdownFilterV2OptionGroup<T>
 ): item is NeDropdownFilterV2OptionGroup<T> {
@@ -298,6 +346,29 @@ function updateInternalModel() {
       checkboxModel.value = modelIds
     }
   }
+}
+
+// Take a snapshot of the current selection, ordered as in the options list. Selections
+// missing from props.options (e.g. when filtering externally) are appended at the end
+function snapshotSelection() {
+  const selected = model.value ?? []
+  const selectedIds = new Set(selected.map((o) => o.id))
+  const inOptionsOrder = allFlatOptions.value.filter((o) => selectedIds.has(o.id))
+  const knownIds = new Set(inOptionsOrder.map((o) => o.id))
+  selectionSnapshot.value = [...inOptionsOrder, ...selected.filter((o) => !knownIds.has(o.id))]
+}
+
+// The transition hooks are used instead of the button click because Headless UI opens the
+// menu on Enter/Space without emitting a click event
+function onMenuOpen() {
+  isMenuOpen.value = true
+  snapshotSelection()
+}
+
+function onMenuClose() {
+  isMenuOpen.value = false
+  clearOptionsFilter()
+  snapshotSelection()
 }
 
 function calculatePosition() {
@@ -363,8 +434,9 @@ function clearFilter() {
         leave-active-class="transition ease-in duration-75"
         leave-from-class="transform opacity-100 scale-100"
         leave-to-class="transform opacity-0 scale-95"
+        @before-enter="onMenuOpen"
         @after-enter="maybeFocusOptionsFilter"
-        @after-leave="clearOptionsFilter"
+        @after-leave="onMenuClose"
       >
         <MenuItems
           :style="[
@@ -407,13 +479,13 @@ function clearFilter() {
             >
               {{ item.label }}
             </div>
+            <!-- divider -->
+            <hr
+              v-else-if="item.type === 'divider'"
+              class="my-1 border-gray-200 dark:border-gray-700"
+            />
             <!-- option -->
             <MenuItem v-else as="div" :disabled="item.option?.disabled">
-              <!-- divider -->
-              <hr
-                v-if="item.option?.id.includes('divider')"
-                class="my-1 border-gray-200 dark:border-gray-700"
-              />
               <!-- radio option -->
               <div v-if="kind === 'radio'" class="flex items-center py-2">
                 <input
@@ -482,7 +554,7 @@ function clearFilter() {
             {{ moreOptionsHiddenLabel }}
           </div>
           <!-- no option matching filter -->
-          <div v-if="!loadingOptions && !filteredOptions.length && !pinnedOptions.length">
+          <div v-if="!loadingOptions && !renderItems.length">
             <div class="py-2 text-gray-500 dark:text-gray-400">
               {{ noOptionsLabel }}
             </div>
