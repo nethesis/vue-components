@@ -76,6 +76,11 @@ export type { AvatarSize } from './components/NeAvatar.vue'
 export type { NeNotificationV2 } from './components/NeToastNotificationV2.vue'
 export type { NeBadgeV2Kind } from './components/NeBadgeV2.vue'
 export type { RoundedIconKind } from './components/NeRoundedIcon.vue'
+export type {
+  TooltipPlacement,
+  TooltipTriggerEvent,
+  TippyComponentProps
+} from './components/NeTooltip.vue'
 
 // library functions export
 export {
@@ -84,15 +89,23 @@ export {
   getAxiosErrorMessage,
   byteFormat1024,
   byteFormat1000,
-  kbpsFormat
+  kbpsFormat,
+  capitalizeFirst
 } from './lib/utils'
 export {
   formatDateLoc,
   formatInTimeZoneLoc,
+  getBrowserLocale,
   getDateFnsLocale,
   formatDurationLoc,
-  humanDistanceToNowLoc
+  formatRelativeTime,
+  formatDateTime,
+  formatDateTimeNoSeconds
 } from './lib/dateTime'
+/**
+ * @deprecated Use formatRelativeTime instead. This function will be removed in a future release.
+ */
+export { humanDistanceToNowLoc } from './lib/dateTime'
 export {
   saveToStorage,
   getJsonFromStorage,

@@ -36,6 +36,9 @@ const meta = {
     triggerEvent: {
       control: 'inline-radio',
       options: triggerEventValues
+    },
+    tippyProps: {
+      control: 'object'
     }
   },
   args: { placement: 'top', triggerEvent: 'click', interactive: true } // default values
@@ -128,4 +131,18 @@ export const ContainsLink: Story = {
     template: containsLinkTemplate
   }),
   args: { placement: 'right' }
+}
+
+export const TippyProps: Story = {
+  render: (args) => ({
+    components: { NeTooltip },
+    setup() {
+      return { args }
+    },
+    template: defaultTemplate
+  }),
+  args: {
+    triggerEvent: 'mouseenter focus',
+    tippyProps: { offset: [0, 20], delay: [300, 0] }
+  }
 }

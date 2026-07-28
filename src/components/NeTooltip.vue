@@ -33,6 +33,11 @@ export type TooltipTriggerEvent =
   | 'mouseenter click'
   | 'manual'
 
+/**
+ * All the props accepted by the Tippy component, see https://vue-tippy.netlify.app/props/
+ */
+export type TippyComponentProps = Partial<InstanceType<typeof Tippy>['$props']>
+
 defineProps({
   placement: {
     type: String as PropType<TooltipPlacement>,
@@ -45,12 +50,27 @@ defineProps({
   interactive: {
     type: Boolean,
     default: true
+  },
+  /**
+   * Any additional Tippy prop (https://vue-tippy.netlify.app/props/), e.g.
+   * `{ maxWidth: 'none', offset: [0, 20], delay: [300, 0] }`.
+   * The props above take precedence over the same key set here.
+   */
+  tippyProps: {
+    type: Object as PropType<TippyComponentProps>,
+    default: undefined
   }
 })
 </script>
 
 <template>
-  <Tippy :interactive="interactive" :placement="placement" :trigger="triggerEvent" theme="tailwind">
+  <Tippy
+    v-bind="tippyProps"
+    :interactive="interactive"
+    :placement="placement"
+    :trigger="triggerEvent"
+    theme="tailwind"
+  >
     <slot name="trigger">
       <button type="button" class="inline-flex">
         <FontAwesomeIcon

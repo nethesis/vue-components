@@ -6,6 +6,14 @@ import { nextTick } from 'vue'
 import type { Ref } from 'vue'
 
 /**
+ * Uppercase the first character, leaving the rest untouched. Unlike lodash capitalize, it doesn't
+ * lowercase the remainder, which would mangle locales that capitalize other words (e.g. German)
+ */
+export function capitalizeFirst(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}
+
+/**
  * Sort function to order array elements by a specific property (for array of objects) or by a specific index (for arrays of arrays)
  *
  */
