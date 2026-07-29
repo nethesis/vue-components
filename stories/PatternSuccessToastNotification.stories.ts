@@ -59,6 +59,17 @@ export const ItemUpdated: Story = {
   }
 }
 
+export const ItemDeleted: Story = {
+  name: 'Item deleted',
+  args: {
+    notification: {
+      ...baseNotification,
+      title: 'User deleted',
+      description: 'User Alice Fox has been deleted'
+    }
+  }
+}
+
 export const ItemCreatedItalian: Story = {
   name: 'Item created (Italian)',
   args: {
@@ -79,6 +90,18 @@ export const ItemUpdatedItalian: Story = {
       ...baseNotification,
       title: 'Utente aggiornato',
       description: "L'utente Alice Fox è stato aggiornato"
+    }
+  }
+}
+
+export const ItemDeletedItalian: Story = {
+  name: 'Item deleted (Italian)',
+  args: {
+    srCloseLabel: 'Chiudi',
+    notification: {
+      ...baseNotification,
+      title: 'Utente eliminato',
+      description: "L'utente Alice Fox è stato eliminato"
     }
   }
 }
