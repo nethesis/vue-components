@@ -62,6 +62,14 @@ export interface Props {
   customOptionsWidth?: string
   externalFilter?: boolean
   loadingOptions?: boolean
+  /**
+   * The currently selected option, supplied by the parent. Used to render the
+   * selection when `modelValue`'s option is absent from `options` — the case
+   * `externalFilter` creates, where the parent only supplies a page of a larger
+   * server-side result set. Ignored unless its `id` matches `modelValue`.
+   * Single selection only: in multiple mode `modelValue` already carries options.
+   */
+  selectedOption?: NeComboboxOption
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -79,7 +87,8 @@ const props = withDefaults(defineProps<Props>(), {
   acceptUserInput: false,
   customOptionsWidth: '',
   externalFilter: false,
-  loadingOptions: false
+  loadingOptions: false,
+  selectedOption: undefined
 })
 
 const emit = defineEmits(['update:modelValue', 'filter'])
@@ -252,8 +261,10 @@ onMounted(() => {
   }
 })
 
+// selectedOption is watched alongside modelValue because the two can arrive in
+// separate ticks (e.g. the parent sets the id first and resolves the entity later)
 watch(
-  () => props.modelValue,
+  [() => props.modelValue, () => props.selectedOption],
   () => {
     // don't update selection while user is actively filtering with external filter
     if (props.externalFilter && showOptions.value) {
@@ -379,6 +390,11 @@ function selectSingleOptionFromModelValue() {
 
   if (optionFound) {
     selected.value = optionFound
+  } else if (props.selectedOption && props.selectedOption.id === props.modelValue) {
+    // the option for modelValue isn't in the current page of options, so fall
+    // back to the one the parent supplied. Checking the id keeps a stale prop
+    // from displaying the wrong label after the user picks something else.
+    selected.value = props.selectedOption
   } else if (props.acceptUserInput && props.modelValue) {
     const userInputOption = {
       id: props.modelValue as string,
@@ -563,14 +579,14 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           selectedLabel
         }}</span>
         <NeBadge
-          v-for="selectedOption in selected"
-          :key="selectedOption.id"
+          v-for="selectedItem in selected"
+          :key="selectedItem.id"
           kind="primary"
-          :text="selectedOption.label"
+          :text="selectedItem.label"
           :icon="fasXmark"
           icon-position="right"
           icon-clickable
-          @icon-click="removeFromSelection(selectedOption)"
+          @icon-click="removeFromSelection(selectedItem)"
         />
       </div>
       <!-- invalid message -->

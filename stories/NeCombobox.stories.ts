@@ -336,6 +336,33 @@ export const ExternalFilter: Story = {
   }
 }
 
+// The selected option is not part of the served page of options — the situation
+// external filtering creates when the parent paginates a larger server-side
+// result set. Without `selectedOption` the field would render empty.
+export const ExternalFilterWithSelectedOption: Story = {
+  render: (args) => ({
+    components: { NeCombobox },
+    setup() {
+      const options = ref([...meta.args.options])
+      const modelValue = ref('99')
+      function onFilter(query: string) {
+        options.value = meta.args.options.filter((opt) =>
+          opt.label.toLowerCase().includes(query.toLowerCase())
+        )
+      }
+      return { args, options, modelValue, onFilter }
+    },
+    template:
+      '<NeCombobox v-bind="args" :options="options" v-model="modelValue" @filter="onFilter" class="max-w-md" />'
+  }),
+  args: {
+    externalFilter: true,
+    label: 'Choose fruit (external filter, selection outside the served page)',
+    placeholder: 'Type to filter...',
+    selectedOption: { id: '99', label: 'Elderberry', description: 'berry' }
+  }
+}
+
 export const ExternalFilterWithUserInput: Story = {
   render: (args) => ({
     components: { NeCombobox },
