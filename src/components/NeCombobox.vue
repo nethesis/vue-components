@@ -263,21 +263,18 @@ onMounted(() => {
 
 // selectedOption is watched alongside modelValue because the two can arrive in
 // separate ticks (e.g. the parent sets the id first and resolves the entity later)
-watch(
-  [() => props.modelValue, () => props.selectedOption],
-  () => {
-    // don't update selection while user is actively filtering with external filter
-    if (props.externalFilter && showOptions.value) {
-      return
-    }
-
-    if (props.multiple) {
-      selectMultipleOptionsFromModelValue()
-    } else {
-      selectSingleOptionFromModelValue()
-    }
+watch([() => props.modelValue, () => props.selectedOption], () => {
+  // don't update selection while user is actively filtering with external filter
+  if (props.externalFilter && showOptions.value) {
+    return
   }
-)
+
+  if (props.multiple) {
+    selectMultipleOptionsFromModelValue()
+  } else {
+    selectSingleOptionFromModelValue()
+  }
+})
 
 function getLimitedNumberOfOptions(options: NeComboboxOption[]) {
   if (!options.length && !props.acceptUserInput) {
