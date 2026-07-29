@@ -16,11 +16,10 @@ export type RadioOption = {
 </script>
 
 <script lang="ts" setup generic="T extends RadioOption">
-import { computed, type PropType, type Ref, ref, watch } from 'vue'
+import { computed, type PropType, type Ref, ref, useId, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import NeFormItemLabel from './NeFormItemLabel.vue'
-import { v4 as uuidv4 } from 'uuid'
 
 export type RadioCardSize = 'md' | 'lg' | 'xl'
 
@@ -107,7 +106,8 @@ const selectionMarkClasses: Record<RadioCardSize, string> = {
   xl: 'right-3 top-3 h-5 w-5'
 }
 
-const radioName = computed(() => (props.name ? props.name : uuidv4()))
+const generatedName = useId()
+const radioName = computed(() => (props.name ? props.name : generatedName))
 
 watch(value, (newValue) => emit('update:modelValue', newValue))
 

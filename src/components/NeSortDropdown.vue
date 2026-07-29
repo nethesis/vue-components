@@ -4,11 +4,10 @@
 -->
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, useId } from 'vue'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { v4 as uuidv4 } from 'uuid'
 import type { ButtonSize } from './NeButton.vue'
 
 export type SortOption = {
@@ -54,7 +53,8 @@ const left = ref(0)
 const right = ref(0)
 const buttonRef = ref()
 
-const componentId = computed(() => (props.id ? props.id : uuidv4()))
+const generatedId = useId()
+const componentId = computed(() => (props.id ? props.id : generatedId))
 
 watch(
   () => props.alignToRight,

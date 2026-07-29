@@ -4,12 +4,11 @@
 -->
 
 <script setup lang="ts">
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted, useId } from 'vue'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { isEqual } from 'lodash-es'
-import { v4 as uuidv4 } from 'uuid'
 import NeBadgeV2 from './NeBadgeV2.vue'
 import NeLink from './NeLink.vue'
 import NeSkeleton from './NeSkeleton.vue'
@@ -110,7 +109,8 @@ const buttonRef = ref()
 const optionsFilter = ref('')
 const optionsFilterRef = ref()
 
-const componentId = computed(() => (props.id ? props.id : uuidv4()))
+const generatedId = useId()
+const componentId = computed(() => (props.id ? props.id : generatedId))
 
 const isSelectionCountShown = computed(() => {
   return props.showSelectionCount && props.kind == 'checkbox' && checkboxModel.value.length > 0

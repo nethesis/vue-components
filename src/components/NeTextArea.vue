@@ -4,8 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { v4 as uuidv4 } from 'uuid'
+import { computed, ref, useId } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircleExclamation as fasCircleExclamation } from '@fortawesome/free-solid-svg-icons'
@@ -79,7 +78,8 @@ const textAreaWritableStyle = 'bg-white dark:bg-gray-950'
 
 const descriptionBaseStyle = 'mt-2 text-sm'
 
-const componentId = computed(() => (props.id ? props.id : uuidv4()))
+const generatedId = useId()
+const componentId = computed(() => (props.id ? props.id : generatedId))
 
 const textAreaStyles = computed(() =>
   [

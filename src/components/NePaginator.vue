@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, useId, watch } from 'vue'
 import { range } from 'lodash-es'
 import { faChevronLeft as fasChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { faChevronRight as fasChevronRight } from '@fortawesome/free-solid-svg-icons'
@@ -58,6 +58,8 @@ const emit = defineEmits<{
   selectPage: [page: number]
   selectPageSize: [pageSize: number]
 }>()
+
+const pageSizeLabelId = useId()
 
 const internalPageSize = ref('')
 
@@ -133,13 +135,13 @@ function navigateToPage(page: number) {
       <div>{{ firstRow }} - {{ lastRow }} {{ rangeOfTotalLabel }} {{ totalRows }}</div>
 
       <div class="flex items-center gap-2">
-        <div id="page-size-label">{{ pageSizeLabel }}</div>
+        <div :id="pageSizeLabelId">{{ pageSizeLabel }}</div>
         <NeListbox
           v-model="internalPageSize"
           :options="pageSizeOptions"
           no-options-label=""
           optional-label=""
-          aria-labelledby="page-size-label"
+          :aria-labelledby="pageSizeLabelId"
           :options-panel-style="listboxOptionsPanelStyle"
         />
       </div>
