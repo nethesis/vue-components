@@ -142,23 +142,22 @@ const filteredOptions = computed((): T[] => {
     return allFlatOptions.value
   }
 
-  const regex = /[^a-zA-Z0-9-]/g
-  const queryText = optionsFilter.value.replace(regex, '')
+  const queryText = normalizeSearchText(optionsFilter.value)
 
   // build a set of matching option IDs, also matching group names
   const matchingIds = new Set<string>()
 
   for (const entry of props.options) {
     if (isFilterOptionGroup(entry)) {
-      const groupMatches = new RegExp(queryText, 'i').test(entry.group?.replace(regex, ''))
+      const groupMatches = matchesSearchQuery(entry.group, queryText)
 
       for (const opt of entry.options) {
-        if (groupMatches || new RegExp(queryText, 'i').test(opt.label?.replace(regex, ''))) {
+        if (groupMatches || optionMatchesSearchQuery(opt, queryText)) {
           matchingIds.add(opt.id)
         }
       }
     } else {
-      if (new RegExp(queryText, 'i').test(entry.label?.replace(regex, ''))) {
+      if (optionMatchesSearchQuery(entry, queryText)) {
         matchingIds.add(entry.id)
       }
     }
@@ -170,7 +169,7 @@ const filteredOptions = computed((): T[] => {
 // Pinned selections still matching the search query. Options coming from props.options
 // reuse the filteredOptions result (so a group name match keeps them, and with
 // externalFilter the caller's own filtering wins); selections that are not part of
-// props.options are matched on their label
+// props.options are matched on their label and description
 const visiblePinnedOptions = computed((): T[] => {
   if (!optionsFilter.value || !isShowingOptionsFilter.value) {
     return selectionSnapshot.value
@@ -178,13 +177,10 @@ const visiblePinnedOptions = computed((): T[] => {
 
   const filteredIds = new Set(filteredOptions.value.map((o) => o.id))
   const knownIds = new Set(allFlatOptions.value.map((o) => o.id))
-  const regex = /[^a-zA-Z0-9-]/g
-  const queryText = optionsFilter.value.replace(regex, '')
+  const queryText = normalizeSearchText(optionsFilter.value)
 
   return selectionSnapshot.value.filter((o) =>
-    knownIds.has(o.id)
-      ? filteredIds.has(o.id)
-      : new RegExp(queryText, 'i').test(o.label?.replace(regex, ''))
+    knownIds.has(o.id) ? filteredIds.has(o.id) : optionMatchesSearchQuery(o, queryText)
   )
 })
 
@@ -322,6 +318,25 @@ watch(
   },
   { immediate: true }
 )
+
+// Strip characters that shouldn't take part in the search (spaces, punctuation, ...), so
+// that the query matches regardless of them and is safe to use as a regular expression
+function normalizeSearchText(text?: string): string {
+  return text?.replace(/[^a-zA-Z0-9-]/g, '') ?? ''
+}
+
+// Case insensitive match of an already normalized query against a text
+function matchesSearchQuery(text: string | undefined, normalizedQuery: string): boolean {
+  return new RegExp(normalizedQuery, 'i').test(normalizeSearchText(text))
+}
+
+// An option matches when the query is found in its label or in its description
+function optionMatchesSearchQuery(option: T, normalizedQuery: string): boolean {
+  return (
+    matchesSearchQuery(option.label, normalizedQuery) ||
+    matchesSearchQuery(option.description, normalizedQuery)
+  )
+}
 
 // Options whose id contains 'divider' are rendered as a separator, not as an option
 function isDivider(item: T | NeDropdownFilterV2OptionGroup<T>): boolean {

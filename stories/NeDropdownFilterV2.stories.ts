@@ -119,29 +119,44 @@ export const OptionsWithDescription: Story = {
     template: template
   }),
   args: {
+    // the internal filter searches both labels and descriptions: e.g. typing "backup"
+    // matches "Storage", "certbot" matches "Let's Encrypt", "kb" matches "Documentation"
+    showOptionsFilter: true,
     options: [
       {
         id: 'option1',
-        label: 'Option 1',
-        description: 'Description for option 1',
+        label: 'Storage',
+        description: 'Disks, volumes and backup destinations',
         disabled: false
       },
       {
         id: 'option2',
-        label: 'Option 2',
-        description: 'Description for option 2',
+        label: 'Networking',
+        description: 'Interfaces, DNS zones and firewall rules',
         disabled: false
       },
       {
         id: 'option3',
-        label: 'Option 3',
-        description: 'Description for option 3',
+        label: "Let's Encrypt",
+        description: 'ACME certificates issued via certbot',
         disabled: true
       },
       {
         id: 'option4',
-        label: 'Option 4',
-        description: 'Description for option 4',
+        label: 'Documentation',
+        description: 'Manuals, KB articles & release notes',
+        disabled: false
+      },
+      {
+        id: 'option5',
+        label: 'Monitoring',
+        description: 'Metrics, alerts and Grafana dashboards',
+        disabled: false
+      },
+      {
+        id: 'option6',
+        label: 'Accounts provider',
+        description: 'LDAP / Active Directory user domains',
         disabled: false
       }
     ]
