@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.12.0](https://github.com/nethesis/vue-components/compare/v3.11.0...v3.12.0) (2026-08-03)
+
+
+### Features
+
+* dropdown filter selection pinning, date/time helpers & more ([#170](https://github.com/nethesis/vue-components/issues/170)) ([7290fb4](https://github.com/nethesis/vue-components/commit/7290fb448c640d352e3f94ee0d5c0c2b02b8fadb))
+
 ## [3.11.0](https://github.com/nethesis/vue-components/compare/v3.10.0...v3.11.0) (2026-06-26)
 
 
