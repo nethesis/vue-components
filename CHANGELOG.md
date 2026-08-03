@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.12.1](https://github.com/nethesis/vue-components/compare/v3.12.0...v3.12.1) (2026-08-03)
+
+
+### Bug Fixes
+
+* **build:** restore missing type declarations in published package ([#174](https://github.com/nethesis/vue-components/issues/174)) ([b67bb25](https://github.com/nethesis/vue-components/commit/b67bb250e87ba8e2565552c996fddfb17b3c00fc))
+
 ## [3.12.0](https://github.com/nethesis/vue-components/compare/v3.11.0...v3.12.0) (2026-08-03)
 
 
