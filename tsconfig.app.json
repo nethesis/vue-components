@@ -4,6 +4,10 @@
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
+    // @vue/tsconfig >= 0.9 sets "noEmit": true in its base config, which silently
+    // suppresses declaration emit even with --emitDeclarationOnly on the CLI.
+    // We publish declarations, so keep emit enabled here.
+    "noEmit": false,
     "baseUrl": ".",
     "outDir": "dist"
   }
