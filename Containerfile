@@ -16,6 +16,9 @@ COPY vite.config.ts .
 
 FROM app as build
 RUN npm run build
+# Declaration emit can fail silently (see the "noEmit" note in tsconfig.app.json).
+# Never ship a package without types.
+RUN test -f dist/main.d.ts
 
 FROM app as build-storybook
 COPY .storybook .storybook
