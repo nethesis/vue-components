@@ -430,12 +430,16 @@ function clearFilter() {
           <span class="flex items-center justify-center">
             <slot v-if="$slots.label" name="label"></slot>
             <span v-else>{{ label }}</span>
-            <NeBadgeV2 v-if="isSelectionCountShown" size="xs" class="ml-2">{{
+            <NeBadgeV2 v-if="isSelectionCountShown" size="xs" kind="indigo" class="ml-2">{{
               checkboxModel.length
             }}</NeBadgeV2>
-            <NeBadgeV2 v-else-if="currentRadioSelectionLabel" size="xs" class="ml-2">{{
-              currentRadioSelectionLabel
-            }}</NeBadgeV2>
+            <NeBadgeV2
+              v-else-if="currentRadioSelectionLabel"
+              size="xs"
+              kind="indigo"
+              class="ml-2"
+              >{{ currentRadioSelectionLabel }}</NeBadgeV2
+            >
             <FontAwesomeIcon :icon="faChevronDown" class="ml-2 h-3 w-3" aria-hidden="true" />
           </span>
         </button>
