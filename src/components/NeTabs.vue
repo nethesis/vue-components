@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, useId, watch } from 'vue'
 
 export interface Tab {
   name: string
@@ -24,6 +24,8 @@ const props = withDefaults(defineProps<Props>(), {
   srSelectTabLabel: 'Select a tab',
   srTabsLabel: 'Tabs'
 })
+
+const selectId = useId()
 
 const currentTab = ref('')
 
@@ -66,9 +68,9 @@ const emit = defineEmits(['selectTab'])
   <div>
     <!-- mobile tabs -->
     <div class="sm:hidden">
-      <label for="tabs_select" class="sr-only">{{ srSelectTabLabel }}</label>
+      <label :for="selectId" class="sr-only">{{ srSelectTabLabel }}</label>
       <select
-        id="tabs_select"
+        :id="selectId"
         v-model="currentTab"
         name="tabs_select"
         class="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500 block w-full rounded-md border-gray-300 bg-white py-2 pr-10 pl-3 text-base text-gray-700 focus:outline-hidden sm:text-sm dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50"

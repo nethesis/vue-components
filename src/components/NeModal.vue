@@ -8,7 +8,7 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import NeButton, { type ButtonKind } from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
-import { watch } from 'vue'
+import { computed, watch } from 'vue'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export type ModalKind = 'neutral' | 'info' | 'warning' | 'error' | 'success'
@@ -47,6 +47,9 @@ const {
 }>()
 
 const emit = defineEmits(['close', 'primaryClick', 'secondaryClick', 'show'])
+
+// when all three buttons are shown, cancel is moved to the opposite side of the footer
+const cancelOnLeft = computed(() => Boolean(primaryLabel && secondaryLabel && cancelLabel))
 
 const sizeStyle: Record<ModalSize, string> = {
   md: 'sm:max-w-lg',
@@ -165,7 +168,7 @@ function onSecondaryClick() {
                     v-if="cancelLabel"
                     kind="tertiary"
                     size="lg"
-                    class="mt-3 w-full sm:mt-0 sm:w-auto"
+                    :class="['mt-3 w-full sm:mt-0 sm:w-auto', cancelOnLeft ? 'sm:mr-auto' : '']"
                     @click="onClose"
                     >{{ cancelLabel }}</NeButton
                   >

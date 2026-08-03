@@ -4,8 +4,7 @@
 -->
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { v4 as uuidv4 } from 'uuid'
+import { computed, useId } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -36,7 +35,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const componentId = computed(() => (props.id ? props.id : uuidv4()))
+const generatedId = useId()
+const componentId = computed(() => (props.id ? props.id : generatedId))
 
 const model = computed({
   get() {

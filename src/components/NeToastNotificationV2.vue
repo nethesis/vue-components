@@ -7,11 +7,11 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark as fasXmark } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { humanDistanceToNowLoc, formatDateLoc } from '../main'
 import NeButton, { type ButtonKind } from './NeButton.vue'
 import NeRoundedIcon from './NeRoundedIcon.vue'
-import NeTooltip from './NeTooltip.vue'
+import NeTooltip, { type TippyComponentProps } from './NeTooltip.vue'
 import { type PropType } from 'vue'
+import { formatDateTimeNoSeconds, formatRelativeTime, getBrowserLocale } from '../lib/dateTime'
 
 export interface NeNotificationV2 {
   id: string
@@ -58,6 +58,14 @@ defineProps({
 
 defineEmits(['close', 'action'])
 
+/**
+ * The timestamp trigger lives inside an absolutely positioned container, which would clip the
+ * tooltip and cap its width. Appending the tooltip to the body avoids both issues.
+ */
+const timestampTippyProps: TippyComponentProps = {
+  appendTo: () => document.body
+}
+
 // add fontawesome icons
 library.add(fasXmark)
 </script>
@@ -87,16 +95,17 @@ library.add(fasXmark)
         <!-- timestamp -->
         <NeTooltip
           v-else-if="showTimestamp && notification.timestamp"
-          placement="left-start"
+          placement="auto"
+          :tippy-props="timestampTippyProps"
           class="text-gray-500 dark:text-gray-400"
         >
           <template #trigger>
             <span class="cursor-pointer">
-              {{ humanDistanceToNowLoc(notification.timestamp) }}
+              {{ formatRelativeTime(notification.timestamp, getBrowserLocale()) }}
             </span>
           </template>
           <template #content>
-            {{ formatDateLoc(notification.timestamp, 'Pp') }}
+            {{ formatDateTimeNoSeconds(notification.timestamp, getBrowserLocale()) }}
           </template>
         </NeTooltip>
       </div>

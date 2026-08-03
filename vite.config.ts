@@ -19,7 +19,6 @@ export default defineConfig({
         '@fortawesome/vue-fontawesome',
         '@fortawesome/free-solid-svg-icons',
         '@headlessui/vue',
-        'uuid',
         'lodash-es',
         '@vueuse/core'
       ],
@@ -30,7 +29,6 @@ export default defineConfig({
           '@fortawesome/vue-fontawesome': 'FontAwesomeIcon',
           '@fortawesome/free-solid-svg-icons': 'fa',
           '@headlessui/vue': 'HeadlessUI',
-          uuid: 'v',
           'lodash-es': 'uniqBy',
           '@vueuse/core': 'onClickOutside'
         }

@@ -24,23 +24,23 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const SpecificError: Story = {
-  name: 'Specific error',
+export const NetworkError: Story = {
+  name: 'Network error',
   args: {
-    title: 'Cannot retrieve phonebook contacts',
+    title: 'Cannot save phonebook contact',
     description: 'Network error. Check your connection and reload the page.'
   }
 }
 
 export const GenericError: Story = {
   name: 'Generic error',
-  args: { title: 'Cannot retrieve phonebook contacts', description: 'Something went wrong' }
+  args: { title: 'Cannot save phonebook contact', description: 'Something went wrong' }
 }
 
-export const SpecificErrorItalian: Story = {
-  name: 'Specific error (Italian)',
+export const NetworkErrorItalian: Story = {
+  name: 'Network error (Italian)',
   args: {
-    title: 'Impossibile recuperare i contatti della rubrica',
+    title: 'Impossibile salvare il contatto della rubrica',
     description: 'Errore di rete. Controlla la connessione e ricarica la pagina.'
   }
 }
@@ -48,7 +48,7 @@ export const SpecificErrorItalian: Story = {
 export const GenericErrorItalian: Story = {
   name: 'Generic error (Italian)',
   args: {
-    title: 'Impossibile recuperare i contatti della rubrica',
+    title: 'Impossibile salvare il contatto della rubrica',
     description: 'Qualcosa è andato storto'
   }
 }
