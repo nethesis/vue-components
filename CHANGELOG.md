@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.13.0](https://github.com/nethesis/vue-components/compare/v3.12.1...v3.13.0) (2026-08-06)
+
+
+### Features
+
+* add NePasswordRequirements component ([#177](https://github.com/nethesis/vue-components/issues/177)) ([8e2428a](https://github.com/nethesis/vue-components/commit/8e2428a2c84f689dbe6f72f8e3f77cb9469194f9))
+
 ## [3.12.1](https://github.com/nethesis/vue-components/compare/v3.12.0...v3.12.1) (2026-08-03)
 
 
