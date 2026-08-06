@@ -53,6 +53,7 @@ export { default as NeAvatar } from './components/NeAvatar.vue'
 export { default as NeBadgeV2 } from './components/NeBadgeV2.vue'
 export { default as NeStepper } from './components/NeStepper.vue'
 export { default as NeToastNotificationV2 } from './components/NeToastNotificationV2.vue'
+export { default as NePasswordRequirements } from './components/NePasswordRequirements.vue'
 
 // types export
 export type { NeComboboxOption } from './components/NeCombobox.vue'
@@ -81,6 +82,11 @@ export type {
   TooltipTriggerEvent,
   TippyComponentProps
 } from './components/NeTooltip.vue'
+export type {
+  NePasswordRequirement,
+  NePasswordRequirementStatus,
+  NePasswordRequirementLabels
+} from './composables/usePasswordRequirements'
 
 // library functions export
 export {
@@ -118,3 +124,7 @@ export {
 // composables export
 export { useItemPagination } from './composables/useItemPagination'
 export { useSort } from './composables/useSort'
+export {
+  usePasswordRequirements,
+  defaultPasswordRequirements
+} from './composables/usePasswordRequirements'
