@@ -3,7 +3,14 @@
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
-import { NePasswordRequirements, defaultPasswordRequirements } from '../src/main'
+import { ref } from 'vue'
+
+import {
+  NePasswordRequirements,
+  NeTextInput,
+  defaultPasswordRequirements,
+  usePasswordRequirements
+} from '../src/main'
 import type { NePasswordRequirement } from '../src/main'
 
 // Evaluate real requirements against a sample password, so that the stories can't drift from
@@ -101,4 +108,20 @@ export const CustomLabels: Story = {
     metLabel: 'Requisito soddisfatto',
     unmetLabel: 'Requisito non soddisfatto'
   }
+}
+
+/** Live checklist: type a password in the field below and watch requirements update. */
+export const Playground: Story = {
+  render: () => ({
+    components: { NePasswordRequirements, NeTextInput },
+    setup() {
+      const password = ref('')
+      const { requirements } = usePasswordRequirements(password)
+      return { password, requirements }
+    },
+    template: `<div class="max-w-md space-y-3">
+      <NeTextInput v-model="password" is-password label="Password" placeholder="Type a password" />
+      <NePasswordRequirements :requirements="requirements" show-errors />
+    </div>`
+  })
 }
