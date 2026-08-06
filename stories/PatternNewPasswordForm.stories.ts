@@ -66,15 +66,12 @@ const italianLabels: FormLabels = {
   }
 }
 
-// The requirements list sits 12px below the field (space/3 in the design), which holds for both
-// the plain and the invalid field, since the error message grows the field itself.
-// NeButton always renders type="button", so submission is wired to an explicit click handler
-// rather than a form submit event.
-const template = `<div class="max-w-md space-y-6">
+const template = `<form class="max-w-md space-y-6" @submit.prevent="submit">
   <div class="space-y-3">
     <NeTextInput
       v-model="password"
       is-password
+      autocomplete="new-password"
       :label="labels.newPassword"
       :invalid-message="passwordError"
       :show-password-label="labels.showPassword"
@@ -90,13 +87,14 @@ const template = `<div class="max-w-md space-y-6">
   <NeTextInput
     v-model="confirmPassword"
     is-password
+    autocomplete="new-password"
     :label="labels.confirmPassword"
     :invalid-message="confirmError"
     :show-password-label="labels.showPassword"
     :hide-password-label="labels.hidePassword"
   />
-  <NeButton kind="primary" size="lg" @click="submit">{{ labels.submit }}</NeButton>
-</div>`
+  <NeButton kind="primary" size="lg" type="submit">{{ labels.submit }}</NeButton>
+</form>`
 
 /**
  * Wires the three pieces together: usePasswordRequirements owns the rules,
