@@ -51,15 +51,13 @@ const SPECIAL_CHARACTER_REGEXP = /[^\p{L}\p{N}\s]/u
  * result, append or drop rules, and pass it back as the `requirements` option of
  * usePasswordRequirements.
  */
-export function defaultPasswordRequirements(
-  options: {
-    minLength?: number
-    labels?: NePasswordRequirementLabels
-  } = {}
-): NePasswordRequirement[] {
-  const minLength = options.minLength ?? DEFAULT_MIN_LENGTH
-  const labels = options.labels ?? {}
-
+export function defaultPasswordRequirements({
+  minLength = DEFAULT_MIN_LENGTH,
+  labels = {}
+}: {
+  minLength?: number
+  labels?: NePasswordRequirementLabels
+} = {}): NePasswordRequirement[] {
   return [
     {
       key: 'minLength',

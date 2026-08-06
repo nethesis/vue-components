@@ -5,7 +5,6 @@
 
 <script lang="ts" setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import type { NePasswordRequirementStatus } from '../composables/usePasswordRequirements'
 
@@ -25,9 +24,6 @@ const {
   metLabel?: string
   unmetLabel?: string
 }>()
-
-library.add(faCircleCheck)
-library.add(faCircleXmark)
 </script>
 
 <template>
