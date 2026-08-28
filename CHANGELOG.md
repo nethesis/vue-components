@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.13.1](https://github.com/nethesis/vue-components/compare/v3.13.0...v3.13.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* **NeCheckbox:** add background color for dark mode ([#180](https://github.com/nethesis/vue-components/issues/180)) ([46100df](https://github.com/nethesis/vue-components/commit/46100df18f1d73509f136affd4f071d969443a16))
+
 ## [3.13.0](https://github.com/nethesis/vue-components/compare/v3.12.1...v3.13.0) (2026-08-06)
 
 
