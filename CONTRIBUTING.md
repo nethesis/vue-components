@@ -90,16 +90,18 @@ the result will be put in the `storybook-static` folder, which can be served wit
 
 ## Publishing the library
 
-To publish the library, a GitHub action in provided in `.github/workflows/publish.yml`, when you're ready to publish, just manually trigger the action, this will open a PR with the following changes:
+Releases are automated by [release-please](https://github.com/googleapis/release-please-action) in `.github/workflows/release-please.yml`: on every push to `main` it keeps a release PR up to date with
 
 - Changelog
 - Package version automatically bumped based off the commit messages
 
-Once the PR is merged, the action will automatically generate the release, tag the new version and publish the package to NPM.
+Once that PR is merged, release-please creates the GitHub release and tags the new version. The tag triggers `.github/workflows/release.yml`, which builds `dist` and publishes the package to NPM.
+
+The publish job does not use any NPM token: it authenticates with [npm trusted publishing](https://docs.npmjs.com/trusted-publishers) through GitHub OIDC, which also attaches a provenance attestation to the published version. This requires the `id-token: write` permission on the job and npm >= 11.5.1 on the runner (provided by the Node version pinned in `.nvmrc`). The trusted publisher registered on npmjs.com points at the `release.yml` workflow filename, so renaming that file breaks publishing.
 
 ### Manual publishing
 
-To publish the library manually, you'll need to have a NPM account with write access to the package. You'll need to follow this procedure:
+Manual publishing is a fallback only: it requires an NPM account with write access to the package, and the resulting version has no provenance attestation. You'll need to follow this procedure:
 
 - write a changelog entry in `CHANGELOG.md`
 - bump the version in `package.json` and `package-lock.json`

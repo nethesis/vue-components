@@ -10,13 +10,19 @@ jobs:
   publish:
     name: NPM package
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for npm trusted publishing (OIDC)
     concurrency:
       group: publish-npm
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          # node 24 bundles npm >= 11.5.1, required by npm trusted publishing
+          node-version-file: '.nvmrc'
+          package-manager-cache: false
       - run: ./build.sh dist
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v4
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
