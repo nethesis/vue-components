@@ -62,7 +62,7 @@
     "@tailwindcss/vite": "^4.1.7",
     "@vueuse/core": "^14.0.0",
     "date-fns": "^2.30.0",
-    "date-fns-tz": "^2.0.0",
+    "date-fns-tz": "^3.0.0",
     "lodash-es": "^4.17.21",
     "vue": "^3.5.12",
     "vue-tippy": "^6.3.1"
