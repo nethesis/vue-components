@@ -1,4 +1,4 @@
-FROM docker.io/library/node:22.23.2 as base
+FROM docker.io/library/node:24.20.0 as base
 WORKDIR /app
 
 FROM base as dev
