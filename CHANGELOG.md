@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.13.2](https://github.com/nethesis/vue-components/compare/v3.13.1...v3.13.2) (2026-09-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to v14 ([#183](https://github.com/nethesis/vue-components/issues/183)) ([1682858](https://github.com/nethesis/vue-components/commit/1682858d17874cce2f95c53bacdc2dc6eea3b429))
+
 ## [3.13.1](https://github.com/nethesis/vue-components/compare/v3.13.0...v3.13.1) (2026-09-07)
 
 
