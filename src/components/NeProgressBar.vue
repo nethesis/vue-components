@@ -8,16 +8,7 @@ import { computed, type PropType } from 'vue'
 
 export type ProgressBarSize = 'sm' | 'md' | 'lg' | 'xl'
 export type ProgressBarColor =
-  | 'primary'
-  | 'gray'
-  | 'blue'
-  | 'red'
-  | 'green'
-  | 'yellow'
-  | 'indigo'
-  | 'rose'
-  | 'amber'
-  | 'custom'
+  'primary' | 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'indigo' | 'rose' | 'amber' | 'custom'
 
 const props = defineProps({
   progress: {
