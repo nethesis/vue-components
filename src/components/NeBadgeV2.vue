@@ -9,14 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export type NeBadgeV2Kind =
-  | 'primary'
-  | 'indigo'
-  | 'gray'
-  | 'green'
-  | 'amber'
-  | 'rose'
-  | 'blue'
-  | 'custom'
+  'primary' | 'indigo' | 'gray' | 'green' | 'amber' | 'rose' | 'blue' | 'custom'
 
 const {
   size = 'sm',

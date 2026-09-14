@@ -37,15 +37,7 @@ export type SpinnerSize =
   | '12'
 
 export type SpinnerColor =
-  | 'primary'
-  | 'blue'
-  | 'gray'
-  | 'green'
-  | 'red'
-  | 'yellow'
-  | 'pink'
-  | 'purple'
-  | 'white'
+  'primary' | 'blue' | 'gray' | 'green' | 'red' | 'yellow' | 'pink' | 'purple' | 'white'
 
 const sizes: Record<SpinnerSize, string> = {
   '0': 'w-0 h-0',

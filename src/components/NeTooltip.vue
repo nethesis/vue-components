@@ -27,11 +27,7 @@ export type TooltipPlacement =
   | 'auto-end'
 
 export type TooltipTriggerEvent =
-  | 'click'
-  | 'mouseenter focus'
-  | 'focusin'
-  | 'mouseenter click'
-  | 'manual'
+  'click' | 'mouseenter focus' | 'focusin' | 'mouseenter click' | 'manual'
 
 /**
  * All the props accepted by the Tippy component, see https://vue-tippy.netlify.app/props/
