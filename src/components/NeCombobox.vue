@@ -31,6 +31,9 @@ export interface NeComboboxOption {
   label: string
   description?: string
   icon?: IconDefinition
+  // URL of an image shown before the label (e.g. an application logo, an SVG
+  // data URL). When set it replaces the icon, which is limited to FontAwesome.
+  image?: string
   rawObj?: unknown
   disabled?: boolean
 }
@@ -534,9 +537,17 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
                 ]"
               >
                 <div class="flex items-center truncate">
+                  <!-- option image -->
+                  <img
+                    v-if="option.image"
+                    :src="option.image"
+                    alt=""
+                    class="mr-2.5 size-4 shrink-0 object-contain"
+                    aria-hidden="true"
+                  />
                   <!-- option icon -->
                   <FontAwesomeIcon
-                    v-if="option.icon"
+                    v-else-if="option.icon"
                     :icon="option.icon"
                     class="mr-2.5 h-4 w-4 shrink-0"
                     aria-hidden="true"
