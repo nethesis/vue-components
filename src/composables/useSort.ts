@@ -1,15 +1,15 @@
 import { ref, toValue, watchEffect, type MaybeRefOrGetter } from 'vue'
 
-export function useSort<T>(
+export function useSort<T, ExtraKey extends string = never>(
   items: MaybeRefOrGetter<T[]>,
-  sortKey: MaybeRefOrGetter<keyof T>,
+  sortKey: MaybeRefOrGetter<keyof T | ExtraKey>,
   descending: MaybeRefOrGetter<boolean> = false,
-  sortFunctions: Partial<Record<keyof T, (a: T, b: T) => number>> = {}
+  sortFunctions: Partial<Record<keyof T | ExtraKey, (a: T, b: T) => number>> = {}
 ) {
   const sortedItems = ref<T[]>([])
 
   function defaultSortFn(a: T, b: T) {
-    const sortKeyValue = toValue(sortKey)
+    const sortKeyValue = toValue(sortKey) as keyof T
     const valueA = a[sortKeyValue]
     const valueB = b[sortKeyValue]
 
