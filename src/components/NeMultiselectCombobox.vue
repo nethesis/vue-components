@@ -30,6 +30,10 @@ export interface NeMultiselectComboboxOption {
   label: string
   description?: string
   icon?: IconDefinition
+  // URL of an image shown before the label, in the list and in the selected
+  // badges (e.g. an application logo, an SVG data URL). When set it replaces
+  // the icon, which is limited to FontAwesome.
+  image?: string
   rawObj?: unknown
   disabled?: boolean
 }
@@ -494,8 +498,15 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
             @mousedown.prevent.stop
             @click.stop
           >
+            <img
+              v-if="selectedOption.image"
+              :src="selectedOption.image"
+              alt=""
+              class="mr-0.5 size-3.5 shrink-0 object-contain"
+              aria-hidden="true"
+            />
             <FontAwesomeIcon
-              v-if="selectedOption.icon"
+              v-else-if="selectedOption.icon"
               :icon="selectedOption.icon"
               class="mr-0.5 size-3.5 shrink-0"
               aria-hidden="true"
@@ -566,8 +577,15 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
                 ]"
               >
                 <div class="flex items-center truncate">
+                  <img
+                    v-if="option.image"
+                    :src="option.image"
+                    alt=""
+                    class="mr-2.5 size-4 shrink-0 object-contain"
+                    aria-hidden="true"
+                  />
                   <FontAwesomeIcon
-                    v-if="option.icon"
+                    v-else-if="option.icon"
                     :icon="option.icon"
                     class="mr-2.5 h-4 w-4 shrink-0"
                     aria-hidden="true"
