@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.14.0](https://github.com/nethesis/vue-components/compare/v3.13.1...v3.14.0) (2026-09-23)
+
+
+### Features
+
+* **combobox:** render an image next to the option label ([#191](https://github.com/nethesis/vue-components/issues/191)) ([7bce0c3](https://github.com/nethesis/vue-components/commit/7bce0c3930ba4b705b8d6766aa8ca24efa2d7af4))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @vueuse/core to v14 ([#183](https://github.com/nethesis/vue-components/issues/183)) ([1682858](https://github.com/nethesis/vue-components/commit/1682858d17874cce2f95c53bacdc2dc6eea3b429))
+* **sort:** relaxing sorting function ([#104](https://github.com/nethesis/vue-components/issues/104)) ([75f7850](https://github.com/nethesis/vue-components/commit/75f785069d7e45f0674606d0279784df0da7361f))
+
 ## [3.13.1](https://github.com/nethesis/vue-components/compare/v3.13.0...v3.13.1) (2026-09-07)
 
 
