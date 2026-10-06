@@ -8,7 +8,7 @@
     // suppresses declaration emit even with --emitDeclarationOnly on the CLI.
     // We publish declarations, so keep emit enabled here.
     "noEmit": false,
-    "baseUrl": ".",
+    "rootDir": "src",
     "outDir": "dist"
   }
 }
