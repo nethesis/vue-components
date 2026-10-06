@@ -2,8 +2,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { enGB, it } from 'date-fns/locale'
-import { format, utcToZonedTime } from 'date-fns-tz'
-import { formatDistanceToNowStrict, formatDuration, intervalToDuration } from 'date-fns'
+import { tz } from '@date-fns/tz'
+import {
+  format,
+  formatDistanceToNowStrict,
+  formatDuration,
+  intervalToDuration,
+  parseISO
+} from 'date-fns'
 import { capitalizeFirst } from './utils'
 
 const RELATIVE_DIVISIONS: { amount: number; unit: Intl.RelativeTimeFormatUnit }[] = [
@@ -24,8 +30,14 @@ export function formatDateLoc(date: Date | number, fmt: string) {
   return format(date, fmt, { locale: getDateFnsLocale() })
 }
 
-export const formatInTimeZoneLoc = (date: Date | string | number, fmt: string, tz: string) => {
-  return format(utcToZonedTime(date, tz), fmt, { timeZone: tz, locale: getDateFnsLocale() })
+export const formatInTimeZoneLoc = (
+  date: Date | string | number,
+  fmt: string,
+  timeZone: string
+) => {
+  // parse strings as ISO 8601, so that date-only values are local midnight (new Date() would use UTC)
+  const value = typeof date === 'string' ? parseISO(date) : date
+  return format(value, fmt, { in: tz(timeZone), locale: getDateFnsLocale() })
 }
 
 export const getBrowserLocale = () => {
@@ -67,13 +79,19 @@ export function formatDurationLoc(
     return null
   }
 
-  return formatDuration(
-    intervalToDuration({
-      start: 0,
-      end: durationSeconds * 1000
-    }),
-    { ...options, locale: getDateFnsLocale() }
-  )
+  // intervalToDuration omits zero-valued units, restore them for the 'zero' option of formatDuration
+  const duration = {
+    years: 0,
+    months: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    // date-fns 2 ignored the sign of the interval, keep formatting negative durations as positive
+    ...intervalToDuration({ start: 0, end: Math.abs(durationSeconds) * 1000 })
+  }
+
+  return formatDuration(duration, { ...options, locale: getDateFnsLocale() })
 }
 
 /**
