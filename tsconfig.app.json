@@ -8,6 +8,8 @@
     // suppresses declaration emit even with --emitDeclarationOnly on the CLI.
     // We publish declarations, so keep emit enabled here.
     "noEmit": false,
+    // required by allowImportingTsExtensions (set by @vue/tsconfig) once noEmit is disabled
+    "emitDeclarationOnly": true,
     "rootDir": "src",
     "outDir": "dist"
   }
