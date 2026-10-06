@@ -2,6 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>NethServer/.github:vue3", ":automergePatch"],
   "constraints": {
-    "npm": "^11"
+    "npm": "^12.0.0"
   }
 }
