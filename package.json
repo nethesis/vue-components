@@ -14,7 +14,7 @@
   "bugs": "https://github.com/nethesis/vue-components",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nethesis/vue-components.git"
+    "url": "git+https://github.com/nethesis/vue-components.git"
   },
   "publishConfig": {
     "access": "public"

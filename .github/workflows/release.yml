@@ -22,7 +22,8 @@ jobs:
         with:
           # node 24 bundles npm >= 11.5.1, required by npm trusted publishing
           node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
       - run: ./build.sh dist
       - name: Publish to NPM
-        uses: JS-DevTools/npm-publish@v4
+        run: npm publish --ignore-scripts
