@@ -8,11 +8,11 @@ export default defineConfig({
   build: {
     cssCodeSplit: true,
     lib: {
-      entry: resolve(__dirname, 'src/main.ts'),
+      entry: resolve(import.meta.dirname, 'src/main.ts'),
       name: 'VueComponents',
       fileName: 'vue-components'
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: [
         'vue',
         'vue-tippy',
