@@ -30,7 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - run: ./build.sh dist
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      # declaration emit can fail silently (see the "noEmit" note in tsconfig.app.json),
+      # never ship a package without types
+      - run: test -f dist/main.d.ts
       - uses: actions/upload-artifact@v7
         with:
           name: dist
@@ -40,7 +47,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - run: ./build.sh storybook
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+      - run: npm ci --ignore-scripts
+      - run: npm run build-storybook
       - uses: actions/upload-artifact@v7
         with:
           name: storybook

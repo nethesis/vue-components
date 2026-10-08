@@ -21,8 +21,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+      - run: npm ci --ignore-scripts
       - name: Build storybook
-        run: ./build.sh storybook
+        run: npm run build-storybook
       - name: Upload artifact to Pages
         uses: actions/upload-pages-artifact@v5
         with:

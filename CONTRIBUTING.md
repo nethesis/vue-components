@@ -2,8 +2,7 @@
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/), at the exact version pinned in `.nvmrc`. It is the same version used by the CI and by the container builds (`Containerfile`), and Renovate keeps both up to date.
-- [podman](https://podman.io/), only to build the library and the Storybook (see [Building the library](#building-the-library)).
+The only prerequisite is [Node.js](https://nodejs.org/), at the exact version pinned in `.nvmrc`. The CI and the release workflows use the same version, and Renovate keeps it up to date.
 
 ### Node.js setup
 
@@ -104,20 +103,20 @@ Commit messages MUST follow the [Conventional Commits](https://www.conventionalc
 
 ## Building the library
 
-To ensure that the build is agnostic to the environment, it's run inside a container. You can build the components with:
+You can build the components with:
 
 ```bash
-./build.sh dist
+npm run build
 ```
 
-the result will be put in the `dist` folder.
+the result will be put in the `dist` folder. The CI and the release workflows run the same command.
 
 ## Building the storybook
 
 To build the storybook, run:
 
 ```bash
-./build.sh storybook
+npm run build-storybook
 ```
 
 the result will be put in the `storybook-static` folder, which can be served with any web server.

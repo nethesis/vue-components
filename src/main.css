@@ -1,5 +1,6 @@
 @import '@fortawesome/fontawesome-svg-core/styles' layer(vendor);
-@import 'tailwindcss';
+/* scan only the library sources, so that stories and playground classes don't end up in dist */
+@import 'tailwindcss' source('.');
 @import './styles/theme.css';
 @import '@fontsource/poppins';
 

@@ -24,6 +24,10 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
-      - run: ./build.sh dist
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      # declaration emit can fail silently (see the "noEmit" note in tsconfig.app.json),
+      # never ship a package without types
+      - run: test -f dist/main.d.ts
       - name: Publish to NPM
         run: npm publish --ignore-scripts
