@@ -2,27 +2,56 @@
 
 ## Prerequisites
 
-The development is enclosed in a container, you'll only need [podman](https://podman.io/) to be installed. Everything will be run calling the `dev.sh` script, which will take care of building the container and providing a standardized environment for every need.
+- [Node.js](https://nodejs.org/), at the exact version pinned in `.nvmrc`. It is the same version used by the CI and by the container builds (`Containerfile`), and Renovate keeps both up to date.
+- [podman](https://podman.io/), only to build the library and the Storybook (see [Building the library](#building-the-library)).
+
+### Node.js setup
+
+The recommended way to get the right Node.js version is [nvm](https://github.com/nvm-sh/nvm):
+
+1. Install nvm following its [installation instructions](https://github.com/nvm-sh/nvm#installing-and-updating), then open a new shell.
+2. From the repository root, install the Node.js version pinned in `.nvmrc`:
+
+   ```bash
+   nvm install
+   ```
+
+   Without arguments, `nvm install` reads the version from `.nvmrc`, installs it and switches the current shell to it.
+
+3. Check that the active version matches `.nvmrc`:
+
+   ```bash
+   node --version
+   cat .nvmrc
+   ```
+
+`nvm` switches the version only in the current shell. In every new shell, run from the repository root:
+
+```bash
+nvm use
+```
+
+When `.nvmrc` changes (e.g. after pulling a Node.js update from Renovate), `nvm use` reports that the new version is not installed: run `nvm install` again. To switch version automatically when entering the repository, see nvm's [deeper shell integration](https://github.com/nvm-sh/nvm#deeper-shell-integration).
+
+Use the npm version bundled with Node.js, don't upgrade it separately.
 
 ## Run a development environment
 
-You can start Storybook:
+Install the dependencies:
 
 ```bash
-./dev.sh
+npm ci
 ```
 
-This will build the image (if not already built), install `node_modules` and run the UI in development mode. You'll find it served at http://localhost:6006. The UI will be hot-reloaded on any change.
+`npm ci` installs exactly the versions recorded in `package-lock.json`. Use `npm install` only to add or update a dependency.
 
-### Accessing the container
-
-To access the container's shell, run
+Start Storybook:
 
 ```bash
-./dev.sh bash
+npm run storybook
 ```
 
-With `bash` you can replace any command you want to run inside the container, bash since it's an interactive command will keep the container open. The only special command is `build`, which will rebuild the container even if it already exists.
+You'll find it served at http://localhost:6006. The UI will be hot-reloaded on any change.
 
 ### Playground
 
@@ -38,13 +67,12 @@ Edit `playground/App.vue` to add the components you want to test. The app will b
 
 ## IDE support
 
-Due to the usage of podman, you need to configure the IDE to use `podman` instead of `docker` as container runtime.
+[VS Code](https://code.visualstudio.com/) is the recommended IDE. When you open the repository, it suggests installing the recommended extensions listed in `.vscode/extensions.json`:
 
-Following instructions are for VSCode, which is the recommended IDE. You need to install the [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension and configure it to use `podman` as container runtime.
-
-You can do this by going to `File > Preferences > Settings`, search `dev containers docker path` and type `podman` as `Docker path`.
-
-This will provide the same environment as it's been called through `./dev.sh`.
+- [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 
 ## Quality Standards
 
@@ -53,16 +81,22 @@ This will provide the same environment as it's been called through `./dev.sh`.
 Code style is enforced by [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/). You can run the linter with:
 
 ```bash
-./dev.sh npm run lint
+npm run lint
 ```
 
-and to format the code:
+To check the formatting of the code:
 
 ```bash
-./dev.sh npm run format
+npm run format
 ```
 
-During PRs the linter will be run automatically and report any error.
+and to fix it:
+
+```bash
+npm run format-fix
+```
+
+During PRs the linter and the formatting check will be run automatically and report any error.
 
 ### Commit messages
 

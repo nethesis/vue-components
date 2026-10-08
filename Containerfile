@@ -1,9 +1,6 @@
 FROM docker.io/library/node:24.21.0 as base
 WORKDIR /app
 
-FROM base as dev
-CMD exec /bin/bash -c "npm install && npm run storybook"
-
 FROM base as app
 COPY package.json .
 COPY package-lock.json .
