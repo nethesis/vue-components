@@ -1,4 +1,8 @@
-@reference "../src/main.css";
+@import "../src/main.css";
+
+/* src/main.css scans only the library sources, add the stories and the Storybook config */
+@source "../stories";
+@source ".";
 
 .sb-show-main.sb-main-padded {
   /* remove default padding from component area */

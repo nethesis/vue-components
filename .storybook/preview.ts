@@ -3,7 +3,6 @@ import { withThemeByClassName } from '@storybook/addon-themes'
 import { fn } from 'storybook/test'
 import { themes } from 'storybook/theming'
 
-import '../src/main.css'
 import './storybook.css'
 
 const prefersDark =
