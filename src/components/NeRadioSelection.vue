@@ -11,6 +11,9 @@ export type RadioOption = {
   label: string
   description?: string
   icon?: IconDefinition
+  // URL of an image shown before the label in the card layout (e.g. an application logo, an SVG
+  // data URL). When set it replaces the icon, which is limited to FontAwesome.
+  image?: string
   disabled?: boolean
 }
 </script>
@@ -20,8 +23,17 @@ import { computed, type PropType, type Ref, ref, useId, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import NeFormItemLabel from './NeFormItemLabel.vue'
+import {
+  selectionCardClasses,
+  selectionCardIconClasses,
+  selectionCardMarkClasses,
+  selectionCardMarkSpaceClass,
+  selectionCardMediaClasses,
+  selectionCardTextClasses,
+  type SelectionCardSize
+} from '../lib/selectionCards'
 
-export type RadioCardSize = 'md' | 'lg' | 'xl'
+export type RadioCardSize = SelectionCardSize
 
 const props = defineProps({
   modelValue: {
@@ -82,30 +94,6 @@ const value: Ref<any> = ref(props.modelValue ?? '')
 
 const inputRef = ref()
 
-const cardClasses: Record<RadioCardSize, string> = {
-  md: 'px-4 py-2',
-  lg: 'px-5 py-4',
-  xl: 'px-6 py-5'
-}
-
-const iconClasses: Record<RadioCardSize, string> = {
-  md: 'h-7 w-7 pr-2',
-  lg: 'h-10 w-10 pr-3',
-  xl: 'h-12 w-12 pr-5'
-}
-
-const textClasses: Record<RadioCardSize, string> = {
-  md: 'text-sm',
-  lg: 'text-sm',
-  xl: 'text-base'
-}
-
-const selectionMarkClasses: Record<RadioCardSize, string> = {
-  md: 'right-2 top-2 h-4 w-4',
-  lg: 'right-3 top-3 h-4 w-4',
-  xl: 'right-3 top-3 h-5 w-5'
-}
-
 const generatedName = useId()
 const radioName = computed(() => (props.name ? props.name : generatedName))
 
@@ -136,46 +124,74 @@ function focus() {
       </NeFormItemLabel>
       <p v-if="description" class="text-gray-500 dark:text-gray-400">{{ description }}</p>
     </div>
-    <div v-if="card" :class="gridStyle" class="grid">
-      <!-- card layout -->
-      <button
-        v-for="option in options"
-        :key="option.id"
-        ref="inputRef"
-        type="button"
-        :class="[
-          `${cardClasses[cardSize]}`,
-          value == option.id ? 'ring-primary-700 dark:ring-primary-500 ring-2' : ''
-        ]"
-        class="focus:ring-primary-700 dark:focus:ring-primary-500 dark:focus:ring-offset-primary-950 relative flex w-full items-center overflow-hidden rounded-md border text-gray-700 shadow-sm hover:bg-gray-200/70 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-600/30"
-        role="button"
-        :disabled="option.disabled || disabled"
-        @click="value = option.id"
-      >
-        <FontAwesomeIcon
-          v-if="option.icon"
-          :icon="option.icon"
-          :class="`${iconClasses[cardSize]}`"
-        />
-        <!-- custom content -->
-        <template v-if="$slots.option">
-          <slot :option="option" name="option" />
-        </template>
-        <!-- standard label and description -->
-        <div v-else :class="`text-left ${textClasses[cardSize]}`">
-          <p class="font-medium">
-            {{ option.label }}
-          </p>
-          <p v-if="option.description != undefined">{{ option.description }}</p>
-        </div>
-        <!-- top-right selection icon -->
-        <FontAwesomeIcon
-          v-if="value == option.id && cardSelectionMark"
-          :icon="faCircleCheck"
-          :class="`text-primary-700 dark:text-primary-500 absolute ${selectionMarkClasses[cardSize]}`"
-        />
-      </button>
-    </div>
+    <!-- card layout: each card is a label wrapping a visually hidden native radio, so that arrow
+    keys, the checked state and the radio role work as in the standard layout -->
+    <fieldset v-if="card">
+      <legend class="sr-only">{{ label }}</legend>
+      <div :class="gridStyle" class="grid">
+        <label
+          v-for="option in options"
+          :key="option.id"
+          :class="[
+            selectionCardClasses[cardSize],
+            value == option.id ? 'ring-primary-700 dark:ring-primary-500 ring-2' : '',
+            option.disabled || disabled
+              ? 'cursor-not-allowed opacity-50'
+              : 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800'
+          ]"
+          class="has-focus-visible:ring-primary-700 dark:has-focus-visible:ring-primary-500 dark:has-focus-visible:ring-offset-primary-950 relative flex w-full items-center overflow-hidden rounded-md border bg-white text-gray-700 shadow-sm has-focus-visible:ring-2 has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-white dark:border-gray-500 dark:bg-gray-950 dark:text-gray-50"
+        >
+          <input
+            ref="inputRef"
+            v-model="value"
+            type="radio"
+            :name="radioName"
+            :value="option.id"
+            :disabled="option.disabled || disabled"
+            class="sr-only"
+          />
+          <span
+            v-if="option.image || option.icon"
+            :class="selectionCardMediaClasses[cardSize]"
+            class="flex shrink-0 items-center justify-center"
+            aria-hidden="true"
+          >
+            <img v-if="option.image" :src="option.image" alt="" class="size-full object-contain" />
+            <FontAwesomeIcon
+              v-else-if="option.icon"
+              :icon="option.icon"
+              :class="selectionCardIconClasses[cardSize]"
+            />
+          </span>
+          <!-- custom content -->
+          <template v-if="$slots.option">
+            <slot :option="option" name="option" />
+          </template>
+          <!-- standard label and description -->
+          <div
+            v-else
+            :class="[
+              'text-left',
+              selectionCardTextClasses[cardSize],
+              cardSelectionMark ? selectionCardMarkSpaceClass : ''
+            ]"
+          >
+            <p class="font-medium">
+              {{ option.label }}
+            </p>
+            <p v-if="option.description != undefined">{{ option.description }}</p>
+          </div>
+          <!-- top-right selection icon -->
+          <FontAwesomeIcon
+            v-if="value == option.id && cardSelectionMark"
+            :icon="faCircleCheck"
+            :class="selectionCardMarkClasses[cardSize]"
+            class="text-primary-700 dark:text-primary-500 absolute"
+            aria-hidden="true"
+          />
+        </label>
+      </div>
+    </fieldset>
     <template v-else>
       <!-- standard layout -->
       <fieldset>

@@ -10,6 +10,10 @@ import {
   faShield,
   faUserGroup
 } from '@fortawesome/free-solid-svg-icons'
+import mailLogo from '../src/assets/mail.svg'
+import mattermostLogo from '../src/assets/mattermost.svg'
+import nethvoiceLogo from '../src/assets/nethvoice.svg'
+import nextcloudLogo from '../src/assets/nextcloud.svg'
 
 const meta: Meta<typeof NeRadioSelection> = {
   title: 'Components/NeRadioSelection',
@@ -119,6 +123,29 @@ export const CardPicker: StoryObj<typeof NeRadioSelection> = {
         label: 'Custom Role',
         icon: faLocationDot
       }
+    ]
+  }
+}
+
+export const CardPickerWithImages: StoryObj<typeof NeRadioSelection> = {
+  render: (args) => ({
+    components: { NeRadioSelection },
+    setup() {
+      return { args }
+    },
+    template: `
+      <NeRadioSelection v-bind="args" />
+    `
+  }),
+  args: {
+    label: 'Choose application',
+    card: true,
+    gridStyle: 'grid-cols-3 gap-3',
+    options: [
+      { id: '1', label: 'NethVoice', description: 'PBX', image: nethvoiceLogo },
+      { id: '2', label: 'Mattermost', description: 'Chat', image: mattermostLogo },
+      { id: '3', label: 'Nextcloud', description: 'Files', image: nextcloudLogo },
+      { id: '4', label: 'Mail', description: 'Email', image: mailLogo }
     ]
   }
 }
