@@ -96,6 +96,7 @@ const inputRef = ref()
 
 const generatedName = useId()
 const radioName = computed(() => (props.name ? props.name : generatedName))
+const labelId = `${generatedName}-label`
 
 watch(value, (newValue) => emit('update:modelValue', newValue))
 
@@ -114,7 +115,7 @@ function focus() {
 <template>
   <div class="text-sm">
     <div class="mb-2">
-      <NeFormItemLabel v-if="props.label || $slots.label" class="mb-0">
+      <NeFormItemLabel v-if="props.label || $slots.label" :id="labelId" class="mb-0">
         <slot name="label">
           {{ label }}
         </slot>
@@ -126,8 +127,8 @@ function focus() {
     </div>
     <!-- card layout: each card is a label wrapping a visually hidden native radio, so that arrow
     keys, the checked state and the radio role work as in the standard layout -->
-    <fieldset v-if="card">
-      <legend class="sr-only">{{ label }}</legend>
+    <!-- labelled by the visible label, so that the label slot names the group too -->
+    <fieldset v-if="card" :aria-labelledby="props.label || $slots.label ? labelId : undefined">
       <div :class="gridStyle" class="grid">
         <label
           v-for="option in options"
@@ -163,12 +164,12 @@ function focus() {
               :class="selectionCardIconClasses[cardSize]"
             />
           </span>
-          <!-- custom content -->
-          <template v-if="$slots.option">
+          <!-- custom content, padded like the standard one so that it doesn't overlap the mark -->
+          <span v-if="$slots.option" :class="cardSelectionMark ? selectionCardMarkSpaceClass : ''">
             <slot :option="option" name="option" />
-          </template>
-          <!-- standard label and description -->
-          <div
+          </span>
+          <!-- standard label and description (spans, since a label only allows phrasing content) -->
+          <span
             v-else
             :class="[
               'text-left',
@@ -176,11 +177,13 @@ function focus() {
               cardSelectionMark ? selectionCardMarkSpaceClass : ''
             ]"
           >
-            <p class="font-medium">
+            <span class="block font-medium">
               {{ option.label }}
-            </p>
-            <p v-if="option.description != undefined">{{ option.description }}</p>
-          </div>
+            </span>
+            <span v-if="option.description != undefined" class="block">{{
+              option.description
+            }}</span>
+          </span>
           <!-- top-right selection icon -->
           <FontAwesomeIcon
             v-if="value == option.id && cardSelectionMark"
@@ -194,8 +197,7 @@ function focus() {
     </fieldset>
     <template v-else>
       <!-- standard layout -->
-      <fieldset>
-        <legend class="sr-only">{{ label }}</legend>
+      <fieldset :aria-labelledby="props.label || $slots.label ? labelId : undefined">
         <div class="space-y-3">
           <div v-for="option in options" :key="option.id" class="flex items-center">
             <input
@@ -214,10 +216,10 @@ function focus() {
               :disabled="option.disabled"
               class="ms-2 text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:text-gray-50"
             >
-              <div>{{ option.label }}</div>
-              <div v-if="option.description" class="text-gray-500 dark:text-gray-400">
+              <span class="block">{{ option.label }}</span>
+              <span v-if="option.description" class="block text-gray-500 dark:text-gray-400">
                 {{ option.description }}
-              </div>
+              </span>
             </label>
           </div>
         </div>

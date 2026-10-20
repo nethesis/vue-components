@@ -124,15 +124,16 @@ function focus() {
               :class="selectionCardIconClasses[size]"
             />
           </span>
-          <div :class="['text-left', selectionCardTextClasses[size], selectionCardMarkSpaceClass]">
+          <!-- spans, since a label only allows phrasing content -->
+          <span :class="['text-left', selectionCardTextClasses[size], selectionCardMarkSpaceClass]">
             <!-- custom content, standard label and description by default -->
             <slot name="option" :option="option" :checked="isChecked(option)">
-              <p class="font-medium">
+              <span class="block font-medium">
                 {{ option.label }}
-              </p>
-              <p v-if="option.description">{{ option.description }}</p>
+              </span>
+              <span v-if="option.description" class="block">{{ option.description }}</span>
             </slot>
-          </div>
+          </span>
           <!-- top-right selection mark -->
           <input
             ref="inputs"
