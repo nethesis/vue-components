@@ -7,6 +7,10 @@ import { NeMultiselectCombobox, NeTooltip } from '../src/main'
 import type { NeMultiselectComboboxOption } from '../src/main'
 import { faBell, faEarthAmericas, faStar } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import mailLogo from '../src/assets/mail.svg'
+import mattermostLogo from '../src/assets/mattermost.svg'
+import nethvoiceLogo from '../src/assets/nethvoice.svg'
+import nextcloudLogo from '../src/assets/nextcloud.svg'
 
 const baseOptions = [
   { id: '1', label: 'Cherry' },
@@ -201,13 +205,6 @@ export const OptionsWithIcon: Story = {
   }
 }
 
-
-// Inline SVG logos, so the story needs no external asset
-const logo = (color: string) =>
-  `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="${color}"/><circle cx="8" cy="8" r="4" fill="white"/></svg>`
-  )}`
-
 export const OptionsWithImage: Story = {
   render: (args) => ({
     components: { NeMultiselectCombobox },
@@ -219,10 +216,10 @@ export const OptionsWithImage: Story = {
   args: {
     label: 'Choose application',
     options: [
-      { id: '1', label: 'NethVoice', description: 'PBX', image: logo('#0369a1') },
-      { id: '2', label: 'Mattermost', description: 'Chat', image: logo('#1d4ed8') },
-      { id: '3', label: 'Nextcloud', description: 'Files', image: logo('#0e7490') },
-      { id: '4', label: 'Legacy icon', icon: faStar }
+      { id: '1', label: 'NethVoice', description: 'PBX', image: nethvoiceLogo },
+      { id: '2', label: 'Mattermost', description: 'Chat', image: mattermostLogo },
+      { id: '3', label: 'Nextcloud', description: 'Files', image: nextcloudLogo },
+      { id: '4', label: 'Mail', description: 'Email', image: mailLogo }
     ]
   }
 }
