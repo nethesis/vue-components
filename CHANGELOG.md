@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.15.0](https://github.com/nethesis/vue-components/compare/v3.14.1...v3.15.0) (2026-10-20)
+
+
+### Features
+
+* add NeCheckboxCards component ([#204](https://github.com/nethesis/vue-components/issues/204)) ([e52b2d4](https://github.com/nethesis/vue-components/commit/e52b2d47c8c6c2a8e0d881e793b992c78cf52a70))
+
 ## [3.14.1](https://github.com/nethesis/vue-components/compare/v3.14.0...v3.14.1) (2026-10-06)
 
 
