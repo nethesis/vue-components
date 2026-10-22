@@ -146,7 +146,7 @@ function calculatePosition() {
             { top: top + 'px' },
             alignToRight ? { right: right + 'px' } : { left: left + 'px' }
           ]"
-          class="absolute z-50 mt-2.5 max-h-80 min-w-40 overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50"
+          class="absolute z-110 mt-2.5 max-h-80 min-w-40 overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50"
         >
           <div class="text-sm leading-6 font-medium text-gray-500 dark:text-gray-400">
             {{ sortByLabel }}

@@ -7,6 +7,7 @@
 import { Tippy } from 'vue-tippy'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import type { PropType } from 'vue'
+import type { Plugin } from 'tippy.js'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 
 export type TooltipPlacement =
@@ -33,6 +34,36 @@ export type TooltipTriggerEvent =
  * All the props accepted by the Tippy component, see https://vue-tippy.netlify.app/props/
  */
 export type TippyComponentProps = Partial<InstanceType<typeof Tippy>['$props']>
+
+// escape dismisses the tooltip only: listening on document lets an open popup inside it
+// handle the key first, and stops it before a drawer or modal listening on window.
+// manual tooltips are left alone, their visibility belongs to the consumer
+const hideOnEsc: Plugin = {
+  name: 'hideOnEsc',
+  defaultValue: true,
+  fn(instance) {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.stopPropagation()
+        instance.hide()
+      }
+    }
+
+    return {
+      onShow() {
+        if (instance.props.trigger !== 'manual') {
+          document.addEventListener('keydown', onKeyDown)
+        }
+      },
+      onHide() {
+        document.removeEventListener('keydown', onKeyDown)
+      },
+      onDestroy() {
+        document.removeEventListener('keydown', onKeyDown)
+      }
+    }
+  }
+}
 
 defineProps({
   placement: {
@@ -65,6 +96,7 @@ defineProps({
     :interactive="interactive"
     :placement="placement"
     :trigger="triggerEvent"
+    :plugins="[hideOnEsc, ...(tippyProps?.plugins ?? [])]"
     theme="tailwind"
   >
     <slot name="trigger">

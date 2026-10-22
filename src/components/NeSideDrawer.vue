@@ -7,7 +7,7 @@
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { onMounted, onUnmounted, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps({
   isShown: { type: Boolean, default: false },
@@ -17,6 +17,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close', 'show'])
+
+const panelRef = ref<{ $el: HTMLElement } | null>(null)
 
 watch(
   () => props.isShown,
@@ -46,11 +48,20 @@ function maybeCloseDrawer() {
   }
 }
 
-function onKeyUp(event: any) {
-  // close drawer on escape key
-  if (event.key === 'Escape') {
-    closeDrawer()
+function onKeyUp(event: KeyboardEvent) {
+  if (event.key !== 'Escape' || !props.isShown) {
+    return
   }
+  // escape pressed in a modal or popup opened over the drawer belongs to that element only
+  const target = event.target
+  if (
+    target instanceof Element &&
+    target !== document.body &&
+    !panelRef.value?.$el.contains(target)
+  ) {
+    return
+  }
+  closeDrawer()
 }
 </script>
 
@@ -80,6 +91,7 @@ function onKeyUp(event: any) {
           leave-to="translate-x-full"
         >
           <DialogPanel
+            ref="panelRef"
             class="3xl:w-[35rem] relative ml-16 flex w-[80vw] flex-1 overflow-y-auto bg-gray-50 text-gray-700 shadow-[0px_20px_40px_0_rgba(0,0,0,0.2)] sm:w-100 lg:w-120 dark:bg-gray-900 dark:text-gray-100 dark:shadow-[0px_20px_40px_0_rgba(0,0,0,0.6)]"
           >
             <TransitionChild
