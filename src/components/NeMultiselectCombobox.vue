@@ -429,11 +429,16 @@ function onInputChange(event: Event) {
   emit('filter', query.value)
 }
 
-function onInputKeydown(event: KeyboardEvent) {
+function onInputKeydown(event: KeyboardEvent, open: boolean) {
   if (event.key === 'Backspace' && !query.value && selected.value.length) {
     selected.value = selected.value.slice(0, -1)
   }
   if (event.key === 'Escape') {
+    if (open || showOptions.value) {
+      // escape only closes the options list: keep it from reaching a parent drawer or modal
+      event.preventDefault()
+      event.stopPropagation()
+    }
     showOptions.value = false
     query.value = ''
     if (props.externalFilter) {
@@ -523,7 +528,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
             :aria-invalid="invalidMessage ? 'true' : undefined"
             @change="onInputChange"
             @click="onInputClick"
-            @keydown="onInputKeydown"
+            @keydown="onInputKeydown($event, open)"
           />
         </div>
 
