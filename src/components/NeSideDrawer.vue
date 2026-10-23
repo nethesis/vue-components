@@ -30,11 +30,11 @@ watch(
 )
 
 onMounted(() => {
-  window.addEventListener('keydown', onKeyUp)
+  window.addEventListener('keydown', onKeyDown)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', onKeyUp)
+  window.removeEventListener('keydown', onKeyDown)
 })
 
 function closeDrawer() {
@@ -48,7 +48,7 @@ function maybeCloseDrawer() {
   }
 }
 
-function onKeyUp(event: KeyboardEvent) {
+function onKeyDown(event: KeyboardEvent) {
   if (event.key !== 'Escape' || !props.isShown) {
     return
   }
