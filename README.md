@@ -33,6 +33,19 @@ icons, and adding the required CSS by yourself in a lower priority layer than ta
 
 Official documentation can be found here: https://docs.fontawesome.com/apis/javascript/configuration
 
+## Font
+
+The theme uses Poppins with two weights: Regular (400) and Medium (500). Load both, for example with
+`@fontsource/poppins`:
+
+```css
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/500.css';
+```
+
+The default import, `@import '@fontsource/poppins'`, loads only Regular: the browser then fakes Medium by
+thickening Regular. Use only `font-normal` and `font-medium`, the weights of the design system.
+
 ## Contributing
 
 You can read the [contributing guidelines](CONTRIBUTING.md) to know how to contribute to this project.

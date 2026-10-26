@@ -270,7 +270,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
                   ]"
                 >
                   <div class="block truncate">
-                    <span :class="['truncate', optionSelected && 'font-semibold']">
+                    <span :class="['truncate', optionSelected && 'font-medium']">
                       {{ option.label }}
                     </span>
                     <span

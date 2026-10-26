@@ -18,8 +18,8 @@ defineProps({
 const baseStyle = 'text-gray-900 dark:text-gray-100'
 
 const textSizes: Record<string, string> = {
-  h1: 'text-4xl font-bold',
-  h2: 'text-3xl font-semibold',
+  h1: 'text-4xl font-medium',
+  h2: 'text-3xl font-medium',
   h3: 'text-2xl font-medium',
   h4: 'text-xl font-medium',
   h5: 'text-lg font-medium',

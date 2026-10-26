@@ -2,6 +2,9 @@
 /* scan only the library sources, so that stories and playground classes don't end up in dist */
 @import 'tailwindcss' source('.');
 @import './styles/theme.css';
-@import '@fontsource/poppins';
+/* Regular and Medium, the two weights of the design system: the default import
+   loads only Regular, and the browser would fake Medium */
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/500.css';
 
 @custom-variant dark (&:where(.dark, .dark *));

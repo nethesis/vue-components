@@ -413,7 +413,7 @@ export const CustomTypeExtension: Story = {
           v-model="selected" 
         />
         <div v-if="selected.length" class="p-4 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700">
-          <p class="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Selected services (v-model w/ custom attrs):</p>
+          <p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Selected services (v-model w/ custom attrs):</p>
           <pre class="text-xs overflow-auto text-gray-600 dark:text-gray-400">{{ JSON.stringify(selected, null, 2) }}</pre>
         </div>
       </div>

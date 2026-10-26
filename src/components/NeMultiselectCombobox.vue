@@ -595,7 +595,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
                     class="mr-2.5 h-4 w-4 shrink-0"
                     aria-hidden="true"
                   />
-                  <span :class="['shrink-0 truncate', optionSelected && 'font-semibold']">
+                  <span :class="['shrink-0 truncate', optionSelected && 'font-medium']">
                     {{ option.label }}
                   </span>
                   <span
