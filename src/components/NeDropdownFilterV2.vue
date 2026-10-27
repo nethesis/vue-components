@@ -501,7 +501,7 @@ function clearFilter() {
             <!-- group header -->
             <div
               v-if="item.type === 'group'"
-              class="pt-3 pb-1 text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400"
+              class="pt-3 pb-1 text-xs font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400"
             >
               {{ item.label }}
             </div>

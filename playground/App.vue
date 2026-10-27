@@ -11,7 +11,7 @@ const isDark = useDark()
     class="min-h-screen bg-gray-50 p-10 text-sm text-gray-700 dark:bg-gray-900 dark:text-gray-100"
   >
     <div class="mb-6 flex items-center justify-between">
-      <h1 class="text-2xl font-semibold">@nethesis/vue-components playground</h1>
+      <h1 class="text-2xl font-medium">@nethesis/vue-components playground</h1>
       <NeToggle v-model="isDark" label="Dark mode" />
     </div>
 

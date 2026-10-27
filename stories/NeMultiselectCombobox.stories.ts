@@ -454,7 +454,7 @@ export const CustomTypeExtension: Story = {
           class="max-w-md" 
         />
         <div v-if="modelValue.length" class="p-4 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700">
-          <p class="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Selected employees (v-model):</p>
+          <p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Selected employees (v-model):</p>
           <pre class="text-xs overflow-auto text-gray-600 dark:text-gray-400">{{ JSON.stringify(modelValue, null, 2) }}</pre>
         </div>
       </div>
