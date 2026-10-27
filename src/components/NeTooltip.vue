@@ -6,7 +6,8 @@
 <script lang="ts" setup>
 import { Tippy } from 'vue-tippy'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import type { PropType } from 'vue'
+import { ref, type PropType } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 
 export type TooltipPlacement =
@@ -34,7 +35,7 @@ export type TooltipTriggerEvent =
  */
 export type TippyComponentProps = Partial<InstanceType<typeof Tippy>['$props']>
 
-defineProps({
+const props = defineProps({
   placement: {
     type: String as PropType<TooltipPlacement>,
     default: 'top'
@@ -57,15 +58,35 @@ defineProps({
     default: undefined
   }
 })
+
+// vue-tippy exposes the instance methods but does not type them
+const tippyRef = ref<{ hide: () => void } | null>(null)
+const isShown = ref(false)
+
+// escape dismisses the tooltip only: listening on document lets an open popup inside it
+// handle the key first, and stops it before a drawer or modal listening on window.
+// manual tooltips are left alone, their visibility belongs to the consumer
+useEventListener(
+  () => (isShown.value && props.triggerEvent !== 'manual' ? document : undefined),
+  'keydown',
+  (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      event.stopPropagation()
+      tippyRef.value?.hide()
+    }
+  }
+)
 </script>
 
 <template>
   <Tippy
+    ref="tippyRef"
     v-bind="tippyProps"
     :interactive="interactive"
     :placement="placement"
     :trigger="triggerEvent"
     theme="tailwind"
+    @state="isShown = $event.isShown"
   >
     <slot name="trigger">
       <button type="button" class="inline-flex">

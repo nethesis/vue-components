@@ -446,6 +446,21 @@ function onInputChange(event: Event) {
   emit('filter', query.value)
 }
 
+function onInputKeydown(event: KeyboardEvent, open: boolean) {
+  if (event.key !== 'Escape' || !(open || showOptions.value)) {
+    return
+  }
+  // escape only closes the options list: keep it from reaching a parent drawer or modal
+  event.preventDefault()
+  event.stopPropagation()
+  showOptions.value = false
+  query.value = ''
+
+  if (props.externalFilter) {
+    emit('filter', '')
+  }
+}
+
 function removeFromSelection(optionToRemove: NeComboboxOption) {
   selected.value = selected.value.filter(
     (option: NeComboboxOption) => option.id !== optionToRemove.id
@@ -488,6 +503,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
           :placeholder="props.placeholder"
           @change="onInputChange"
           @click="onInputClick"
+          @keydown="onInputKeydown($event, open)"
         />
         <ComboboxButton
           :class="[

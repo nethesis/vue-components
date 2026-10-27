@@ -247,7 +247,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
           <div v-show="open || showOptions">
             <ListboxOptions
               static
-              :class="`absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-500/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 ${optionsPanelStyle}`"
+              :class="`absolute z-110 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-500/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 ${optionsPanelStyle}`"
               :style="[{ top: top + 'px' }, { left: left + 'px' }, { 'min-width': width + 'px' }]"
             >
               <ListboxOption

@@ -2,7 +2,9 @@
    Placing this file inside the playground root ensures @tailwindcss/vite
    processes it (and therefore the @import 'tailwindcss' + @theme directives
    inside main.css) from within the correct root context.
-   @source explicitly adds the library component files to Tailwind's scan. */
+   @source explicitly adds the library component files and the playground
+   files to Tailwind's scan, since main.css limits it to src/. */
 @import '../src/main.css';
 @source '../src/**/*.vue';
 @source '../src/**/*.ts';
+@source './**/*.vue';
