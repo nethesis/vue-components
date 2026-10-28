@@ -11,6 +11,14 @@ import type { NePasswordRequirementLabels } from '../src/main'
 const meta = {
   title: 'Patterns/New password form',
   component: NePasswordRequirements,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The form to set a new password: the password with its requirements, checked while the user types, and its confirmation.'
+      }
+    }
+  },
   // The pattern drives its own reactive state from the render function, so args are unused
   // here — the requirements list comes from usePasswordRequirements, not from a control.
   args: {

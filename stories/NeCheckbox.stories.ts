@@ -8,6 +8,14 @@ const meta = {
   title: 'Components/NeCheckbox',
   component: NeCheckbox,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A single checkbox, with a label and an optional description. For a group of choices shown as cards, use `NeCheckboxCards`; for a setting that is turned on or off, `NeToggle`.'
+      }
+    }
+  },
   args: {
     label: 'Label',
     modelValue: true,

@@ -8,6 +8,14 @@ const meta = {
   title: 'Components/NeStepper',
   component: NeStepper,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The current step of a procedure with several steps, such as a wizard: a progress bar with the step number.'
+      }
+    }
+  },
   args: {
     totalSteps: 4,
     currentStep: 1,

@@ -11,6 +11,14 @@ const meta = {
   title: 'Components/NeAvatar',
   component: NeAvatar,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The picture of a user or an account, or their initials when there is no picture. `squared` gives it square corners.'
+      }
+    }
+  },
   argTypes: {
     size: { control: 'inline-radio', options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] }
   },

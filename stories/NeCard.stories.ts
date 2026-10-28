@@ -12,6 +12,14 @@ const meta = {
   title: 'Components/NeCard',
   component: NeCard,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A box that groups the content of a section, with an optional title, icon and menu of actions. It shows its own loading skeleton and error message, so each card of a dashboard can load on its own.'
+      }
+    }
+  },
   args: {
     title: 'Card title',
     description: '',

@@ -6,6 +6,14 @@ import { NeSideDrawer } from '../src/main'
 
 const meta = {
   title: 'Components/NeSideDrawer',
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A panel that slides in from the side of the page, for a form or details too long for a modal, keeping the page in view.'
+      }
+    }
+  },
   args: {
     isShown: true,
     title: 'Drawer title',

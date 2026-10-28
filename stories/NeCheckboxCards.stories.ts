@@ -21,6 +21,14 @@ const meta: Meta<typeof NeCheckboxCards> = {
   // generic components don't match Storybook's component type, cast to it
   component: NeCheckboxCards as Meta<typeof NeCheckboxCards>['component'],
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A group of checkboxes shown as cards, each with a label and an optional description, icon or image, to choose several options that need more than a label to tell apart. To choose only one, use `NeRadioSelection` with `card`.'
+      }
+    }
+  },
   argTypes: {
     size: { control: 'inline-radio', options: ['md', 'lg', 'xl'] }
   },

@@ -15,6 +15,14 @@ const meta = {
   title: 'Components/NeDropdown',
   component: NeDropdown,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A menu of actions opened by a button, by default three vertical dots: the actions of a table row, a card or a page. To filter a list, use `NeDropdownFilterV2`; to sort it, `NeSortDropdown`.'
+      }
+    }
+  },
   args: {
     items: [
       {

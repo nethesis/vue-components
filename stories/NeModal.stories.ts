@@ -8,6 +8,14 @@ import { NeModal } from '../src/main'
 const meta = {
   title: 'Components/NeModal',
   component: NeModal,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A dialog over the page, for a confirmation, a short form or a message that needs an answer before going on. `kind` sets the icon; it has up to three buttons: primary, secondary and cancel. For a deletion, follow the Delete item modal pattern; for a long form or for details, use `NeSideDrawer`.'
+      }
+    }
+  },
   argTypes: {
     kind: { control: 'inline-radio', options: ['neutral', 'info', 'warning', 'error', 'success'] },
     size: { control: 'inline-radio', options: ['md', 'lg', 'xl', 'xxl'] },

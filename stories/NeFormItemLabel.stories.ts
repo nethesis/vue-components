@@ -7,6 +7,14 @@ import { NeFormItemLabel } from '../src/main'
 const meta = {
   title: 'Components/NeFormItemLabel',
   component: NeFormItemLabel,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The label of a form field built without the form components, which have their own `label` prop.'
+      }
+    }
+  },
   tags: ['autodocs']
 } satisfies Meta<typeof NeFormItemLabel>
 

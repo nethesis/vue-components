@@ -13,6 +13,14 @@ const meta = {
   title: 'Components/NeEmptyState',
   component: NeEmptyState,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Takes the place of a list, a table or a page with nothing to show: an icon, a title, a description and, when there is a next step, an action. Follow the Empty state pattern for its texts.'
+      }
+    }
+  },
   argTypes: {},
   args: {
     title: 'No user',

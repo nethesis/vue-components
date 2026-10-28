@@ -28,6 +28,14 @@ const meta = {
   title: 'Components/NeTooltip',
   component: NeTooltip,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Extra information shown when the user hovers or focuses an element, such as the help icon next to a label. Form components have a `tooltip` slot for it. Never put information the user needs only in a tooltip.'
+      }
+    }
+  },
   argTypes: {
     placement: {
       control: 'inline-radio',

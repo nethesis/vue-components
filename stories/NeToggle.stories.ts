@@ -9,6 +9,13 @@ const meta = {
   title: 'Components/NeToggle',
   component: NeToggle,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'A switch that turns a setting or a feature on or off.'
+      }
+    }
+  },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl'] }
   },

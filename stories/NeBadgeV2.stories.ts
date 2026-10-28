@@ -10,6 +10,14 @@ const meta: Meta<typeof NeBadgeV2> = {
   title: 'Components/NeBadgeV2',
   component: NeBadgeV2,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A short label for a status or a category, such as Enabled, Expired or Admin, next to the object it describes. `dismissable` adds a button to remove it, for example to remove an active filter.'
+      }
+    }
+  },
   argTypes: {
     size: {
       options: ['xs', 'sm'],

@@ -12,6 +12,14 @@ const meta = {
   title: 'Components/NeToastNotificationV2',
   component: NeToastNotificationV2,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A short notification over the page: the result of an action the user should notice, such as an object created or deleted. It can have up to two actions. For an error the user has to act on, use `NeInlineNotification`. Follow the Success toast notification pattern for its texts.'
+      }
+    }
+  },
   args: {
     srCloseLabel: 'Close',
     firstActionOnRight: false,

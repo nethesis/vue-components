@@ -8,6 +8,14 @@ const meta: Meta<typeof NeExpandable> = {
   title: 'Components/NeExpandable',
   component: NeExpandable,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A label that shows and hides the content below it, for advanced settings or details that would make a page too long.'
+      }
+    }
+  },
   args: {
     label: 'Label',
     isExpanded: false,

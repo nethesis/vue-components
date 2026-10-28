@@ -19,6 +19,14 @@ const meta: Meta<typeof NeRadioSelection> = {
   title: 'Components/NeRadioSelection',
   component: NeRadioSelection,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A group of radio buttons to choose one option among a few, all visible. With `card`, each option is a card with a description, an icon or an image. For many options, use `NeListbox`.'
+      }
+    }
+  },
   argTypes: {
     cardSize: { control: 'inline-radio', options: ['md', 'lg', 'xl'] }
   },

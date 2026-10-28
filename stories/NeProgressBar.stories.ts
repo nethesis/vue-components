@@ -8,6 +8,14 @@ const meta = {
   title: 'Components/NeProgressBar',
   component: NeProgressBar,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'How far a task has gone, as a percentage, or `indeterminate` when that is unknown. For a short wait, use `NeSpinner`; while content loads, `NeSkeleton`.'
+      }
+    }
+  },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl'] },
     color: {

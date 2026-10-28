@@ -19,6 +19,14 @@ const baseNotification: NeNotificationV2 = {
 const meta = {
   title: 'Patterns/Success toast notification',
   component: NeToastNotificationV2,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The toast notification shown after an object is created, updated or deleted, with its texts.'
+      }
+    }
+  },
   argTypes: {
     // The notification is set per story as a whole object; an object control adds noise.
     notification: { table: { disable: true } }

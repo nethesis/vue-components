@@ -10,6 +10,14 @@ import { NeModal, NeTextInput } from '../src/main'
 const meta = {
   title: 'Patterns/Delete item modal',
   component: NeModal,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The confirmation before deleting an object: an `NeModal` of kind warning with a danger button. The Type to confirm version asks the user to type the name of the object, for deletions that lose a lot of data.'
+      }
+    }
+  },
   argTypes: {
     kind: { control: 'inline-radio', options: ['neutral', 'info', 'warning', 'error', 'success'] },
     size: { control: 'inline-radio', options: ['md', 'lg', 'xl', 'xxl'] },

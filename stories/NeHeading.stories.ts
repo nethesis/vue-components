@@ -8,6 +8,14 @@ const meta: Meta<typeof NeHeading> = {
   title: 'Components/NeHeading',
   component: NeHeading,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A heading: `tag` sets the level, from `h1` to `h6`, and the matching text style. One `h1` per page, for its title.'
+      }
+    }
+  },
   argTypes: {
     tag: { control: 'inline-radio', options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }
   },
