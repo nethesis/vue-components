@@ -11,6 +11,14 @@ const meta = {
   title: 'Components/NeTextInput',
   component: NeTextInput,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A text field of one line. `isSearch` makes it a search field with a button to clear it; `isPassword` hides the value, with a button to show it. The `prefix` and `suffix` slots add text or an icon inside the field.'
+      }
+    }
+  },
   // default values
   args: {
     label: 'Label',

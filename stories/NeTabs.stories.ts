@@ -9,6 +9,13 @@ const meta = {
   title: 'Components/NeTabs',
   component: NeTabs,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Tabs that switch between views of the same page or object.'
+      }
+    }
+  },
   argTypes: {},
   args: {
     tabs: [

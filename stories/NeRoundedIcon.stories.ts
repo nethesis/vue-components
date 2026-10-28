@@ -9,6 +9,14 @@ const meta = {
   title: 'Components/NeRoundedIcon',
   component: NeRoundedIcon,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'An icon in a colored circle that shows the kind of a message: info, warning, error or success. Modals and notifications already include it.'
+      }
+    }
+  },
   argTypes: {
     kind: { control: 'inline-radio', options: ['info', 'warning', 'error', 'success', 'gray'] }
   },

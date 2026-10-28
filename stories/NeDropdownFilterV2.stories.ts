@@ -38,6 +38,14 @@ const meta = {
   title: 'Components/NeDropdownFilterV2',
   component: NeDropdownFilterV2,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A button that opens the values of a filter, in the toolbar above a table or a list. `kind` sets one value (`radio`) or several (`checkbox`). Options can be grouped. A search field appears with `showOptionsFilter`, or when there are more options than `maxOptionsShown`. With `checkbox`, the button shows how many values are selected.'
+      }
+    }
+  },
   argTypes: {
     kind: { control: 'inline-radio', options: ['radio', 'checkbox'] },
     size: { control: 'inline-radio', options: ['xs', 'sm', 'md', 'lg', 'xl'] }

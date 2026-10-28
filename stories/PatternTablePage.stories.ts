@@ -167,6 +167,14 @@ const itLabels: Labels = {
 const meta = {
   title: 'Patterns/Table page',
   component: NeTable,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A page that lists objects in a table: the title, the toolbar with search, filters, sorting and the create button, the table with the actions of each row and the paginator, and the loading and empty states.'
+      }
+    }
+  },
   argTypes: {
     cardBreakpoint: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl', '2xl'] }
   },

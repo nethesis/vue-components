@@ -11,6 +11,14 @@ const meta = {
   title: 'Components/NeCombobox',
   component: NeCombobox,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A field to choose one option from a long list, typing to filter it. `acceptUserInput` also accepts a value that is not in the list. For a short list, use `NeListbox`. `multiple` is deprecated: to choose several options, use `NeMultiselectCombobox`.'
+      }
+    }
+  },
   args: {
     label: 'Choose fruit',
     placeholder: 'Placeholder',

@@ -8,6 +8,14 @@ const meta = {
   title: 'Components/NeSpinner',
   component: NeSpinner,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A small spinning indicator for a short wait. `NeButton` shows it with `loading`. While a page or a section loads, use `NeSkeleton`.'
+      }
+    }
+  },
   argTypes: {
     size: {
       control: 'inline-radio',

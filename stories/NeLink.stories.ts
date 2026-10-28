@@ -8,6 +8,14 @@ const meta: Meta<typeof NeLink> = {
   title: 'Components/NeLink',
   component: NeLink,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A text link, to another page or to an external site, or for a minor action inside text. `invertedTheme` is for a background of the opposite theme, such as inside a tooltip.'
+      }
+    }
+  },
   args: {
     invertedTheme: false
   }

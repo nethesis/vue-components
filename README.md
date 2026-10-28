@@ -20,6 +20,7 @@ This library contains:
    @source 'node_modules/@nethesis/vue-components';
    ```
 4. After this, you're golden! You can browse the [Storybook](https://nethesis.github.io/vue-components) to see the available components and their usage.
+   Coding agents and other tools that cannot run the Storybook can read the list of the components and patterns, with their descriptions, in [components.json](https://nethesis.github.io/vue-components/components.json).
 
 ## Fontawesome
 

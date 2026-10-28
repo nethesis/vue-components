@@ -8,6 +8,14 @@ const meta = {
   title: 'Components/NeInlineNotification',
   component: NeInlineNotification,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A message inside a page, a form or a dialog, that stays until the problem is solved or the user closes it: an error after an action, a warning, or information about the content around it. Buttons and `details` are optional. For the result of an action, shown for a few seconds, use `NeToastNotificationV2`.'
+      }
+    }
+  },
   argTypes: {
     kind: { control: 'inline-radio', options: ['info', 'warning', 'error', 'success'] }
   },

@@ -28,6 +28,14 @@ const meta = {
   title: 'Components/NeTooltip',
   component: NeTooltip,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Extra information about an element, such as the help icon next to a label. It opens on click by default; `triggerEvent="mouseenter focus"` opens it on hover and focus. Form components have a `tooltip` slot for it. Never put information the user needs only in a tooltip.'
+      }
+    }
+  },
   argTypes: {
     placement: {
       control: 'inline-radio',

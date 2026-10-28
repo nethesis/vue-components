@@ -5,6 +5,14 @@ const meta: Meta<typeof NeSkeleton> = {
   title: 'Components/NeSkeleton',
   component: NeSkeleton,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Gray lines in place of content while it loads. For a table, use the `loading` prop of `NeTable`.'
+      }
+    }
+  },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     lines: { control: 'number' }

@@ -9,6 +9,14 @@ const meta = {
   title: 'Components/NeSortDropdown',
   component: NeSortDropdown,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A button that opens the sort options of a list or a table: the field to sort by and the direction.'
+      }
+    }
+  },
   argTypes: {
     size: { control: 'inline-radio', options: ['xs', 'sm', 'md', 'lg', 'xl'] }
   },

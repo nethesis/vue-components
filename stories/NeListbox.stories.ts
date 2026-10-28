@@ -9,6 +9,14 @@ const meta = {
   title: 'Components/NeListbox',
   component: NeListbox,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A field to choose one or more options from a short list, without typing: the equivalent of a select. For a long list that needs searching, use `NeCombobox` or `NeMultiselectCombobox`.'
+      }
+    }
+  },
   args: {
     label: 'Choose fruit',
     placeholder: 'Placeholder',

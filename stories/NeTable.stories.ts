@@ -26,6 +26,14 @@ const meta: Meta<typeof NeTable> = {
   title: 'Components/NeTable',
   component: NeTable,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A data table, built with `NeTableHead`, `NeTableHeadCell`, `NeTableBody`, `NeTableRow` and `NeTableCell`. Below `cardBreakpoint`, each row becomes a card. Sortable columns emit `sort`, and the product sorts the rows, for example with `useSort`; `useItemPagination` splits the rows into pages for a `NePaginator` in the `paginator` slot. `loading` shows a skeleton. For a whole page that lists objects, follow the Table page pattern.'
+      }
+    }
+  },
   argTypes: {
     cardBreakpoint: { control: 'inline-radio', options: ['sm', 'md', 'lg', 'xl', '2xl'] }
   },

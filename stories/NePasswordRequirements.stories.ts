@@ -23,6 +23,14 @@ const meta = {
   title: 'Components/NePasswordRequirements',
   component: NePasswordRequirements,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The requirements of a new password, each marked as met or not while the user types. Use it with `usePasswordRequirements`, as in the New password form pattern.'
+      }
+    }
+  },
   // default values
   args: {
     requirements: statusesFor(''),

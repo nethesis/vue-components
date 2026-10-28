@@ -24,6 +24,14 @@ const meta = {
   title: 'Components/NeMultiselectCombobox',
   component: NeMultiselectCombobox,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A field to choose several options from a list, typing to filter it. The chosen options are shown as badges. To choose only one, use `NeCombobox`.'
+      }
+    }
+  },
   args: {
     label: 'Choose fruit',
     placeholder: 'Placeholder',

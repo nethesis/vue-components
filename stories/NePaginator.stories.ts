@@ -8,6 +8,14 @@ const meta: Meta<typeof NePaginator> = {
   title: 'Components/NePaginator',
   component: NePaginator,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The page navigation of a table or a list, with the range of rows shown and the number of rows per page. It goes in the `paginator` slot of `NeTable`.'
+      }
+    }
+  },
   args: {
     currentPage: 1,
     totalRows: 54,

@@ -15,6 +15,14 @@ import {
 
 const meta = {
   title: 'Patterns/Empty state',
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The empty states of a page or a list: no objects yet, no objects configured, no results for a search or a filter, and a page the user cannot access.'
+      }
+    }
+  },
   component: NeEmptyState
 } satisfies Meta<typeof NeEmptyState>
 

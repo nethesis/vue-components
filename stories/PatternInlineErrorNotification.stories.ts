@@ -7,6 +7,14 @@ import { NeInlineNotification } from '../src/main'
 const meta = {
   title: 'Patterns/Inline error notification',
   component: NeInlineNotification,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'The error shown inside a page or a form when an action fails, such as saving: a network error or a generic one.'
+      }
+    }
+  },
   args: {
     kind: 'error',
     showCloseButton: false,

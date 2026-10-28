@@ -8,6 +8,14 @@ const meta = {
   title: 'Components/NeFileInput',
   component: NeFileInput,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'A field for one file: an area where the user drops the file or clicks to choose it, with an optional progress bar for the upload. `accept` filters the file picker only, not dropped files: check the type of the selected file.'
+      }
+    }
+  },
   argTypes: {},
   args: {
     label: 'Label',

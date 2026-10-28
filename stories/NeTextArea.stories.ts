@@ -9,6 +9,13 @@ const meta = {
   title: 'Components/NeTextArea',
   component: NeTextArea,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'A text field of several lines, for descriptions, notes and other long text.'
+      }
+    }
+  },
   // default values
   args: {
     label: 'Label',
