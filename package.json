@@ -48,7 +48,8 @@
     "format": "prettier --list-different src/",
     "format-fix": "prettier --write src/",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build && node scripts/components-json.mjs",
+    "build-storybook": "storybook build",
+    "postbuild-storybook": "node scripts/components-json.mjs",
     "build-pack": "npm version patch --no-git-tag-version && npm run build && npm pack",
     "playground": "vite --config playground/vite.config.ts"
   },
