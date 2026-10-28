@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The picture of a user or an account, or their initials when there is no picture. `squared` gives it square corners.'
+          'The picture of a user or an account; without a picture, their initials or a user icon. `squared` makes it a square with rounded corners instead of a circle.'
       }
     }
   },

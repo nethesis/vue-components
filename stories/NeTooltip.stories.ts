@@ -32,7 +32,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Extra information shown when the user hovers or focuses an element, such as the help icon next to a label. Form components have a `tooltip` slot for it. Never put information the user needs only in a tooltip.'
+          'Extra information about an element, such as the help icon next to a label. It opens on click by default; `triggerEvent="mouseenter focus"` opens it on hover and focus. Form components have a `tooltip` slot for it. Never put information the user needs only in a tooltip.'
       }
     }
   },

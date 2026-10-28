@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A file field: an area where the user drops a file or clicks to choose it, with an optional progress bar for the upload. `accept` limits the file types.'
+          'A field for one file: an area where the user drops the file or clicks to choose it, with an optional progress bar for the upload. `accept` filters the file picker only, not dropped files: check the type of the selected file.'
       }
     }
   },

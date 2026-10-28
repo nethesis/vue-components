@@ -30,7 +30,7 @@ const meta: Meta<typeof NeTable> = {
     docs: {
       description: {
         component:
-          'A data table, built with `NeTableHead`, `NeTableHeadCell`, `NeTableBody`, `NeTableRow` and `NeTableCell`. Below `cardBreakpoint`, each row becomes a card. It supports sorting, a loading skeleton and a `NePaginator` in the `paginator` slot. For a whole page that lists objects, follow the Table page pattern.'
+          'A data table, built with `NeTableHead`, `NeTableHeadCell`, `NeTableBody`, `NeTableRow` and `NeTableCell`. Below `cardBreakpoint`, each row becomes a card. Sortable columns emit `sort`, and the product sorts the rows, for example with `useSort`; `useItemPagination` splits the rows into pages for a `NePaginator` in the `paginator` slot. `loading` shows a skeleton. For a whole page that lists objects, follow the Table page pattern.'
       }
     }
   },

@@ -16,7 +16,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A short notification over the page: the result of an action the user should notice, such as an object created or deleted. It can have up to two actions. For an error the user has to act on, use `NeInlineNotification`. Follow the Success toast notification pattern for its texts.'
+          'A notification about the result of an action the user should notice, such as an object created or deleted, with up to two actions. It is only the card: the product shows it in a fixed container at the edge of the screen, and removes it on `close` or after a few seconds. For an error the user has to act on, use `NeInlineNotification`. Follow the Success toast notification pattern for its texts.'
       }
     }
   },

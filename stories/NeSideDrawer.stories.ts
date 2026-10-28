@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A panel that slides in from the side of the page, for a form or details too long for a modal, keeping the page in view.'
+          'A modal panel that slides in from the right over the dimmed page, for a form or details too long for a modal. The page behind it cannot be used until it closes.'
       }
     }
   },
