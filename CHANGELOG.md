@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.15.1](https://github.com/nethesis/vue-components/compare/v3.15.0...v3.15.1) (2026-10-28)
+
+
+### Bug Fixes
+
+* let escape close only the topmost popup ([#208](https://github.com/nethesis/vue-components/issues/208)) ([f5b74c8](https://github.com/nethesis/vue-components/commit/f5b74c8c4b9df712a7cb032722dd7e1fa79bbd77))
+* use only Regular and Medium font weights ([#210](https://github.com/nethesis/vue-components/issues/210)) ([178766d](https://github.com/nethesis/vue-components/commit/178766dd90e4d86dd32ae2936464d4461abce177))
+
 ## [3.15.0](https://github.com/nethesis/vue-components/compare/v3.14.1...v3.15.0) (2026-10-20)
 
 
