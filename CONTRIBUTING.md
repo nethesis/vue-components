@@ -121,11 +121,11 @@ npm run build-storybook
 
 the result will be put in the `storybook-static` folder, which can be served with any web server.
 
-The build also writes `storybook-static/components.json` (`scripts/components-json.mjs`): the list of the components and the patterns, with their descriptions and links, for coding agents and other tools that cannot run the Storybook.
+After the build, npm runs `scripts/components-json.mjs` (the `postbuild-storybook` script), which writes `storybook-static/components.json`: the list of the components and the patterns, with their descriptions and links, for coding agents and other tools that cannot run the Storybook. It is published at https://nethesis.github.io/vue-components/components.json. `npm run storybook` does not serve it.
 
 ### Stories
 
-Every component and every pattern has a stories file in `stories`, with a title that starts with `Components/` or `Patterns/`. Its meta has a description, shown on the Docs page and in `components.json`:
+Every component and every pattern has a stories file in `stories`, with a title that starts with `Components/` or `Patterns/`. Its meta has a description, written in `components.json` and shown on the Docs page when the stories have the `autodocs` tag:
 
 ```ts
 const meta = {
@@ -142,9 +142,9 @@ const meta = {
 } satisfies Meta<typeof NeButton>
 ```
 
-The description says what the component is for, and which component to use instead in the cases it does not cover. When a component is deprecated, add ` [Deprecated]` to its title and start its description with `Deprecated: use <Name>`, the component that replaces it.
+The description says what the component is for, and which component to use instead in the cases it does not cover. Leave out `autodocs` only for components that cover the page, such as `NeModal` and `NeSideDrawer`. When a component is deprecated, add ` [Deprecated]` to its title and start its description with `Deprecated: use <Name>`, the component that replaces it.
 
-The build of the Storybook fails if a description is missing, or if a deprecated component does not name an existing replacement.
+The build of the Storybook fails if a description is missing, if a deprecated component does not name an existing replacement, or if a component exported by `src/main.ts` has no stories.
 
 ## Publishing the library
 
