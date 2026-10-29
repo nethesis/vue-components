@@ -14,7 +14,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Starts an action. `primary` is the main action of a view or a dialog, and there is only one; `secondary` is for the other actions, `tertiary` for minor ones, `danger` to confirm a destructive action. Bind `loading` while the action runs. To go to another page, use `NeLink`.'
+          'Starts an action. `primary` is the main action of a view or a dialog, and there is only one; `secondary` is for the other actions, `tertiary` for minor ones, `danger` to confirm a destructive action. Bind `loading` while the action runs. To go to another page, use `NeLink`. Its texts follow [Buttons and actions](https://nethesis.github.io/design-system/?page=writing-guidelines#buttons-and-actions) in the writing guidelines.'
       }
     }
   },

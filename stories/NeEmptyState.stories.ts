@@ -17,7 +17,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Takes the place of a list, a table or a page with nothing to show: an icon, a title, a description and, when there is a next step, an action. Follow the Empty state pattern for its texts.'
+          'Takes the place of a list, a table or a page with nothing to show: an icon, a title, a description and, when there is a next step, an action. Follow the Empty state pattern for its texts. Its texts follow [Empty states](https://nethesis.github.io/design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
       }
     }
   },
