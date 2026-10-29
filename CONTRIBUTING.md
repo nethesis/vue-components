@@ -142,7 +142,7 @@ const meta = {
 } satisfies Meta<typeof NeButton>
 ```
 
-The description says what the component is for, and which component to use instead in the cases it does not cover. Leave out `autodocs` only for components that cover the page, such as `NeModal` and `NeSideDrawer`. When a component is deprecated, add ` [Deprecated]` to its title and start its description with `Deprecated: use <Name>`, the component that replaces it.
+The description says what the component is for, and which component to use instead in the cases it does not cover. When the writing guidelines of the [Nethesis Design System](https://nethesis.github.io/design-system/?page=writing-guidelines) have a section for the texts of the component or the pattern, the description links it: `Its texts follow [Modals](https://nethesis.github.io/design-system/?page=writing-guidelines#modals) in the writing guidelines.` Leave out `autodocs` only for components that cover the page, such as `NeModal` and `NeSideDrawer`. When a component is deprecated, add ` [Deprecated]` to its title and start its description with `Deprecated: use <Name>`, the component that replaces it.
 
 The build of the Storybook fails if a description is missing, if a deprecated component does not name an existing replacement, or if a component exported by `src/main.ts` has no stories.
 
