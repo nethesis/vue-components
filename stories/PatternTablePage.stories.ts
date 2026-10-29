@@ -20,7 +20,6 @@ import {
   NeDropdown,
   NeDropdownFilterV2,
   NeEmptyState,
-  NeHeading,
   NePaginator,
   NeSortDropdown,
   NeTable,
@@ -56,7 +55,6 @@ const companies = [...new Set(contacts.map((contact) => contact.company))]
 // Every user-visible string is a prop, so a pattern is localized by passing a
 // different label set to the same render function.
 type Labels = {
-  title: string
   pageDescription: string
   createItem: string
   filterItems: string
@@ -95,7 +93,6 @@ type Labels = {
 }
 
 const enLabels: Labels = {
-  title: 'Phonebook contacts',
   pageDescription: 'List of phonebook contacts, including phone number and company.',
   createItem: 'Create contact',
   filterItems: 'Filter contacts',
@@ -130,7 +127,6 @@ const enLabels: Labels = {
 }
 
 const itLabels: Labels = {
-  title: 'Contatti della rubrica',
   pageDescription: 'Elenco dei contatti della rubrica, con numero di telefono e azienda.',
   createItem: 'Crea contatto',
   filterItems: 'Filtra contatti',
@@ -171,7 +167,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A page that lists objects in a table: the title, the toolbar with search, filters, sorting and the create button, the table with the actions of each row and the paginator, and the loading and empty states.'
+          'A page that lists objects in a table: the description of the page with the create button, the toolbar with search, filters and sorting, the table with the actions of each row and the paginator, and the loading and empty states. Without a description, the create button goes on the right of the toolbar, or above it on small screens.'
       }
     }
   },
@@ -197,13 +193,14 @@ type Variant = 'table' | 'noItemsConfigured' | 'noItemsFound'
 // args, so the stories use a render function. Only the table props stay editable
 // as controls; every label comes from the label set passed to renderTablePage().
 const tablePageTemplate = `<div>
-  <!-- page header: title and description on the left, primary action on the right -->
-  <NeHeading tag="h3">{{ labels.title }}</NeHeading>
-  <div class="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-    <p class="mt-2 max-w-2xl text-gray-500 dark:text-gray-400">
+  <!-- Description of the page, with the primary action on its right; on small screens the
+       action goes after the description. Without a description, the action goes in the
+       toolbar instead. -->
+  <div v-if="withDescription" class="mb-8 grid gap-x-4 gap-y-2 sm:grid-cols-[1fr_auto] sm:items-center">
+    <p class="max-w-2xl text-gray-500 dark:text-gray-400">
       {{ labels.pageDescription }}
     </p>
-    <NeButton kind="primary" size="lg" class="shrink-0" @click="noop">
+    <NeButton kind="primary" size="lg" class="mt-2 justify-self-start sm:mt-0" @click="noop">
       <template #prefix>
         <FontAwesomeIcon :icon="faCirclePlus" aria-hidden="true" />
       </template>
@@ -212,6 +209,16 @@ const tablePageTemplate = `<div>
   </div>
   <!-- table toolbar -->
   <div class="mb-6 flex flex-wrap items-center gap-4">
+    <!-- without a description, the primary action: on its own row above the filters on small
+         screens, on the right of the filters on large ones -->
+    <div v-if="!withDescription" class="basis-full max-lg:mb-4 lg:order-last lg:ml-auto lg:basis-auto">
+      <NeButton kind="primary" size="lg" @click="noop">
+        <template #prefix>
+          <FontAwesomeIcon :icon="faCirclePlus" aria-hidden="true" />
+        </template>
+        {{ labels.createItem }}
+      </NeButton>
+    </div>
     <!-- text filter -->
     <NeTextInput
       v-model="textFilter"
@@ -333,14 +340,17 @@ const tablePageTemplate = `<div>
   </NeTable>
 </div>`
 
-function renderTablePage(labels: Labels, variant: Variant = 'table'): Story['render'] {
+function renderTablePage(
+  labels: Labels,
+  variant: Variant = 'table',
+  withDescription = true
+): Story['render'] {
   return (args) => ({
     components: {
       NeButton,
       NeDropdown,
       NeDropdownFilterV2,
       NeEmptyState,
-      NeHeading,
       NePaginator,
       NeSortDropdown,
       NeTable,
@@ -386,6 +396,7 @@ function renderTablePage(labels: Labels, variant: Variant = 'table'): Story['ren
         args,
         labels,
         variant,
+        withDescription,
         contacts,
         companyFilterOptions,
         textFilter,
@@ -432,6 +443,13 @@ export const NoItemsFound: Story = {
   render: renderTablePage(enLabels, 'noItemsFound')
 }
 
+// A page without a description: the primary action moves to the toolbar
+export const WithoutDescription: Story = {
+  name: 'Without description',
+  args: { ariaLabel: 'Phonebook contacts' },
+  render: renderTablePage(enLabels, 'table', false)
+}
+
 export const StandardItalian: Story = {
   name: 'Standard (Italian)',
   args: { ariaLabel: 'Contatti della rubrica' },
@@ -454,4 +472,10 @@ export const NoItemsFoundItalian: Story = {
   name: 'No items found (Italian)',
   args: { ariaLabel: 'Contatti della rubrica' },
   render: renderTablePage(itLabels, 'noItemsFound')
+}
+
+export const WithoutDescriptionItalian: Story = {
+  name: 'Without description (Italian)',
+  args: { ariaLabel: 'Contatti della rubrica' },
+  render: renderTablePage(itLabels, 'table', false)
 }
