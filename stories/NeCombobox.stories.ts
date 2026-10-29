@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A field to choose one option from a long list, typing to filter it. `acceptUserInput` also accepts a value that is not in the list. For a short list, use `NeListbox`. `multiple` is deprecated: to choose several options, use `NeMultiselectCombobox`.'
+          'A field to choose one option from a long list, typing to filter it. `acceptUserInput` also accepts a value that is not in the list. For a short list, use `NeListbox`. `multiple` is deprecated: to choose several options, use `NeMultiselectCombobox`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },

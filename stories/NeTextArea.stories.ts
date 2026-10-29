@@ -12,7 +12,8 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'A text field of several lines, for descriptions, notes and other long text.'
+        component:
+          'A text field of several lines, for descriptions, notes and other long text. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },
