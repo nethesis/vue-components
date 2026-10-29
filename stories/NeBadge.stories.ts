@@ -14,7 +14,7 @@ const meta: Meta<typeof NeBadge> = {
     docs: {
       description: {
         component:
-          'Deprecated: use NeBadgeV2 instead. This component will be removed in a future release.'
+          'Deprecated: use NeBadgeV2 instead. This component will be removed in a future release. To switch, move `text` and the icon into the default slot of NeBadgeV2, the icon as a `FontAwesomeIcon` before or after the text. The kinds become colors: `primary` stays, `secondary` becomes `gray`, `tertiary` `indigo`, `success` `green`, `warning` `amber`, `error` `rose` and `info` `blue`. `rounded` becomes `pill`, `customColorClasses` becomes `customKindClasses`, and an icon that removes the badge becomes `dismissable`, with the `dismiss` event. `label` has no replacement.'
       }
     }
   },
