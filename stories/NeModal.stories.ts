@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A dialog over the page, for a confirmation, a short form or a message that needs an answer before going on. `kind` sets the icon; it has up to three buttons: primary, secondary and cancel. For a deletion, follow the Delete item modal pattern; for a long form or for details, use `NeSideDrawer`.'
+          'A dialog over the page, for a confirmation, a short form or a message that needs an answer before going on. `kind` sets the icon; it has up to three buttons: primary, secondary and cancel. For a deletion, follow the Delete item modal pattern; for a long form or for details, use `NeSideDrawer`. Its texts follow [Modals](https://nethesis.github.io/design-system/?page=writing-guidelines#modals) in the writing guidelines.'
       }
     }
   },

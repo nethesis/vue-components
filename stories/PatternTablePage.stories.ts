@@ -171,7 +171,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A page that lists objects in a table: the title, the toolbar with search, filters, sorting and the create button, the table with the actions of each row and the paginator, and the loading and empty states.'
+          'A page that lists objects in a table: the title, the toolbar with search, filters, sorting and the create button, the table with the actions of each row and the paginator, and the loading and empty states. Its texts follow [Page header](https://nethesis.github.io/design-system/?page=writing-guidelines#page-header), [Table filters](https://nethesis.github.io/design-system/?page=writing-guidelines#table-filters) and [Empty states](https://nethesis.github.io/design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
       }
     }
   },

@@ -28,7 +28,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A field to choose several options from a list, typing to filter it. The chosen options are shown as badges. To choose only one, use `NeCombobox`.'
+          'A field to choose several options from a list, typing to filter it. The chosen options are shown as badges. To choose only one, use `NeCombobox`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },

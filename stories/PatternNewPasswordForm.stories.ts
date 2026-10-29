@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The form to set a new password: the password with its requirements, checked while the user types, and its confirmation.'
+          'The form to set a new password: the password with its requirements, checked while the user types, and its confirmation. Its texts follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },

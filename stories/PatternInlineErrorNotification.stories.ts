@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The error shown inside a page or a form when an action fails, such as saving: a network error or a generic one.'
+          'The error shown inside a page or a form when an action fails, such as saving: a network error or a generic one. Its texts follow [Error messages](https://nethesis.github.io/design-system/?page=writing-guidelines#error-messages) and [Inline notifications](https://nethesis.github.io/design-system/?page=writing-guidelines#inline-notifications) in the writing guidelines.'
       }
     }
   },

@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A text field of one line. `isSearch` makes it a search field with a button to clear it; `isPassword` hides the value, with a button to show it. The `prefix` and `suffix` slots add text or an icon inside the field.'
+          'A text field of one line. `isSearch` makes it a search field with a button to clear it; `isPassword` hides the value, with a button to show it. The `prefix` and `suffix` slots add text or an icon inside the field. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },

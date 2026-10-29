@@ -23,7 +23,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The toast notification shown after an object is created, updated or deleted, with its texts.'
+          'The toast notification shown after an object is created, updated or deleted, with its texts. Its texts follow [Success notifications](https://nethesis.github.io/design-system/?page=writing-guidelines#success-notifications) in the writing guidelines.'
       }
     }
   },

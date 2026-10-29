@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A single checkbox, with a label and an optional description. For a group of choices shown as cards, use `NeCheckboxCards`; for a setting that is turned on or off, `NeToggle`.'
+          'A single checkbox, with a label and an optional description. For a group of choices shown as cards, use `NeCheckboxCards`; for a setting that is turned on or off, `NeToggle`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },
