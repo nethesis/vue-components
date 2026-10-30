@@ -16,7 +16,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A notification about the result of an action the user should notice, such as an object created or deleted, with up to two actions. It is only the card: the product shows it in a fixed container at the edge of the screen, and removes it on `close` or after a few seconds. For an error the user has to act on, use `NeInlineNotification`. Follow the Success toast notification pattern. Its texts follow [Notifications](https://nethesis.github.io/design-system/?page=writing-guidelines#notifications) in the writing guidelines.'
+          'A notification about the result of an action the user should notice, such as an object created or deleted, with up to two actions. It is only the card: the product shows it in a fixed container at the edge of the screen, and removes it on `close` or after a few seconds. For an error the user has to act on, use `NeInlineNotification`. Follow the Success toast notification pattern. Its texts follow [Notifications](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#notifications) in the writing guidelines.'
       }
     }
   },

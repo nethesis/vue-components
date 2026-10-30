@@ -19,7 +19,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The empty states of a page or a list: no objects yet, no objects configured, no results for a search or a filter, and a page the user cannot access. Its texts follow [Empty states](https://nethesis.github.io/design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
+          'The empty states of a page or a list: no objects yet, no objects configured, no results for a search or a filter, and a page the user cannot access. Its texts follow [Empty states](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
       }
     }
   },

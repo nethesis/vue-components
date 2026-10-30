@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A message inside a page, a form or a dialog, that stays until the problem is solved or the user closes it: an error after an action, a warning, or information about the content around it. Buttons and `details` are optional. For the result of an action, shown for a few seconds, use `NeToastNotificationV2`. Its texts follow [Notifications](https://nethesis.github.io/design-system/?page=writing-guidelines#notifications) in the writing guidelines.'
+          'A message inside a page, a form or a dialog, that stays until the problem is solved or the user closes it: an error after an action, a warning, or information about the content around it. Buttons and `details` are optional. For the result of an action, shown for a few seconds, use `NeToastNotificationV2`. Its texts follow [Notifications](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#notifications) in the writing guidelines.'
       }
     }
   },

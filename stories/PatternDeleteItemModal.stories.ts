@@ -14,7 +14,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The confirmation before deleting an object: an `NeModal` of kind warning with a danger button. The Type to confirm version asks the user to type the name of the object, for deletions that lose a lot of data. Its texts follow [Delete confirmation](https://nethesis.github.io/design-system/?page=writing-guidelines#delete-confirmation) in the writing guidelines.'
+          'The confirmation before deleting an object: an `NeModal` of kind warning with a danger button. The Type to confirm version asks the user to type the name of the object, for deletions that lose a lot of data. Its texts follow [Delete confirmation](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#delete-confirmation) in the writing guidelines.'
       }
     }
   },

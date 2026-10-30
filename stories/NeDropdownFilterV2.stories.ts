@@ -42,7 +42,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A button that opens the values of a filter, in the toolbar above a table or a list. `kind` sets one value (`radio`) or several (`checkbox`). Options can be grouped. A search field appears with `showOptionsFilter`, or when there are more options than `maxOptionsShown`. With `checkbox`, the button shows how many values are selected. Its texts follow [Table filters](https://nethesis.github.io/design-system/?page=writing-guidelines#table-filters) in the writing guidelines.'
+          'A button that opens the values of a filter, in the toolbar above a table or a list. `kind` sets one value (`radio`) or several (`checkbox`). Options can be grouped. A search field appears with `showOptionsFilter`, or when there are more options than `maxOptionsShown`. With `checkbox`, the button shows how many values are selected. Its texts follow [Table filters](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#table-filters) in the writing guidelines.'
       }
     }
   },

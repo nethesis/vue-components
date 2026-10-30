@@ -23,7 +23,7 @@ const meta: Meta<typeof NeRadioSelection> = {
     docs: {
       description: {
         component:
-          'A group of radio buttons to choose one option among a few, all visible. With `card`, each option is a card with a description, an icon or an image. For many options, use `NeListbox`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
+          'A group of radio buttons to choose one option among a few, all visible. With `card`, each option is a card with a description, an icon or an image. For many options, use `NeListbox`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },

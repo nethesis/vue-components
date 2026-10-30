@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A switch that turns a setting or a feature on or off. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
+          'A switch that turns a setting or a feature on or off. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },
