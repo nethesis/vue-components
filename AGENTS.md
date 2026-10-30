@@ -28,11 +28,11 @@ npm run build-storybook  # Storybook, then components.json; fails on a missing d
 
 ## Design rules
 
-The components follow the Nethesis Design System (https://nethesis.github.io/design-system/, plain files listed in https://nethesis.github.io/design-system/llms.txt). If the `nethesis-frontend` skill is available, use it for these rules:
+The components follow the Nebula Design System (https://nethesis.github.io/nebula-design-system/, plain files listed in https://nethesis.github.io/nebula-design-system/llms.txt). If the `nebula-frontend` skill is available, use it for these rules:
 
 - Colors from the semantic tokens, and every color class with its `dark:` variant: every component supports the dark theme.
 - Poppins with two weights only: `font-normal` and `font-medium`.
-- Icons: `FontAwesomeIcon` with the free Solid icons, imported by name. The icon for each meaning comes from https://nethesis.github.io/design-system/icons.json.
+- Icons: `FontAwesomeIcon` with the free Solid icons, imported by name. The icon for each meaning comes from https://nethesis.github.io/nebula-design-system/icons.json.
 - Keyboard support and a visible focus ring on every interactive element; icons without text get an accessible label.
 - Texts in the stories follow the writing guidelines and the glossary of the design system. Pattern stories have an English and an Italian version.
 

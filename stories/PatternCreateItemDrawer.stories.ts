@@ -78,7 +78,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The form to create an object, in an `NeSideDrawer` opened by the create button of the page: the fields, an `NeInlineNotification` when the save fails, and the footer with Cancel and the button that saves. The same drawer edits an object: then its title is Edit <object> and the button is Save. The first field gets the focus when the drawer opens, and Enter in a field saves. After saving, the drawer closes and the product shows the Success toast notification pattern. Its texts follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) and [Error messages](https://nethesis.github.io/design-system/?page=writing-guidelines#error-messages) in the writing guidelines.'
+          'The form to create an object, in an `NeSideDrawer` opened by the create button of the page: the fields, an `NeInlineNotification` when the save fails, and the footer with Cancel and the button that saves. The same drawer edits an object: then its title is Edit <object> and the button is Save. The first field gets the focus when the drawer opens, and Enter in a field saves. After saving, the drawer closes and the product shows the Success toast notification pattern. Its texts follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) and [Error messages](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#error-messages) in the writing guidelines.'
       }
     }
   }

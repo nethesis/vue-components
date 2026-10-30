@@ -21,7 +21,7 @@ This library contains:
    ```
 4. After this, you're golden! You can browse the [Storybook](https://nethesis.github.io/vue-components) to see the available components and their usage.
    Coding agents and other tools that cannot run the Storybook can read the list of the components and patterns, with their descriptions, in [components.json](https://nethesis.github.io/vue-components/components.json).
-5. Write the texts, and choose the icons and colors, by the [Nethesis Design System](https://nethesis.github.io/design-system/), which the components follow.
+5. Write the texts, and choose the icons and colors, by the [Nebula Design System](https://nethesis.github.io/nebula-design-system/), which the components follow.
 
 ## Fontawesome
 

@@ -159,8 +159,8 @@ const json = {
   source: STORYBOOK,
   package: packageName,
   version,
-  designSystem: 'https://nethesis.github.io/design-system/llms.txt',
-  note: `The components of @nethesis/vue-components and the patterns, ready-made combinations of components for a whole interaction. Use a pattern when it covers the task, a component otherwise, and never a deprecated component: use its replacedBy. parts are components documented with the one that contains them. storiesSource is the code of the stories, with the usage of the component; componentSource is the code of the component. The Storybook is built from the main branch, which may have changes not released yet; version is the latest release. Check the props of the installed version in node_modules/@nethesis/vue-components/dist/components/<Name>.vue.d.ts. The rules for texts, icons and colors are in the Nethesis Design System: designSystem lists its files, and descriptions link the sections of the writing guidelines that the texts follow.`,
+  designSystem: 'https://nethesis.github.io/nebula-design-system/llms.txt',
+  note: `The components of @nethesis/vue-components and the patterns, ready-made combinations of components for a whole interaction. Use a pattern when it covers the task, a component otherwise, and never a deprecated component: use its replacedBy. parts are components documented with the one that contains them. storiesSource is the code of the stories, with the usage of the component; componentSource is the code of the component. The Storybook is built from the main branch, which may have changes not released yet; version is the latest release. Check the props of the installed version in node_modules/@nethesis/vue-components/dist/components/<Name>.vue.d.ts. The rules for texts, icons and colors are in the Nebula Design System: designSystem lists its files, and descriptions link the sections of the writing guidelines that the texts follow.`,
   components,
   patterns
 }
