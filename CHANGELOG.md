@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.16.0](https://github.com/nethesis/vue-components/compare/v3.15.1...v3.16.0) (2026-10-30)
+
+
+### Features
+
+* add removeLabel, fix NeSideDrawer title ([#218](https://github.com/nethesis/vue-components/issues/218)) ([57a6553](https://github.com/nethesis/vue-components/commit/57a6553453447b0133ceb97167251f42dade3742))
+
 ## [3.15.1](https://github.com/nethesis/vue-components/compare/v3.15.0...v3.15.1) (2026-10-28)
 
 
