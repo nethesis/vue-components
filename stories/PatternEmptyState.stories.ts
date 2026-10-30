@@ -137,7 +137,7 @@ export const NoItemsFoundItalian: Story = {
   args: {
     icon: faMagnifyingGlass,
     title: 'Nessun utente trovato',
-    description: 'Prova a modificare i filtri di ricerca'
+    description: 'Prova a modificare i filtri di ricerca.'
   },
   render: (args) => ({
     components: { NeEmptyState, NeButton, FontAwesomeIcon },
@@ -155,7 +155,7 @@ export const RestrictedPageItalian: Story = {
   },
   render: (args) => ({
     components: { NeEmptyState, NeButton, FontAwesomeIcon },
-    setup: () => ({ args, faArrowRight, buttonLabel: 'Vai alla dashboard' }),
+    setup: () => ({ args, faArrowRight, buttonLabel: 'Vai alla Dashboard' }),
     template: restrictedTemplate
   })
 }

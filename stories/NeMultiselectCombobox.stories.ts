@@ -6,7 +6,6 @@ import { ref, onMounted } from 'vue'
 import { NeMultiselectCombobox, NeTooltip } from '../src/main'
 import type { NeMultiselectComboboxOption } from '../src/main'
 import { faBell, faEarthAmericas, faStar } from '@fortawesome/free-solid-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import mailLogo from '../src/assets/mail.svg'
 import mattermostLogo from '../src/assets/mattermost.svg'
 import nethvoiceLogo from '../src/assets/nethvoice.svg'
@@ -44,8 +43,8 @@ const meta = {
     noOptionsLabel: 'No options available',
     acceptUserInput: false,
     userInputLabel: 'User input',
-    removeLabel: 'Remove',
     optionalLabel: 'Optional',
+    removeLabel: 'Remove',
     customOptionsWidth: '',
     maxHeight: '8.5rem',
     maxOptionsShown: 50,
@@ -157,7 +156,7 @@ export const Invalid: Story = {
     template
   }),
   args: {
-    invalidMessage: 'Invalid value'
+    invalidMessage: 'Required'
   }
 }
 
@@ -191,10 +190,6 @@ export const OptionsWithDescription: Story = {
     ]
   }
 }
-
-library.add(faStar)
-library.add(faBell)
-library.add(faEarthAmericas)
 
 export const OptionsWithIcon: Story = {
   render: (args) => ({
