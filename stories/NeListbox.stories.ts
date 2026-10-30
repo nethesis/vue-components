@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A field to choose one or more options from a short list, without typing: the equivalent of a select. For a long list that needs searching, use `NeCombobox` or `NeMultiselectCombobox`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
+          'A field to choose one option from a short list, without typing: the equivalent of a select. For a long list that needs searching, use `NeCombobox`. To choose several options, use `NeCheckboxCards` for a few and `NeMultiselectCombobox` for many. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },

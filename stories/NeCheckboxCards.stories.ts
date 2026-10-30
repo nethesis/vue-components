@@ -25,7 +25,7 @@ const meta: Meta<typeof NeCheckboxCards> = {
     docs: {
       description: {
         component:
-          'A group of checkboxes shown as cards, each with a label and an optional description, icon or image, to choose several options that need more than a label to tell apart. To choose only one, use `NeRadioSelection` with `card`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
+          'A group of checkboxes shown as cards, each with a label and an optional description, icon or image, to choose several among a few options, all visible. For many options, use `NeMultiselectCombobox`; to choose only one, `NeRadioSelection` with `card`. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/design-system/?page=writing-guidelines#forms) in the writing guidelines.'
       }
     }
   },
