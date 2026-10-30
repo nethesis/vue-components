@@ -44,6 +44,7 @@ const meta = {
     noOptionsLabel: 'No options available',
     acceptUserInput: false,
     userInputLabel: 'User input',
+    removeLabel: 'Remove',
     optionalLabel: 'Optional',
     customOptionsWidth: '',
     maxHeight: '8.5rem',
