@@ -42,7 +42,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Deprecated: use NeDropdownFilterV2 instead. This component will be removed in a future release.'
+          'Deprecated: use NeDropdownFilterV2 instead. This component will be removed in a future release. NeDropdownFilterV2 has the same props and events, but its `v-model` holds the selected options, not their ids. The types `FilterOption` and `FilterOptionGroup` become `NeDropdownFilterV2Option` and `NeDropdownFilterV2OptionGroup`.'
       }
     }
   },

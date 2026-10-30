@@ -107,7 +107,7 @@ const enLabels: Labels = {
   openMenu: 'Open menu',
   noItemsConfigured: 'No contacts configured',
   noItemsFound: 'No contacts found',
-  tryChangingFilters: 'Try changing your search filters',
+  tryChangingFilters: 'Try changing your search filters.',
   sort: 'Sort',
   sortBy: 'Sort by',
   sortDirection: 'Sort direction',
@@ -117,7 +117,7 @@ const enLabels: Labels = {
   openFilter: 'Open filter',
   noOptions: 'No options',
   moreOptionsHidden: 'Continue typing to show more options',
-  clearSearch: 'Clear',
+  clearSearch: 'Clear search',
   optionsFilterPlaceholder: 'Filter options',
   previousPage: 'Go to previous page',
   nextPage: 'Go to next page',
@@ -141,7 +141,7 @@ const itLabels: Labels = {
   openMenu: 'Apri menu',
   noItemsConfigured: 'Nessun contatto configurato',
   noItemsFound: 'Nessun contatto trovato',
-  tryChangingFilters: 'Prova a modificare i filtri di ricerca',
+  tryChangingFilters: 'Prova a modificare i filtri di ricerca.',
   sort: 'Ordina',
   sortBy: 'Ordina per',
   sortDirection: 'Direzione',
@@ -151,7 +151,7 @@ const itLabels: Labels = {
   openFilter: 'Apri filtro',
   noOptions: 'Nessuna opzione',
   moreOptionsHidden: 'Continua a digitare per mostrare altre opzioni',
-  clearSearch: 'Cancella',
+  clearSearch: 'Azzera ricerca',
   optionsFilterPlaceholder: 'Filtra opzioni',
   previousPage: 'Vai alla pagina precedente',
   nextPage: 'Vai alla pagina successiva',
@@ -167,7 +167,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A page that lists objects in a table: the description of the page with the create button, the toolbar with search, filters and sorting, the table with the actions of each row and the paginator, and the loading and empty states. Without a description, the create button goes on the right of the toolbar, or above it on small screens. Its texts follow [Page header](https://nethesis.github.io/design-system/?page=writing-guidelines#page-header), [Table filters](https://nethesis.github.io/design-system/?page=writing-guidelines#table-filters) and [Empty states](https://nethesis.github.io/design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
+          'A page that lists objects in a table: the description of the page with the create button, the toolbar with search, filters and sorting, the table with the actions of each row and the paginator, and the loading and empty states. Without a description, the create button goes on the right of the toolbar, or above it on small screens. With no objects yet, the create button is only in the empty state. Its texts follow [Page header](https://nethesis.github.io/design-system/?page=writing-guidelines#page-header), [Table filters](https://nethesis.github.io/design-system/?page=writing-guidelines#table-filters) and [Empty states](https://nethesis.github.io/design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
       }
     }
   },
@@ -195,12 +195,19 @@ type Variant = 'table' | 'noItemsConfigured' | 'noItemsFound'
 const tablePageTemplate = `<div>
   <!-- Description of the page, with the primary action on its right; on small screens the
        action goes after the description. Without a description, the action goes in the
-       toolbar instead. -->
+       toolbar instead. With no contact yet, the action is only in the empty state, to keep
+       one primary button in the page. -->
   <div v-if="withDescription" class="mb-8 grid gap-x-4 gap-y-2 sm:grid-cols-[1fr_auto] sm:items-center">
-    <p class="max-w-2xl text-gray-500 dark:text-gray-400">
+    <p class="max-w-2xl text-gray-600 dark:text-gray-400">
       {{ labels.pageDescription }}
     </p>
-    <NeButton kind="primary" size="lg" class="mt-2 justify-self-start sm:mt-0" @click="noop">
+    <NeButton
+      v-if="variant !== 'noItemsConfigured'"
+      kind="primary"
+      size="lg"
+      class="mt-2 justify-self-start sm:mt-0"
+      @click="noop"
+    >
       <template #prefix>
         <FontAwesomeIcon :icon="faCirclePlus" aria-hidden="true" />
       </template>
@@ -211,7 +218,10 @@ const tablePageTemplate = `<div>
   <div class="mb-6 flex flex-wrap items-center gap-4">
     <!-- without a description, the primary action: on its own row above the filters on small
          screens, on the right of the filters on large ones -->
-    <div v-if="!withDescription" class="basis-full max-lg:mb-4 lg:order-last lg:ml-auto lg:basis-auto">
+    <div
+      v-if="!withDescription && variant !== 'noItemsConfigured'"
+      class="basis-full max-lg:mb-4 lg:order-last lg:ml-auto lg:basis-auto"
+    >
       <NeButton kind="primary" size="lg" @click="noop">
         <template #prefix>
           <FontAwesomeIcon :icon="faCirclePlus" aria-hidden="true" />
@@ -224,6 +234,7 @@ const tablePageTemplate = `<div>
       v-model="textFilter"
       is-search
       :placeholder="labels.filterItems"
+      :aria-label="labels.filterItems"
       :clear-search-label="labels.clearSearch"
       class="max-w-48 sm:max-w-sm"
     />

@@ -85,7 +85,7 @@ export const NoItemsFound: Story = {
   args: {
     icon: faMagnifyingGlass,
     title: 'No users found',
-    description: 'Try changing your search filters'
+    description: 'Try changing your search filters.'
   },
   render: (args) => ({
     components: { NeEmptyState, NeButton, FontAwesomeIcon },

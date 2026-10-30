@@ -43,7 +43,7 @@ The components follow the Nethesis Design System (https://nethesis.github.io/des
 3. **Write its stories** in `stories/Ne<Name>.stories.ts`: title `Components/Ne<Name>`, `tags: ['autodocs']` (except for components that cover the page, such as `NeModal`), a story for each main variant, and the description in `parameters.docs.description.component` (see "Stories" in CONTRIBUTING.md). The description says what the component is for and which component to use in the cases it does not cover, and links the section of the writing guidelines for its texts, if there is one: agents read it in `components.json` to choose a component, so update it when the component changes.
 4. **Do not break the products.** Add props instead of renaming or removing them. When a component needs incompatible changes, create a new version (`Ne<Name>V2`) and deprecate the old one:
    - add ` [Deprecated]` to the title of its stories;
-   - start its description with `Deprecated: use Ne<Name>V2`;
+   - start its description with `Deprecated: use Ne<Name>V2`, and say how to switch: the props, slots, events and types that change;
    - add `/** @deprecated Use Ne<Name>V2 instead. … */` to its export in `src/main.ts`;
    - call `warnDeprecated()` from `src/lib/utils.ts` when it mounts.
 

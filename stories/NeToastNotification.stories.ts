@@ -14,7 +14,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Deprecated: use NeToastNotificationV2 instead. This component will be removed in a future release.'
+          'Deprecated: use NeToastNotificationV2 instead. This component will be removed in a future release. To switch, make the notification a `NeNotificationV2`: `primaryLabel` and `secondaryLabel` become `firstButtonLabel` and `secondButtonLabel`. `primaryAction` and `secondaryAction` hold functions, while `firstButtonAction` and `secondButtonAction` hold names: the component emits the name with the `action` event, and the product runs the action. `primaryButtonRightAligned` becomes `firstActionOnRight`.'
       }
     }
   },
