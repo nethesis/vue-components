@@ -61,6 +61,7 @@ const props = withDefaults(
     loadingOptions?: boolean
     badgeKind?: NeBadgeV2Kind
     badgeCustomKindClasses?: string
+    removeLabel?: string
   }>(),
   {
     options: () => [],
@@ -78,7 +79,8 @@ const props = withDefaults(
     externalFilter: false,
     loadingOptions: false,
     badgeKind: 'gray',
-    badgeCustomKindClasses: ''
+    badgeCustomKindClasses: '',
+    removeLabel: 'Remove'
   }
 )
 
@@ -497,7 +499,7 @@ onClickOutside(comboboxRef, () => onClickOutsideCombobox())
             dismissable
             :kind="badgeKind"
             :custom-kind-classes="badgeCustomKindClasses"
-            :dismiss-aria-label="`Remove ${selectedOption.label}`"
+            :dismiss-aria-label="`${removeLabel} ${selectedOption.label}`"
             :pill="false"
             @dismiss="removeFromSelection(selectedOption)"
             @mousedown.prevent.stop

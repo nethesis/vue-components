@@ -75,7 +75,7 @@ export const Invalid: Story = {
     template: template
   }),
   args: {
-    invalidMessage: 'Invalid input value'
+    invalidMessage: 'Required'
   }
 }
 
@@ -109,7 +109,7 @@ export const Password: Story = {
     },
     template: template
   }),
-  args: { isPassword: true, label: 'Enter password', placeholder: 'Current password' }
+  args: { isPassword: true, label: 'Password', placeholder: '' }
 }
 
 const typeNumberTemplate = '<NeTextInput v-bind="args" type="number" class="max-w-xs" />'
