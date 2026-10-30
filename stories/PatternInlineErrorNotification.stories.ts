@@ -42,7 +42,7 @@ export const NetworkError: Story = {
 
 export const GenericError: Story = {
   name: 'Generic error',
-  args: { title: 'Cannot save phonebook contact', description: 'Something went wrong' }
+  args: { title: 'Cannot save phonebook contact', description: 'Something went wrong.' }
 }
 
 export const NetworkErrorItalian: Story = {
@@ -57,6 +57,6 @@ export const GenericErrorItalian: Story = {
   name: 'Generic error (Italian)',
   args: {
     title: 'Impossibile salvare il contatto della rubrica',
-    description: 'Qualcosa è andato storto'
+    description: 'Qualcosa è andato storto.'
   }
 }
