@@ -4,7 +4,7 @@
 -->
 
 <script lang="ts" setup>
-import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
@@ -119,9 +119,9 @@ function onKeyDown(event: KeyboardEvent) {
               <!-- drawer header -->
               <div v-if="title">
                 <div class="flex items-center justify-between">
-                  <div class="text-lg">
+                  <DialogTitle as="h3" class="text-lg font-medium text-gray-900 dark:text-gray-50">
                     {{ props.title }}
-                  </div>
+                  </DialogTitle>
                   <button
                     class="focus:ring-primary-500 dark:focus:ring-primary-300 inline-flex rounded-md p-1.5 text-gray-700 hover:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:outline-hidden dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-offset-gray-900"
                     type="button"
