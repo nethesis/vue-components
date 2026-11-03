@@ -108,7 +108,9 @@ const isHeaderShown = computed(() => {
     </div>
     <!-- description and content -->
     <div class="flex h-full flex-row items-center justify-between">
-      <div class="h-full grow">
+      <!-- min-w-0: a flex item never shrinks below its content, so a wide child (a table)
+           would push the card past its container instead of scrolling inside it -->
+      <div class="h-full min-w-0 grow">
         <NeSkeleton v-if="loading" :lines="skeletonLines"></NeSkeleton>
         <NeInlineNotification
           v-else-if="errorTitle"

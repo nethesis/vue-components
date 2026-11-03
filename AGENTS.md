@@ -7,7 +7,7 @@
 ```bash
 npm ci                   # Node.js version from .nvmrc
 npm run storybook        # Storybook on :6006
-npm run playground       # quick test app, see playground/App.vue
+npm run playground       # quick test app, see playground/App.vue (local only, never commit it)
 npm run lint             # ESLint
 npm run format           # Prettier check of src/ (format-fix to fix)
 npm run build            # type declarations + library bundle in dist/
@@ -56,3 +56,5 @@ New files start with the license header used by the others (`Copyright (C) <year
 ## Commits
 
 Conventional Commits: release-please builds the changelog and the version from them, so `feat` and `fix` are for changes the products see, and `!` or `BREAKING CHANGE` for incompatible ones.
+
+Never commit the playground: scenarios added to `playground/` and changes to `playground/App.vue` are for local testing. Say in the pull request what you tested there.

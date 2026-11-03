@@ -128,14 +128,18 @@ function navigateToPage(page: number) {
 
 <template>
   <div
-    class="flex flex-col justify-between gap-6 border-t border-gray-300 bg-white px-6 py-3 text-sm text-gray-700 sm:flex-row sm:items-center dark:border-gray-600 dark:bg-gray-950 dark:text-gray-100"
+    class="flex flex-col justify-between gap-6 border-t border-gray-300 bg-white px-6 py-3 text-sm text-gray-700 sm:flex-row sm:flex-wrap sm:items-center sm:gap-y-3 dark:border-gray-600 dark:bg-gray-950 dark:text-gray-100"
   >
-    <!-- range information and page size selection -->
-    <div class="flex items-center gap-6">
-      <div>{{ firstRow }} - {{ lastRow }} {{ rangeOfTotalLabel }} {{ totalRows }}</div>
+    <!-- range information and page size selection: when the container is too narrow for one
+         row, the page size and the pages wrap below instead of squeezing the range one word
+         per line -->
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      <div class="whitespace-nowrap">
+        {{ firstRow }} - {{ lastRow }} {{ rangeOfTotalLabel }} {{ totalRows }}
+      </div>
 
       <div class="flex items-center gap-2">
-        <div :id="pageSizeLabelId">{{ pageSizeLabel }}</div>
+        <div :id="pageSizeLabelId" class="whitespace-nowrap">{{ pageSizeLabel }}</div>
         <NeListbox
           v-model="internalPageSize"
           :options="pageSizeOptions"

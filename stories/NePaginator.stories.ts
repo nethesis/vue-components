@@ -12,7 +12,7 @@ const meta: Meta<typeof NePaginator> = {
     docs: {
       description: {
         component:
-          'The page navigation of a table or a list, with the range of rows shown and the number of rows per page. It goes in the `paginator` slot of `NeTable`.'
+          'The page navigation of a table or a list, with the range of rows shown and the number of rows per page. It goes in the `paginator` slot of `NeTable`. In a narrow container the pages wrap below the range and the page size.'
       }
     }
   },
@@ -71,5 +71,27 @@ export const CustomPageSizes: Story = {
   args: {
     pageSizes: [5, 10, 15, 20],
     pageSize: 5
+  }
+}
+
+export const InNarrowContainer: Story = {
+  render: (args) => ({
+    components: { NePaginator },
+    setup() {
+      return { args }
+    },
+    template: `<div class="max-w-xl">${template}</div>`
+  }),
+  args: {
+    currentPage: 11,
+    totalRows: 1050
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'When the container is too narrow for one row, as in a card that takes half of a page, the pages wrap below the range and the page size.'
+      }
+    }
   }
 }
