@@ -64,6 +64,8 @@ npm run playground
 
 Edit `playground/App.vue` to add the components you want to test. The app will be hot-reloaded on any change.
 
+The playground is for local testing only: do not commit your scenarios or your changes to `playground/App.vue`. Describe what you tested in the pull request instead.
+
 ## IDE support
 
 [VS Code](https://code.visualstudio.com/) is the recommended IDE. When you open the repository, it suggests installing the recommended extensions listed in `.vscode/extensions.json`:
