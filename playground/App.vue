@@ -2,6 +2,7 @@
 import { useDark } from '@vueuse/core'
 import NeButton from '../src/components/NeButton.vue'
 import NeToggle from '../src/components/NeToggle.vue'
+import CardPaginatorScenarios from './CardPaginatorScenarios.vue'
 
 const isDark = useDark()
 </script>
@@ -24,5 +25,7 @@ const isDark = useDark()
 
     <!-- Add components below -->
     <NeButton kind="primary">Hello from playground</NeButton>
+
+    <CardPaginatorScenarios class="mt-10" />
   </div>
 </template>
