@@ -59,6 +59,14 @@ const props = defineProps({
   }
 })
 
+// An interactive tooltip is mounted next to its trigger, not in the body, so tab moves from the
+// trigger into it: its content would inherit the text styles of the trigger's container, such as
+// the font-medium of a badge or a label or the uppercase of a table header. These classes restore
+// what the tooltip inherits. tippy.css already sets the size, the line height and the white space,
+// and the theme the color
+const contentClasses =
+  'font-normal not-italic normal-case tracking-normal indent-0 text-start break-normal cursor-auto'
+
 // vue-tippy exposes the instance methods but does not type them
 const tippyRef = ref<{ hide: () => void } | null>(null)
 const isShown = ref(false)
@@ -97,7 +105,9 @@ useEventListener(
       </button>
     </slot>
     <template #content>
-      <slot name="content" />
+      <div :class="contentClasses">
+        <slot name="content" />
+      </div>
     </template>
   </Tippy>
 </template>
