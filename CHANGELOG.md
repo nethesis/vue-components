@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.16.0](https://github.com/nethesis/vue-components/compare/v3.15.1...v3.16.0) (2026-11-06)
+
+
+### Features
+
+* add removeLabel, fix NeSideDrawer title ([#218](https://github.com/nethesis/vue-components/issues/218)) ([57a6553](https://github.com/nethesis/vue-components/commit/57a6553453447b0133ceb97167251f42dade3742))
+
+
+### Bug Fixes
+
+* keep NeCard and NePaginator inside narrow containers ([#223](https://github.com/nethesis/vue-components/issues/223)) ([cb9ffd2](https://github.com/nethesis/vue-components/commit/cb9ffd246543146edc94c79a829a89f8ec02b65f))
+* **NeTooltip:** keep text from inheriting styles ([#224](https://github.com/nethesis/vue-components/issues/224)) ([9ebfb88](https://github.com/nethesis/vue-components/commit/9ebfb88c475c73e1e3a9855bd34960dacf9b77b0))
+
 ## [3.15.1](https://github.com/nethesis/vue-components/compare/v3.15.0...v3.15.1) (2026-10-28)
 
 
