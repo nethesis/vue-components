@@ -31,3 +31,6 @@ coverage
 
 # Output of 'npm pack'
 *.tgz
+
+# TypeScript incremental build info
+*.tsbuildinfo
