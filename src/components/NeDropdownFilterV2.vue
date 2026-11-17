@@ -469,7 +469,7 @@ function clearFilter() {
             { top: top + 'px' },
             alignToRight ? { right: right + 'px' } : { left: left + 'px' }
           ]"
-          class="absolute z-110 mt-2.5 max-h-[17.2rem] min-w-40 overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50"
+          class="absolute z-110 mt-2.5 max-h-[17.2rem] min-w-40 overflow-y-auto rounded-md bg-white px-4 py-2 text-sm shadow-lg ring-1 ring-gray-200 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-700"
         >
           <div v-if="isShowingOptionsFilter" class="py-2">
             <label class="sr-only" :for="`${componentId}-options-filter`">
