@@ -155,6 +155,7 @@ function navigateToPage(page: number) {
       <ul class="flex h-10 items-center -space-x-px text-base">
         <li>
           <button
+            type="button"
             :disabled="currentPage === 1"
             :aria-label="previousLabel"
             class="ms-0 flex h-10 items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-4 leading-tight text-gray-500 hover:bg-gray-50 hover:text-gray-700 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-white"
@@ -168,6 +169,7 @@ function navigateToPage(page: number) {
         <template v-if="totalPages <= 8">
           <li v-for="i in range(1, totalPages + 1)" :key="i">
             <button
+              type="button"
               :aria-current="getAriaCurrent(i)"
               :class="getCellClass(i)"
               @click="navigateToPage(i)"
@@ -180,6 +182,7 @@ function navigateToPage(page: number) {
         <template v-else>
           <li>
             <button
+              type="button"
               :aria-current="getAriaCurrent(1)"
               :class="getCellClass(1)"
               @click="navigateToPage(1)"
@@ -189,6 +192,7 @@ function navigateToPage(page: number) {
           </li>
           <li>
             <button
+              type="button"
               :aria-current="getAriaCurrent(firstPages ? 2 : -1)"
               :class="getCellClass(firstPages ? 2 : -1, !firstPages)"
               @click="firstPages ? navigateToPage(2) : undefined"
@@ -198,6 +202,7 @@ function navigateToPage(page: number) {
           </li>
           <li v-for="i in range(-1, 2)" :key="i">
             <button
+              type="button"
               :aria-current="
                 getAriaCurrent(
                   firstPages ? 4 + i : lastPages ? totalPages - 3 + i : currentPage + i
@@ -217,6 +222,7 @@ function navigateToPage(page: number) {
           </li>
           <li>
             <button
+              type="button"
               :aria-current="getAriaCurrent(lastPages ? totalPages - 1 : -1)"
               :class="getCellClass(lastPages ? totalPages - 1 : -1, !lastPages)"
               @click="lastPages ? navigateToPage(totalPages - 1) : undefined"
@@ -226,6 +232,7 @@ function navigateToPage(page: number) {
           </li>
           <li>
             <button
+              type="button"
               :aria-current="getAriaCurrent(totalPages)"
               :class="getCellClass(totalPages)"
               @click="navigateToPage(totalPages)"
@@ -236,6 +243,7 @@ function navigateToPage(page: number) {
         </template>
         <li>
           <button
+            type="button"
             :disabled="currentPage >= totalPages"
             :aria-label="nextLabel"
             class="flex h-10 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-4 leading-tight text-gray-500 hover:bg-gray-50 hover:text-gray-700 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-white"
