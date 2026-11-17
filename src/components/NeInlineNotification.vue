@@ -143,6 +143,7 @@ const closeIconKindStyle: { [index: string]: string } = {
         <!-- expandable details -->
         <template v-if="$slots.details">
           <button
+            type="button"
             :class="`mt-3 -ml-2 rounded-md px-2 py-1.5 font-medium transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-hidden ${
               buttonsKindStyle[props.kind as string]
             }`"
