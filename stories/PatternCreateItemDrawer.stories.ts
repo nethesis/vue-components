@@ -30,6 +30,7 @@ type Labels = {
   cannotCreateItem: string
   networkError: string
   cancel: string
+  create: string
   save: string
 }
 
@@ -48,6 +49,7 @@ const enLabels: Labels = {
   cannotCreateItem: 'Cannot create contact',
   networkError: 'Network error. Check your connection and reload the page.',
   cancel: 'Cancel',
+  create: 'Create',
   save: 'Save'
 }
 
@@ -66,6 +68,7 @@ const itLabels: Labels = {
   cannotCreateItem: 'Impossibile creare il contatto',
   networkError: 'Errore di rete. Controlla la connessione e ricarica la pagina.',
   cancel: 'Annulla',
+  create: 'Crea',
   save: 'Salva'
 }
 
@@ -78,7 +81,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The form to create an object, in an `NeSideDrawer` opened by the create button of the page: the fields, an `NeInlineNotification` when the save fails, and the footer with Cancel and the button that saves. The same drawer edits an object: then its title is Edit <object> and the button is Save. The first field gets the focus when the drawer opens, and Enter in a field saves. After saving, the drawer closes and the product shows the Success toast notification pattern. Its texts follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) and [Error messages](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#error-messages) in the writing guidelines.'
+          'The form to create an object, in an `NeSideDrawer` opened by the create button of the page: the fields, an `NeInlineNotification` when the save fails, and the footer with Cancel and the button that saves, which repeats only the verb of the title: Create. The same drawer edits an object: then its title is Edit <object> and the button is Save. The first field gets the focus when the drawer opens, and Enter in a field saves. After saving, the drawer closes and the product shows the Success toast notification pattern. Its texts follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) and [Error messages](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#error-messages) in the writing guidelines.'
       }
     }
   }
@@ -148,7 +151,7 @@ const drawerTemplate = `<div>
           {{ labels.cancel }}
         </NeButton>
         <NeButton type="submit" kind="primary" size="lg" :disabled="saving" :loading="saving">
-          {{ editing ? labels.save : labels.createItem }}
+          {{ editing ? labels.save : labels.create }}
         </NeButton>
       </div>
     </form>

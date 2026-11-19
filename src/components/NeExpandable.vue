@@ -67,6 +67,7 @@ function toggleExpanded() {
         <template v-else>
           <!-- full width button -->
           <button
+            type="button"
             class="flex w-full items-center justify-between rounded border-b border-gray-300 px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-200 dark:border-gray-500 dark:text-gray-50 dark:hover:bg-gray-700"
           >
             <span>{{ label }}</span>

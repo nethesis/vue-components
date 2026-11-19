@@ -75,7 +75,8 @@ const buttonRef = ref<InstanceType<typeof Listbox> | null>(null)
 const inputValidStyle =
   'ring-gray-300 dark:ring-gray-600 focus:ring-primary-500 dark:focus:ring-primary-300'
 
-const inputInvalidStyle = 'ring-rose-300 focus:ring-rose-500 ring-rose-700 focus:ring-rose-500'
+const inputInvalidStyle =
+  'ring-rose-700 focus:ring-rose-500 dark:ring-rose-500 dark:focus:ring-rose-500'
 
 const descriptionBaseStyle = 'mt-2 text-sm'
 
@@ -247,7 +248,7 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
           <div v-show="open || showOptions">
             <ListboxOptions
               static
-              :class="`absolute z-110 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-500/5 focus:outline-hidden sm:text-sm dark:bg-gray-950 ${optionsPanelStyle}`"
+              :class="`absolute z-110 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-gray-200 focus:outline-hidden sm:text-sm dark:bg-gray-950 dark:ring-gray-700 ${optionsPanelStyle}`"
               :style="[{ top: top + 'px' }, { left: left + 'px' }, { 'min-width': width + 'px' }]"
             >
               <ListboxOption
@@ -263,10 +264,10 @@ onClickOutside(listboxRef, () => onClickOutsideListbox())
                   :class="[
                     'relative cursor-default py-2 pr-9 pl-3 select-none',
                     active
-                      ? 'cursor-pointer bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-100'
+                      ? 'cursor-pointer bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-50'
                       : option.disabled
                         ? 'cursor-not-allowed text-gray-500 dark:text-gray-500'
-                        : 'text-gray-900 dark:text-gray-100'
+                        : 'text-gray-700 dark:text-gray-200'
                   ]"
                 >
                   <div class="block truncate">
