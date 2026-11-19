@@ -167,7 +167,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A page that lists objects in a table: the description of the page with the create button, the toolbar with search, filters and sorting, the table with the actions of each row and the paginator, and the loading and empty states. Without a description, the create button goes on the right of the toolbar, or above it on small screens. With no objects yet, the create button is only in the empty state. Its texts follow [Page header](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#page-header), [Table filters](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#table-filters) and [Empty states](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
+          'A page that lists objects in a table: the description of the page with the create button, the toolbar with search, filters and sorting, the table with the actions of each row and the paginator, and the loading and empty states. Where the create button goes, with or without a title or a description, follows [Page header](https://nethesis.github.io/nebula-design-system/?page=layout#page-header) in the Layout page: this pattern shows it on the right of the description and, without a title or a description, in the toolbar. Its texts follow [Page header](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#page-header), [Table filters](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#table-filters) and [Empty states](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#empty-states) in the writing guidelines.'
       }
     }
   },
@@ -194,8 +194,8 @@ type Variant = 'table' | 'noItemsConfigured' | 'noItemsFound'
 // as controls; every label comes from the label set passed to renderTablePage().
 const tablePageTemplate = `<div>
   <!-- Description of the page, with the primary action on its right; on small screens the
-       action goes after the description. Without a description, the action goes in the
-       toolbar instead. With no contact yet, the action is only in the empty state, to keep
+       action goes after the description. Without a title or a description, the action goes
+       in the toolbar instead. With no contact yet, the action is only in the empty state, to keep
        one primary button in the page. -->
   <div v-if="withDescription" class="mb-8 grid gap-x-4 gap-y-2 sm:grid-cols-[1fr_auto] sm:items-center">
     <p class="max-w-2xl text-gray-600 dark:text-gray-400">
@@ -216,7 +216,7 @@ const tablePageTemplate = `<div>
   </div>
   <!-- table toolbar -->
   <div class="mb-6 flex flex-wrap items-center gap-4">
-    <!-- without a description, the primary action: on its own row above the filters on small
+    <!-- without a title or a description, the primary action: on its own row above the filters on small
          screens, on the right of the filters on large ones -->
     <div
       v-if="!withDescription && variant !== 'noItemsConfigured'"
@@ -454,7 +454,7 @@ export const NoItemsFound: Story = {
   render: renderTablePage(enLabels, 'noItemsFound')
 }
 
-// A page without a description: the primary action moves to the toolbar
+// A page without a title or a description: the primary action moves to the toolbar
 export const WithoutDescription: Story = {
   name: 'Without description',
   args: { ariaLabel: 'Phonebook contacts' },
