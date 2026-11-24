@@ -9,7 +9,7 @@
 -->
 
 <script setup lang="ts">
-import { computed, nextTick, ref, useId } from 'vue'
+import { computed, nextTick, ref, useId, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -39,8 +39,13 @@ const YEARS_PER_PAGE = 12
 
 const props = withDefaults(
   defineProps<{
-    // the selected day, as 'yyyy-MM-dd'
+    // the selected day, as 'yyyy-MM-dd'; the first day with range
     modelValue?: string
+    // show a range of days, from modelValue to rangeEnd
+    range?: boolean
+    // the last day of the range, as 'yyyy-MM-dd'; while it is empty, the range follows the day
+    // under the pointer or with the focus
+    rangeEnd?: string
     min?: string
     max?: string
     isDateDisabled?: (date: Date) => boolean
@@ -59,6 +64,8 @@ const props = withDefaults(
   }>(),
   {
     modelValue: '',
+    range: false,
+    rangeEnd: '',
     min: '',
     max: '',
     isDateDisabled: undefined,
@@ -92,6 +99,35 @@ const calendarRef = ref<HTMLElement>()
 const minDate = computed(() => parseIsoDate(props.min))
 const maxDate = computed(() => parseIsoDate(props.max))
 const selectedDate = computed(() => parseIsoDate(props.modelValue))
+const rangeEndDate = computed(() => (props.range ? parseIsoDate(props.rangeEnd) : null))
+// the last day of the range while it is being chosen
+const previewDate = ref<Date | null>(null)
+
+// the range shown, first day first: the chosen one, or the one being chosen
+const shownRange = computed((): [Date, Date] | null => {
+  const start = selectedDate.value
+  const end = rangeEndDate.value ?? previewDate.value
+  if (!props.range || !start || !end) {
+    return null
+  }
+  return end < start ? [end, start] : [start, end]
+})
+
+const isChoosingRangeEnd = computed(
+  () => props.range && !!selectedDate.value && !rangeEndDate.value
+)
+
+// show the month of a day set from outside, such as a preset
+watch(
+  () => props.modelValue,
+  () => {
+    const date = parseIsoDate(props.modelValue)
+    if (date && !isSameMonth(date, activeDate.value)) {
+      activeDate.value = date
+    }
+    previewDate.value = null
+  }
+)
 
 const weekStartsOn = computed(() => (((props.weekStart % 7) + 7) % 7) as Day)
 
@@ -259,13 +295,41 @@ function isSelectable(day: Date): boolean {
   return isDaySelectable(day, props.min, props.max, props.isDateDisabled)
 }
 
+// the chosen day, or the first or the last day of the chosen range
+function isDaySelected(day: Date): boolean {
+  return (
+    (!!selectedDate.value && isSameDay(day, selectedDate.value)) ||
+    (!!rangeEndDate.value && isSameDay(day, rangeEndDate.value))
+  )
+}
+
+function isRangeEdge(day: Date): boolean {
+  const range = shownRange.value
+  return !!range && (isSameDay(day, range[0]) || isSameDay(day, range[1]))
+}
+
+function isInRange(day: Date): boolean {
+  const range = shownRange.value
+  return !!range && day > range[0] && day < range[1]
+}
+
+function onDayHover(day: Date) {
+  if (isChoosingRangeEnd.value) {
+    previewDate.value = day
+  }
+}
+
 function getDayStyle(day: Date): string {
-  const isSelected = !!selectedDate.value && isSameDay(day, selectedDate.value)
+  const isSelected = isDaySelected(day) || isRangeEdge(day)
   const styles = [cellBaseStyle, 'size-9']
 
   if (isSelected) {
     styles.push(
       'border-transparent bg-primary-700 font-medium text-white hover:bg-primary-800 dark:bg-primary-500 dark:text-gray-950 dark:hover:bg-primary-300'
+    )
+  } else if (isInRange(day)) {
+    styles.push(
+      'border-transparent bg-primary-100 text-gray-900 dark:bg-primary-900 dark:text-gray-50'
     )
   } else if (isToday(day)) {
     styles.push(
@@ -331,6 +395,7 @@ async function focus() {
 
 async function moveActiveDate(date: Date) {
   activeDate.value = startOfDay(date)
+  onDayHover(activeDate.value)
   await focus()
 }
 
@@ -551,7 +616,7 @@ function onKeydown(event: KeyboardEvent) {
             <td
               v-if="day"
               role="gridcell"
-              :aria-selected="!!selectedDate && isSameDay(day, selectedDate)"
+              :aria-selected="isDaySelected(day) || (!!rangeEndDate && isInRange(day))"
               class="p-0"
             >
               <button
@@ -563,6 +628,7 @@ function onKeydown(event: KeyboardEvent) {
                 :aria-current="isToday(day) ? 'date' : undefined"
                 :aria-disabled="!isSelectable(day) || undefined"
                 @click="selectDay(day)"
+                @mouseenter="onDayHover(day)"
                 @keydown="onDayKeydown"
               >
                 {{ day.getDate() }}

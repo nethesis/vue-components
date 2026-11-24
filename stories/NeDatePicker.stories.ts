@@ -3,9 +3,9 @@
 
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref, watch } from 'vue'
-import { isWeekend } from 'date-fns'
+import { addDays, addHours, format, isWeekend, setHours, startOfHour, startOfMonth } from 'date-fns'
 
-import { NeDatePicker } from '../src/main'
+import { NeDatePicker, type NeDatePickerPreset } from '../src/main'
 
 const meta = {
   title: 'Components/NeDatePicker',
@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "A field to choose a day, a date and time, or a time of day, in forms and filters. `type` sets the value: `'date'` (default) is a `'yyyy-MM-dd'` string, which carries no time zone; `'datetime'` is a `Date`, a moment; `'time'` is a `'HH:mm'` string, `'HH:mm:ss'` with `showSeconds`. An empty value is `''`, `null` for `'datetime'`. `min` and `max` have the same type as the value; `isDateDisabled` disables other days. `'datetime'` is shown and chosen in the browser time zone, or in `timeZone`, such as `'Europe/Rome'`, whose name is shown after the time. `minuteStep` sets the step of the minutes. For `'date'`, a click on a day applies it; for `'datetime'` and `'time'`, the popup has Cancel and Select buttons. `autoApply` changes this. `textInput` also lets the user type the value in the format of the `locale`, such as `24/11/2026, 14:30` in Italian. Month and day names, the date and time format, the 12 or 24-hour clock and the first day of the week come from `locale`, the browser language if empty; `hourCycle` sets the clock regardless of the language. The popup works inside NeSideDrawer and NeModal, with the keyboard support of the WAI-ARIA date picker dialog and spin button patterns. For a start and an end, use two NeDatePicker fields: set the `min` of the end field to the start and the `max` of the start field to the end. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) in the writing guidelines."
+          "A field to choose a day, a date and time, or a time of day, in forms and filters. `type` sets the value: `'date'` (default) is a `'yyyy-MM-dd'` string, which carries no time zone; `'datetime'` is a `Date`, a moment; `'time'` is a `'HH:mm'` string, `'HH:mm:ss'` with `showSeconds`. An empty value is `''`, `null` for `'datetime'`. `min` and `max` have the same type as the value; `isDateDisabled` disables other days. `'datetime'` is shown and chosen in the browser time zone, or in `timeZone`, such as `'Europe/Rome'`, whose name is shown after the time. `minuteStep` sets the step of the minutes. For `'date'`, a click on a day applies it; for `'datetime'` and `'time'`, the popup has Cancel and Select buttons. `autoApply` changes this. `range` chooses a range of days, as `[first, last]`, `null` when empty, with two clicks; it is only for `'date'`. `presets` adds values to choose with a click next to the calendar, such as `Last 7 days`: each has a `label`, translated by the product, and a `value`, or a function that returns it when the preset is chosen. The library has no presets of its own. `textInput` also lets the user type the value in the format of the `locale`, such as `24/11/2026, 14:30` in Italian. Month and day names, the date and time format, the 12 or 24-hour clock and the first day of the week come from `locale`, the browser language if empty; `hourCycle` sets the clock regardless of the language. The popup works inside NeSideDrawer and NeModal, with the keyboard support of the WAI-ARIA date picker dialog and spin button patterns. For a start and an end, use two NeDatePicker fields: set the `min` of the end field to the start and the `max` of the start field to the end. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) in the writing guidelines."
       }
     }
   },
@@ -43,12 +43,16 @@ const meta = {
     autoApply: undefined,
     textInput: false,
     clearable: true,
+    range: false,
+    presets: [],
     openCalendarLabel: 'Choose date',
     chooseTimeLabel: 'Choose time',
     clearLabel: 'Clear',
     cancelLabel: 'Cancel',
     selectLabel: 'Select',
     invalidDateLabel: 'Enter a valid date',
+    invalidRangeLabel: 'Enter a valid start and end date',
+    presetsLabel: 'Presets',
     invalidDateTimeLabel: 'Enter a valid date and time',
     invalidTimeLabel: 'Enter a valid time',
     unavailableDateLabel: 'This date is not available',
@@ -138,6 +142,72 @@ export const TextInput: Story = {
 export const CancelAndSelect: Story = {
   render,
   args: { autoApply: false }
+}
+
+const iso = (date: Date) => format(date, 'yyyy-MM-dd')
+
+const rangePresets: NeDatePickerPreset[] = [
+  { label: 'Today', value: () => [iso(new Date()), iso(new Date())] },
+  { label: 'Last 7 days', value: () => [iso(addDays(new Date(), -6)), iso(new Date())] },
+  { label: 'Last 30 days', value: () => [iso(addDays(new Date(), -29)), iso(new Date())] },
+  { label: 'This month', value: () => [iso(startOfMonth(new Date())), iso(new Date())] }
+]
+
+export const Range: Story = {
+  render,
+  args: {
+    label: 'Date range',
+    range: true,
+    modelValue: ['2026-11-10', '2026-11-18']
+  }
+}
+
+export const RangeWithPresets: Story = {
+  render,
+  args: {
+    label: 'Date range',
+    range: true,
+    presets: rangePresets,
+    max: iso(new Date()),
+    helperText: 'Up to today.'
+  }
+}
+
+export const RangeTextInput: Story = {
+  render,
+  args: {
+    label: 'Date range',
+    range: true,
+    textInput: true,
+    placeholder: 'mm/dd/yyyy – mm/dd/yyyy'
+  }
+}
+
+export const DatePresets: Story = {
+  render,
+  args: {
+    label: 'Expiration date',
+    presets: [
+      { label: 'Tomorrow', value: () => iso(addDays(new Date(), 1)) },
+      { label: 'In a week', value: () => iso(addDays(new Date(), 7)) },
+      { label: 'In a month', value: () => iso(addDays(new Date(), 30)) }
+    ]
+  }
+}
+
+export const DateAndTimePresets: Story = {
+  render,
+  args: {
+    type: 'datetime',
+    label: 'Mute until',
+    presets: [
+      { label: 'Next hour', value: () => addHours(startOfHour(new Date()), 1) },
+      {
+        label: 'Tomorrow at 09:00',
+        value: () => setHours(startOfHour(addDays(new Date(), 1)), 9)
+      }
+    ]
+  }
 }
 
 export const DateAndTime: Story = {

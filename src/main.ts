@@ -59,7 +59,11 @@ export { default as NeDatePicker } from './components/NeDatePicker.vue'
 
 // types export
 export type { NeComboboxOption } from './components/NeCombobox.vue'
-export type { NeDatePickerType } from './components/NeDatePicker.vue'
+export type {
+  NeDatePickerType,
+  NeDatePickerValue,
+  NeDatePickerPreset
+} from './components/NeDatePicker.vue'
 export type { NeMultiselectComboboxOption } from './components/NeMultiselectCombobox.vue'
 export type { Tab } from './components/NeTabs.vue'
 /**
