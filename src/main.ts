@@ -56,6 +56,7 @@ export { default as NeStepper } from './components/NeStepper.vue'
 export { default as NeToastNotificationV2 } from './components/NeToastNotificationV2.vue'
 export { default as NePasswordRequirements } from './components/NePasswordRequirements.vue'
 export { default as NeDatePicker } from './components/NeDatePicker.vue'
+export { default as NeDateRangeFilter } from './components/NeDateRangeFilter.vue'
 
 // types export
 export type { NeComboboxOption } from './components/NeCombobox.vue'

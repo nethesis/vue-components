@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { computed, nextTick, ref, useAttrs, useId, watch } from 'vue'
+import { computed, nextTick, ref, useAttrs, useId, useSlots, watch } from 'vue'
 import { onClickOutside, useEventListener, useResizeObserver } from '@vueuse/core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
@@ -182,6 +182,7 @@ defineExpose({
 })
 
 const attrs = useAttrs()
+const slots = useSlots()
 const generatedId = useId()
 const componentId = computed(() => props.id || generatedId)
 
@@ -552,7 +553,14 @@ function toggle() {
 }
 
 function focus() {
-  triggerRef.value?.focus()
+  if (slots.trigger) {
+    // the first button or field of the trigger slot
+    fieldRef.value
+      ?.querySelector<HTMLElement>('button, input, [tabindex]:not([tabindex="-1"])')
+      ?.focus()
+  } else {
+    triggerRef.value?.focus()
+  }
 }
 
 function onCalendarSelect(day: string) {
@@ -633,6 +641,21 @@ function onTimeEnter() {
 function onSelectClick() {
   applyPendingValue()
   close()
+}
+
+// clear the value from the popup, which stays open, as the clear button of a filter does; the
+// focus moves to the calendar, since the button that cleared may no longer be focusable
+function clearFromPopup() {
+  pendingDay.value = ''
+  pendingEnd.value = ''
+  model.value = emptyValue.value
+  inputText.value = ''
+  typedError.value = ''
+  if (hasCalendar.value) {
+    calendarRef.value?.focus()
+  } else {
+    timeSpinnerRef.value?.focus()
+  }
 }
 
 function clear() {
@@ -805,127 +828,140 @@ function trapFocus(event: KeyboardEvent) {
 
 <template>
   <div v-bind="rootAttrs">
-    <label
-      v-if="label"
-      :id="`${componentId}-label`"
-      :for="componentId"
-      class="mb-2 flex items-end justify-between text-sm leading-6 font-medium text-gray-700 dark:text-gray-200"
-    >
-      <span>
-        {{ label }}
-        <span v-if="$slots.tooltip" class="ml-1">
-          <slot name="tooltip"></slot>
-        </span>
-      </span>
-      <span v-if="optional" class="ml-2 font-normal">{{ optionalLabel }}</span>
-    </label>
-    <div ref="fieldRef" class="relative rounded-md shadow-sm">
-      <!-- typed date -->
-      <input
-        v-if="textInput"
-        :id="componentId"
-        ref="triggerRef"
-        v-model="inputText"
-        type="text"
-        autocomplete="off"
-        :class="fieldStyle"
-        :placeholder="placeholder"
+    <!-- a custom trigger, such as the button of a filter, instead of the field -->
+    <div v-if="$slots.trigger" ref="fieldRef" class="inline-block">
+      <slot
+        name="trigger"
+        :is-open="isOpen"
+        :display-value="displayValue"
         :disabled="disabled"
-        :aria-invalid="!!shownInvalidMessage || undefined"
-        :aria-describedby="descriptionId"
-        v-bind="fieldAttrs"
-        @keydown="onInputKeydown"
-        @blur="commitInputText"
-      />
-      <!-- date chosen from the calendar only -->
-      <button
-        v-else
-        :id="componentId"
-        ref="triggerRef"
-        type="button"
-        :class="fieldStyle"
-        :disabled="disabled"
-        aria-haspopup="dialog"
-        :aria-expanded="isOpen"
-        :aria-label="label ? undefined : openLabel"
-        :aria-labelledby="label ? `${componentId}-label ${componentId}-value` : undefined"
-        :aria-invalid="!!shownInvalidMessage || undefined"
-        :aria-describedby="descriptionId"
-        v-bind="fieldAttrs"
-        @click="toggle"
-        @keydown="onTriggerKeydown"
+        :toggle="toggle"
+        :trigger-attrs="{ 'aria-haspopup': 'dialog' as const, 'aria-expanded': isOpen }"
+      ></slot>
+    </div>
+    <template v-else>
+      <label
+        v-if="label"
+        :id="`${componentId}-label`"
+        :for="componentId"
+        class="mb-2 flex items-end justify-between text-sm leading-6 font-medium text-gray-700 dark:text-gray-200"
       >
-        <span
-          :id="`${componentId}-value`"
-          :class="[
-            'block truncate',
-            displayValue ? '' : 'text-gray-400 dark:text-gray-500',
-            !displayValue && !placeholder ? 'sr-only' : ''
-          ]"
-          >{{ displayValue || placeholder || openLabel }}</span
-        >
-      </button>
-      <!-- clicks on the icons, except the buttons, go through to the field below -->
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1 pr-2">
-        <FontAwesomeIcon
-          v-if="shownInvalidMessage"
-          :icon="faCircleExclamation"
-          class="size-4 text-rose-700 dark:text-rose-400"
-          aria-hidden="true"
-        />
-        <button
-          v-if="isClearShown"
-          type="button"
-          :class="iconButtonStyle"
-          :aria-label="clearLabel"
-          @click="clear"
-        >
-          <FontAwesomeIcon :icon="faXmark" class="size-4" aria-hidden="true" />
-        </button>
-        <!-- with textInput the calendar has its own button, otherwise the whole field opens it -->
-        <button
+        <span>
+          {{ label }}
+          <span v-if="$slots.tooltip" class="ml-1">
+            <slot name="tooltip"></slot>
+          </span>
+        </span>
+        <span v-if="optional" class="ml-2 font-normal">{{ optionalLabel }}</span>
+      </label>
+      <div ref="fieldRef" class="relative rounded-md shadow-sm">
+        <!-- typed date -->
+        <input
           v-if="textInput"
+          :id="componentId"
+          ref="triggerRef"
+          v-model="inputText"
+          type="text"
+          autocomplete="off"
+          :class="fieldStyle"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :aria-invalid="!!shownInvalidMessage || undefined"
+          :aria-describedby="descriptionId"
+          v-bind="fieldAttrs"
+          @keydown="onInputKeydown"
+          @blur="commitInputText"
+        />
+        <!-- date chosen from the calendar only -->
+        <button
+          v-else
+          :id="componentId"
+          ref="triggerRef"
           type="button"
-          :class="iconButtonStyle"
+          :class="fieldStyle"
           :disabled="disabled"
           aria-haspopup="dialog"
           :aria-expanded="isOpen"
-          :aria-label="openLabel"
+          :aria-label="label ? undefined : openLabel"
+          :aria-labelledby="label ? `${componentId}-label ${componentId}-value` : undefined"
+          :aria-invalid="!!shownInvalidMessage || undefined"
+          :aria-describedby="descriptionId"
+          v-bind="fieldAttrs"
           @click="toggle"
+          @keydown="onTriggerKeydown"
         >
+          <span
+            :id="`${componentId}-value`"
+            :class="[
+              'block truncate',
+              displayValue ? '' : 'text-gray-400 dark:text-gray-500',
+              !displayValue && !placeholder ? 'sr-only' : ''
+            ]"
+            >{{ displayValue || placeholder || openLabel }}</span
+          >
+        </button>
+        <!-- clicks on the icons, except the buttons, go through to the field below -->
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1 pr-2">
           <FontAwesomeIcon
-            :icon="type === 'time' ? faClock : faCalendar"
-            class="size-4"
+            v-if="shownInvalidMessage"
+            :icon="faCircleExclamation"
+            class="size-4 text-rose-700 dark:text-rose-400"
             aria-hidden="true"
           />
-        </button>
-        <FontAwesomeIcon
-          v-else
-          :icon="type === 'time' ? faClock : faCalendar"
-          :class="[
-            'pointer-events-none size-4 text-gray-500 dark:text-gray-400',
-            disabled ? 'opacity-50' : ''
-          ]"
-          aria-hidden="true"
-        />
+          <button
+            v-if="isClearShown"
+            type="button"
+            :class="iconButtonStyle"
+            :aria-label="clearLabel"
+            @click="clear"
+          >
+            <FontAwesomeIcon :icon="faXmark" class="size-4" aria-hidden="true" />
+          </button>
+          <!-- with textInput the calendar has its own button, otherwise the whole field opens it -->
+          <button
+            v-if="textInput"
+            type="button"
+            :class="iconButtonStyle"
+            :disabled="disabled"
+            aria-haspopup="dialog"
+            :aria-expanded="isOpen"
+            :aria-label="openLabel"
+            @click="toggle"
+          >
+            <FontAwesomeIcon
+              :icon="type === 'time' ? faClock : faCalendar"
+              class="size-4"
+              aria-hidden="true"
+            />
+          </button>
+          <FontAwesomeIcon
+            v-else
+            :icon="type === 'time' ? faClock : faCalendar"
+            :class="[
+              'pointer-events-none size-4 text-gray-500 dark:text-gray-400',
+              disabled ? 'opacity-50' : ''
+            ]"
+            aria-hidden="true"
+          />
+        </div>
       </div>
-    </div>
-    <!-- invalid message -->
-    <p
-      v-if="shownInvalidMessage"
-      :id="descriptionId"
-      class="mt-2 text-sm text-rose-700 dark:text-rose-400"
-    >
-      {{ shownInvalidMessage }}
-    </p>
-    <!-- helper text -->
-    <p
-      v-else-if="helperText"
-      :id="descriptionId"
-      class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-    >
-      {{ helperText }}
-    </p>
+      <!-- invalid message -->
+      <p
+        v-if="shownInvalidMessage"
+        :id="descriptionId"
+        class="mt-2 text-sm text-rose-700 dark:text-rose-400"
+      >
+        {{ shownInvalidMessage }}
+      </p>
+      <!-- helper text -->
+      <p
+        v-else-if="helperText"
+        :id="descriptionId"
+        class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+      >
+        {{ helperText }}
+      </p>
+    </template>
 
     <!-- calendar -->
     <Teleport to="body">
@@ -947,6 +983,8 @@ function trapFocus(event: KeyboardEvent) {
           class="fixed z-110 rounded-md bg-white p-3 shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:ring-gray-500/50"
           @keydown="onPopupKeydown"
         >
+          <!-- content above the calendar, such as the clear link of a filter -->
+          <slot name="popup-header" :clear="clearFromPopup"></slot>
           <div class="flex flex-col gap-3 sm:flex-row">
             <!-- presets: above the calendar on small screens, as wide as it, on its left otherwise -->
             <div
