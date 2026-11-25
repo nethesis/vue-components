@@ -40,12 +40,13 @@ import {
 
 export type NeDatePickerType = 'date' | 'datetime' | 'time'
 
-// 'yyyy-MM-dd' for 'date', [first, last] with range, a Date for 'datetime', 'HH:mm' for 'time'
+/** 'yyyy-MM-dd' for 'date', [first, last] with range, a Date for 'datetime', 'HH:mm' for 'time' */
 export type NeDatePickerValue = string | Date | [string, string] | null
 
 export type NeDatePickerPreset = {
+  /** Translated by the product: the library has no presets of its own */
   label: string
-  // a value, or a function that returns it when the preset is chosen, such as the last 7 days
+  /** A value, or a function that returns it when the preset is chosen, such as the last 7 days */
   value: NeDatePickerValue | (() => NeDatePickerValue)
 }
 
@@ -53,8 +54,11 @@ type ValueParts = { day: string; end: string; time: TimeParts | null }
 
 const props = withDefaults(
   defineProps<{
-    // 'date': a day, as 'yyyy-MM-dd'; 'datetime': a moment, as a Date; 'time': a time of day, as
-    // 'HH:mm', or 'HH:mm:ss' with showSeconds
+    /**
+     * 'date': a day, as 'yyyy-MM-dd', which carries no time zone. 'datetime': a moment, as a Date.
+     * 'time': a time of day, as 'HH:mm', or 'HH:mm:ss' with showSeconds. The empty value is '', null
+     * for 'datetime' and range.
+     */
     type?: NeDatePickerType
     label?: string
     id?: string
@@ -64,39 +68,55 @@ const props = withDefaults(
     optional?: boolean
     optionalLabel?: string
     disabled?: boolean
-    // the first and the last value that can be chosen, of the same type as the value: 'yyyy-MM-dd'
-    // for 'date', a Date for 'datetime', 'HH:mm' for 'time'; for 'datetime', a string is read as
-    // an ISO 8601 moment, so '2026-11-10' is midnight UTC: pass a Date, or a string with the time
-    // and the offset
+    /**
+     * The first value that can be chosen, of the same type as the value: 'yyyy-MM-dd' for 'date', a
+     * Date for 'datetime', 'HH:mm' for 'time'. For 'datetime', a string is read as an ISO 8601
+     * moment, so '2026-11-10' is midnight UTC: pass a Date, or a string with the time and the offset.
+     */
     min?: string | Date | null
+    /** The last value that can be chosen, as min */
     max?: string | Date | null
-    // days that can't be chosen, besides those outside min and max; it receives the day at
-    // midnight, local time
+    /**
+     * Days that can't be chosen, besides those outside min and max. It receives the day at midnight,
+     * local time.
+     */
     isDateDisabled?: (date: Date) => boolean
-    // the language of month and day names, of the date and time format, of the 12 or 24-hour
-    // clock and of the first day of the week, such as 'en' or 'it-IT'; the browser language if
-    // empty
+    /**
+     * The language of month and day names, of the date and time format, of the 12 or 24-hour clock
+     * and of the first day of the week, such as 'en' or 'it-IT'. The browser language if empty.
+     */
     locale?: string
-    // first day of the week, 0 for Sunday, 1 for Monday; from the locale if not set
+    /** First day of the week, 0 for Sunday, 1 for Monday. From the locale if not set. */
     weekStart?: number
-    // the time zone of 'datetime', such as 'Europe/Rome', shown next to the time; the browser
-    // time zone if empty
+    /**
+     * The time zone of 'datetime', an IANA name such as 'Europe/Rome', shown next to the time. The
+     * browser time zone if empty or invalid.
+     */
     timeZone?: string
-    // the step of the minutes, from 1 to 30
+    /** The step of the minutes, from 1 to 30. Min and max are rounded to it. */
     minuteStep?: number
+    /** Show and keep the seconds of 'datetime' and 'time' */
     showSeconds?: boolean
-    // the clock of 'datetime' and 'time': 'h12' with AM and PM, 'h23' from 00 to 23; from the
-    // locale if not set
+    /**
+     * The clock of 'datetime' and 'time': 'h12' with AM and PM, 'h23' from 00 to 23. From the
+     * locale if not set.
+     */
     hourCycle?: 'h12' | 'h23'
-    // apply each change at once, without Cancel and Select buttons; on for 'date', off for
-    // 'datetime' and 'time' if not set
+    /**
+     * Apply each change at once, without Cancel and Select buttons. On for 'date', off for
+     * 'datetime' and 'time' if not set.
+     */
     autoApply?: boolean
-    // let the user type the value, in the format of the locale
+    /** Let the user type the value, in the format of the locale, such as 24/11/2026, 14:30 */
     textInput?: boolean
-    // choose a range of days, from the first to the last; only for 'date'
+    /** Choose a range of days, as [first, last], with two clicks. Only for 'date'. */
     range?: boolean
-    // values to choose with a click, shown next to the calendar
+    /**
+     * Values to choose with a click, shown next to the calendar. A preset outside min and max, or
+     * on a disabled day, is disabled.
+     */
     presets?: NeDatePickerPreset[]
+    /** Show a button to empty the value */
     clearable?: boolean
     chooseDateLabel?: string
     chooseTimeLabel?: string
@@ -187,6 +207,27 @@ const props = withDefaults(
     decreaseSecondsLabel: 'Decrease seconds'
   }
 )
+
+defineSlots<{
+  /**
+   * A custom button that replaces the label and the field, such as the button of a filter. Bind
+   * triggerAttrs to it and call toggle on click.
+   */
+  trigger?: (props: {
+    isOpen: boolean
+    displayValue: string
+    disabled: boolean
+    toggle: () => void
+    triggerAttrs: { 'aria-haspopup': 'dialog'; 'aria-expanded': boolean }
+  }) => unknown
+  /**
+   * Content above the calendar, such as the clear link of a filter. clear empties the value and
+   * keeps the popup open.
+   */
+  'popup-header'?: (props: { clear: () => void }) => unknown
+  /** A tooltip next to the label */
+  tooltip?: () => unknown
+}>()
 
 // 'yyyy-MM-dd' for 'date', [first, last] with range, a Date for 'datetime', 'HH:mm' for 'time';
 // '' when empty, null for 'datetime' and range

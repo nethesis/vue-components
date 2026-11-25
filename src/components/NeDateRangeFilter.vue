@@ -25,23 +25,29 @@ const props = withDefaults(
   defineProps<{
     label: string
     id?: string
-    // the first and the last day that can be chosen, as 'yyyy-MM-dd'
+    /** The first day that can be chosen, as 'yyyy-MM-dd' */
     min?: string
+    /** The last day that can be chosen, as 'yyyy-MM-dd' */
     max?: string
-    // days that can't be chosen, besides those outside min and max
+    /** Days that can't be chosen, besides those outside min and max */
     isDateDisabled?: (date: Date) => boolean
-    // ranges to choose with a click, such as the last 7 days: their value is [first, last], or
-    // a function that returns it
+    /**
+     * Ranges to choose with a click, such as the last 7 days, with labels translated by the
+     * product. Their value is [first, last], or a function that returns it.
+     */
     presets?: NeDatePickerPreset[]
-    // the language of month and day names, of the date format and of the first day of the week;
-    // the browser language if empty
+    /**
+     * The language of month and day names, of the date format and of the first day of the week.
+     * The browser language if empty.
+     */
     locale?: string
-    // first day of the week, 0 for Sunday, 1 for Monday; from the locale if not set
+    /** First day of the week, 0 for Sunday, 1 for Monday. From the locale if not set. */
     weekStart?: number
-    // apply the range at the second click, without Cancel and Select buttons
+    /** Apply the range at the second click, without Cancel and Select buttons */
     autoApply?: boolean
     size?: ButtonSize
     disabled?: boolean
+    /** Show a link above the calendar to clear the range, with clearFilterLabel */
     showClearFilter?: boolean
     clearFilterLabel?: string
     cancelLabel?: string
