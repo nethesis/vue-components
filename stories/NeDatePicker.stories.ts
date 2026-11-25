@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "A field to choose a day, a date and time, or a time of day, in forms and filters. `type` sets the value: `'date'` (default) is a `'yyyy-MM-dd'` string, which carries no time zone; `'datetime'` is a `Date`, a moment; `'time'` is a `'HH:mm'` string, `'HH:mm:ss'` with `showSeconds`. An empty value is `''`, `null` for `'datetime'`. `min` and `max` have the same type as the value; `isDateDisabled` disables other days. `'datetime'` is shown and chosen in the browser time zone, or in `timeZone`, such as `'Europe/Rome'`, whose name is shown after the time. `minuteStep` sets the step of the minutes. For `'date'`, a click on a day applies it; for `'datetime'` and `'time'`, the popup has Cancel and Select buttons. `autoApply` changes this. `range` chooses a range of days, as `[first, last]`, `null` when empty, with two clicks; it is only for `'date'`. `presets` adds values to choose with a click next to the calendar, such as `Last 7 days`: each has a `label`, translated by the product, and a `value`, or a function that returns it when the preset is chosen. The library has no presets of its own. `textInput` also lets the user type the value in the format of the `locale`, such as `24/11/2026, 14:30` in Italian. Month and day names, the date and time format, the 12 or 24-hour clock and the first day of the week come from `locale`, the browser language if empty; `hourCycle` sets the clock regardless of the language. The popup works inside NeSideDrawer and NeModal, with the keyboard support of the WAI-ARIA date picker dialog and spin button patterns. The `trigger` slot replaces the field with a custom button, which binds the `triggerAttrs` and calls `toggle` of the slot; the `popup-header` slot adds content above the calendar, with a `clear` function. For a date range filter next to NeDropdownFilterV2, use NeDateRangeFilter. For a start and an end, use two NeDatePicker fields: set the `min` of the end field to the start and the `max` of the start field to the end. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) in the writing guidelines."
+          "A field to choose a day, a date and time, or a time of day, in forms and filters. `type` sets the value: `'date'` (default) is a `'yyyy-MM-dd'` string, which carries no time zone; `'datetime'` is a `Date`, a moment; `'time'` is a `'HH:mm'` string, `'HH:mm:ss'` with `showSeconds`. An empty value is `''`, `null` for `'datetime'`. `min` and `max` have the same type as the value; `isDateDisabled` disables other days. `'datetime'` is shown and chosen in the browser time zone, or in `timeZone`, an IANA name such as `'Europe/Rome'`, whose name is shown after the time; an invalid `timeZone` falls back to the browser time zone. `minuteStep` sets the step of the minutes. For `'date'`, a click on a day applies it; for `'datetime'` and `'time'`, the popup has Cancel and Select buttons. `autoApply` changes this. `range` chooses a range of days, as `[first, last]`, `null` when empty, with two clicks; it is only for `'date'`. `presets` adds values to choose with a click next to the calendar, such as `Last 7 days`: each has a `label`, translated by the product, and a `value`, or a function that returns it when the preset is chosen. A preset outside `min` and `max`, or on a disabled day, is disabled. The library has no presets of its own. `textInput` also lets the user type the value in the format of the `locale`, such as `24/11/2026, 14:30` in Italian. Month and day names, the date and time format, the 12 or 24-hour clock and the first day of the week come from `locale`, the browser language if empty; `hourCycle` sets the clock regardless of the language. The popup works inside NeSideDrawer and NeModal, with the keyboard support of the WAI-ARIA date picker dialog and spin button patterns. The `trigger` slot replaces the field with a custom button, which binds the `triggerAttrs` and calls `toggle` of the slot; the `popup-header` slot adds content above the calendar, with a `clear` function. For a date range filter next to NeDropdownFilterV2, use NeDateRangeFilter. For a start and an end, use two NeDatePicker fields: set the `min` of the end field to the start and the `max` of the start field to the end. Its label, helper text and validation messages follow [Forms](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#forms) in the writing guidelines."
       }
     }
   },
@@ -45,7 +45,7 @@ const meta = {
     clearable: true,
     range: false,
     presets: [],
-    openCalendarLabel: 'Choose date',
+    chooseDateLabel: 'Choose date',
     chooseTimeLabel: 'Choose time',
     clearLabel: 'Clear',
     cancelLabel: 'Cancel',
@@ -65,9 +65,17 @@ const meta = {
     nextYearsLabel: 'Next years',
     chooseMonthLabel: 'Choose month',
     chooseYearLabel: 'Choose year',
+    chooseEndDateLabel: 'Choose end date',
     hoursLabel: 'Hours',
     minutesLabel: 'Minutes',
-    secondsLabel: 'Seconds'
+    secondsLabel: 'Seconds',
+    dayPeriodLabel: 'AM/PM',
+    increaseHoursLabel: 'Increase hours',
+    decreaseHoursLabel: 'Decrease hours',
+    increaseMinutesLabel: 'Increase minutes',
+    decreaseMinutesLabel: 'Decrease minutes',
+    increaseSecondsLabel: 'Increase seconds',
+    decreaseSecondsLabel: 'Decrease seconds'
   }
 } satisfies Meta<typeof NeDatePicker>
 
@@ -135,7 +143,8 @@ export const TextInput: Story = {
   render,
   args: {
     textInput: true,
-    placeholder: 'mm/dd/yyyy'
+    placeholder: 'mm/dd/yyyy',
+    helperText: 'For example, 11/24/2026.'
   }
 }
 
@@ -179,7 +188,8 @@ export const RangeTextInput: Story = {
     label: 'Date range',
     range: true,
     textInput: true,
-    placeholder: 'mm/dd/yyyy – mm/dd/yyyy'
+    placeholder: 'mm/dd/yyyy – mm/dd/yyyy',
+    helperText: 'For example, 11/10/2026 – 11/18/2026.'
   }
 }
 
@@ -199,11 +209,11 @@ export const DateAndTimePresets: Story = {
   render,
   args: {
     type: 'datetime',
-    label: 'Mute until',
+    label: 'Mute end',
     presets: [
       { label: 'Next hour', value: () => addHours(startOfHour(new Date()), 1) },
       {
-        label: 'Tomorrow at 09:00',
+        label: 'Tomorrow at 9:00 AM',
         value: () => setHours(startOfHour(addDays(new Date(), 1)), 9)
       }
     ]
@@ -214,7 +224,7 @@ export const DateAndTime: Story = {
   render,
   args: {
     type: 'datetime',
-    label: 'Mute until',
+    label: 'Mute end',
     modelValue: new Date(2026, 10, 24, 14, 30)
   }
 }
@@ -223,7 +233,7 @@ export const DateAndTimeAutoApply: Story = {
   render,
   args: {
     type: 'datetime',
-    label: 'Update at',
+    label: 'Update time',
     modelValue: new Date(2026, 10, 24, 3, 0),
     autoApply: true,
     minuteStep: 15
@@ -234,7 +244,7 @@ export const DateAndTimeMin: Story = {
   render,
   args: {
     type: 'datetime',
-    label: 'Mute until',
+    label: 'Mute end',
     min: new Date(2026, 10, 24, 9, 30),
     helperText: 'From November 24, 2026, 09:30.'
   }
@@ -244,10 +254,10 @@ export const TimeZone: Story = {
   render,
   args: {
     type: 'datetime',
-    label: 'Update at',
+    label: 'Update time',
     modelValue: new Date('2026-11-24T08:00:00Z'),
     timeZone: 'America/New_York',
-    helperText: 'Time of the firewall, in New York.'
+    helperText: 'In the time zone of the unit, New York.'
   }
 }
 
@@ -255,10 +265,11 @@ export const DateAndTimeWithSeconds: Story = {
   render,
   args: {
     type: 'datetime',
-    label: 'Logs from',
+    label: 'Start time',
     modelValue: new Date(2026, 10, 24, 14, 30, 15),
     showSeconds: true,
-    textInput: true
+    textInput: true,
+    helperText: 'For example, 11/24/2026, 02:30:15 PM.'
   }
 }
 
@@ -266,7 +277,7 @@ export const HourCycle: Story = {
   render,
   args: {
     type: 'datetime',
-    label: 'Update at',
+    label: 'Update time',
     modelValue: new Date(2026, 10, 24, 14, 30),
     hourCycle: 'h23'
   }
@@ -312,7 +323,7 @@ export const NotClearable: Story = {
 
 export const Invalid: Story = {
   render,
-  args: { invalidMessage: 'Enter the expiration date' }
+  args: { invalidMessage: 'Select an expiration date' }
 }
 
 export const Disabled: Story = {
@@ -329,8 +340,9 @@ export const Italian: Story = {
     locale: 'it',
     textInput: true,
     placeholder: 'gg/mm/aaaa, hh:mm',
+    helperText: 'Ad esempio, 24/11/2026, 14:30.',
     optionalLabel: 'Facoltativo',
-    openCalendarLabel: 'Scegli la data',
+    chooseDateLabel: 'Scegli la data',
     chooseTimeLabel: "Scegli l'ora",
     clearLabel: 'Azzera',
     cancelLabel: 'Annulla',
@@ -348,8 +360,16 @@ export const Italian: Story = {
     nextYearsLabel: 'Anni successivi',
     chooseMonthLabel: 'Scegli il mese',
     chooseYearLabel: "Scegli l'anno",
+    chooseEndDateLabel: 'Scegli la data di fine',
     hoursLabel: 'Ore',
     minutesLabel: 'Minuti',
-    secondsLabel: 'Secondi'
+    secondsLabel: 'Secondi',
+    dayPeriodLabel: 'AM/PM',
+    increaseHoursLabel: 'Aumenta le ore',
+    decreaseHoursLabel: 'Diminuisci le ore',
+    increaseMinutesLabel: 'Aumenta i minuti',
+    decreaseMinutesLabel: 'Diminuisci i minuti',
+    increaseSecondsLabel: 'Aumenta i secondi',
+    decreaseSecondsLabel: 'Diminuisci i secondi'
   }
 }

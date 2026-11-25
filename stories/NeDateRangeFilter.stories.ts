@@ -24,13 +24,14 @@ const meta = {
     docs: {
       description: {
         component:
-          "A filter button that opens a calendar to choose a range of days, for the filters above a table or a list, next to NeDropdownFilterV2. The value is `['yyyy-MM-dd', 'yyyy-MM-dd']`, the first and the last day, or `null` when the filter is not set. The button shows the range, or the label of the preset that matches it. `presets` adds ranges to choose with a click, such as `Last 7 days`, with labels translated by the product: the library has none. A click on the second day applies the range; with `autoApply` off, the calendar has Cancel and Select buttons. The popup has a button to clear the range: `clearFilterLabel` is `Clear selection`, or `Reset selection` when the filter has a default range. For a day, or a range in a form with a label, use NeDatePicker. Its texts follow [Table filters](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#table-filters) in the writing guidelines."
+          "A filter button that opens a calendar to choose a range of days, for the filters above a table or a list, next to NeDropdownFilterV2. The value is `['yyyy-MM-dd', 'yyyy-MM-dd']`, the first and the last day, or `null` when the filter is not set. The button shows the range, or the label of the preset that matches it. `presets` adds ranges to choose with a click, such as `Last 7 days`, with labels translated by the product: the library has none. A click on the second day applies the range; with `autoApply` off, the calendar has Cancel and Select buttons. The popup has a link to clear the range, `clearFilterLabel`, `Clear selection` by default. For a day, or a range in a form with a label, use NeDatePicker. Its texts follow [Table filters](https://nethesis.github.io/nebula-design-system/?page=writing-guidelines#table-filters) in the writing guidelines."
       }
     }
   },
   // default values
   args: {
     label: 'Date range',
+    id: '',
     modelValue: null,
     min: '',
     max: '',
@@ -53,7 +54,8 @@ const meta = {
     previousYearsLabel: 'Previous years',
     nextYearsLabel: 'Next years',
     chooseMonthLabel: 'Choose month',
-    chooseYearLabel: 'Choose year'
+    chooseYearLabel: 'Choose year',
+    chooseEndDateLabel: 'Choose end date'
   }
 } satisfies Meta<typeof NeDateRangeFilter>
 

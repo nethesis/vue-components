@@ -27,6 +27,21 @@ export function resolveLocale(locale?: string): string | undefined {
 }
 
 /**
+ * Return the time zone if Intl supports it, such as 'Europe/Rome', undefined (the browser time
+ * zone) otherwise.
+ */
+export function resolveTimeZone(timeZone?: string): string | undefined {
+  if (!timeZone) {
+    return undefined
+  }
+  try {
+    return new Intl.DateTimeFormat(undefined, { timeZone }).resolvedOptions().timeZone
+  } catch {
+    return undefined
+  }
+}
+
+/**
  * Format a calendar day as 'yyyy-MM-dd'.
  */
 export function formatIsoDate(date: Date): string {
@@ -279,27 +294,69 @@ export function toMoment(day: string, time: TimeParts, timeZone?: string): Date 
   return timeZone ? new Date(new TZDate(...args, 0, timeZone).getTime()) : new Date(...args)
 }
 
+// the characters that may separate the letters of AM and PM: "p. m." in Spanish
+const DAY_PERIOD_SEPARATORS = '[.\\s\\u00a0\\u202f]*'
+
+// a regular expression that matches the name of AM or PM, with or without dots and spaces
+function getDayPeriodPattern(name: string): string {
+  const letters = Array.from(name.toLowerCase().replace(/[.\s  ]/g, ''))
+  return (
+    letters
+      .map((letter) => letter.replace(/[$()*+.?[\\\]^{|}]/g, '\\$&'))
+      .join(DAY_PERIOD_SEPARATORS) + '\\.?'
+  )
+}
+
 /**
- * Parse a time typed by the user: 14:30, 14.30, 2:30 pm, 2:30:15 PM. Return null if the text is
- * not a valid time.
+ * Remove the name of AM or PM from a typed text, before the time (PM 02:30 in Korean) or after
+ * it (2:30 pm). Return the text without it, and whether it is PM, or null when there is no name.
  */
-export function parseLocalizedTime(text: string, dayPeriods?: [string, string]): TimeParts | null {
-  const match = text.trim().match(/^(\d{1,2})[:.](\d{2})(?:[:.](\d{2}))?\s*([^\d\s:.]+\.?)?$/u)
+function extractDayPeriod(
+  text: string,
+  dayPeriods: [string, string] = ['AM', 'PM']
+): { text: string; isPm: boolean | null } {
+  const names: [string, boolean][] = [
+    [dayPeriods[0], false],
+    [dayPeriods[1], true],
+    ['am', false],
+    ['pm', true]
+  ]
+  // longer names first, so that "p. m." is not matched as "p"
+  names.sort((a, b) => b[0].length - a[0].length)
+
+  for (const [name, isPm] of names) {
+    if (!name.trim()) {
+      continue
+    }
+    const match = text.match(
+      new RegExp(`(^|[\\s\\d,])${getDayPeriodPattern(name)}(?=$|[\\s\\d])`, 'iu')
+    )
+    if (match && match.index !== undefined) {
+      const before = text.slice(0, match.index) + match[1]
+      const after = text.slice(match.index + match[0].length)
+      return { text: `${before} ${after}`.replace(/\s+/g, ' ').trim(), isPm }
+    }
+  }
+  // a single letter after the time: 2:30 p
+  const letter = text.match(/\d\s*([ap])\.?$/i)
+  if (letter && letter.index !== undefined) {
+    return { text: text.slice(0, letter.index + 1).trim(), isPm: letter[1].toLowerCase() === 'p' }
+  }
+  return { text, isPm: null }
+}
+
+// hours, minutes and seconds, with AM or PM if isPm is not null
+function parseTimeDigits(text: string, isPm: boolean | null): TimeParts | null {
+  const match = text.trim().match(/^(\d{1,2})[:.](\d{2})(?:[:.](\d{2}))?$/)
   if (!match) {
     return null
   }
   let hours = Number(match[1])
   const minutes = Number(match[2])
   const seconds = Number(match[3] ?? 0)
-  const period = match[4]?.toLowerCase().replace(/\./g, '')
 
-  if (period) {
-    const [am, pm] = (dayPeriods ?? ['AM', 'PM']).map((name) =>
-      name.toLowerCase().replace(/\./g, '')
-    )
-    const isAm = period === am || period === 'am' || period === 'a'
-    const isPm = period === pm || period === 'pm' || period === 'p'
-    if ((!isAm && !isPm) || hours < 1 || hours > 12) {
+  if (isPm !== null) {
+    if (hours < 1 || hours > 12) {
       return null
     }
     hours = (hours % 12) + (isPm ? 12 : 0)
@@ -311,18 +368,38 @@ export function parseLocalizedTime(text: string, dayPeriods?: [string, string]):
 }
 
 /**
- * Parse a date and time typed by the user, such as 24/11/2026, 14:30 or 11/24/2026 2:30 PM.
+ * Parse a time typed by the user: 14:30, 14.30, 2:30 pm, 2:30:15 PM, 2:30 p. m., 午後2:30. Return
+ * null if the text is not a valid time.
+ */
+export function parseLocalizedTime(text: string, dayPeriods?: [string, string]): TimeParts | null {
+  const { text: timeText, isPm } = extractDayPeriod(text.trim(), dayPeriods)
+  return parseTimeDigits(timeText, isPm)
+}
+
+/**
+ * Parse a date and time typed by the user, such as 24/11/2026, 14:30, 11/24/2026 2:30 PM,
+ * 2026. 11. 24. 오후 02:30, or with the time first, as in Vietnamese: 14:30 24/11/2026.
  */
 export function parseLocalizedDateTime(
   text: string,
   locale?: string,
   dayPeriods?: [string, string]
 ): DayAndTime | null {
-  const match = text.trim().match(/^(.*?)[,\s]+(\d{1,2}[:.]\d{2}.*)$/u)
-  if (!match) {
+  const { text: dateTimeText, isPm } = extractDayPeriod(text.trim(), dayPeriods)
+  const timePattern = '(\\d{1,2}[:.]\\d{2}(?:[:.]\\d{2})?)'
+  // a comma, also the Arabic one, or a space between date and time
+  const separator = '[,\\u060c\\s]+'
+  const dateFirst = dateTimeText.match(new RegExp(`^(.*?)${separator}${timePattern}$`, 'u'))
+  const timeFirst = dateTimeText.match(new RegExp(`^${timePattern}${separator}(.*)$`, 'u'))
+  const [dateText, timeText] = dateFirst
+    ? [dateFirst[1], dateFirst[2]]
+    : timeFirst
+      ? [timeFirst[2], timeFirst[1]]
+      : ['', '']
+  if (!dateText) {
     return null
   }
-  const date = parseLocalizedDate(match[1], locale)
-  const time = parseLocalizedTime(match[2], dayPeriods)
+  const date = parseLocalizedDate(dateText, locale)
+  const time = parseTimeDigits(timeText, isPm)
   return date && time ? { day: formatIsoDate(date), time } : null
 }

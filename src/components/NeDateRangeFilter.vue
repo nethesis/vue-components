@@ -24,6 +24,7 @@ const sizeStyle: Record<ButtonSize, string> = {
 const props = withDefaults(
   defineProps<{
     label: string
+    id?: string
     // the first and the last day that can be chosen, as 'yyyy-MM-dd'
     min?: string
     max?: string
@@ -54,6 +55,7 @@ const props = withDefaults(
     nextYearsLabel?: string
     chooseMonthLabel?: string
     chooseYearLabel?: string
+    chooseEndDateLabel?: string
   }>(),
   {
     min: '',
@@ -77,7 +79,9 @@ const props = withDefaults(
     previousYearsLabel: 'Previous years',
     nextYearsLabel: 'Next years',
     chooseMonthLabel: 'Choose month',
-    chooseYearLabel: 'Choose year'
+    chooseYearLabel: 'Choose year',
+    id: '',
+    chooseEndDateLabel: 'Choose end date'
   }
 )
 
@@ -123,9 +127,11 @@ const presetLabel = computed(() => {
     :next-years-label="nextYearsLabel"
     :choose-month-label="chooseMonthLabel"
     :choose-year-label="chooseYearLabel"
+    :choose-end-date-label="chooseEndDateLabel"
   >
     <template #trigger="{ displayValue, toggle, triggerAttrs }">
       <button
+        :id="id || undefined"
         type="button"
         class="focus:ring-primary-500 dark:focus:ring-primary-300 dark:focus:ring-offset-primary-950 cursor-pointer font-medium text-gray-700 shadow-sm ring-1 ring-gray-300 transition-colors duration-200 hover:bg-gray-200/70 hover:text-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-100 dark:ring-gray-500 dark:hover:bg-gray-600/30 dark:hover:text-gray-50"
         :class="sizeStyle[size]"

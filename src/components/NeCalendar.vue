@@ -21,7 +21,6 @@ import {
   endOfYear,
   isSameDay,
   isSameMonth,
-  isToday,
   setMonth,
   setYear,
   startOfDay,
@@ -61,6 +60,10 @@ const props = withDefaults(
     nextYearsLabel?: string
     chooseMonthLabel?: string
     chooseYearLabel?: string
+    // announced after the first day of a range is chosen
+    chooseEndDateLabel?: string
+    // today, as 'yyyy-MM-dd', in the time zone of the picker; today in the browser if empty
+    today?: string
   }>(),
   {
     modelValue: '',
@@ -78,7 +81,9 @@ const props = withDefaults(
     previousYearsLabel: 'Previous years',
     nextYearsLabel: 'Next years',
     chooseMonthLabel: 'Choose month',
-    chooseYearLabel: 'Choose year'
+    chooseYearLabel: 'Choose year',
+    chooseEndDateLabel: 'Choose end date',
+    today: ''
   }
 )
 
@@ -137,6 +142,15 @@ const monthLabel = computed(() =>
 
 const yearLabel = computed(() => String(activeDate.value.getFullYear()))
 
+// month and year in the order of the locale: November 2026, 2026년 11월
+const monthYearLabel = computed(() =>
+  capitalizeFirst(
+    new Intl.DateTimeFormat(props.locale, { month: 'long', year: 'numeric' }).format(
+      activeDate.value
+    )
+  )
+)
+
 const firstYearOfPage = computed(
   () => Math.floor(activeDate.value.getFullYear() / YEARS_PER_PAGE) * YEARS_PER_PAGE
 )
@@ -149,7 +163,7 @@ const liveText = computed(() => {
     case 'years':
       return `${firstYearOfPage.value} – ${firstYearOfPage.value + YEARS_PER_PAGE - 1}`
     default:
-      return `${monthLabel.value} ${yearLabel.value}`
+      return monthYearLabel.value
   }
 })
 
@@ -183,14 +197,12 @@ const weeks = computed(() => {
 
 const months = computed(() => {
   const monthFormat = new Intl.DateTimeFormat(props.locale, { month: 'short' })
-  const longFormat = new Intl.DateTimeFormat(props.locale, { month: 'long', year: 'numeric' })
 
   return Array.from({ length: 12 }, (_, index) => {
     const month = setMonth(startOfMonth(activeDate.value), index)
     return {
       index,
       label: capitalizeFirst(monthFormat.format(month)),
-      longLabel: capitalizeFirst(longFormat.format(month)),
       disabled: !isPeriodInRange(month, endOfMonth(month)),
       selected: !!selectedDate.value && isSameMonth(month, selectedDate.value)
     }
@@ -208,6 +220,16 @@ const years = computed(() =>
     }
   })
 )
+
+// months and years in rows of three, as the grid shows them
+const monthRows = computed(() => toRows(months.value))
+const yearRows = computed(() => toRows(years.value))
+
+function toRows<T>(items: T[]): T[][] {
+  return Array.from({ length: Math.ceil(items.length / 3) }, (_, row) =>
+    items.slice(row * 3, row * 3 + 3)
+  )
+}
 
 const isPreviousDisabled = computed(() => {
   if (!minDate.value) {
@@ -274,7 +296,7 @@ function getInitialActiveDate(): Date {
     return selected
   }
   // today, moved within min and max
-  const today = startOfDay(new Date())
+  const today = getToday()
   const min = parseIsoDate(props.min)
   const max = parseIsoDate(props.max)
   if (min && today < min) {
@@ -289,6 +311,14 @@ function getInitialActiveDate(): Date {
 // true if at least a day of the period is within min and max
 function isPeriodInRange(start: Date, end: Date): boolean {
   return (!minDate.value || end >= minDate.value) && (!maxDate.value || start <= maxDate.value)
+}
+
+function getToday(): Date {
+  return parseIsoDate(props.today) ?? startOfDay(new Date())
+}
+
+function isToday(day: Date): boolean {
+  return isSameDay(day, getToday())
 }
 
 function isSelectable(day: Date): boolean {
@@ -399,6 +429,15 @@ async function moveActiveDate(date: Date) {
   await focus()
 }
 
+// a previous or next button disabled at min or max loses the focus: it moves to the active day
+async function keepFocus() {
+  await nextTick()
+  const element = document.activeElement as HTMLButtonElement | null
+  if (!element || element === document.body || element.disabled) {
+    focusActiveElement()
+  }
+}
+
 function goToPrevious() {
   switch (view.value) {
     case 'months':
@@ -410,6 +449,7 @@ function goToPrevious() {
     default:
       activeDate.value = addMonths(activeDate.value, -1)
   }
+  keepFocus()
 }
 
 function goToNext() {
@@ -423,6 +463,7 @@ function goToNext() {
     default:
       activeDate.value = addMonths(activeDate.value, 1)
   }
+  keepFocus()
 }
 
 async function showView(newView: CalendarView) {
@@ -589,13 +630,15 @@ function onKeydown(event: KeyboardEvent) {
       </button>
     </div>
     <div class="sr-only" aria-live="polite">{{ liveText }}</div>
+    <div class="sr-only" aria-live="polite">{{ isChoosingRangeEnd ? chooseEndDateLabel : '' }}</div>
 
     <!-- days -->
     <table
       v-if="view === 'days'"
       :id="`${componentId}-grid`"
       role="grid"
-      :aria-label="`${monthLabel} ${yearLabel}`"
+      :aria-label="monthYearLabel"
+      :aria-multiselectable="range || undefined"
       class="w-full border-separate border-spacing-0.5"
     >
       <thead>
@@ -640,41 +683,62 @@ function onKeydown(event: KeyboardEvent) {
       </tbody>
     </table>
 
-    <!-- months -->
-    <div v-else-if="view === 'months'" class="grid h-66 grid-cols-3 grid-rows-4 gap-2 p-1">
-      <button
-        v-for="month in months"
-        :key="month.index"
-        type="button"
-        :class="getOptionStyle(month.selected, month.disabled)"
-        :tabindex="month.index === activeDate.getMonth() ? 0 : -1"
-        :data-active="month.index === activeDate.getMonth()"
-        :aria-label="month.longLabel"
-        :aria-pressed="month.selected"
-        :aria-disabled="month.disabled || undefined"
-        @click="!month.disabled && selectMonth(month.index)"
-        @keydown="onOptionKeydown"
+    <!-- months, a grid as the days -->
+    <div
+      v-else-if="view === 'months'"
+      role="grid"
+      :aria-label="chooseMonthLabel"
+      class="flex h-66 flex-col gap-2 p-1"
+    >
+      <div
+        v-for="(row, rowIndex) in monthRows"
+        :key="rowIndex"
+        role="row"
+        class="grid flex-1 grid-cols-3 gap-2"
       >
-        {{ month.label }}
-      </button>
+        <div
+          v-for="month in row"
+          :key="month.index"
+          role="gridcell"
+          :aria-selected="month.selected"
+        >
+          <button
+            type="button"
+            :class="getOptionStyle(month.selected, month.disabled)"
+            :tabindex="month.index === activeDate.getMonth() ? 0 : -1"
+            :data-active="month.index === activeDate.getMonth()"
+            :aria-disabled="month.disabled || undefined"
+            @click="!month.disabled && selectMonth(month.index)"
+            @keydown="onOptionKeydown"
+          >
+            {{ month.label }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- years -->
-    <div v-else class="grid h-66 grid-cols-3 grid-rows-4 gap-2 p-1">
-      <button
-        v-for="item in years"
-        :key="item.year"
-        type="button"
-        :class="getOptionStyle(item.selected, item.disabled)"
-        :tabindex="item.year === activeDate.getFullYear() ? 0 : -1"
-        :data-active="item.year === activeDate.getFullYear()"
-        :aria-pressed="item.selected"
-        :aria-disabled="item.disabled || undefined"
-        @click="!item.disabled && selectYear(item.year)"
-        @keydown="onOptionKeydown"
+    <div v-else role="grid" :aria-label="chooseYearLabel" class="flex h-66 flex-col gap-2 p-1">
+      <div
+        v-for="(row, rowIndex) in yearRows"
+        :key="rowIndex"
+        role="row"
+        class="grid flex-1 grid-cols-3 gap-2"
       >
-        {{ item.year }}
-      </button>
+        <div v-for="item in row" :key="item.year" role="gridcell" :aria-selected="item.selected">
+          <button
+            type="button"
+            :class="getOptionStyle(item.selected, item.disabled)"
+            :tabindex="item.year === activeDate.getFullYear() ? 0 : -1"
+            :data-active="item.year === activeDate.getFullYear()"
+            :aria-disabled="item.disabled || undefined"
+            @click="!item.disabled && selectYear(item.year)"
+            @keydown="onOptionKeydown"
+          >
+            {{ item.year }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -32,6 +32,7 @@ import {
   parseLocalizedTime,
   parseTimeString,
   resolveLocale,
+  resolveTimeZone,
   timeToSeconds,
   toMoment,
   type TimeParts
@@ -64,7 +65,9 @@ const props = withDefaults(
     optionalLabel?: string
     disabled?: boolean
     // the first and the last value that can be chosen, of the same type as the value: 'yyyy-MM-dd'
-    // for 'date', a Date for 'datetime', 'HH:mm' for 'time'
+    // for 'date', a Date for 'datetime', 'HH:mm' for 'time'; for 'datetime', a string is read as
+    // an ISO 8601 moment, so '2026-11-10' is midnight UTC: pass a Date, or a string with the time
+    // and the offset
     min?: string | Date | null
     max?: string | Date | null
     // days that can't be chosen, besides those outside min and max; it receives the day at
@@ -95,7 +98,7 @@ const props = withDefaults(
     // values to choose with a click, shown next to the calendar
     presets?: NeDatePickerPreset[]
     clearable?: boolean
-    openCalendarLabel?: string
+    chooseDateLabel?: string
     chooseTimeLabel?: string
     clearLabel?: string
     cancelLabel?: string
@@ -115,9 +118,17 @@ const props = withDefaults(
     nextYearsLabel?: string
     chooseMonthLabel?: string
     chooseYearLabel?: string
+    chooseEndDateLabel?: string
     hoursLabel?: string
     minutesLabel?: string
     secondsLabel?: string
+    dayPeriodLabel?: string
+    increaseHoursLabel?: string
+    decreaseHoursLabel?: string
+    increaseMinutesLabel?: string
+    decreaseMinutesLabel?: string
+    increaseSecondsLabel?: string
+    decreaseSecondsLabel?: string
   }>(),
   {
     type: 'date',
@@ -143,7 +154,7 @@ const props = withDefaults(
     clearable: true,
     range: false,
     presets: () => [],
-    openCalendarLabel: 'Choose date',
+    chooseDateLabel: 'Choose date',
     chooseTimeLabel: 'Choose time',
     clearLabel: 'Clear',
     cancelLabel: 'Cancel',
@@ -163,9 +174,17 @@ const props = withDefaults(
     nextYearsLabel: 'Next years',
     chooseMonthLabel: 'Choose month',
     chooseYearLabel: 'Choose year',
+    chooseEndDateLabel: 'Choose end date',
     hoursLabel: 'Hours',
     minutesLabel: 'Minutes',
-    secondsLabel: 'Seconds'
+    secondsLabel: 'Seconds',
+    dayPeriodLabel: 'AM/PM',
+    increaseHoursLabel: 'Increase hours',
+    decreaseHoursLabel: 'Decrease hours',
+    increaseMinutesLabel: 'Increase minutes',
+    decreaseMinutesLabel: 'Decrease minutes',
+    increaseSecondsLabel: 'Increase seconds',
+    decreaseSecondsLabel: 'Decrease seconds'
   }
 )
 
@@ -187,6 +206,7 @@ const generatedId = useId()
 const componentId = computed(() => props.id || generatedId)
 
 const fieldRef = ref<HTMLElement>()
+const labelRef = ref<HTMLElement>()
 const triggerRef = ref<HTMLElement>()
 const popupRef = ref<HTMLElement>()
 const calendarRef = ref<InstanceType<typeof NeCalendar>>()
@@ -204,27 +224,33 @@ const inputText = ref('')
 const typedError = ref('')
 const popupTop = ref(0)
 const popupLeft = ref(0)
+// the height of the popup when it doesn't fit the screen, which then scrolls
+const popupMaxHeight = ref<number>()
+// the element that opened the popup
+let opener: HTMLElement | undefined
 
 const hasCalendar = computed(() => props.type !== 'time')
 const hasTime = computed(() => props.type !== 'date')
 const isRange = computed(() => props.range && props.type === 'date')
 const resolvedAutoApply = computed(() => props.autoApply ?? props.type === 'date')
 // the locale, with the hour cycle if set, so that the spinner, the field and the typed text use
-// the same clock
+// the same clock; always with the Gregorian calendar and Latin digits, which the calendar grid and
+// the typed text use (Thai shows Buddhist years otherwise, Arabic its own digits)
 const resolvedLocale = computed(() => {
-  const locale = resolveLocale(props.locale)
-  if (!props.hourCycle) {
-    return locale
-  }
-  const baseLocale = locale ?? new Intl.DateTimeFormat().resolvedOptions().locale
-  return new Intl.Locale(baseLocale, { hourCycle: props.hourCycle }).toString()
+  const locale = resolveLocale(props.locale) ?? new Intl.DateTimeFormat().resolvedOptions().locale
+  return new Intl.Locale(locale, {
+    calendar: 'gregory',
+    numberingSystem: 'latn',
+    hourCycle: props.hourCycle
+  }).toString()
 })
+// an invalid time zone, such as a POSIX TZ string, falls back to the browser time zone
 const resolvedTimeZone = computed(() =>
-  props.type === 'datetime' && props.timeZone ? props.timeZone : undefined
+  props.type === 'datetime' ? resolveTimeZone(props.timeZone) : undefined
 )
 const emptyValue = computed(() => (props.type === 'datetime' || isRange.value ? null : ''))
 const openLabel = computed(() =>
-  props.type === 'time' ? props.chooseTimeLabel : props.openCalendarLabel
+  props.type === 'time' ? props.chooseTimeLabel : props.chooseDateLabel
 )
 
 const resolvedWeekStart = computed(() =>
@@ -233,8 +259,20 @@ const resolvedWeekStart = computed(() =>
 
 const minMoment = computed(() => toValidDate(props.min))
 const maxMoment = computed(() => toValidDate(props.max))
-const minTime = computed(() => (typeof props.min === 'string' ? parseTimeString(props.min) : null))
-const maxTime = computed(() => (typeof props.max === 'string' ? parseTimeString(props.max) : null))
+// the time limits on the minute step, as the spinner shows them: min rounds up, max down
+const timeLimits = computed(() => {
+  const min = typeof props.min === 'string' ? parseTimeString(props.min) : null
+  const max = typeof props.max === 'string' ? parseTimeString(props.max) : null
+  const roundedMin = roundTimeLimit(min, 'up')
+  const roundedMax = roundTimeLimit(max, 'down')
+  // when no time on the step is between min and max, they stay as they are
+  if (roundedMin && roundedMax && timeToSeconds(roundedMin) > timeToSeconds(roundedMax)) {
+    return { min, max }
+  }
+  return { min: roundedMin, max: roundedMax }
+})
+const minTime = computed(() => timeLimits.value.min)
+const maxTime = computed(() => timeLimits.value.max)
 
 // the first and the last day of the calendar
 const calendarMin = computed(() => getCalendarLimit(props.min, minMoment.value))
@@ -288,11 +326,21 @@ const presetItems = computed(() =>
   props.presets.map((preset, index) => ({
     key: `${index}-${preset.label}`,
     preset,
-    selected: isPresetSelected(preset)
+    selected: isPresetSelected(preset),
+    available: isPresetAvailable(preset)
   }))
 )
 
 const shownInvalidMessage = computed(() => props.invalidMessage || typedError.value)
+
+// the field is named by its label and its value; without a label, by its value and the action
+const triggerLabelledBy = computed(() => {
+  const ids = [props.label ? `${componentId.value}-label` : '', `${componentId.value}-value`]
+  if (!props.label && (displayValue.value || props.placeholder)) {
+    ids.push(`${componentId.value}-action`)
+  }
+  return ids.filter(Boolean).join(' ')
+})
 
 const isClearShown = computed(
   () =>
@@ -312,10 +360,17 @@ const fieldAttrs = computed(() => {
 })
 
 const fieldBaseStyle =
-  'block w-full rounded-md border-0 py-1.5 pr-16 pl-3 text-left text-gray-900 ring-1 ring-inset outline-hidden transition-colors duration-200 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6 bg-white dark:bg-gray-950 dark:text-gray-50'
+  'block w-full rounded-md border-0 py-1.5 pl-3 text-left text-gray-900 ring-1 ring-inset outline-hidden transition-colors duration-200 focus:ring-2 focus:ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm sm:leading-6 bg-white dark:bg-gray-950 dark:text-gray-50'
+
+// room for the icons on the right: error, clear and calendar
+const fieldPaddingStyle = computed(() => {
+  const iconCount = 1 + (shownInvalidMessage.value ? 1 : 0) + (isClearShown.value ? 1 : 0)
+  return ['pr-10', 'pr-18', 'pr-22'][iconCount - 1]
+})
 
 const fieldStyle = computed(() => [
   fieldBaseStyle,
+  fieldPaddingStyle.value,
   shownInvalidMessage.value
     ? 'ring-rose-700 focus:ring-rose-500 dark:ring-rose-500 dark:focus:ring-rose-500'
     : 'ring-gray-300 focus:ring-primary-500 dark:ring-gray-600 dark:focus:ring-primary-300',
@@ -354,7 +409,8 @@ onClickOutside(
       close(false)
     }
   },
-  { ignore: [fieldRef] }
+  // a click on the label goes to the field, which opens and closes the popup
+  { ignore: [fieldRef, labelRef] }
 )
 
 function getValueParts(value: NeDatePickerValue): ValueParts {
@@ -396,6 +452,43 @@ function isPresetSelected(preset: NeDatePickerPreset): boolean {
   }
 }
 
+// true if the preset can be chosen: its days and times are within min and max, and not disabled
+function isPresetAvailable(preset: NeDatePickerPreset): boolean {
+  const parts = getValueParts(getPresetValue(preset))
+
+  if (props.type === 'time') {
+    if (!parts.time) {
+      return false
+    }
+    const time = normalizeTime(parts.time)
+    return timeToSeconds(clampTime(time)) === timeToSeconds(time)
+  }
+  const days = isRange.value ? [parts.day, parts.end] : [parts.day]
+  const areDaysSelectable = days.every((day) => {
+    const date = parseIsoDate(day)
+    return (
+      !!date && isDaySelectable(date, calendarMin.value, calendarMax.value, props.isDateDisabled)
+    )
+  })
+  if (!areDaysSelectable) {
+    return false
+  }
+  if (props.type === 'datetime') {
+    const moment = toValidDate(getPresetValue(preset))
+    return (
+      !!moment &&
+      (!minMoment.value || moment >= minMoment.value) &&
+      (!maxMoment.value || moment <= maxMoment.value)
+    )
+  }
+  return true
+}
+
+// today in the time zone, for the calendar
+function getToday(): string {
+  return getDayAndTime(new Date(), resolvedTimeZone.value).day
+}
+
 // a Date, or an ISO 8601 string, as a valid Date
 function toValidDate(value: unknown): Date | null {
   if (props.type !== 'datetime' || !value) {
@@ -412,6 +505,23 @@ function getCalendarLimit(limit: string | Date | null, moment: Date | null): str
   return moment ? getDayAndTime(moment, resolvedTimeZone.value).day : ''
 }
 
+function roundTimeLimit(time: TimeParts | null, direction: 'up' | 'down'): TimeParts | null {
+  if (!time || props.showSeconds) {
+    return time
+  }
+  const step = Math.min(Math.max(Math.floor(props.minuteStep), 1), 30)
+  const lastStep = Math.floor(59 / step) * step
+  if (direction === 'down') {
+    return { hours: time.hours, minutes: Math.floor(time.minutes / step) * step, seconds: 0 }
+  }
+  const minutes = Math.ceil((time.minutes + (time.seconds > 0 ? 1 : 0)) / step) * step
+  if (minutes <= lastStep) {
+    return { hours: time.hours, minutes, seconds: 0 }
+  }
+  // after the last step of the hour comes the next hour
+  return time.hours < 23 ? { hours: time.hours + 1, minutes: 0, seconds: 0 } : time
+}
+
 // seconds are kept only when shown
 function normalizeTime(time: TimeParts): TimeParts {
   return props.showSeconds ? time : { ...time, seconds: 0 }
@@ -424,19 +534,35 @@ function getDefaultTime(): TimeParts {
   return { hours: now.hours, minutes: Math.floor(now.minutes / step) * step, seconds: 0 }
 }
 
-// the step in milliseconds of the values that can be chosen
-function getStepMilliseconds(): number {
-  return props.showSeconds ? 1000 : Math.min(Math.max(Math.floor(props.minuteStep), 1), 30) * 60000
+// move a moment to the closest value that can be chosen, later or earlier: the next second with
+// seconds, the next minute step of the hour in the time zone otherwise, as the spinner shows
+function roundMoment(moment: Date, direction: 'up' | 'down'): Date {
+  const round = direction === 'up' ? Math.ceil : Math.floor
+  if (props.showSeconds) {
+    return new Date(round(moment.getTime() / 1000) * 1000)
+  }
+  const step = Math.min(Math.max(Math.floor(props.minuteStep), 1), 30)
+  const { time } = getDayAndTime(moment, resolvedTimeZone.value)
+  const startOfHour =
+    moment.getTime() - (time.minutes * 60 + time.seconds) * 1000 - moment.getMilliseconds()
+  const minutes = time.minutes + (time.seconds * 1000 + moment.getMilliseconds()) / 60000
+  // after the last step of the hour comes the next hour
+  const roundedMinutes = Math.min(round(minutes / step) * step, 60)
+  return new Date(startOfHour + roundedMinutes * 60000)
 }
 
 // move a moment within min and max, on a minute step
 function clampMoment(moment: Date): Date {
-  const step = getStepMilliseconds()
-  if (minMoment.value && moment < minMoment.value) {
-    moment = new Date(Math.ceil(minMoment.value.getTime() / step) * step)
+  const min = minMoment.value
+  const max = maxMoment.value
+  // when no moment on the step is between min and max, min and max are used as they are
+  if (min && moment < min) {
+    const rounded = roundMoment(min, 'up')
+    moment = max && rounded > max ? min : rounded
   }
-  if (maxMoment.value && moment > maxMoment.value) {
-    moment = new Date(Math.floor(maxMoment.value.getTime() / step) * step)
+  if (max && moment > max) {
+    const rounded = roundMoment(max, 'down')
+    moment = min && rounded < min ? max : rounded
   }
   return moment
 }
@@ -452,19 +578,49 @@ function clampTime(time: TimeParts): TimeParts {
   return time
 }
 
-// move the pending day and time within min and max, so that the popup shows what will be applied
-function normalizePending() {
+// the moment of the pending day and time; the value itself when they are the value's, since a
+// time repeated when daylight saving time ends is two moments
+function getPendingMoment(): Date | null {
+  if (!pendingDay.value) {
+    return null
+  }
+  const time = normalizeTime(pendingTime.value)
+  const current = toValidDate(model.value)
+  const currentTime = modelParts.value.time
+  if (
+    current &&
+    currentTime &&
+    modelParts.value.day === pendingDay.value &&
+    timeToSeconds(normalizeTime(currentTime)) === timeToSeconds(time)
+  ) {
+    const precision = props.showSeconds ? 1000 : 60000
+    return new Date(Math.floor(current.getTime() / precision) * precision)
+  }
+  return toMoment(pendingDay.value, time, resolvedTimeZone.value)
+}
+
+// move the pending day and time within min and max, so that the popup shows what will be applied;
+// previousTime is the time before a change in the spinner, direction the arrow that changed it
+function normalizePending(previousTime?: TimeParts, direction?: 1 | -1) {
   if (props.type === 'datetime' && pendingDay.value) {
-    const moment = toMoment(
-      pendingDay.value,
-      normalizeTime(pendingTime.value),
-      resolvedTimeZone.value
-    )
-    if (moment) {
-      const parts = getDayAndTime(clampMoment(moment), resolvedTimeZone.value)
-      pendingDay.value = parts.day
-      pendingTime.value = parts.time
+    let moment = getPendingMoment()
+    if (!moment) {
+      return
     }
+    // a time skipped when daylight saving time starts moves forward, after the skipped hour;
+    // when the user goes back in time, it moves before it instead, so that the spinner goes on
+    const requested = timeToSeconds(normalizeTime(pendingTime.value))
+    const shown = timeToSeconds(getDayAndTime(moment, resolvedTimeZone.value).time)
+    // an arrow tells the direction, also when the hours go round from 23 to 0
+    const isBackward = direction
+      ? direction === -1
+      : !!previousTime && requested < timeToSeconds(previousTime)
+    if (previousTime && shown > requested && isBackward) {
+      moment = new Date(moment.getTime() - (shown - requested) * 1000)
+    }
+    const parts = getDayAndTime(clampMoment(moment), resolvedTimeZone.value)
+    pendingDay.value = parts.day
+    pendingTime.value = parts.time
   } else if (props.type === 'time') {
     pendingTime.value = clampTime(normalizeTime(pendingTime.value))
   }
@@ -476,9 +632,7 @@ function getPendingValue(): NeDatePickerValue {
     case 'time':
       return formatTimeString(normalizeTime(pendingTime.value), props.showSeconds)
     case 'datetime':
-      return pendingDay.value
-        ? toMoment(pendingDay.value, normalizeTime(pendingTime.value), resolvedTimeZone.value)
-        : null
+      return getPendingMoment()
     default:
       if (isRange.value) {
         return pendingDay.value && pendingEnd.value ? [pendingDay.value, pendingEnd.value] : null
@@ -504,17 +658,25 @@ function updatePosition() {
   const gap = 4
   const field = fieldRef.value.getBoundingClientRect()
   const popupWidth = popupRef.value.offsetWidth
-  const popupHeight = popupRef.value.offsetHeight
+  // the height of the content, also when the popup scrolls
+  const popupHeight = popupRef.value.scrollHeight
   const viewportWidth = document.documentElement.clientWidth
   const viewportHeight = window.innerHeight
 
-  // below the field, or above it when it doesn't fit below and there is more space above
-  const spaceBelow = viewportHeight - field.bottom
-  const spaceAbove = field.top
-  popupTop.value =
-    spaceBelow < popupHeight + gap + margin && spaceAbove > spaceBelow
-      ? Math.max(margin, field.top - popupHeight - gap)
-      : field.bottom + gap
+  // below the field, or above it when it doesn't fit below and there is more space above; when
+  // it fits neither, it scrolls
+  const spaceBelow = viewportHeight - field.bottom - gap - margin
+  const spaceAbove = field.top - gap - margin
+  const isAbove = spaceBelow < popupHeight && spaceAbove > spaceBelow
+  const space = Math.max(isAbove ? spaceAbove : spaceBelow, 160)
+  popupMaxHeight.value = popupHeight > space ? space : undefined
+  // below, moved up when the popup is taller than the space left
+  popupTop.value = isAbove
+    ? Math.max(margin, field.top - gap - Math.min(popupHeight, space))
+    : Math.max(
+        margin,
+        Math.min(field.bottom + gap, viewportHeight - margin - Math.min(popupHeight, space))
+      )
 
   // aligned to the left of the field, moved left when it goes past the right of the screen
   popupLeft.value = Math.max(margin, Math.min(field.left, viewportWidth - popupWidth - margin))
@@ -524,9 +686,21 @@ async function open() {
   if (props.disabled || isOpen.value) {
     return
   }
+  // the typed text is applied first, so that the popup shows it
+  if (props.textInput) {
+    commitInputText()
+    // the value of v-model changes when the parent updates it
+    await nextTick()
+  }
+  // the focus goes back to the element that opened the popup, such as the calendar button
+  opener = fieldRef.value?.contains(document.activeElement)
+    ? (document.activeElement as HTMLElement)
+    : undefined
   pendingDay.value = modelParts.value.day
   pendingEnd.value = modelParts.value.end
   pendingTime.value = modelParts.value.time ?? getDefaultTime()
+  // the default time, or a value outside min and max, moves within them
+  normalizePending()
   isOpen.value = true
   await nextTick()
   updatePosition()
@@ -540,7 +714,11 @@ async function open() {
 function close(returnFocus = true) {
   isOpen.value = false
   if (returnFocus) {
-    focus()
+    if (opener?.isConnected) {
+      opener.focus()
+    } else {
+      focus()
+    }
   }
 }
 
@@ -606,6 +784,9 @@ function selectPreset(preset: NeDatePickerPreset) {
   if (props.type === 'time' ? !parts.time : !parts.day) {
     return
   }
+  if (!isPresetAvailable(preset)) {
+    return
+  }
   typedError.value = ''
   pendingDay.value = parts.day
   pendingEnd.value = parts.end
@@ -618,22 +799,23 @@ function selectPreset(preset: NeDatePickerPreset) {
   }
 }
 
-function onTimeChange(time: TimeParts) {
+function onTimeChange(time: TimeParts, direction?: 1 | -1) {
   typedError.value = ''
+  const previousTime = pendingTime.value
   pendingTime.value = time
-  normalizePending()
+  normalizePending(previousTime, direction)
 
   if (resolvedAutoApply.value) {
     applyPendingValue()
   }
 }
 
+// Enter applies the time shown, also with autoApply when the value is still empty
 function onTimeEnter() {
-  if (!resolvedAutoApply.value) {
-    if (isSelectDisabled.value) {
-      return
-    }
+  if (!isSelectDisabled.value) {
     applyPendingValue()
+  } else if (!resolvedAutoApply.value) {
+    return
   }
   close()
 }
@@ -673,6 +855,13 @@ function onTriggerKeydown(event: KeyboardEvent) {
   }
 }
 
+// a click in the text field closes the popup, so that the focus is not outside it while open
+function onInputFocus() {
+  if (isOpen.value) {
+    close(false)
+  }
+}
+
 function onInputKeydown(event: KeyboardEvent) {
   if (event.key === 'ArrowDown' && event.altKey) {
     event.preventDefault()
@@ -683,18 +872,33 @@ function onInputKeydown(event: KeyboardEvent) {
   }
 }
 
-// the typed text without the name of the time zone, which is shown after the time
+// the typed text without the name of the time zone, which is shown after the time, before it
+// (Chinese), in brackets (Chinese of Taiwan) or in parentheses (Persian); the name changes with
+// daylight saving time (CET, CEST), so the names of winter and summer are removed
 function removeTimeZoneName(text: string): string {
   if (!resolvedTimeZone.value) {
     return text
   }
-  const zoneName = new Intl.DateTimeFormat(resolvedLocale.value, {
+  const zoneFormat = new Intl.DateTimeFormat(resolvedLocale.value, {
     timeZone: resolvedTimeZone.value,
     timeZoneName: 'short'
   })
-    .formatToParts(new Date())
-    .find((part) => part.type === 'timeZoneName')?.value
-  return zoneName && text.endsWith(zoneName) ? text.slice(0, -zoneName.length).trim() : text
+  const year = new Date().getFullYear()
+  const moments = [new Date(year, 0, 1), new Date(year, 6, 1), toValidDate(model.value)]
+  for (const moment of moments) {
+    const zoneName = moment
+      ? zoneFormat.formatToParts(moment).find((part) => part.type === 'timeZoneName')?.value
+      : undefined
+    if (zoneName && text.includes(zoneName)) {
+      return text
+        .replace(`[${zoneName}]`, ' ')
+        .replace(`(${zoneName})`, ' ')
+        .replace(zoneName, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+    }
+  }
+  return text
 }
 
 // apply the typed text, or show why it can't be applied; return false if it is not valid
@@ -749,11 +953,16 @@ function applyTypedText(text: string): string {
     const moment = toMoment(parts.day, normalizeTime(parts.time), resolvedTimeZone.value)
     if (
       !moment ||
-      !isDaySelectable(day, '', '', props.isDateDisabled) ||
+      !isDaySelectable(day, calendarMin.value, calendarMax.value, props.isDateDisabled)
+    ) {
+      return props.unavailableDateLabel
+    }
+    // the day can be chosen, but not at this time
+    if (
       (minMoment.value && moment < minMoment.value) ||
       (maxMoment.value && moment > maxMoment.value)
     ) {
-      return props.unavailableDateLabel
+      return props.unavailableTimeLabel
     }
     model.value = moment
     return ''
@@ -804,6 +1013,8 @@ function onPopupKeydown(event: KeyboardEvent) {
 
 // keep the focus inside the popup, as in a modal dialog
 function trapFocus(event: KeyboardEvent) {
+  // the popup itself has the focus after a click on an empty area
+  const isPopupFocused = document.activeElement === popupRef.value
   const focusable = Array.from(
     popupRef.value?.querySelectorAll<HTMLElement>(
       'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -816,10 +1027,10 @@ function trapFocus(event: KeyboardEvent) {
   const first = focusable[0]
   const last = focusable[focusable.length - 1]
 
-  if (event.shiftKey && document.activeElement === first) {
+  if (event.shiftKey && (document.activeElement === first || isPopupFocused)) {
     event.preventDefault()
     last.focus()
-  } else if (!event.shiftKey && document.activeElement === last) {
+  } else if (!event.shiftKey && (document.activeElement === last || isPopupFocused)) {
     event.preventDefault()
     first.focus()
   }
@@ -843,6 +1054,7 @@ function trapFocus(event: KeyboardEvent) {
       <label
         v-if="label"
         :id="`${componentId}-label`"
+        ref="labelRef"
         :for="componentId"
         class="mb-2 flex items-end justify-between text-sm leading-6 font-medium text-gray-700 dark:text-gray-200"
       >
@@ -866,9 +1078,11 @@ function trapFocus(event: KeyboardEvent) {
           :class="fieldStyle"
           :placeholder="placeholder"
           :disabled="disabled"
+          :aria-label="label ? undefined : openLabel"
           :aria-invalid="!!shownInvalidMessage || undefined"
           :aria-describedby="descriptionId"
           v-bind="fieldAttrs"
+          @focus="onInputFocus"
           @keydown="onInputKeydown"
           @blur="commitInputText"
         />
@@ -882,9 +1096,7 @@ function trapFocus(event: KeyboardEvent) {
           :disabled="disabled"
           aria-haspopup="dialog"
           :aria-expanded="isOpen"
-          :aria-label="label ? undefined : openLabel"
-          :aria-labelledby="label ? `${componentId}-label ${componentId}-value` : undefined"
-          :aria-invalid="!!shownInvalidMessage || undefined"
+          :aria-labelledby="triggerLabelledBy"
           :aria-describedby="descriptionId"
           v-bind="fieldAttrs"
           @click="toggle"
@@ -899,6 +1111,7 @@ function trapFocus(event: KeyboardEvent) {
             ]"
             >{{ displayValue || placeholder || openLabel }}</span
           >
+          <span v-if="!label" :id="`${componentId}-action`" class="sr-only">{{ openLabel }}</span>
         </button>
         <!-- clicks on the icons, except the buttons, go through to the field below -->
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1 pr-2">
@@ -946,9 +1159,11 @@ function trapFocus(event: KeyboardEvent) {
         </div>
       </div>
       <!-- invalid message -->
+      <!-- the error of the typed text is announced when it appears -->
       <p
         v-if="shownInvalidMessage"
         :id="descriptionId"
+        :role="invalidMessage ? undefined : 'alert'"
         class="mt-2 text-sm text-rose-700 dark:text-rose-400"
       >
         {{ shownInvalidMessage }}
@@ -978,9 +1193,14 @@ function trapFocus(event: KeyboardEvent) {
           ref="popupRef"
           role="dialog"
           aria-modal="true"
+          tabindex="-1"
           :aria-label="label || openLabel"
-          :style="{ top: `${popupTop}px`, left: `${popupLeft}px` }"
-          class="fixed z-110 rounded-md bg-white p-3 shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-950 dark:ring-gray-500/50"
+          :style="{
+            top: `${popupTop}px`,
+            left: `${popupLeft}px`,
+            maxHeight: popupMaxHeight ? `${popupMaxHeight}px` : undefined
+          }"
+          class="fixed z-110 overflow-y-auto rounded-md bg-white p-3 shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden dark:bg-gray-950 dark:ring-gray-500/50"
           @keydown="onPopupKeydown"
         >
           <!-- content above the calendar, such as the clear link of a filter -->
@@ -998,12 +1218,16 @@ function trapFocus(event: KeyboardEvent) {
                 :key="item.key"
                 type="button"
                 :class="[
-                  'focus-visible:ring-primary-500 dark:focus-visible:ring-primary-300 cursor-pointer rounded-md px-2 py-1.5 text-left text-sm transition-colors duration-200 hover:bg-gray-200/70 focus:outline-hidden focus-visible:ring-2 dark:hover:bg-gray-600/30',
+                  'focus-visible:ring-primary-500 dark:focus-visible:ring-primary-300 rounded-md px-2 py-1.5 text-left text-sm transition-colors duration-200 focus:outline-hidden focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50',
                   item.selected
-                    ? 'text-primary-700 dark:text-primary-500 font-medium'
-                    : 'text-gray-700 dark:text-gray-200'
+                    ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 font-medium'
+                    : 'text-gray-700 dark:text-gray-200',
+                  item.available && !item.selected
+                    ? 'cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-600/30'
+                    : ''
                 ]"
-                :aria-pressed="item.selected"
+                :disabled="!item.available"
+                :aria-current="item.selected || undefined"
                 @click="selectPreset(item.preset)"
               >
                 {{ item.preset.label }}
@@ -1029,6 +1253,8 @@ function trapFocus(event: KeyboardEvent) {
                 :next-years-label="nextYearsLabel"
                 :choose-month-label="chooseMonthLabel"
                 :choose-year-label="chooseYearLabel"
+                :choose-end-date-label="chooseEndDateLabel"
+                :today="getToday()"
                 @update:model-value="onCalendarSelect"
               />
               <div
@@ -1047,6 +1273,14 @@ function trapFocus(event: KeyboardEvent) {
                   :hours-label="hoursLabel"
                   :minutes-label="minutesLabel"
                   :seconds-label="secondsLabel"
+                  :label="chooseTimeLabel"
+                  :day-period-label="dayPeriodLabel"
+                  :increase-hours-label="increaseHoursLabel"
+                  :decrease-hours-label="decreaseHoursLabel"
+                  :increase-minutes-label="increaseMinutesLabel"
+                  :decrease-minutes-label="decreaseMinutesLabel"
+                  :increase-seconds-label="increaseSecondsLabel"
+                  :decrease-seconds-label="decreaseSecondsLabel"
                   @update:model-value="onTimeChange"
                   @enter="onTimeEnter"
                 />
