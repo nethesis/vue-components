@@ -89,19 +89,21 @@ const emit = defineEmits(['selectTab'])
     <div class="hidden sm:block">
       <div class="border-b border-gray-200 dark:border-gray-700">
         <nav class="-mb-px flex space-x-8" :aria-label="srTabsLabel">
-          <a
+          <button
             v-for="tab in props.tabs"
             :key="tab.name"
+            type="button"
             :class="[
               currentTab === tab.name
                 ? 'border-primary-600 text-primary-700 dark:border-primary-400 dark:text-primary-500'
                 : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-700 dark:hover:text-gray-100',
-              'cursor-pointer border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap'
+              'focus-visible:ring-primary-500 dark:focus-visible:ring-primary-300 cursor-pointer border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap focus:outline-hidden focus-visible:ring-2'
             ]"
             :aria-current="currentTab === tab.name ? 'page' : undefined"
             @click="selectTab(tab.name)"
-            >{{ tab.label }}</a
           >
+            {{ tab.label }}
+          </button>
         </nav>
       </div>
     </div>
