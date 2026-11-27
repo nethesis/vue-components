@@ -70,6 +70,37 @@
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
+
+  @supports (-moz-appearance: none) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-gray-400) var(--color-gray-200);
+    }
+
+    :where(.dark, .dark *) {
+      scrollbar-color: var(--color-gray-400) var(--color-gray-900);
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background-color: var(--color-gray-200);
+  }
+
+  :where(.dark, .dark *)::-webkit-scrollbar-track,
+  :where(.dark, .dark *)::-webkit-scrollbar-corner {
+    background-color: var(--color-gray-900);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: var(--color-gray-400);
+  }
 }
 
 @layer components {
