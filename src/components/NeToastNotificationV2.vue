@@ -132,40 +132,37 @@ library.add(fasXmark)
           </h6>
           <p
             v-if="notification.description"
-            class="mt-2 break-words text-gray-700 dark:text-gray-200"
+            class="mt-2 wrap-break-word text-gray-700 dark:text-gray-200"
           >
             {{ notification.description }}
           </p>
-        </div>
-      </div>
-      <div
-        v-if="notification.firstButtonLabel || notification.secondButtonLabel"
-        class="ml-10 flex shrink-0"
-      >
-        <div
-          :class="[
-            `mt-4 flex grow justify-end gap-3`,
-            firstActionOnRight ? 'flex-row' : 'flex-row-reverse'
-          ]"
-        >
-          <NeButton
-            v-if="notification.secondButtonLabel && notification.secondButtonAction"
-            :kind="notification.secondButtonKind ?? 'tertiary'"
-            size="sm"
-            class="w-auto"
-            @click="$emit('action', notification.secondButtonAction)"
+          <!-- buttons, inside the text column to align them with title and description -->
+          <div
+            v-if="notification.firstButtonLabel || notification.secondButtonLabel"
+            :class="[
+              `mt-4 flex justify-end gap-3`,
+              firstActionOnRight ? 'flex-row' : 'flex-row-reverse'
+            ]"
           >
-            {{ notification.secondButtonLabel }}
-          </NeButton>
-          <NeButton
-            v-if="notification.firstButtonLabel && notification.firstButtonAction"
-            :kind="notification.firstButtonKind ?? 'secondary'"
-            size="sm"
-            class="w-auto"
-            @click="$emit('action', notification.firstButtonAction)"
-          >
-            {{ notification.firstButtonLabel }}
-          </NeButton>
+            <NeButton
+              v-if="notification.secondButtonLabel && notification.secondButtonAction"
+              :kind="notification.secondButtonKind ?? 'tertiary'"
+              size="sm"
+              class="w-auto"
+              @click="$emit('action', notification.secondButtonAction)"
+            >
+              {{ notification.secondButtonLabel }}
+            </NeButton>
+            <NeButton
+              v-if="notification.firstButtonLabel && notification.firstButtonAction"
+              :kind="notification.firstButtonKind ?? 'secondary'"
+              size="sm"
+              class="w-auto"
+              @click="$emit('action', notification.firstButtonAction)"
+            >
+              {{ notification.firstButtonLabel }}
+            </NeButton>
+          </div>
         </div>
       </div>
     </div>

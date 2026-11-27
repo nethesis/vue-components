@@ -72,7 +72,7 @@ const textAreaBaseStyle =
 const textAreaValidStyle =
   'ring-gray-300 focus:ring-primary-500 dark:ring-gray-600 dark:focus:ring-primary-300'
 const textAreaInvalidStyle =
-  'pr-10 ring-rose-300 focus:ring-rose-500 ring-rose-700 focus:ring-rose-500'
+  'pr-10 ring-rose-700 focus:ring-rose-500 dark:ring-rose-500 dark:focus:ring-rose-500'
 const textAreaReadonlyStyle = 'bg-transparent'
 const textAreaWritableStyle = 'bg-white dark:bg-gray-950'
 
