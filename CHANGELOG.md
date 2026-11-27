@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.17.0](https://github.com/nethesis/vue-components/compare/v3.16.0...v3.17.0) (2026-11-27)
+
+
+### Features
+
+* add NeDatePicker and NeDateRangeFilter ([#229](https://github.com/nethesis/vue-components/issues/229)) ([c10fe10](https://github.com/nethesis/vue-components/commit/c10fe1094267b7f392c38b39b97d7c603e8fe9a8))
+
+
+### Bug Fixes
+
+* align colors and keep buttons from submitting ([#225](https://github.com/nethesis/vue-components/issues/225)) ([6fc698c](https://github.com/nethesis/vue-components/commit/6fc698cb355c6c4f0b556ff90b4782ba71be4082))
+
 ## [3.16.0](https://github.com/nethesis/vue-components/compare/v3.15.1...v3.16.0) (2026-11-06)
 
 
